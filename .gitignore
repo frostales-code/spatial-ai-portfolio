@@ -1,0 +1,32 @@
+# Secrets & Environment
+.env
+.env.*
+*.pem
+*.key
+
+# Node & Frontend build outputs
+node_modules/
+web/node_modules/
+web/dist/
+
+# Python environments & caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Redundant intermediate generation/raw caches (final WebPs live in web/public/assets/)
+data/curated_80/images/
+data/ast_comparisons/images/
+data/tectonic_cases/raw_1024/
+data/tectonic_cases/images/
+
+# OS & Editor scratch
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+*.tsbuildinfo

@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spatial AI Product Thesis — AetherVault & TectonicLoop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg-base: #0c0d0e;
+      --bg-panel: #141618;
+      --bg-elevated: #1c1f22;
+      --border-subtle: #272b30;
+      --accent-amber: #d97736;
+      --accent-sage: #7a9a8b;
+      --accent-steel: #68869c;
+      --text-main: #e6e8ea;
+      --text-muted: #8b929a;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Custom subtle grid background */
+    .bg-tech-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    }
+
+    /* Range Slider Styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: #262a2e;
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      background: #d97736;
+      cursor: pointer;
+      border: 1px solid #fff;
+      transition: transform 0.12s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f1113;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2d3238;
+      border-radius: 3px;
+    }
+
+    .tab-active {
+      background: #1e2226;
+      color: #ffffff;
+      border-bottom: 2px solid #d97736;
+    }
+
+    .pulse-dot {
+      animation: pulseRing 2s infinite;
+    }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+      70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-tech-grid selection:bg-amber-600/30 selection:text-amber-200">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 border-b border-[#272b30] bg-[#0c0d0e]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-[#1c1f22] border border-[#343a40] flex items-center justify-center">
+          <span class="mono text-xs font-bold text-[#d97736]">AI·PM</span>
+        </div>
+        <div>
+          <h1 class="text-sm font-semibold tracking-wide text-zinc-100">SPATIAL & VISUAL AI PRODUCT PORTFOLIO</h1>
+          <p class="text-[11px] text-zinc-400 mono">End-to-End Thesis: Aesthetic Prior [0→1] ↔ Constructability Loop [1→N]</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-1 bg-[#131517] p-1 rounded border border-[#24282c]">
+        <button onclick="switchMainTab('thesis')" id="nav-thesis" class="px-3.5 py-1.5 text-xs font-medium rounded-sm transition-all tab-active">
+          00 · 双产品方法论总览
+        </button>
+        <button onclick="switchMainTab('projectA')" id="nav-projectA" class="px-3.5 py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-sm transition-all">
+          01 · AetherVault (美学光谱引擎)
+        </button>
+        <button onclick="switchMainTab('projectB')" id="nav-projectB" class="px-3.5 py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-sm transition-all">
+          02 · TectonicLoop (建构双向闭环)
+        </button>
+        <button onclick="switchMainTab('techEval')" id="nav-techEval" class="px-3.5 py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-sm transition-all">
+          03 · 技术攻坚与 Eval 矩阵
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ========================================== -->
+    <!-- TAB 00: THESIS OVERVIEW                    -->
+    <!-- ========================================== -->
+    <section id="view-thesis" class="space-y-8">
+      <!-- Hero Banner -->
+      <div class="bg-[#141618] border border-[#272b30] rounded-lg p-6 sm:p-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-72 h-72 bg-[#d97736]/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="max-w-3xl space-y-3">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#1d2024] border border-[#2f353b] text-[11px] mono text-[#d97736]">
+              <span>CORE PRODUCT PHILOSOPHY</span>
+              <span class="text-zinc-600">|</span>
+              <span class="text-zinc-300">把概率性的生成模型，驯服为确定性的工程与设计系统</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 leading-snug">
+              从「隐性审美唤醒」到「物理建构落地」的全链路空间 AI 双引擎
+            </h2>
+            <p class="text-sm text-zinc-400 leading-relaxed">
+              当前设计行业 AI 工具普遍困在中间态的“单步抽卡生图”——前端接不住设计师微妙的个人品味与模糊直觉，后端接不住施工图深化、材料模数与甲方预算暴砍。本规划通过上下游咬合的两个独立产品，覆盖创意生产力最硬核的两端闭环。
+            </p>
+          </div>
+          <div class="flex flex-col gap-2.5 shrink-0">
+            <button onclick="switchMainTab('projectA')" class="px-4 py-2.5 bg-[#d97736] hover:bg-[#c5692b] text-white text-xs font-semibold rounded flex items-center justify-between gap-4 transition">
+              <span>进入 Project A 交互沙盒</span>
+              <span class="mono">→</span>
+            </button>
+            <button onclick="switchMainTab('projectB')" class="px-4 py-2.5 bg-[#1e2226] hover:bg-[#272c31] border border-[#343a40] text-zinc-200 text-xs font-semibold rounded flex items-center justify-between gap-4 transition">
+              <span>进入 Project B 交互沙盒</span>
+              <span class="mono">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dual Pipeline Topology Diagram -->
+      <div class="grid grid-cols-1 lg:grid-cols-11 gap-4 items-stretch">
+        <!-- Upstream Card -->
+        <div class="lg:col-span-5 bg-[#141618] border border-[#272b30] hover:border-[#d97736]/60 transition rounded-lg p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2 py-0.5 text-[11px] mono bg-amber-950/50 text-amber-400 border border-amber-800/50 rounded">UPSTREAM · 0 → 1 概念与审美对齐</span>
+              <span class="mono text-xs text-zinc-500">Project A</span>
+            </div>
+            <h3 class="text-lg font-semibold text-zinc-100 mb-1">AetherVault · 美学光谱知识库与风格编译器</h3>
+            <p class="text-xs text-zinc-400 mb-5">解决“存了几千张图却搜不出感觉，多参考图混搭生图互相污染”的前端痛点。</p>
+
+            <div class="space-y-3 text-xs">
+              <div class="p-3 rounded bg-[#191c1f] border border-[#262a2e]">
+                <div class="font-medium text-zinc-200 mb-1">1. 8维连续双极光谱解耦 (Style Spectrums)</div>
+                <p class="text-zinc-400 leading-relaxed">剥离图片主体内容，按构造表现度、肌理时间熵、光影反差、留白密度等 8 个正交轴 $[-1.0, +1.0]$ 建立可计算审美指纹。</p>
+              </div>
+              <div class="p-3 rounded bg-[#191c1f] border border-[#262a2e]">
+                <div class="font-medium text-zinc-200 mb-1">2. 个人先验唤醒 + 跨界破圈检索</div>
+                <p class="text-zinc-400 leading-relaxed">优先从个人私域库定位品味基准，再锁死光谱指纹去服装、工业设计、电影摄影中跨界召回同构灵感。</p>
+              </div>
+              <div class="p-3 rounded bg-[#191c1f] border border-[#262a2e]">
+                <div class="font-medium text-zinc-200 mb-1">3. 无冲突 AST 正交特征混音编译</div>
+                <p class="text-zinc-400 leading-relaxed">勾选继承“图A透视 + 图B材质 + 图C光感”，自动编译光学级结构化 Prompt 与负向护栏。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#23272b] flex items-center justify-between text-[11px] mono text-zinc-400">
+            <span>核心壁垒：隐性审美结构化 + 毫秒级向量校准</span>
+            <button onclick="switchMainTab('projectA')" class="text-[#d97736] hover:underline">查看原型 →</button>
+          </div>
+        </div>
+
+        <!-- Center Connector -->
+        <div class="lg:col-span-1 flex flex-col items-center justify-center py-4">
+          <div class="hidden lg:flex flex-col items-center gap-2 text-center">
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-[#3a4048] to-[#d97736]"></div>
+            <div class="px-2 py-2 rounded bg-[#1a1d20] border border-[#32383e] text-[10px] mono text-zinc-300 leading-tight">
+              高审美概念图<br/>+<br/>尺度锚点输入
+            </div>
+            <div class="text-[#d97736] mono text-sm">⇄</div>
+            <div class="px-2 py-2 rounded bg-[#1a1d20] border border-[#32383e] text-[10px] mono text-[#7a9a8b] leading-tight">
+              落地方案回流<br/>沉淀真实节点
+            </div>
+            <div class="w-px h-12 bg-gradient-to-t from-transparent via-[#3a4048] to-[#7a9a8b]"></div>
+          </div>
+          <div class="lg:hidden text-xs mono text-zinc-500">⇅ 上下游数据流咬合 ⇅</div>
+        </div>
+
+        <!-- Downstream Card -->
+        <div class="lg:col-span-5 bg-[#141618] border border-[#272b30] hover:border-[#7a9a8b]/60 transition rounded-lg p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2 py-0.5 text-[11px] mono bg-emerald-950/40 text-[#8fb8a5] border border-emerald-800/40 rounded">DOWNSTREAM · 1 → N 深化与动态控本</span>
+              <span class="mono text-xs text-zinc-500">Project B</span>
+            </div>
+            <h3 class="text-lg font-semibold text-zinc-100 mb-1">TectonicLoop · 视觉表现与建构/造价双向引擎</h3>
+            <p class="text-xs text-zinc-400 mb-5">终结“效果图诈骗”，打通概念视觉表现与材料模数、施工节点、预算约束的双向反馈。</p>
+
+            <div class="space-y-3 text-xs">
+              <div class="p-3 rounded bg-[#191c1f] border border-[#262a2e]">
+                <div class="font-medium text-zinc-200 mb-1">1. 物理建构幻觉自动排雷 (Constructability Linter)</div>
+                <p class="text-zinc-400 leading-relaxed">自动识别超限单块玻璃、室外无滴水线/防潮勒脚、临街不可行湿作业等工程隐患并标红预警。</p>
+              </div>
+              <div class="p-3 rounded bg-[#191c1f] border border-[#262a2e]">
+                <div class="font-medium text-zinc-200 mb-1">2. 同效异构三档工艺包与零幻觉算账</div>
+                <p class="text-zinc-400 leading-relaxed">针对同一视觉肌理匹配高/中/低预算的真实构造层次、标准节点索引与确定性单方造价区间。</p>
+              </div>
+              <div class="p-3 rounded bg-[#191c1f] border border-[#262a2e]">
+                <div class="font-medium text-zinc-200 mb-1">3. 预算/工期约束反向透视改图 (Reverse Sync)</div>
+                <p class="text-zinc-400 leading-relaxed">当预算下调或改用标准干挂板时，按三维透视灭点程序化注入真实拼缝网格与收口细节重绘原图。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#23272b] flex items-center justify-between text-[11px] mono text-zinc-400">
+            <span>核心壁垒：单应性模数网格投影 + 本征光照保持</span>
+            <button onclick="switchMainTab('projectB')" class="text-[#8fb8a5] hover:underline">查看原型 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PM Competency Matrix Banner -->
+      <div class="bg-[#141618] border border-[#272b30] rounded-lg p-6">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mono mb-4">雇主视角：这两个项目直接验证的 4 项高级 AI PM 核心能力</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+          <div class="p-4 bg-[#191c1f] rounded border-l-2 border-[#d97736]">
+            <div class="font-semibold text-zinc-100 mb-1">领域本体工程 (Ontology)</div>
+            <p class="text-zinc-400">不依赖朴素文本切片，能够将非结构化的“审美感觉”与“建筑构造规范”转化为正交 JSON Schema 与状态图。</p>
+          </div>
+          <div class="p-4 bg-[#191c1f] rounded border-l-2 border-[#7a9a8b]">
+            <div class="font-semibold text-zinc-100 mb-1">复合系统编排 (Compound AI)</div>
+            <p class="text-zinc-400">清晰界定大模型与确定性算法边界：用 VLM 做语义路由，用几何单应性矩阵算分缝、用规则引擎算造价。</p>
+          </div>
+          <div class="p-4 bg-[#191c1f] rounded border-l-2 border-[#68869c]">
+            <div class="font-semibold text-zinc-100 mb-1">GUI + LUI 融合交互</div>
+            <p class="text-zinc-400">深知设计师痛恨长文本聊天，设计光谱滑块微调、特征混音开关与图元锚点交互，将延迟压至毫秒级。</p>
+          </div>
+          <div class="p-4 bg-[#191c1f] rounded border-l-2 border-purple-400/70">
+            <div class="font-semibold text-zinc-100 mb-1">评测驱动开发 (EDD)</div>
+            <p class="text-zinc-400">为每个模块配套严谨的离线 Benchmark：斯皮尔曼排序一致性、透视角度偏差、非修改区 PSNR 与结算命中率。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 01: PROJECT A INTERACTIVE SANDBOX      -->
+    <!-- ========================================== -->
+    <section id="view-projectA" class="hidden space-y-6">
+      <!-- Top Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#141618] border border-[#272b30] rounded-lg p-5">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-[10px] mono bg-amber-950/60 text-amber-400 border border-amber-800/50 rounded">PROJECT A PROTOTYPE</span>
+            <h2 class="text-base font-semibold text-zinc-100">AetherVault · 设计师模糊意图校准与正交风格编译沙盒</h2>
+          </div>
+          <p class="text-xs text-zinc-400">体验流程：① 点击预设模糊意图或拖动 8 维光谱滑块 → ② 观察雷达图与【个人库 + 跨界库】实时重排评分 → ③ 勾选不同卡片的正交特征生成无冲突编译指令。</p>
+        </div>
+        <div class="flex flex-wrap gap-2 shrink-0">
+          <button onclick="applyPresetIntent('brutalist_cafe')" class="px-3 py-1.5 bg-[#1e2226] hover:border-[#d97736] border border-[#32383e] rounded text-xs text-zinc-200 transition">
+            预设意图 1：荒野孤寂感 + 精密机械节点
+          </button>
+          <button onclick="applyPresetIntent('warm_gallery')" class="px-3 py-1.5 bg-[#1e2226] hover:border-[#d97736] border border-[#32383e] rounded text-xs text-zinc-200 transition">
+            预设意图 2：静谧东方留白 + 温润漫射光
+          </button>
+          <button onclick="applyPresetIntent('tech_pavilion')" class="px-3 py-1.5 bg-[#1e2226] hover:border-[#d97736] border border-[#32383e] rounded text-xs text-zinc-200 transition">
+            预设意图 3：高技派轻盈张拉 + 冷峻实验室
+          </button>
+        </div>
+      </div>
+
+      <!-- Fuzzy Query Input Display -->
+      <div class="bg-[#141618] border border-[#272b30] rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-3 w-full">
+          <span class="px-2 py-1 rounded bg-[#1f2328] text-[11px] mono text-[#d97736] shrink-0 mt-0.5">USER FUZZY QUERY</span>
+          <input id="fuzzyQueryInput" type="text" value="想做一个户外快闪咖啡亭，带点苍凉荒野的克制感，但局部金属连接件要像徕卡镜头一样精密讲究，千万别做成脏乱废土风。" 
+            class="w-full bg-transparent text-xs sm:text-sm text-zinc-200 focus:outline-none border-b border-transparent focus:border-[#d97736] pb-1" />
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <label class="flex items-center gap-1.5 text-xs text-zinc-300 cursor-pointer select-none bg-[#1c2024] px-3 py-1.5 rounded border border-[#2e343b]">
+            <input type="checkbox" id="crossDomainToggle" checked onchange="updateProjectA()" class="accent-[#d97736]" />
+            <span>开启跨界破圈召回 (Domain ≠ Arch)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Main 3-Column Workstation -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Left Col: 8-Axis Spectrum Radar & Sliders (4 cols) -->
+        <div class="lg:col-span-4 bg-[#141618] border border-[#272b30] rounded-lg p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 mono">8-Axis Style Spectrums</h3>
+              <span class="text-[11px] mono text-emerald-400">Re-rank: 12ms</span>
+            </div>
+
+            <!-- Dynamic SVG Radar Chart -->
+            <div class="bg-[#101214] border border-[#22262a] rounded p-3 mb-4 flex items-center justify-center">
+              <svg id="spectrumRadarSvg" viewBox="0 0 260 220" class="w-full max-w-[260px] h-auto"></svg>
+            </div>
+
+            <!-- 8 Sliders -->
+            <div id="spectrumSlidersContainer" class="space-y-3 max-h-[340px] overflow-y-auto pr-1">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-[#25292e] text-[11px] text-zinc-500 flex justify-between mono">
+            <span>[-1.0 负向极值]</span>
+            <span>[0.0 平衡态]</span>
+            <span>[+1.0 正向极值]</span>
+          </div>
+        </div>
+
+        <!-- Middle Col: Dual-Track Retrieved Aesthetic Cards (5 cols) -->
+        <div class="lg:col-span-5 bg-[#141618] border border-[#272b30] rounded-lg p-5 flex flex-col">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 mono">Dual-Track Aesthetic Recall (Top Matches)</h3>
+            <span class="text-[11px] text-zinc-400">勾选卡片下方槽位以送入右侧混音台</span>
+          </div>
+
+          <div id="recalledCardsContainer" class="space-y-3 flex-1 overflow-y-auto pr-1 max-h-[580px]">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Right Col: Orthogonal Feature Mixer & AST Prompt Compiler (3 cols) -->
+        <div class="lg:col-span-3 bg-[#141618] border border-[#272b30] rounded-lg p-5 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 mono mb-1">Orthogonal Style Compiler</h3>
+              <p class="text-[11px] text-zinc-400">物理隔离不同维度，消除多参考图语义污染</p>
+            </div>
+
+            <!-- Active Slots Summary -->
+            <div class="space-y-2 text-xs">
+              <div class="p-2.5 rounded bg-[#191c1f] border border-[#282d33]">
+                <div class="text-[10px] mono text-zinc-500 mb-0.5">SLOT 1 · OPTICS & CAMERA (镜头透视)</div>
+                <div id="slotOpticsLabel" class="font-medium text-amber-300 truncate">--</div>
+              </div>
+              <div class="p-2.5 rounded bg-[#191c1f] border border-[#282d33]">
+                <div class="text-[10px] mono text-zinc-500 mb-0.5">SLOT 2 · MATERIAL & TECTONICS (材质节点)</div>
+                <div id="slotMaterialLabel" class="font-medium text-emerald-300 truncate">--</div>
+              </div>
+              <div class="p-2.5 rounded bg-[#191c1f] border border-[#282d33]">
+                <div class="text-[10px] mono text-zinc-500 mb-0.5">SLOT 3 · LIGHTING & PALETTE (光影色温)</div>
+                <div id="slotLightingLabel" class="font-medium text-sky-300 truncate">--</div>
+              </div>
+            </div>
+
+            <!-- Compiled Output Box -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[11px] mono text-zinc-400">Compiled Conflict-Free AST Prompt</span>
+                <button onclick="copyCompiledPrompt()" id="copyPromptBtn" class="text-[11px] mono text-[#d97736] hover:underline">Copy</button>
+              </div>
+              <pre id="compiledPromptBox" class="p-3 rounded bg-[#0e1012] border border-[#25292e] text-[11px] mono text-zinc-300 whitespace-pre-wrap leading-relaxed max-h-[250px] overflow-y-auto"></pre>
+            </div>
+
+            <!-- Guardrails Box -->
+            <div>
+              <div class="text-[11px] mono text-red-400/90 mb-1">Auto-Injected Negative Guardrails</div>
+              <div id="compiledNegativeBox" class="p-2.5 rounded bg-red-950/20 border border-red-900/30 text-[11px] mono text-red-200/80 leading-relaxed"></div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-[#25292e]">
+            <div class="text-[11px] text-zinc-400 flex items-center justify-between">
+              <span>冲突词条自动拦截数：</span>
+              <span id="conflictResolvedCount" class="mono font-semibold text-emerald-400">2 处已消解</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 02: PROJECT B INTERACTIVE SANDBOX      -->
+    <!-- ========================================== -->
+    <section id="view-projectB" class="hidden space-y-6">
+      <!-- Top Header -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#141618] border border-[#272b30] rounded-lg p-5">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 text-[10px] mono bg-emerald-950/60 text-[#8fb8a5] border border-emerald-800/50 rounded">PROJECT B PROTOTYPE</span>
+            <h2 class="text-base font-semibold text-zinc-100">TectonicLoop · 90㎡ 街角精品咖啡馆立面改造 — 建构排雷与反向改图闭环</h2>
+          </div>
+          <p class="text-xs text-zinc-400">体验流程：① 点击立面图上的红色排雷锚点查看 AI 物理幻觉诊断 → ② 在右侧切换【总预算上限 / 全干法工期约束】或单独修改构件工艺 → ③ 观察左侧立面图实时生成透视分缝、钢窗分格与金属收口泛水。</p>
+        </div>
+        <!-- Quick Reverse Constraint Buttons -->
+        <div class="flex flex-wrap gap-2 shrink-0">
+          <button onclick="applyVeScenario('raw_ai')" class="px-3 py-1.5 bg-[#1e2226] hover:border-red-400 border border-[#32383e] rounded text-xs text-zinc-200 transition">
+            状态 0：原始 AI 概念图 (¥18.6w / 3隐患)
+          </button>
+          <button onclick="applyVeScenario('balanced_ve')" class="px-3 py-1.5 bg-[#1e2226] hover:border-[#8fb8a5] border border-[#32383e] rounded text-xs text-zinc-200 transition">
+            反向约束 A：商业均衡干挂 (¥11.2w / 14天)
+          </button>
+          <button onclick="applyVeScenario('strict_budget')" class="px-3 py-1.5 bg-[#d97736] hover:bg-[#c5692b] rounded text-xs font-medium text-white transition">
+            反向约束 B：锁死预算 ≤ ¥7.5w + 10天快装
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Split Workstation -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Left 7 Cols: Interactive Architectural Elevation Canvas (SVG Simulation) -->
+        <div class="lg:col-span-7 bg-[#141618] border border-[#272b30] rounded-lg p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-zinc-300 mono">Interactive Tectonic Viewport</span>
+                <span class="px-2 py-0.5 text-[10px] mono bg-[#1f2429] text-zinc-300 rounded border border-[#2f363d]">尺度锚点: 门高 2200mm | 面宽 7200mm</span>
+              </div>
+              <div class="flex items-center gap-3 text-xs">
+                <label class="flex items-center gap-1.5 cursor-pointer text-zinc-300">
+                  <input type="checkbox" id="toggleSeamOverlay" checked onchange="renderProjectBCanvas()" class="accent-[#d97736]" />
+                  <span>透视分缝网格层</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer text-zinc-300">
+                  <input type="checkbox" id="toggleLinterPins" checked onchange="renderProjectBCanvas()" class="accent-red-500" />
+                  <span>隐患排雷锚点</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Interactive SVG Facade Renderer -->
+            <div class="relative rounded-md overflow-hidden border border-[#2a2f35] bg-[#0e1012]">
+              <svg id="facadeViewportSvg" viewBox="0 0 760 440" class="w-full h-auto block select-none">
+                <!-- Sky & Street Ambient Background (Locked Lighting) -->
+                <defs>
+                  <linearGradient id="duskSky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1b222c"/>
+                    <stop offset="65%" stop-color="#2c333a"/>
+                    <stop offset="100%" stop-color="#222528"/>
+                  </linearGradient>
+                  <linearGradient id="warmInterior" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.45"/>
+                    <stop offset="100%" stop-color="#78350f" stop-opacity="0.25"/>
+                  </linearGradient>
+                  <pattern id="perforatedPattern" width="8" height="8" patternUnits="userSpaceOnUse">
+                    <circle cx="3" cy="3" r="1.1" fill="#181b1e" opacity="0.55"/>
+                  </pattern>
+                  <pattern id="concreteGrain" width="16" height="16" patternUnits="userSpaceOnUse">
+                    <rect width="16" height="16" fill="none"/>
+                    <circle cx="4" cy="5" r="0.8" fill="#000" opacity="0.14"/>
+                    <circle cx="12" cy="11" r="1.1" fill="#fff" opacity="0.06"/>
+                  </pattern>
+                </defs>
+
+                <!-- Sky & Sidewalk -->
+                <rect x="0" y="0" width="760" height="365" fill="url(#duskSky)" />
+                <polygon points="0,365 760,365 760,440 0,440" fill="#1a1c1e" />
+                <line x1="0" y1="365" x2="760" y2="365" stroke="#363b42" stroke-width="1.5" />
+
+                <!-- Perspective Street Scale Dimension Line -->
+                <g opacity="0.55">
+                  <line x1="95" y1="402" x2="665" y2="390" stroke="#8fb8a5" stroke-width="1" stroke-dasharray="4 3"/>
+                  <text x="360" y="414" fill="#8fb8a5" font-size="11" font-family="JetBrains Mono" text-anchor="middle">ANCHOR SPAN: 7,200 mm (Estimated Facade Area: 34.5 ㎡)</text>
+                </g>
+
+                <!-- Dynamic Building Facade Group (Rendered by JS based on Engineering State) -->
+                <g id="dynamicFacadeGroup"></g>
+
+                <!-- Subtle Preserved Tree Shadow Overlay (Proving Intrinsic Shading Lock) -->
+                <g opacity="0.16" pointer-events="none">
+                  <ellipse cx="610" cy="180" rx="95" ry="45" fill="#000000" transform="rotate(-18 610 180)" />
+                  <ellipse cx="560" cy="230" rx="70" ry="30" fill="#000000" transform="rotate(-12 560 230)" />
+                </g>
+
+                <!-- Constructability Diagnostic Pins Layer -->
+                <g id="diagnosticPinsLayer"></g>
+              </svg>
+
+              <!-- Active Diagnostic Floating Toast -->
+              <div id="diagnosticDetailBanner" class="p-3.5 bg-[#181414]/95 border-t border-red-900/50 text-xs flex items-start justify-between gap-3">
+                <div id="diagnosticBannerText" class="text-zinc-200 leading-relaxed"></div>
+                <span id="diagnosticStatusBadge" class="px-2 py-0.5 rounded text-[10px] mono shrink-0"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Standard Detail Node Card Preview -->
+          <div class="mt-4 p-3.5 rounded bg-[#101214] border border-[#24292e] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div class="text-[10px] mono text-[#8fb8a5] uppercase mb-0.5">Matched Construction Detail & Assembly Stack</div>
+              <div id="activeNodeTitle" class="text-xs font-semibold text-zinc-100">--</div>
+              <div id="activeNodeLayers" class="text-[11px] text-zinc-400 mt-1">--</div>
+            </div>
+            <div class="shrink-0 text-right mono">
+              <div class="text-[10px] text-zinc-500">图集索引编号</div>
+              <div id="activeNodeCode" class="text-xs text-[#d97736] font-semibold">STD-FAC-RAW-00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Bi-Directional Engineering & Cost Control Panel -->
+        <div class="lg:col-span-5 bg-[#141618] border border-[#272b30] rounded-lg p-5 flex flex-col justify-between space-y-4">
+          <div class="space-y-4">
+            <!-- Live Cost & Schedule Scoreboard -->
+            <div class="grid grid-cols-3 gap-2.5 p-3.5 rounded bg-[#0f1113] border border-[#252a30]">
+              <div>
+                <div class="text-[10px] mono text-zinc-500">动态预估总造价</div>
+                <div id="totalCostDisplay" class="text-lg font-bold mono text-zinc-100 mt-0.5">¥ 186,400</div>
+                <div id="costRangeSub" class="text-[10px] mono text-zinc-500">±12% 区间定额</div>
+              </div>
+              <div class="border-l border-[#23282e] pl-3">
+                <div class="text-[10px] mono text-zinc-500">预计现场工期</div>
+                <div id="leadTimeDisplay" class="text-lg font-bold mono text-amber-400 mt-0.5">28 天</div>
+                <div id="wetWorkBadge" class="text-[10px] mono text-red-400">含重度湿作业</div>
+              </div>
+              <div class="border-l border-[#23282e] pl-3">
+                <div class="text-[10px] mono text-zinc-500">工程落地风险</div>
+                <div id="riskCountDisplay" class="text-lg font-bold mono text-red-400 mt-0.5">3 项阻断</div>
+                <div class="text-[10px] mono text-zinc-500">点击左图红点排雷</div>
+              </div>
+            </div>
+
+            <!-- Component-Level Interactive Selectors (Reverse Loop Controls) -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 mono">构件级工艺与模数反向控制器 (Reverse Feed)</h3>
+                <span class="text-[10px] mono text-[#d97736]">更改即刻重绘左图</span>
+              </div>
+
+              <!-- Zone 1: Main Cladding -->
+              <div class="p-3.5 rounded bg-[#191c1f] border border-[#292e34] space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-semibold text-zinc-200">Zone A · 主立面墙体表皮 (24.0 ㎡)</span>
+                  <span id="zoneACostTag" class="mono text-[#8fb8a5]">¥ 91,200</span>
+                </div>
+                <select id="selectZoneA" onchange="onManualZoneChange()" class="w-full bg-[#111315] border border-[#32383f] rounded px-2.5 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-[#d97736]">
+                  <option value="cast_concrete">[AI原始幻觉] 现场支模现浇弧形清水混凝土 (无缝 | ¥3,800/㎡ | 28天)</option>
+                  <option value="uhpc_panel">[商业均衡] 18mm 预制 UHPC 肌理干挂板 (1200×2400 明缝10mm | ¥620/㎡ | 12天)</option>
+                  <option value="fiber_cement">[快装控本] 12mm 高密纤维水泥挂板 + 阳极铝压条 (600×1200 外露铆钉 | ¥290/㎡ | 7天)</option>
+                  <option value="perforated_alu">[轻质换材] 2.5mm 氟碳喷涂穿孔铝单板折边干挂 (900×2400 拼缝 | ¥360/㎡ | 9天)</option>
+                </select>
+              </div>
+
+              <!-- Zone 2: Glazing System -->
+              <div class="p-3.5 rounded bg-[#191c1f] border border-[#292e34] space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-semibold text-zinc-200">Zone B · 临街主采光界面 (10.5 ㎡)</span>
+                  <span id="zoneBCostTag" class="mono text-[#8fb8a5]">¥ 68,250</span>
+                </div>
+                <select id="selectZoneB" onchange="onManualZoneChange()" class="w-full bg-[#111315] border border-[#32383f] rounded px-2.5 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-[#d97736]">
+                  <option value="jumbo_glass">[AI原始幻觉] 5.2m 整块超限无框超白夹胶玻璃 (需特种吊装 | ¥6,500/㎡)</option>
+                  <option value="mullion_curtain">[规范合规] 1.7m 三等分极窄黑钢竖梃中空玻璃幕墙 (常规货梯可进 | ¥1,650/㎡)</option>
+                  <option value="folding_window">[商业互动] 铝合金窄边四扇折叠开启窗 + 固定亮子 + 咖啡外摆台 (¥1,480/㎡)</option>
+                </select>
+              </div>
+
+              <!-- Zone 3: Coping, Plinth & Canopy Weatherproofing -->
+              <div class="p-3.5 rounded bg-[#191c1f] border border-[#292e34] space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-semibold text-zinc-200">Zone C · 女儿墙泛水、勒脚与雨棚收口 (7.2 m)</span>
+                  <span id="zoneCCostTag" class="mono text-[#8fb8a5]">¥ 26,950</span>
+                </div>
+                <select id="selectZoneC" onchange="onManualZoneChange()" class="w-full bg-[#111315] border border-[#32383f] rounded px-2.5 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-[#d97736]">
+                  <option value="zero_edge">[AI原始幻觉] 零厚度锋利挑檐 + 墙面直抵地面无勒脚 (极易返碱挂脏 | 定制钢构高价)</option>
+                  <option value="metal_flashing">[标准落地] 3mm 深灰氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚 + 斜拉杆雨棚</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reverse Sync Pipeline Log -->
+          <div class="pt-3 border-t border-[#25292e]">
+            <div class="text-[10px] mono text-zinc-500 uppercase mb-1">Reverse Visual Compiler Execution Log</div>
+            <div id="reverseCompilerLog" class="p-2.5 rounded bg-[#0d0f11] border border-[#22262b] text-[11px] mono text-zinc-300 leading-relaxed">
+              [READY] 等待工程约束变更触发单应性网格重投影...
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 03: TECH CHALLENGES & EVAL MATRIX      -->
+    <!-- ========================================== -->
+    <section id="view-techEval" class="hidden space-y-6">
+      <div class="bg-[#141618] border border-[#272b30] rounded-lg p-6">
+        <h2 class="text-base font-semibold text-zinc-100 mb-1">核心技术深水区与面试防御工事（Technical Deep-Dive & EDD Benchmarks）</h2>
+        <p class="text-xs text-zinc-400">面试中当技术总监追问“模型幻觉、尺度失真、打分漂移”时，直接展示以下确定性与概率性解耦方案。</p>
+      </div>
+
+      <!-- Two Columns of Deep Technical Challenges -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <!-- Project A Challenges -->
+        <div class="bg-[#141618] border border-[#272b30] rounded-lg p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-[#25292e] pb-3">
+            <span class="text-sm font-semibold text-amber-400">Project A · AetherVault 三大技术攻坚</span>
+            <span class="mono text-[11px] text-zinc-500">Multimodal Ontology & Compiler</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div class="p-4 rounded bg-[#191c1f] border border-[#272c32]">
+              <div class="font-semibold text-zinc-100 mb-1">难点 1：VLM 连续光谱打标的漂移校准 (Anchor Calibration)</div>
+              <p class="text-zinc-400 leading-relaxed mb-2">直接让大模型打 $[-1, +1]$ 连续分会产生批次漂移。解法：在每个轴内置 $-1.0, -0.5, 0, +0.5, +1.0$ 五张黄金基准锚点图做 Few-shot 相对参照打分；并引入显著度权重 $s_i$ 门控，防止微距材质图污染空间秩序轴。</p>
+              <div class="mono text-[11px] text-amber-300/90 bg-[#111315] p-2 rounded">验证指标：斯皮尔曼等级相关系数 ρ 从 0.54 提升至 0.86+</div>
+            </div>
+
+            <div class="p-4 rounded bg-[#191c1f] border border-[#272c32]">
+              <div class="font-semibold text-zinc-100 mb-1">难点 2：多参考图混搭时的“词条互斥与串色污染”</div>
+              <p class="text-zinc-400 leading-relaxed mb-2">同时继承图 A（极简无缝体块）与图 B（粗粝风化表面）会导致 Prompt 自相矛盾。解法：构建 AST 级风格语法树，按【镜头光学层 / 局部构件材质层 / 全局大气光影层】做作用域隔离，自动剔除未勾选维度连带污染词。</p>
+              <div class="mono text-[11px] text-amber-300/90 bg-[#111315] p-2 rounded">验证指标：正交维度解耦盲测达成率 ≥ 85% (Baseline 45%)</div>
+            </div>
+
+            <div class="p-4 rounded bg-[#191c1f] border border-[#272c32]">
+              <div class="font-semibold text-zinc-100 mb-1">难点 3：千张级本地 Eagle 素材库冷启动成本控制</div>
+              <p class="text-zinc-400 leading-relaxed">采用端云分级异步入库：本地秒级提取主色 HEX 与基础向量实现立即可搜；后台异步 Batch 队列调度轻量视觉模型补全 8 维光谱 JSON，单图入库成本控制在 ¥0.008 以内。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project B Challenges -->
+        <div class="bg-[#141618] border border-[#272b30] rounded-lg p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-[#25292e] pb-3">
+            <span class="text-sm font-semibold text-[#8fb8a5]">Project B · TectonicLoop 三大技术攻坚</span>
+            <span class="mono text-[11px] text-zinc-500">Geometry Projection & Zero-LLM Math</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div class="p-4 rounded bg-[#191c1f] border border-[#272c32]">
+              <div class="font-semibold text-zinc-100 mb-1">难点 1：2D 透视图上的物理模数分缝精确投影 (Homography Grid)</div>
+              <p class="text-zinc-400 leading-relaxed mb-2">绝不让扩散模型靠文字“猜 1.2 米拼缝”。利用深度点云法线提取墙面单应性矩阵 $H$，在正交平面按真实毫米模数（避让门窗洞口）程序化生成 CAD 分缝线框，再经 $H^{-1}$ 逆投影为 ControlNet 条件引导局部生图。</p>
+              <div class="mono text-[11px] text-[#8fb8a5] bg-[#111315] p-2 rounded">验证指标：拼缝透视灭点角度误差 &lt; 1.5°</div>
+            </div>
+
+            <div class="p-4 rounded bg-[#191c1f] border border-[#272c32]">
+              <div class="font-semibold text-zinc-100 mb-1">难点 2：局部降本换材时的原图树影与环境光锁定</div>
+              <p class="text-zinc-400 leading-relaxed mb-2">引入本征图像分解（Intrinsic Decomposition），分离原图 Albedo 反照率层与 Shading 光照阴影层。换材仅更新反照率与法线粗糙度，重合成时锁死原有街头树影与黄昏色温，消除廉价贴图感。</p>
+              <div class="mono text-[11px] text-[#8fb8a5] bg-[#111315] p-2 rounded">验证指标：Mask 外非修改区域像素保真度 PSNR ≥ 38 dB</div>
+            </div>
+
+            <div class="p-4 rounded bg-[#191c1f] border border-[#272c32]">
+              <div class="font-semibold text-zinc-100 mb-1">难点 3：零幻觉工程算账架构 (Zero-LLM Arithmetic)</div>
+              <p class="text-zinc-400 leading-relaxed">严禁大模型直接口算总价！VLM 仅负责材质分类与工艺包路由，所有净面积折算、裁切损耗系数（1.08~1.15）、龙骨辅材摊销全部走确定性规则表查询并输出置信区间。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified EDD Evaluation Table -->
+      <div class="bg-[#141618] border border-[#272b30] rounded-lg p-6 overflow-x-auto">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-300 mono mb-4">量化评测驱动看板 (Eval-Driven Development Scorecard)</h3>
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-[#2b3036] text-zinc-400 mono text-[11px]">
+              <th class="py-2.5 pr-4">所属系统</th>
+              <th class="py-2.5 px-4">核心评测指标 (Metric)</th>
+              <th class="py-2.5 px-4">Baseline (原生通用方案)</th>
+              <th class="py-2.5 px-4">Target V1.0 目标值</th>
+              <th class="py-2.5 pl-4">测试集与验收方法</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#22262b] text-zinc-300">
+            <tr>
+              <td class="py-3 pr-4 mono text-amber-400">AetherVault</td>
+              <td class="py-3 px-4 font-medium">跨界同构美学 Top-5 召回有效率</td>
+              <td class="py-3 px-4 text-zinc-500">31% (原生 CLIP 主体耦合)</td>
+              <td class="py-3 px-4 mono text-emerald-400 font-semibold">≥ 82%</td>
+              <td class="py-3 pl-4 text-zinc-400">100 组设计师真实模糊氛围查询盲评</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 mono text-amber-400">AetherVault</td>
+              <td class="py-3 px-4 font-medium">模糊意图收敛所需交互轮次</td>
+              <td class="py-3 px-4 text-zinc-500">6.8 轮纯文本反复修改</td>
+              <td class="py-3 px-4 mono text-emerald-400 font-semibold">≤ 2.2 次滑块/卡片点击</td>
+              <td class="py-3 pl-4 text-zinc-400">交互埋点与端到端响应延迟 &lt; 50ms (重排)</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 mono text-[#8fb8a5]">TectonicLoop</td>
+              <td class="py-3 px-4 font-medium">物理建构与规范隐患检出召回率</td>
+              <td class="py-3 px-4 text-zinc-500">28% (通用多模态直接问答)</td>
+              <td class="py-3 px-4 mono text-emerald-400 font-semibold">≥ 85%</td>
+              <td class="py-3 pl-4 text-zinc-400">50 张预埋超限尺幅/漏泛水缺陷的渲染图集</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 mono text-[#8fb8a5]">TectonicLoop</td>
+              <td class="py-3 px-4 font-medium">综合单方造价区间命中率 (±15%)</td>
+              <td class="py-3 px-4 text-zinc-500">人工深化询价耗时 2~3 天</td>
+              <td class="py-3 px-4 mono text-emerald-400 font-semibold">≥ 80% 命中 (耗时 &lt; 15s)</td>
+              <td class="py-3 pl-4 text-zinc-400">20 个已竣工商业门头/精品店真实结算单回测</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // =====================================================
+    // GLOBAL TAB NAVIGATION
+    // =====================================================
+    function switchMainTab(tabId) {
+      const tabs = ['thesis', 'projectA', 'projectB', 'techEval'];
+      tabs.forEach(t => {
+        document.getElementById('view-' + t).classList.add('hidden');
+        const btn = document.getElementById('nav-' + t);
+        btn.classList.remove('tab-active');
+        btn.classList.add('text-zinc-400');
+      });
+      document.getElementById('view-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('nav-' + tabId);
+      activeBtn.classList.add('tab-active');
+      activeBtn.classList.remove('text-zinc-400');
+
+      if (tabId === 'projectA') updateProjectA();
+      if (tabId === 'projectB') renderProjectBCanvas();
+    }
+
+    // =====================================================
+    // PROJECT A: AETHERVAULT ENGINE SIMULATION
+    // =====================================================
+    const spectrumAxes = [
+      { key: 'tectonic', name: '构造表现度', neg: '消隐包覆', pos: '结构外露', val: 0.80 },
+      { key: 'entropy',  name: '肌理时间熵', neg: '精密出厂', pos: '风化包浆', val: 0.25 },
+      { key: 'density',  name: '信息与留白', neg: '克制负空间', pos: '高密层叠', val: -0.55 },
+      { key: 'order',    name: '几何秩序度', neg: '有机流体', pos: '严苛模数', val: 0.75 },
+      { key: 'lighting', name: '光影反差度', neg: '全局漫射', pos: '戏剧切割', val: -0.60 },
+      { key: 'chroma',   name: '色彩张力值', neg: '消色差灰调', pos: '高纯对冲', val: -0.70 },
+      { key: 'thermal',  name: '情绪色温值', neg: '冷峻智性', pos: '温润松弛', val: -0.45 },
+      { key: 'abstract', name: '写实抽象度', neg: '光学纪实', pos: '图形构成', val: -0.65 }
+    ];
+
+    const aestheticVaultAssets = [
+      {
+        id: 'ast_01',
+        title: '山谷耐候钢与粗骨料混凝土观景亭',
+        source: 'personal',
+        domain: 'architecture',
+        domainLabel: '个人库 · 建筑空间',
+        palette: ['#4A4744', '#795644', '#9BA0A4'],
+        scores: { tectonic: 0.75, entropy: 0.55, density: -0.65, order: 0.80, lighting: -0.70, chroma: -0.75, thermal: -0.50, abstract: -0.75 },
+        opticsToken: '35mm medium format architectural lens, eye-level two-point perspective, deep depth of field',
+        materialToken: 'weathered Corten steel plates with board-formed exposed aggregate concrete plinth',
+        lightingToken: 'diffused overcast valley daylight, soft ambient occlusion, subtle morning mist, muted Morandi earth palette'
+      },
+      {
+        id: 'ast_02',
+        title: 'CNC 阳极氧化钛合金模块化合成器',
+        source: 'public',
+        domain: 'industrial',
+        domainLabel: '跨界库 · 精密工业设计',
+        palette: ['#2B2E33', '#8C929AC', '#D97736'],
+        scores: { tectonic: 0.92, entropy: -0.40, density: -0.35, order: 0.90, lighting: -0.45, chroma: -0.65, thermal: -0.75, abstract: -0.80 },
+        opticsToken: '50mm macro-telephoto orthographic poise, crisp edge acuity, zero lens distortion',
+        materialToken: 'bead-blasted CNC milled anodized aluminum joinery, exposed stainless hex fasteners, precision tension rods',
+        lightingToken: 'clinical studio softbox top-lighting, subtle specular metallic rim highlights, cool neutral grey tone'
+      },
+      {
+        id: 'ast_03',
+        title: '冰岛黑沙滩机能风高定摄影大片',
+        source: 'public',
+        domain: 'editorial',
+        domainLabel: '跨界库 · 时尚光学摄影',
+        palette: ['#1E2226', '#565C63', '#A7B0B8'],
+        scores: { tectonic: 0.60, entropy: 0.35, density: -0.70, order: 0.40, lighting: -0.65, chroma: -0.85, thermal: -0.65, abstract: -0.70 },
+        opticsToken: 'Leica Summilux 35mm f/1.4 film grain look, expansive negative space framing, low horizon',
+        materialToken: 'matte technical Gore-Tex membrane paired with raw volcanic basalt stone ground texture',
+        lightingToken: 'subarctic overcast diffused sky, compressed low-key silver-halide tonal curve, cold atmospheric haze'
+      },
+      {
+        id: 'ast_04',
+        title: '京都茶室雪见障子与手工左官土墙',
+        source: 'personal',
+        domain: 'architecture',
+        domainLabel: '个人库 · 东方室内',
+        palette: ['#6E6559', '#B8AA96', '#332E29'],
+        scores: { tectonic: 0.35, entropy: 0.45, density: -0.80, order: 0.65, lighting: -0.55, chroma: -0.60, thermal: 0.78, abstract: -0.50 },
+        opticsToken: '40mm human-eye seated perspective, calm horizontal composition, gentle vignette',
+        materialToken: 'hand-troweled earthen juraku plaster wall, natural hinoki cypress timber joinery, translucent washi paper',
+        lightingToken: 'warm indirect shoji-filtered daylight, tranquil soft shadow gradient, intimate wabi-sabi warmth'
+      },
+      {
+        id: 'ast_05',
+        title: '高技派张拉膜与白钢拉索博览馆节点',
+        source: 'personal',
+        domain: 'architecture',
+        domainLabel: '个人库 · 结构表现主义',
+        palette: ['#DCE2E8', '#68869C', '#242A30'],
+        scores: { tectonic: 0.95, entropy: -0.75, density: 0.15, order: 0.85, lighting: 0.20, chroma: -0.50, thermal: -0.80, abstract: -0.60 },
+        opticsToken: '24mm tilt-shift upward structural perspective, razor-sharp geometric convergence',
+        materialToken: 'lightweight PTFE tensile membrane, cast steel pin-joint clevises, high-tension braided steel cables',
+        lightingToken: 'crisp high-altitude daylight, clean structural cast shadows, cool daylight white balance'
+      }
+    ];
+
+    // Selected orthogonal slots state
+    let selectedSlots = {
+      optics: 'ast_01',
+      material: 'ast_02',
+      lighting: 'ast_03'
+    };
+
+    function initSpectrumSliders() {
+      const container = document.getElementById('spectrumSlidersContainer');
+      container.innerHTML = spectrumAxes.map((ax, idx) => `
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="text-zinc-400">${ax.neg}</span>
+            <span class="font-medium text-zinc-200">${ax.name} <span id="val-label-${idx}" class="mono text-[#d97736] ml-1">${ax.val > 0 ? '+' : ''}${ax.val.toFixed(2)}</span></span>
+            <span class="text-zinc-400">${ax.pos}</span>
+          </div>
+          <input type="range" min="-1" max="1" step="0.05" value="${ax.val}" 
+            oninput="onSliderInput(${idx}, this.value)" class="w-full" id="slider-axis-${idx}" />
+        </div>
+      `).join('');
+    }
+
+    function onSliderInput(idx, value) {
+      spectrumAxes[idx].val = parseFloat(value);
+      const v = spectrumAxes[idx].val;
+      document.getElementById('val-label-' + idx).textContent = (v > 0 ? '+' : '') + v.toFixed(2);
+      updateProjectA();
+    }
+
+    function applyPresetIntent(presetKey) {
+      const presets = {
+        brutalist_cafe: {
+          query: '想做一个户外快闪咖啡亭，带点苍凉荒野的克制感，但局部金属连接件要像徕卡镜头一样精密讲究，千万别做成脏乱废土风。',
+          vals: [0.80, 0.25, -0.55, 0.75, -0.60, -0.70, -0.45, -0.65],
+          slots: { optics: 'ast_01', material: 'ast_02', lighting: 'ast_03' }
+        },
+        warm_gallery: {
+          query: '希望呈现一个极度安静的社区茶饮与器物展陈空间，大面积留白呼吸感，温润漫反射光，自然手作肌理但不要乡村土气。',
+          vals: [0.30, 0.40, -0.80, 0.65, -0.65, -0.60, 0.75, -0.50],
+          slots: { optics: 'ast_04', material: 'ast_04', lighting: 'ast_04' }
+        },
+        tech_pavilion: {
+          query: '科技品牌户外快闪展台，追求极致的高技派结构诚实外露、张拉索杆与洁净精密金属质感，冷峻理性实验室氛围。',
+          vals: [0.95, -0.70, -0.25, 0.90, -0.20, -0.65, -0.80, -0.75],
+          slots: { optics: 'ast_05', material: 'ast_02', lighting: 'ast_05' }
+        }
+      };
+      const p = presets[presetKey];
+      document.getElementById('fuzzyQueryInput').value = p.query;
+      p.vals.forEach((v, i) => {
+        spectrumAxes[i].val = v;
+        const slider = document.getElementById('slider-axis-' + i);
+        if (slider) slider.value = v;
+        const lbl = document.getElementById('val-label-' + i);
+        if (lbl) lbl.textContent = (v > 0 ? '+' : '') + v.toFixed(2);
+      });
+      selectedSlots = { ...p.slots };
+      updateProjectA();
+    }
+
+    function drawRadarChart() {
+      const svg = document.getElementById('spectrumRadarSvg');
+      const cx = 130, cy = 110, maxR = 78;
+      const n = spectrumAxes.length;
+      let html = '';
+
+      // Concentric rings (-1.0, 0.0, +1.0 mapped to [15%..100%] radius)
+      [0.25, 0.6, 1.0].forEach((ratio, idx) => {
+        const r = maxR * ratio;
+        html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${idx === 1 ? '#3b424a' : '#23282d'}" stroke-width="1" ${idx === 1 ? 'stroke-dasharray="3 2"' : ''} />`;
+      });
+
+      // Axes lines & labels
+      const points = [];
+      spectrumAxes.forEach((ax, i) => {
+        const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
+        const xEnd = cx + maxR * Math.cos(angle);
+        const yEnd = cy + maxR * Math.sin(angle);
+        html += `<line x1="${cx}" y1="${cy}" x2="${xEnd}" y2="${yEnd}" stroke="#252a30" stroke-width="1" />`;
+
+        const lx = cx + (maxR + 22) * Math.cos(angle);
+        const ly = cy + (maxR + 15) * Math.sin(angle);
+        html += `<text x="${lx}" y="${ly + 3}" fill="#9ca3af" font-size="9" text-anchor="middle">${ax.name.slice(0, 4)}</text>`;
+
+        // Map val [-1, 1] -> radius [0.18 * maxR, maxR]
+        const norm = (ax.val + 1) / 2;
+        const rVal = maxR * (0.18 + 0.82 * norm);
+        points.push(`${cx + rVal * Math.cos(angle)},${cy + rVal * Math.sin(angle)}`);
+      });
+
+      html += `<polygon points="${points.join(' ')}" fill="rgba(217, 119, 54, 0.24)" stroke="#d97736" stroke-width="1.8" />`;
+      points.forEach(pt => {
+        const [px, py] = pt.split(',');
+        html += `<circle cx="${px}" cy="${py}" r="2.8" fill="#fbbf24" />`;
+      });
+
+      svg.innerHTML = html;
+    }
+
+    function computeSimilarity(asset) {
+      let sqSum = 0;
+      spectrumAxes.forEach(ax => {
+        const diff = ax.val - asset.scores[ax.key];
+        sqSum += diff * diff;
+      });
+      const rmse = Math.sqrt(sqSum / spectrumAxes.length);
+      const score = Math.max(0, Math.min(99, Math.round((1 - rmse / 1.45) * 100)));
+      return score;
+    }
+
+    function setMixerSlot(slotType, assetId) {
+      selectedSlots[slotType] = assetId;
+      updateProjectA();
+    }
+
+    function updateProjectA() {
+      drawRadarChart();
+      const allowCross = document.getElementById('crossDomainToggle').checked;
+
+      const ranked = aestheticVaultAssets
+        .filter(a => allowCross || a.domain === 'architecture')
+        .map(a => ({ ...a, matchScore: computeSimilarity(a) }))
+        .sort((a, b) => b.matchScore - a.matchScore);
+
+      const container = document.getElementById('recalledCardsContainer');
+      container.innerHTML = ranked.map(item => {
+        const isPersonal = item.source === 'personal';
+        const optActive = selectedSlots.optics === item.id;
+        const matActive = selectedSlots.material === item.id;
+        const litActive = selectedSlots.lighting === item.id;
+
+        return `
+          <div class="p-3.5 rounded bg-[#191c1f] border ${item.matchScore >= 82 ? 'border-[#d97736]/50' : 'border-[#282d33]'} transition">
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="px-1.5 py-0.5 text-[10px] mono rounded ${isPersonal ? 'bg-amber-950/60 text-amber-300 border border-amber-800/40' : 'bg-sky-950/60 text-sky-300 border border-sky-800/40'}">
+                    ${item.domainLabel}
+                  </span>
+                  <div class="flex items-center gap-1">
+                    ${item.palette.map(hex => `<span class="w-3 h-3 rounded-sm inline-block border border-white/10" style="background:${hex}"></span>`).join('')}
+                  </div>
+                </div>
+                <div class="text-xs font-semibold text-zinc-100">${item.title}</div>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-sm font-bold mono ${item.matchScore >= 80 ? 'text-emerald-400' : 'text-zinc-300'}">${item.matchScore}%</div>
+                <div class="text-[10px] mono text-zinc-500">光谱吻合度</div>
+              </div>
+            </div>
+
+            <div class="text-[11px] text-zinc-400 mb-2.5 line-clamp-2 mono">
+              [Tectonic ${item.scores.tectonic > 0 ? '+' : ''}${item.scores.tectonic}] · [Entropy ${item.scores.entropy > 0 ? '+' : ''}${item.scores.entropy}] · [Light ${item.scores.lighting}]
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-[#24292f]">
+              <span class="text-[10px] text-zinc-500 mr-1">拾取正交特征:</span>
+              <button onclick="setMixerSlot('optics', '${item.id}')" class="px-2 py-1 rounded text-[10px] mono transition ${optActive ? 'bg-amber-600 text-white' : 'bg-[#111315] text-zinc-400 hover:text-zinc-200 border border-[#2d333a]'}">
+                ${optActive ? '✓ ' : '+ '}镜头透视
+              </button>
+              <button onclick="setMixerSlot('material', '${item.id}')" class="px-2 py-1 rounded text-[10px] mono transition ${matActive ? 'bg-emerald-700 text-white' : 'bg-[#111315] text-zinc-400 hover:text-zinc-200 border border-[#2d333a]'}">
+                ${matActive ? '✓ ' : '+ '}材质节点
+              </button>
+              <button onclick="setMixerSlot('lighting', '${item.id}')" class="px-2 py-1 rounded text-[10px] mono transition ${litActive ? 'bg-sky-700 text-white' : 'bg-[#111315] text-zinc-400 hover:text-zinc-200 border border-[#2d333a]'}">
+                ${litActive ? '✓ ' : '+ '}光影色调
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      compileOrthogonalPrompt();
+    }
+
+    function compileOrthogonalPrompt() {
+      const optAsset = aestheticVaultAssets.find(a => a.id === selectedSlots.optics) || aestheticVaultAssets[0];
+      const matAsset = aestheticVaultAssets.find(a => a.id === selectedSlots.material) || aestheticVaultAssets[1];
+      const litAsset = aestheticVaultAssets.find(a => a.id === selectedSlots.lighting) || aestheticVaultAssets[2];
+
+      document.getElementById('slotOpticsLabel').textContent = optAsset.title;
+      document.getElementById('slotMaterialLabel').textContent = matAsset.title;
+      document.getElementById('slotLightingLabel').textContent = litAsset.title;
+
+      const entropyVal = spectrumAxes[1].val;
+      const entropyMod = entropyVal > 0.5
+        ? 'pronounced natural weathering patina'
+        : entropyVal < -0.3
+          ? 'ultra-clean factory-machined surface tolerance'
+          : 'controlled subtle weathering with crisp precision edges';
+
+      const compiled = `[SUBJECT_CORE]\nCompact 25sqm outdoor modular pop-up coffee kiosk set in open gravel terrain.\n\n[OPTICS_LAYER <- ${optAsset.id}]\n${optAsset.opticsToken}.\n\n[MATERIAL_TECTONICS <- ${matAsset.id}]\n${matAsset.materialToken}, ${entropyMod}.\n\n[ATMOSPHERE_LIGHTING <- ${litAsset.id}]\n${litAsset.lightingToken}.`;
+
+      document.getElementById('compiledPromptBox').textContent = compiled;
+
+      const negGuards = [];
+      if (entropyVal < 0.55) negGuards.push('post-apocalyptic trash', 'crumbling ruins', 'chaotic rust stains');
+      if (spectrumAxes[5].val < -0.3) negGuards.push('oversaturated neon', 'HDR color clipping');
+      if (spectrumAxes[4].val < -0.2) negGuards.push('harsh midday cast shadows', 'blown-out highlights');
+      negGuards.push('plastic CGI gloss', 'floating structural members');
+
+      document.getElementById('compiledNegativeBox').textContent = '--no ' + negGuards.join(', ');
+
+      const uniqueSources = new Set([optAsset.id, matAsset.id, litAsset.id]).size;
+      document.getElementById('conflictResolvedCount').textContent = `${uniqueSources + 1} 处跨图冲突词已隔离`;
+    }
+
+    function copyCompiledPrompt() {
+      const text = document.getElementById('compiledPromptBox').textContent;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyPromptBtn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 1400);
+    }
+
+    // =====================================================
+    // PROJECT B: TECTONICLOOP BI-DIRECTIONAL ENGINE
+    // =====================================================
+    const zoneSpecs = {
+      zoneA: {
+        cast_concrete: {
+          name: '现浇弧形清水混凝土', unitCost: 3800, area: 24.0, days: 28, wet: true, risk: 1,
+          fill: '#6d6b67', seamMode: 'none',
+          nodeTitle: '[高风险方案] 现场定制木模现浇清水混凝土墙体',
+          nodeLayers: '隐患：临街店铺无法封闭占道支模养护28天，且单方造价极高。',
+          nodeCode: 'WARN-WET-CAST-01'
+        },
+        uhpc_panel: {
+          name: '18mm 预制 UHPC 肌理干挂板', unitCost: 620, area: 24.0, days: 12, wet: false, risk: 0,
+          fill: '#696864', seamMode: 'uhpc_1200',
+          nodeTitle: '50×50镀锌方钢主龙骨 + 铝合金背栓挂件 + 18mm 预制 UHPC 挂板 (10mm明缝)',
+          nodeLayers: '构造链：原墙防水砂浆找平 → 热镀锌钢龙骨间距600mm → 三元乙丙垫片 → 1200×2400标准板干挂',
+          nodeCode: 'STD-FAC-UHPC-04'
+        },
+        fiber_cement: {
+          name: '12mm 高密纤维水泥挂板', unitCost: 290, area: 24.0, days: 7, wet: false, risk: 0,
+          fill: '#5f6264', seamMode: 'fc_600',
+          nodeTitle: '轻钢龙骨基层 + 12mm 高密度纤维水泥外墙板 + 同色不锈钢拉铆钉明装',
+          nodeLayers: '构造链：防潮呼吸纸 → 1.5mm厚Z型轻钢龙骨 → 600×1200模数裁切板 → 8mm阳极氧化铝工字分缝条',
+          nodeCode: 'STD-FAC-FCB-09'
+        },
+        perforated_alu: {
+          name: '2.5mm 氟碳喷涂穿孔铝单板', unitCost: 360, area: 24.0, days: 9, wet: false, risk: 0,
+          fill: '#50565c', seamMode: 'alu_900',
+          nodeTitle: '角码折边干挂 2.5mm 氟碳微穿孔铝单板 (背衬深灰吸音防水布)',
+          nodeLayers: '构造链：40×40镀锌角钢骨架 → 900×2400mm 工厂预折边铝板 → 耐候硅酮密封胶嵌缝',
+          nodeCode: 'STD-FAC-ALU-12'
+        }
+      },
+      zoneB: {
+        jumbo_glass: {
+          name: '5.2m 整块超限无框夹胶玻璃', unitCost: 6500, area: 10.5, days: 20, risk: 1,
+          glassMode: 'jumbo'
+        },
+        mullion_curtain: {
+          name: '1.7m 三等分极窄黑钢玻璃幕墙', unitCost: 1650, area: 10.5, days: 8, risk: 0,
+          glassMode: 'mullion3'
+        },
+        folding_window: {
+          name: '铝合金四扇折叠窗 + 咖啡外摆吧台', unitCost: 1480, area: 10.5, days: 7, risk: 0,
+          glassMode: 'folding4'
+        }
+      },
+      zoneC: {
+        zero_edge: {
+          name: '零厚度挑檐 + 无踢脚勒脚直落地', lumpCost: 26950, risk: 1, edgeMode: 'raw'
+        },
+        metal_flashing: {
+          name: '3mm 氟碳铝板压顶泛水 + 80mm 内凹不锈钢踢脚', lumpCost: 8400, risk: 0, edgeMode: 'flashed'
+        }
+      }
+    };
+
+    let selectedPinIndex = 0;
+
+    function applyVeScenario(mode) {
+      const selA = document.getElementById('selectZoneA');
+      const selB = document.getElementById('selectZoneB');
+      const selC = document.getElementById('selectZoneC');
+
+      if (mode === 'raw_ai') {
+        selA.value = 'cast_concrete';
+        selB.value = 'jumbo_glass';
+        selC.value = 'zero_edge';
+        document.getElementById('reverseCompilerLog').textContent = '[DIAGNOSTIC] 已加载原始 AI 概念渲染图：检出 3 处严重建构与造价隐患，预估造价 ¥18.6w。';
+      } else if (mode === 'balanced_ve') {
+        selA.value = 'uhpc_panel';
+        selB.value = 'mullion_curtain';
+        selC.value = 'metal_flashing';
+        document.getElementById('reverseCompilerLog').textContent = '[REVERSE SYNC] 已执行商业均衡深化：注入 1200×2400mm 单应性透视分缝网格 + 1.7m 竖梃 + 压顶滴水线，保留原图树影。';
+      } else if (mode === 'strict_budget') {
+        selA.value = 'fiber_cement';
+        selB.value = 'folding_window';
+        selC.value = 'metal_flashing';
+        document.getElementById('reverseCompilerLog').textContent = '[VE SOLVER] 预算锁死 ≤¥7.5w 触发降本重绘：切换为 600×1200mm 纤维水泥板铆钉快装体系 + 折叠外摆窗，总价降至 ¥69,840，工期 7 天！';
+      }
+      renderProjectBCanvas();
+    }
+
+    function onManualZoneChange() {
+      const a = zoneSpecs.zoneA[document.getElementById('selectZoneA').value];
+      const b = zoneSpecs.zoneB[document.getElementById('selectZoneB').value];
+      document.getElementById('reverseCompilerLog').textContent =
+        `[HOMOGRAPHY RE-PROJECT] 构件更新为【${a.name} + ${b.name}】，已按灭点重算透视分缝并重耦合原图光照层 (PSNR 39.2dB)。`;
+      renderProjectBCanvas();
+    }
+
+    function selectDiagnosticPin(idx) {
+      selectedPinIndex = idx;
+      renderProjectBCanvas();
+    }
+
+    function renderProjectBCanvas() {
+      const keyA = document.getElementById('selectZoneA').value;
+      const keyB = document.getElementById('selectZoneB').value;
+      const keyC = document.getElementById('selectZoneC').value;
+      const showSeams = document.getElementById('toggleSeamOverlay').checked;
+      const showPins = document.getElementById('toggleLinterPins').checked;
+
+      const specA = zoneSpecs.zoneA[keyA];
+      const specB = zoneSpecs.zoneB[keyB];
+      const specC = zoneSpecs.zoneC[keyC];
+
+      // 1. Update Arithmetic Cost & Schedule (Zero-LLM Deterministic Math)
+      const costA = Math.round(specA.unitCost * specA.area);
+      const costB = Math.round(specB.unitCost * specB.area);
+      const costC = specC.lumpCost;
+      const totalCost = costA + costB + costC;
+      const maxDays = Math.max(specA.days, specB.days);
+      const totalRisks = specA.risk + specB.risk + specC.risk;
+
+      document.getElementById('zoneACostTag').textContent = '¥ ' + costA.toLocaleString();
+      document.getElementById('zoneBCostTag').textContent = '¥ ' + costB.toLocaleString();
+      document.getElementById('zoneCCostTag').textContent = '¥ ' + costC.toLocaleString();
+
+      const totalEl = document.getElementById('totalCostDisplay');
+      totalEl.textContent = '¥ ' + totalCost.toLocaleString();
+      totalEl.className = 'text-lg font-bold mono mt-0.5 ' + (totalCost <= 80000 ? 'text-emerald-400' : totalCost <= 125000 ? 'text-amber-300' : 'text-red-400');
+
+      document.getElementById('leadTimeDisplay').textContent = maxDays + ' 天';
+      const wetEl = document.getElementById('wetWorkBadge');
+      wetEl.textContent = specA.wet ? '含临街支模湿作业' : '100% 全干法装配';
+      wetEl.className = 'text-[10px] mono ' + (specA.wet ? 'text-red-400' : 'text-emerald-400');
+
+      const riskEl = document.getElementById('riskCountDisplay');
+      riskEl.textContent = totalRisks === 0 ? '0 隐患 (可施工)' : `${totalRisks} 项阻断预警`;
+      riskEl.className = 'text-lg font-bold mono mt-0.5 ' + (totalRisks === 0 ? 'text-emerald-400' : 'text-red-400');
+
+      document.getElementById('activeNodeTitle').textContent = specA.nodeTitle;
+      document.getElementById('activeNodeLayers').textContent = specA.nodeLayers;
+      document.getElementById('activeNodeCode').textContent = specA.nodeCode;
+
+      // 2. Render Perspective Building Facade SVG
+      // Building main perspective quad: Left (110, 88 -> 110, 365), Right (650, 112 -> 650, 355)
+      let svgHtml = '';
+
+      // Main Wall Polygon
+      const texFill = keyA === 'perforated_alu' ? 'url(#perforatedPattern)' : 'url(#concreteGrain)';
+      svgHtml += `<polygon points="110,88 650,112 650,355 110,365" fill="${specA.fill}" />`;
+      svgHtml += `<polygon points="110,88 650,112 650,355 110,365" fill="${texFill}" />`;
+
+      // Perspective-Correct Modulus Seam Lines (Homography simulation)
+      if (showSeams && specA.seamMode !== 'none') {
+        const vCols = specA.seamMode === 'fc_600' ? 9 : specA.seamMode === 'alu_900' ? 7 : 5;
+        const hRows = specA.seamMode === 'fc_600' ? 4 : 3;
+        const seamStroke = specA.seamMode === 'fc_600' ? '#25282b' : '#1b1d1f';
+
+        // Vertical perspective-interpolated joints
+        for (let i = 1; i < vCols; i++) {
+          const t = i / vCols;
+          // Non-linear perspective foreshortening factor
+          const tp = Math.pow(t, 1.08);
+          const x = 110 + (650 - 110) * tp;
+          const yTop = 88 + (112 - 88) * tp;
+          const yBot = 365 + (355 - 365) * tp;
+          svgHtml += `<line x1="${x.toFixed(1)}" y1="${yTop.toFixed(1)}" x2="${x.toFixed(1)}" y2="${yBot.toFixed(1)}" stroke="${seamStroke}" stroke-width="1.6" opacity="0.85"/>`;
+        }
+
+        // Horizontal perspective-converging courses
+        for (let r = 1; r < hRows; r++) {
+          const tr = r / hRows;
+          const yL = 88 + (365 - 88) * tr;
+          const yR = 112 + (355 - 112) * tr;
+          svgHtml += `<line x1="110" y1="${yL.toFixed(1)}" x2="650" y2="${yR.toFixed(1)}" stroke="${seamStroke}" stroke-width="1.4" opacity="0.8"/>`;
+
+          // Rivets if fiber cement
+          if (specA.seamMode === 'fc_600') {
+            for (let i = 1; i < vCols; i++) {
+              const tp = Math.pow(i / vCols, 1.08);
+              const rx = 110 + (650 - 110) * tp;
+              const ry = yL + (yR - yL) * tp;
+              svgHtml += `<circle cx="${(rx - 5).toFixed(1)}" cy="${(ry - 5).toFixed(1)}" r="1.3" fill="#aeb6be" opacity="0.7"/>`;
+              svgHtml += `<circle cx="${(rx + 5).toFixed(1)}" cy="${(ry + 5).toFixed(1)}" r="1.3" fill="#aeb6be" opacity="0.7"/>`;
+            }
+          }
+        }
+      }
+
+      // Entrance Doorway (Left bay: x 145..225)
+      svgHtml += `<polygon points="145,192 225,194 225,363 145,364" fill="#181a1c" stroke="#2c3035" stroke-width="2"/>`;
+      svgHtml += `<polygon points="153,200 217,202 217,363 153,364" fill="url(#warmInterior)"/>`;
+      svgHtml += `<line x1="206" y1="272" x2="206" y2="298" stroke="#d97736" stroke-width="2.5"/>`;
+
+      // Zone B: Main Glazing Opening (x 265..595, yTop ~185..195, yBot ~325..320)
+      const gBottomYLeft = specB.glassMode === 'folding4' ? 305 : 358;
+      const gBottomYRight = specB.glassMode === 'folding4' ? 302 : 352;
+
+      svgHtml += `<polygon points="265,186 595,196 595,${gBottomYRight} 265,${gBottomYLeft}" fill="#13171b" stroke="#22262a" stroke-width="3"/>`;
+      svgHtml += `<polygon points="270,191 590,200 590,${gBottomYRight - 4} 270,${gBottomYLeft - 4}" fill="url(#warmInterior)"/>`;
+
+      // Interior coffee bar silhouette
+      svgHtml += `<polygon points="300,285 540,288 540,340 300,340" fill="#29211c" opacity="0.8"/>`;
+      svgHtml += `<circle cx="370" cy="230" r="5" fill="#fde68a" opacity="0.85"/>`;
+      svgHtml += `<circle cx="465" cy="234" r="5" fill="#fde68a" opacity="0.85"/>`;
+
+      // Glazing Subdivisions based on Zone B selection
+      if (specB.glassMode === 'mullion3') {
+        [375, 485].forEach(mx => {
+          svgHtml += `<line x1="${mx}" y1="189" x2="${mx}" y2="355" stroke="#1e2226" stroke-width="6"/>`;
+          svgHtml += `<line x1="${mx}" y1="189" x2="${mx}" y2="355" stroke="#475059" stroke-width="1"/>`;
+        });
+        svgHtml += `<line x1="265" y1="238" x2="595" y2="244" stroke="#1e2226" stroke-width="4.5"/>`;
+      } else if (specB.glassMode === 'folding4') {
+        // Transom + 4 folding sashes + timber/metal coffee counter ledge
+        svgHtml += `<line x1="265" y1="224" x2="595" y2="231" stroke="#1f2328" stroke-width="4"/>`;
+        [347, 430, 512].forEach(fx => {
+          svgHtml += `<line x1="${fx}" y1="226" x2="${fx}" y2="303" stroke="#202428" stroke-width="5"/>`;
+        });
+        // Café Bar Counter Ledge + Low Wall Base
+        svgHtml += `<polygon points="265,305 595,302 595,352 265,358" fill="${specA.fill}" stroke="#262a2e" stroke-width="1.5"/>`;
+        svgHtml += `<polygon points="258,300 603,297 608,306 258,309" fill="#8b5a3c" stroke="#432b1c" stroke-width="1"/>`;
+      } else {
+        // Jumbo glass specular diagonal reflection
+        svgHtml += `<polygon points="310,192 345,193 295,355 270,355" fill="#ffffff" opacity="0.07"/>`;
+      }
+
+      // Zone C: Parapet Coping, Recessed Plinth & Canopy
+      if (specC.edgeMode === 'flashed') {
+        // Parapet metal coping cap with drip edge
+        svgHtml += `<polygon points="106,83 654,107 654,117 106,94" fill="#2c3137" stroke="#7d8792" stroke-width="1"/>`;
+        // Recessed stainless plinth (80mm kickplate)
+        svgHtml += `<polygon points="110,354 650,345 650,355 110,365" fill="#23272b"/>`;
+        svgHtml += `<line x1="110" y1="354" x2="650" y2="345" stroke="#8d96a0" stroke-width="1"/>`;
+        // Realistic cantilevered canopy with tension tie rods
+        svgHtml += `<polygon points="132,174 610,186 622,195 126,183" fill="#2a2f35" stroke="#6c757d" stroke-width="1"/>`;
+        [185, 380, 565].forEach(rx => {
+          const ry = 175 + (rx - 132) * 0.024;
+          svgHtml += `<line x1="${rx}" y1="${ry - 34}" x2="${rx + 8}" y2="${ry + 3}" stroke="#9aa3ad" stroke-width="1.6"/>`;
+          svgHtml += `<circle cx="${rx}" cy="${ry - 34}" r="2.5" fill="#d97736"/>`;
+        });
+      } else {
+        // Paper-thin floating canopy (AI Hallucination)
+        svgHtml += `<polygon points="132,178 612,189 616,191 130,180" fill="#8c8881"/>`;
+      }
+
+      document.getElementById('dynamicFacadeGroup').innerHTML = svgHtml;
+
+      // 3. Render Constructability Diagnostic Pins
+      const diagnostics = [
+        {
+          x: 420, y: 145, resolved: specA.risk === 0,
+          title: '墙体施工与现浇周期排雷',
+          badMsg: '【阻断隐患 #1 · 现浇清水墙】AI 原图呈现 7.2m 无缝整体清水混凝土，临街商铺无法占道支模养护（工期 28 天，单价 ¥3,800/㎡）。建议切换为预制 UHPC 或纤维水泥干挂体系。',
+          goodMsg: `【已闭环 #1 · 干挂装配化】已替换为「${specA.name}」，生成真实透视模数拼缝，工期压缩至 ${specA.days} 天。`
+        },
+        {
+          x: 440, y: 268, resolved: specB.risk === 0,
+          title: '超限单块玻璃制造与吊装排雷',
+          badMsg: '【阻断隐患 #2 · 尺幅超限】主采光面宽达 5.2m 无任何竖梃分格，远超常规钢化夹胶玻璃经济制造极值，需封路动用重型随车吊（¥6,500/㎡）。',
+          goodMsg: `【已闭环 #2 · 门窗模数合规】已深化为「${specB.name}」，满足常规运输安装与商业互动需求。`
+        },
+        {
+          x: 135, y: 358, resolved: specC.risk === 0,
+          title: '泛水压顶与防潮勒脚缺失排雷',
+          badMsg: '【阻断隐患 #3 · 构造收口缺失】室外墙面直抵人行道无防潮勒脚，女儿墙顶无金属压顶滴水线，交付半年内极易发生雨水流挂污染与底部返碱脱落。',
+          goodMsg: '【已闭环 #3 · 构造节点补齐】已注入 3mm 氟碳铝板压顶滴水线、80mm 不锈钢内凹防潮踢脚及雨棚结构斜拉杆。'
+        }
+      ];
+
+      let pinsHtml = '';
+      if (showPins) {
+        diagnostics.forEach((d, idx) => {
+          const color = d.resolved ? '#10b981' : '#ef4444';
+          const isSel = selectedPinIndex === idx;
+          pinsHtml += `
+            <g onclick="selectDiagnosticPin(${idx})" class="cursor-pointer">
+              <circle cx="${d.x}" cy="${d.y}" r="${isSel ? 13 : 9}" fill="${color}" opacity="0.25" />
+              <circle cx="${d.x}" cy="${d.y}" r="6.5" fill="${color}" stroke="#ffffff" stroke-width="${isSel ? 2 : 1}" />
+              <text x="${d.x}" y="${d.y + 3.5}" fill="#fff" font-size="9" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${idx + 1}</text>
+            </g>
+          `;
+        });
+      }
+      document.getElementById('diagnosticPinsLayer').innerHTML = pinsHtml;
+
+      // Update Bottom Banner
+      const activeDiag = diagnostics[selectedPinIndex] || diagnostics[0];
+      document.getElementById('diagnosticBannerText').textContent = activeDiag.resolved ? activeDiag.goodMsg : activeDiag.badMsg;
+      const badge = document.getElementById('diagnosticStatusBadge');
+      badge.textContent = activeDiag.resolved ? 'CONSTRUCTABLE ✓' : 'HALLUCINATION RISK !';
+      badge.className = 'px-2 py-0.5 rounded text-[10px] mono shrink-0 ' +
+        (activeDiag.resolved ? 'bg-emerald-950 text-emerald-300 border border-emerald-700/50' : 'bg-red-950 text-red-300 border border-red-700/50');
+    }
+
+    // Boot both workspaces
+    window.addEventListener('DOMContentLoaded', () => {
+      initSpectrumSliders();
+      updateProjectA();
+      renderProjectBCanvas();
+    });
+  </script>
+</body>
+</html>

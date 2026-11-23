@@ -1,0 +1,1873 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-11-22T04:27:56.823280+00:00",
+  "total_assets": 80,
+  "domain_counts": {
+    "architecture": 16,
+    "industrial": 16,
+    "editorial": 16,
+    "craft": 16,
+    "graphic": 16
+  },
+  "akb_priors_loaded": 529,
+  "golden_anchors_verified": 40,
+  "cost_ledger": {
+    "batch_size": 1000,
+    "duplicate_skip_rate": 0.12,
+    "effective_vlm_calls": 880,
+    "edge_deterministic_cost_cny_per_img": 0.0,
+    "vlm_model_tier": "gemini-2.5-flash-lite-batch-cached",
+    "cached_system_prompt_tokens": 1850,
+    "image_tokens_per_asset": 258,
+    "uncached_user_tokens_per_asset": 90,
+    "output_tokens_per_asset": 320,
+    "usd_to_cny_rate": 7.25,
+    "batch_discount_factor": 0.5,
+    "total_batch_cost_cny": 0.7669,
+    "effective_cost_cny_per_img": 0.000767,
+    "target_ceiling_cny_per_img": 0.008,
+    "within_budget": true
+  },
+  "records": [
+    {
+      "asset_id": "arch_01",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#653A20",
+        "#7F5B44",
+        "#1E0E05",
+        "#E7E7E7",
+        "#9C8F82"
+      ],
+      "akb_prior_asset_id": "01M7SKRFZ5RH1E95KZB6XA6YYZ",
+      "akb_board_hint": "疗愈空间",
+      "akb_palette_distance": 0.0357,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_01",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Valley Corten Steel & Exposed Concrete Pavilion"
+      }
+    },
+    {
+      "asset_id": "arch_02",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#595759",
+        "#4B494E",
+        "#3B3A3E",
+        "#716B63",
+        "#AB9C81"
+      ],
+      "akb_prior_asset_id": "01M7SM20YJ4TXJZGAFK00ZDA3K",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0379,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=brutalist+concrete+facade+texture",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Board-Formed Fair-Faced Concrete Gallery Wing"
+      }
+    },
+    {
+      "asset_id": "arch_03",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#282933",
+        "#19191F",
+        "#4E85C1",
+        "#395D8A",
+        "#876144"
+      ],
+      "akb_prior_asset_id": "01M7SKVQXHT02T14AQAMMGAGKW",
+      "akb_board_hint": "门卫",
+      "akb_palette_distance": 0.0619,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=wooden+pergola+architecture",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Modular Timber Pergola & Colonnade Courtyard"
+      }
+    },
+    {
+      "asset_id": "arch_04",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#5A2803",
+        "#784416",
+        "#3C1600",
+        "#DEC6AA",
+        "#A37549"
+      ],
+      "akb_prior_asset_id": "01M7SMDHYF34V4A79G6DDSKSXC",
+      "akb_board_hint": "家装室內設計",
+      "akb_palette_distance": 0.0357,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_04",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Kyoto Post-and-Beam Plaster Tea Room"
+      }
+    },
+    {
+      "asset_id": "arch_05",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#DACBB7",
+        "#ADA59A",
+        "#80715C",
+        "#584D3A",
+        "#201A10"
+      ],
+      "akb_prior_asset_id": "01M7SM18FHQPPW5XW2ABS2WC2W",
+      "akb_board_hint": "配色",
+      "akb_palette_distance": 0.0244,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_05",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Balanced Daylight Limestone Museum Courtyard"
+      }
+    },
+    {
+      "asset_id": "arch_06",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#C1C0BB",
+        "#E4E5E5",
+        "#D3D2CE",
+        "#817763",
+        "#A39B8A"
+      ],
+      "akb_prior_asset_id": "01M7SM6VK6BMPR7EPXEZZPDCNT",
+      "akb_board_hint": "fashion",
+      "akb_palette_distance": 0.0227,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_06",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Seamless Monolithic White Plaster Pavilion"
+      }
+    },
+    {
+      "asset_id": "arch_07",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#0B0E10",
+        "#010204",
+        "#2C3337",
+        "#DDCAB1",
+        "#766E64"
+      ],
+      "akb_prior_asset_id": "01M7SKX3SBS8C661QV5R0SCP74",
+      "akb_board_hint": "隐",
+      "akb_palette_distance": 0.0336,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_07",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Chiaroscuro Concrete Hall with Sharp Skylight Slit"
+      }
+    },
+    {
+      "asset_id": "arch_08",
+      "domain": "architecture",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#A3A3A3",
+        "#171717",
+        "#7A7A7A",
+        "#434343",
+        "#606060"
+      ],
+      "akb_prior_asset_id": "01M7SKY9WXEBQ3A9W4SEN8T45M",
+      "akb_board_hint": "产业园",
+      "akb_palette_distance": 0.0234,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=minimalist+concrete+architecture+courtyard",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Minimalist Concrete Courtyard with Single Skylight"
+      }
+    },
+    {
+      "asset_id": "arch_09",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#8E8370",
+        "#ACA08E",
+        "#494231",
+        "#726958",
+        "#282215"
+      ],
+      "akb_prior_asset_id": "01M7SM1VC4E030G13JM3TH62GC",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0247,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_09",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Muted Concrete & Sage Moss Courtyard House"
+      }
+    },
+    {
+      "asset_id": "arch_10",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#675F45",
+        "#54503C",
+        "#423C29",
+        "#807D6C",
+        "#A9C2D8"
+      ],
+      "akb_prior_asset_id": "01M7SKYENZ4BW9SCY5H0N78893",
+      "akb_board_hint": "产业园",
+      "akb_palette_distance": 0.0364,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_10",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Fluid Parametric Cast Shell Pavilion"
+      }
+    },
+    {
+      "asset_id": "arch_11",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#6A8091",
+        "#40525F",
+        "#1C2831",
+        "#93A7B5",
+        "#CED9E0"
+      ],
+      "akb_prior_asset_id": "01M7SKWCPAMAMK94M3T70NBXP2",
+      "akb_board_hint": "门卫",
+      "akb_palette_distance": 0.0276,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_11",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Nordic Cool Slate & Brushed Steel Lobby"
+      }
+    },
+    {
+      "asset_id": "arch_12",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#180600",
+        "#7A2803",
+        "#531A02",
+        "#9F3806",
+        "#D9620E"
+      ],
+      "akb_prior_asset_id": "01M7SKMPJC6BEPNN7WQP1RXZB1",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0545,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_12",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Dusk Amber-Lit Terracotta Tea Alcove"
+      }
+    },
+    {
+      "asset_id": "arch_13",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#1E1F24",
+        "#454347",
+        "#6E797E",
+        "#C1DEEE",
+        "#A2A999"
+      ],
+      "akb_prior_asset_id": "01M7SKNJM0HHMNH950GFB91286",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0256,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=modernist+building+facade+grid",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Architectural Daylight Facade Documentary"
+      }
+    },
+    {
+      "asset_id": "arch_14",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#313127",
+        "#111213",
+        "#899294",
+        "#555E60",
+        "#D2D6D0"
+      ],
+      "akb_prior_asset_id": "01M7SM2D3S0QSW7R8JN64TN9F8",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0277,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=steel+truss+glass+roof+architecture",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "High-Tech Tensile Cable & Pin-Joint Canopy"
+      }
+    },
+    {
+      "asset_id": "arch_15",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#273144",
+        "#161B26",
+        "#DE984A",
+        "#6FA7D2",
+        "#8A6441"
+      ],
+      "akb_prior_asset_id": "01M7SM4M6TK7VEEEGVCKXBGB75",
+      "akb_board_hint": "艺术",
+      "akb_palette_distance": 0.061,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_15",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Perforated Dark Aluminum Commercial Storefront"
+      }
+    },
+    {
+      "asset_id": "arch_16",
+      "domain": "architecture",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#20130C",
+        "#563A2A",
+        "#000101",
+        "#897368",
+        "#ACB0B7"
+      ],
+      "akb_prior_asset_id": "01M7SKX3SBS8C661QV5R0SCP74",
+      "akb_board_hint": "隐",
+      "akb_palette_distance": 0.0458,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/arch_16",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Industrial Brick & Black Steel Loft Transformation"
+      }
+    },
+    {
+      "asset_id": "ind_01",
+      "domain": "industrial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#010203",
+        "#21272A",
+        "#0C1115",
+        "#415353",
+        "#8B9392"
+      ],
+      "akb_prior_asset_id": "01M7SMEPVMY56AA16FG9NG6CXE",
+      "akb_board_hint": "UI",
+      "akb_palette_distance": 0.0337,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_01",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Optical Mirror-Polished Titanium Lens Barrel"
+      }
+    },
+    {
+      "asset_id": "ind_02",
+      "domain": "industrial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#C9C9CA",
+        "#A3A3A3",
+        "#747474",
+        "#414140",
+        "#1B1B1B"
+      ],
+      "akb_prior_asset_id": "01M7SKNJM0HHMNH950GFB91286",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0213,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_02",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "CNC Anodized Modular Field Synthesizer"
+      }
+    },
+    {
+      "asset_id": "ind_03",
+      "domain": "industrial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#292829",
+        "#333537",
+        "#5A7579",
+        "#485659",
+        "#46292A"
+      ],
+      "akb_prior_asset_id": "01M7SMCT4W983W9K098GPG4XAX",
+      "akb_board_hint": "简历模板",
+      "akb_palette_distance": 0.0456,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=black+vintage+camera",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Directional Rim-Lit Matte Black Rangefinder Camera"
+      }
+    },
+    {
+      "asset_id": "ind_04",
+      "domain": "industrial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#939293",
+        "#BFBDBD",
+        "#ACABAB",
+        "#5E5D5E",
+        "#403F40"
+      ],
+      "akb_prior_asset_id": "01M7SKXM6NE2GXP8XDKD69G6BG",
+      "akb_board_hint": "隐",
+      "akb_palette_distance": 0.0265,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_04",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Unibody Seamless Matte Aluminum Acoustic Speaker"
+      }
+    },
+    {
+      "asset_id": "ind_05",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#655E5E",
+        "#161513",
+        "#F47C27",
+        "#482E28",
+        "#A7A4A0"
+      ],
+      "akb_prior_asset_id": "01M7SM39BEAR1H4AGZX159F4X2",
+      "akb_board_hint": "naichadian",
+      "akb_palette_distance": 0.0416,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_05",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Graphite Anodized Device with Signal Amber Dial"
+      }
+    },
+    {
+      "asset_id": "ind_06",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#747474",
+        "#5D5E5D",
+        "#D5D5D5",
+        "#949494",
+        "#AEAEAE"
+      ],
+      "akb_prior_asset_id": "01M7SM4J1B2H2XYRDYDCCHPXMS",
+      "akb_board_hint": "艺术",
+      "akb_palette_distance": 0.0254,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_06",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Bead-Blasted Satin Anodized Aluminum Workstation"
+      }
+    },
+    {
+      "asset_id": "ind_07",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#C7D8E0",
+        "#7C949F",
+        "#A2B7C2",
+        "#5B737F",
+        "#1B2C35"
+      ],
+      "akb_prior_asset_id": "01M7SKWE9QCNRTK7HDEV5KD39Q",
+      "akb_board_hint": "门卫",
+      "akb_palette_distance": 0.0248,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_07",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Cleanroom Surgical Steel Optical Test Bench"
+      }
+    },
+    {
+      "asset_id": "ind_08",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#747778",
+        "#3F4343",
+        "#585B5C",
+        "#939598",
+        "#252828"
+      ],
+      "akb_prior_asset_id": "01M7SKY9WXEBQ3A9W4SEN8T45M",
+      "akb_board_hint": "产业园",
+      "akb_palette_distance": 0.0311,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_08",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Modular Studio Rack with Calibrated Dials & Cables"
+      }
+    },
+    {
+      "asset_id": "ind_09",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#686667",
+        "#E2E2DF",
+        "#848281",
+        "#ADABA6",
+        "#3E3C3B"
+      ],
+      "akb_prior_asset_id": "01M7SKZA3XPFTWQT7C385MNZTF",
+      "akb_board_hint": "凤南",
+      "akb_palette_distance": 0.0203,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_09",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Orthographic Isometric Industrial Prototype Study"
+      }
+    },
+    {
+      "asset_id": "ind_10",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#BDB29B",
+        "#050301",
+        "#2C251A",
+        "#5B5141",
+        "#8D8370"
+      ],
+      "akb_prior_asset_id": "01M7SM1N2WVPX2BMATM5Y33HC7",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0336,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_10",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Mechanical Watch Skeleton Movement & Brass Gears"
+      }
+    },
+    {
+      "asset_id": "ind_11",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#936F54",
+        "#7F909E",
+        "#5A4E50",
+        "#BAC6CD",
+        "#1E222E"
+      ],
+      "akb_prior_asset_id": "01M7SM37Z1RXN4TSB7W3GBGXJN",
+      "akb_board_hint": "naichadian",
+      "akb_palette_distance": 0.0223,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=titanium+bicycle+frame+detail",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Carbon & Titanium Bicycle Frame Joint Detail"
+      }
+    },
+    {
+      "asset_id": "ind_12",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#131617",
+        "#040403",
+        "#363736",
+        "#6E6C69",
+        "#D4D2CE"
+      ],
+      "akb_prior_asset_id": "01M7SKZKPHKWWYBZGXS21P2GYD",
+      "akb_board_hint": "凤南",
+      "akb_palette_distance": 0.0366,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_12",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Precision Machined Coffee Grinder & Steel Brewer"
+      }
+    },
+    {
+      "asset_id": "ind_13",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#CFCFCE",
+        "#B8B7B6",
+        "#959494",
+        "#6E6E6D",
+        "#313130"
+      ],
+      "akb_prior_asset_id": "01M7SM4V5KC0GE9P814Y2RXZ90",
+      "akb_board_hint": "艺术",
+      "akb_palette_distance": 0.0273,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_13",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Tubular Chrome Steel Cantilever Chair Profile"
+      }
+    },
+    {
+      "asset_id": "ind_14",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#A6A4A7",
+        "#C4C2C6",
+        "#838284",
+        "#484949",
+        "#181816"
+      ],
+      "akb_prior_asset_id": "01M7SKVCQNFEKNFC6ZGCP2NCS4",
+      "akb_board_hint": "门卫",
+      "akb_palette_distance": 0.0323,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_14",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Precision Stainless Vernier Caliper Scale Macro"
+      }
+    },
+    {
+      "asset_id": "ind_15",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#000000",
+        "#0C0C0C",
+        "#272727",
+        "#575757",
+        "#969696"
+      ],
+      "akb_prior_asset_id": "01M7SM6MWH8WEN9R3PNQRVYEBB",
+      "akb_board_hint": "fashion",
+      "akb_palette_distance": 0.0388,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_15",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Extruded Anodized Aluminum Heatsink Fin Array"
+      }
+    },
+    {
+      "asset_id": "ind_16",
+      "domain": "industrial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#1D1814",
+        "#130F0C",
+        "#403121",
+        "#D7CAAE",
+        "#7E6B52"
+      ],
+      "akb_prior_asset_id": "01M7SKM4G1YVNBQVSK7SHXEZXR",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0334,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/ind_16",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Spun Brass & Matte Steel Architectural Desk Lamp"
+      }
+    },
+    {
+      "asset_id": "edit_01",
+      "domain": "editorial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#222222",
+        "#D7D6D4",
+        "#A9A8A6",
+        "#424341",
+        "#757573"
+      ],
+      "akb_prior_asset_id": "01M7SKNJM0HHMNH950GFB91286",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0096,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_cc0_cached",
+        "source_url": "https://openverse.org/search/image?q=minimalist+lone+person+black+landscape",
+        "creator": "Openverse CC0/PDM Contributor",
+        "original_title": "Solitary Silhouette in Icelandic Black Sand Void"
+      }
+    },
+    {
+      "asset_id": "edit_02",
+      "domain": "editorial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#CBD2CF",
+        "#ACA38E",
+        "#948267",
+        "#725F46",
+        "#382C1E"
+      ],
+      "akb_prior_asset_id": "01M7SMC3P59KK7NZXF51E783K6",
+      "akb_board_hint": "宣传墙",
+      "akb_palette_distance": 0.0202,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_02",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Subarctic Overcast Shadowless Editorial Portrait"
+      }
+    },
+    {
+      "asset_id": "edit_03",
+      "domain": "editorial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#292929",
+        "#404040",
+        "#111111",
+        "#000000",
+        "#636363"
+      ],
+      "akb_prior_asset_id": "01M7SM6MWH8WEN9R3PNQRVYEBB",
+      "akb_board_hint": "fashion",
+      "akb_palette_distance": 0.0401,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_03",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Silver-Gelatin Monochrome Basalt Study"
+      }
+    },
+    {
+      "asset_id": "edit_04",
+      "domain": "editorial",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#B1A08B",
+        "#977E63",
+        "#D2C8BB",
+        "#775C40",
+        "#432912"
+      ],
+      "akb_prior_asset_id": "01M7SMB0V3S5Y8FC8XZNRW30E8",
+      "akb_board_hint": "Codex TEST_COFFEE SHOP INTERIOR",
+      "akb_palette_distance": 0.0182,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_04",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Medium-Format Film Photography Physical Micro-Detail"
+      }
+    },
+    {
+      "asset_id": "edit_05",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#494539",
+        "#979383",
+        "#2B281D",
+        "#726C5D",
+        "#10130B"
+      ],
+      "akb_prior_asset_id": "01M7SKKGDP5280PSN0ZZV3XDAC",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0305,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_05",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Technical Shell Trench in Brutalist Colonnade"
+      }
+    },
+    {
+      "asset_id": "edit_06",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#4D402D",
+        "#78664E",
+        "#241103",
+        "#928875",
+        "#B2AB9D"
+      ],
+      "akb_prior_asset_id": "01M7SM1VC4E030G13JM3TH62GC",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0251,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_06",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Draped Wool Coat Inside Rectilinear Corridor"
+      }
+    },
+    {
+      "asset_id": "edit_07",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#634A15",
+        "#3A2505",
+        "#8D7034",
+        "#BFA36E",
+        "#F1E6CE"
+      ],
+      "akb_prior_asset_id": "01M7SME65B1BC2WN9Z2N56NEXT",
+      "akb_board_hint": "家装室內設計",
+      "akb_palette_distance": 0.0379,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_flickr",
+        "source_url": "https://www.flickr.com/photos/24490288@N04/55318043099",
+        "creator": "Oneterry AKA Terry Kearney",
+        "original_title": "The Tyndall Effect"
+      }
+    },
+    {
+      "asset_id": "edit_08",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#8D4922",
+        "#E9CBA9",
+        "#C69F77",
+        "#461903",
+        "#A2734C"
+      ],
+      "akb_prior_asset_id": "01M7SME65B1BC2WN9Z2N56NEXT",
+      "akb_board_hint": "家装室內設計",
+      "akb_palette_distance": 0.0296,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_08",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Terracotta Backdrop Sculptural Editorial Study"
+      }
+    },
+    {
+      "asset_id": "edit_09",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#8E9D9E",
+        "#121C14",
+        "#283227",
+        "#414A3C",
+        "#666F63"
+      ],
+      "akb_prior_asset_id": "01M7SM1VC4E030G13JM3TH62GC",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0355,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_09",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Misty Pine Forest Technical Outerwear Study"
+      }
+    },
+    {
+      "asset_id": "edit_10",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#125C94",
+        "#D82A0D",
+        "#022C5D",
+        "#9C1914",
+        "#340502"
+      ],
+      "akb_prior_asset_id": "01M7SKMPJC6BEPNN7WQP1RXZB1",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0961,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_10",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Cobalt Blue & Vermilion Architectural Step Editorial"
+      }
+    },
+    {
+      "asset_id": "edit_11",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#212120",
+        "#2E3136",
+        "#424954",
+        "#5D6980",
+        "#8197BC"
+      ],
+      "akb_prior_asset_id": "01M7SKSPE416N3G1JETDP16J4G",
+      "akb_board_hint": "公园",
+      "akb_palette_distance": 0.0341,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_flickr",
+        "source_url": "https://www.flickr.com/photos/135396164@N05/28448712275",
+        "creator": "freestocks.org",
+        "original_title": "Reflection in the puddle"
+      }
+    },
+    {
+      "asset_id": "edit_12",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#917055",
+        "#D5D0C8",
+        "#6A4830",
+        "#B19E8C",
+        "#48210D"
+      ],
+      "akb_prior_asset_id": "01M7SMAAPVX9AQRWS61P55718K",
+      "akb_board_hint": "Codex TEST_COFFEE SHOP INTERIOR",
+      "akb_palette_distance": 0.0267,
+      "provenance": {
+        "license": "PDM",
+        "source_kind": "openverse_flickr",
+        "source_url": "https://www.flickr.com/photos/42298505@N02/5388108637",
+        "creator": "Brentano fabrics",
+        "original_title": "Brentano - Silhouette, Essentials Collection Spring 2011"
+      }
+    },
+    {
+      "asset_id": "edit_13",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#F4F4F5",
+        "#EDEDEE",
+        "#E2E2E4",
+        "#CECFD0",
+        "#B0B0B2"
+      ],
+      "akb_prior_asset_id": "01M7SM1M7EHPN6WCK727Z68HVX",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0075,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_13",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Clinical Acrylic & Titanium Eyewear Studio Look"
+      }
+    },
+    {
+      "asset_id": "edit_14",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#201F20",
+        "#131313",
+        "#040404",
+        "#3B3B3D",
+        "#000000"
+      ],
+      "akb_prior_asset_id": "01M7SM6MWH8WEN9R3PNQRVYEBB",
+      "akb_board_hint": "fashion",
+      "akb_palette_distance": 0.0558,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_14",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Origami-Folded Matte Leather Structural Profile"
+      }
+    },
+    {
+      "asset_id": "edit_15",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#351E0D",
+        "#AF6324",
+        "#6B4122",
+        "#EDC799",
+        "#D6AF83"
+      ],
+      "akb_prior_asset_id": "01M7SME65B1BC2WN9Z2N56NEXT",
+      "akb_board_hint": "家装室內設計",
+      "akb_palette_distance": 0.0336,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_15",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Sand Dune Ridge & Minimalist Draped Robe"
+      }
+    },
+    {
+      "asset_id": "edit_16",
+      "domain": "editorial",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#0A0401",
+        "#1C0502",
+        "#370905",
+        "#5D0D08",
+        "#81280D"
+      ],
+      "akb_prior_asset_id": "01M7SKR5QNE2Z3E0FTPRBSH0PD",
+      "akb_board_hint": "疗愈空间",
+      "akb_palette_distance": 0.0882,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/edit_16",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "35mm Film Grain Deep Crimson Velvet Theater Study"
+      }
+    },
+    {
+      "asset_id": "craft_01",
+      "domain": "craft",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#EDE9E5",
+        "#4C453E",
+        "#191817",
+        "#7B7166",
+        "#BEB8B3"
+      ],
+      "akb_prior_asset_id": "01M7SMFR3PS9SYGBHDK9SDHVW3",
+      "akb_board_hint": "建筑",
+      "akb_palette_distance": 0.023,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_flickr",
+        "source_url": "https://www.flickr.com/photos/101561334@N08/26501545302",
+        "creator": "Gary Lee Todd, Ph.D.",
+        "original_title": "Ceramic Tea Bowl, Edo, 17th Century"
+      }
+    },
+    {
+      "asset_id": "craft_02",
+      "domain": "craft",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#6A5D4D",
+        "#524A3F",
+        "#3A3530",
+        "#7D776D",
+        "#A99B7F"
+      ],
+      "akb_prior_asset_id": "01M7SMA82Q62SDXY8K2HDQTMP2",
+      "akb_board_hint": "Codex TEST_COFFEE SHOP INTERIOR",
+      "akb_palette_distance": 0.0297,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_clevelandmuseum",
+        "source_url": "https://clevelandart.org/art/1976.111",
+        "creator": "",
+        "original_title": "Jar with Incised Combed Shoulder Designs: Bizen Ware"
+      }
+    },
+    {
+      "asset_id": "craft_03",
+      "domain": "craft",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#3F1401",
+        "#995D30",
+        "#C38149",
+        "#703714",
+        "#FDCF8E"
+      ],
+      "akb_prior_asset_id": "01M7SME65B1BC2WN9Z2N56NEXT",
+      "akb_board_hint": "家装室內設計",
+      "akb_palette_distance": 0.0395,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/craft_03",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Hand-Planed Hinoki Tray & Warm Rice-Paper Glow"
+      }
+    },
+    {
+      "asset_id": "craft_04",
+      "domain": "craft",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#C8B9A4",
+        "#6C4025",
+        "#B7A690",
+        "#512E1A",
+        "#271002"
+      ],
+      "akb_prior_asset_id": "01M7SKR5QNE2Z3E0FTPRBSH0PD",
+      "akb_board_hint": "疗愈空间",
+      "akb_palette_distance": 0.0455,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/craft_04",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Satin-Honed Limestone & Oiled Walnut Craft Surface"
+      }
+    },
+    {
+      "asset_id": "craft_05",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#AAA9A7",
+        "#D4CEC8",
+        "#958074",
+        "#824D37",
+        "#D69F74"
+      ],
+      "akb_prior_asset_id": "01M7SKQECP1D41T33D2H1TCKDB",
+      "akb_board_hint": "宣传板us",
+      "akb_palette_distance": 0.0359,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/9183439/terracotta-skyphos-deep-drinking-cup-with-lid",
+        "creator": "themet",
+        "original_title": "Terracotta skyphos (deep drinking cup)"
+      }
+    },
+    {
+      "asset_id": "craft_06",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#E9E7E5",
+        "#695149",
+        "#2D211E",
+        "#E8A753",
+        "#9F7E6D"
+      ],
+      "akb_prior_asset_id": "01M7SMC53QA8Y049X41QMEA0R6",
+      "akb_board_hint": "宣传墙",
+      "akb_palette_distance": 0.0392,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/3285391/free-photo-image-tea-pot-beverage",
+        "creator": "",
+        "original_title": "Ceramic tea set"
+      }
+    },
+    {
+      "asset_id": "craft_07",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#2A2725",
+        "#100F0C",
+        "#3D3936",
+        "#010100",
+        "#635F5C"
+      ],
+      "akb_prior_asset_id": "01M7SM2B81SZD39SCKJ5MS7S8F",
+      "akb_board_hint": "咖啡店",
+      "akb_palette_distance": 0.0458,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/craft_07",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Cast-Iron Nambu Tekki Kettle Texture Study"
+      }
+    },
+    {
+      "asset_id": "craft_08",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#CAC9C8",
+        "#EDEDED",
+        "#535150",
+        "#ABAAA7",
+        "#7C7A77"
+      ],
+      "akb_prior_asset_id": "01M7SKYMYANEZ1PEWZNWR8YWBB",
+      "akb_board_hint": "产业园",
+      "akb_palette_distance": 0.0219,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/11800347/bowl",
+        "creator": "lacma",
+        "original_title": "Minimalist white ceramic bowl"
+      }
+    },
+    {
+      "asset_id": "craft_09",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#181C2C",
+        "#21283F",
+        "#E6E6E7",
+        "#575A66",
+        "#BCBCC1"
+      ],
+      "akb_prior_asset_id": "01M7SM5C70KGWBSFMQKV4B4WRA",
+      "akb_board_hint": "gallery",
+      "akb_palette_distance": 0.0334,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/7654203/photo-image-light-vintage-art",
+        "creator": "",
+        "original_title": "panel, tie-dyed light blue indigo"
+      }
+    },
+    {
+      "asset_id": "craft_10",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#BCC6D7",
+        "#854B3C",
+        "#A1665B",
+        "#A7A4B1",
+        "#6C3122"
+      ],
+      "akb_prior_asset_id": "01M7SMC163J2TG2P02RTME9C70",
+      "akb_board_hint": "宣传墙",
+      "akb_palette_distance": 0.0437,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/9079429/spouted-bowl-kataguchi",
+        "creator": "",
+        "original_title": "Spouted Bowl kataguchi"
+      }
+    },
+    {
+      "asset_id": "craft_11",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#BFBFBA",
+        "#A9A9A5",
+        "#6C5846",
+        "#82776B",
+        "#4E3D2D"
+      ],
+      "akb_prior_asset_id": "01M7SKYENZ4BW9SCY5H0N78893",
+      "akb_board_hint": "产业园",
+      "akb_palette_distance": 0.0244,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/8934215/stool",
+        "creator": "artinstitutechicago",
+        "original_title": "Antique wooden stool with carvings"
+      }
+    },
+    {
+      "asset_id": "craft_12",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#CECAC8",
+        "#C0BDBB",
+        "#694C43",
+        "#4B342E",
+        "#998883"
+      ],
+      "akb_prior_asset_id": "01M7SM622SE0JK43Q249QBAHYC",
+      "akb_board_hint": "gallery",
+      "akb_palette_distance": 0.0313,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/9012242/peony-ikebana-basket",
+        "creator": "artinstitutechicago",
+        "original_title": "Peony Ikebana Basket"
+      }
+    },
+    {
+      "asset_id": "craft_13",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#4B3D2D",
+        "#2A2018",
+        "#6C5E46",
+        "#958867",
+        "#E2D1B4"
+      ],
+      "akb_prior_asset_id": "01M7SM7N7Z5680ED1GFC7483WF",
+      "akb_board_hint": "过廊",
+      "akb_palette_distance": 0.0297,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_flickr",
+        "source_url": "https://www.flickr.com/photos/101561334@N08/9847975855",
+        "creator": "Gary Lee Todd, Ph.D.",
+        "original_title": "Celadon Flower Vase with Peony Scrolls, Longquan, Yuan, 1300-1330"
+      }
+    },
+    {
+      "asset_id": "craft_14",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#5B4C3C",
+        "#736452",
+        "#34281A",
+        "#080401",
+        "#BAA582"
+      ],
+      "akb_prior_asset_id": "01M7SKRMGZP7VTWR8SDFA32CYM",
+      "akb_board_hint": "疗愈空间",
+      "akb_palette_distance": 0.0404,
+      "provenance": {
+        "license": "AI-SELF-GENERATED-SHOWCASE",
+        "source_kind": "openai_gpt_image_1_mini",
+        "source_url": "self://generated/craft_14",
+        "creator": "AetherVault Curated Studio Generator",
+        "original_title": "Hand-Hammered Brass & Pewter Tea Scoop"
+      }
+    },
+    {
+      "asset_id": "craft_15",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#B5A48D",
+        "#BCAB94",
+        "#AD9C85",
+        "#998A76",
+        "#5D5448"
+      ],
+      "akb_prior_asset_id": "01M7SM9ZYFEGTCAWMDPRKWFVV9",
+      "akb_board_hint": "Codex TEST_COFFEE SHOP INTERIOR",
+      "akb_palette_distance": 0.0232,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/5940674/free-public-domain-cc0-photo",
+        "creator": "",
+        "original_title": ""
+      }
+    },
+    {
+      "asset_id": "craft_16",
+      "domain": "craft",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#B9B9B9",
+        "#878787",
+        "#6B6B6A",
+        "#53514D",
+        "#312D26"
+      ],
+      "akb_prior_asset_id": "01M7SKY86NVJP3QTHYVH0AF51N",
+      "akb_board_hint": "产业园",
+      "akb_palette_distance": 0.0213,
+      "provenance": {
+        "license": "CC0",
+        "source_kind": "openverse_rawpixel",
+        "source_url": "https://www.rawpixel.com/image/8325608/tenmoku-tea-bowl-with-hares-fur-glaze",
+        "creator": "themet",
+        "original_title": "Tenmoku Tea Bowl Hare’s-Fur Glaze"
+      }
+    },
+    {
+      "asset_id": "graph_01",
+      "domain": "graphic",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#F0EDE7",
+        "#141618",
+        "#BD5B47",
+        "#C8BCB6",
+        "#252628"
+      ],
+      "akb_prior_asset_id": "01M7SM79H9J6ZANA2QQYGK0Q2W",
+      "akb_board_hint": "fashion",
+      "akb_palette_distance": 0.0493,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Swiss International 12-Column Strict Orthogonal Grid"
+      }
+    },
+    {
+      "asset_id": "graph_02",
+      "domain": "graphic",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#F0EBE0",
+        "#1F3FB7",
+        "#F2C526",
+        "#D25048",
+        "#1C1B24"
+      ],
+      "akb_prior_asset_id": "01M7SMD71A1FXDDAN51CKT9VBS",
+      "akb_board_hint": "简历模板",
+      "akb_palette_distance": 0.0799,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Bauhaus Ultramarine, Vermilion & Signal Yellow Collision"
+      }
+    },
+    {
+      "asset_id": "graph_03",
+      "domain": "graphic",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#ECE6DB",
+        "#17181A",
+        "#C54131",
+        "#61534F",
+        "#BFA89F"
+      ],
+      "akb_prior_asset_id": "01M7SMEVAR1MW0VN2DW99JNQ1P",
+      "akb_board_hint": "UI",
+      "akb_palette_distance": 0.0454,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Pure Flat Constructivist Geometric Vector Composition"
+      }
+    },
+    {
+      "asset_id": "graph_04",
+      "domain": "graphic",
+      "is_personal_prior": true,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#DBD8D2",
+        "#7D7B77",
+        "#1D1D1C",
+        "#A4A29D",
+        "#B8B5B0"
+      ],
+      "akb_prior_asset_id": "01M7SM6JVCVWFD2H19SK7D6QKY",
+      "akb_board_hint": "fashion",
+      "akb_palette_distance": 0.0187,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Neutral Warm-Grey & Carbon Paper Print Composition"
+      }
+    },
+    {
+      "asset_id": "graph_05",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#F1EDE3",
+        "#26527A",
+        "#D5794E",
+        "#CAC9C3",
+        "#7B8896"
+      ],
+      "akb_prior_asset_id": "01M7SKP07JSKVE6JVSVDTM5NMN",
+      "akb_board_hint": "Palettes",
+      "akb_palette_distance": 0.0463,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Risograph Halftone Architectural Axonometric Print"
+      }
+    },
+    {
+      "asset_id": "graph_06",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#F4F1EA",
+        "#161616",
+        "#B7B5B0",
+        "#7D7C79",
+        "#454443"
+      ],
+      "akb_prior_asset_id": "01M7SMCVGFTYF12XKMWCRQCG03",
+      "akb_board_hint": "简历模板",
+      "akb_palette_distance": 0.0188,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Austere Black Circle & Hairline Negative-Space Print"
+      }
+    },
+    {
+      "asset_id": "graph_07",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#0E1013",
+        "#191B1D",
+        "#131518",
+        "#222223",
+        "#34261E"
+      ],
+      "akb_prior_asset_id": "01M7SMEPVMY56AA16FG9NG6CXE",
+      "akb_board_hint": "UI",
+      "akb_palette_distance": 0.0703,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Isometric White-Line Blueprint Construction Diagram"
+      }
+    },
+    {
+      "asset_id": "graph_08",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#222327",
+        "#CD482D",
+        "#DDD2C0",
+        "#493D3C",
+        "#818385"
+      ],
+      "akb_prior_asset_id": "01M7SKX2JSWWB6N8X852247HA3",
+      "akb_board_hint": "隐",
+      "akb_palette_distance": 0.044,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Dense Constructivist Overlapping Diagonal Print Collage"
+      }
+    },
+    {
+      "asset_id": "graph_09",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#3F5D7D",
+        "#4F6E8F",
+        "#324E6D",
+        "#6484A5",
+        "#253F5B"
+      ],
+      "akb_prior_asset_id": "01M7SM3QNNQ84R1T1VGH4KCAV2",
+      "akb_board_hint": "艺术",
+      "akb_palette_distance": 0.0629,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Cool Cobalt & Silver Optical Interference Stripe Graphic"
+      }
+    },
+    {
+      "asset_id": "graph_10",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#E5DDD0",
+        "#DAD1C4",
+        "#8F9A88",
+        "#C0744F",
+        "#BCB29F"
+      ],
+      "akb_prior_asset_id": "01M7SKQZ0S66F5PAAW79S25QV7",
+      "akb_board_hint": "宣传板us",
+      "akb_palette_distance": 0.0358,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Biomorphic Topographic Contour & Organic Color Study"
+      }
+    },
+    {
+      "asset_id": "graph_11",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#0E1012",
+        "#1E2024",
+        "#D87636",
+        "#523320",
+        "#A75E2D"
+      ],
+      "akb_prior_asset_id": "01M7SKR5QNE2Z3E0FTPRBSH0PD",
+      "akb_board_hint": "疗愈空间",
+      "akb_palette_distance": 0.051,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Obsidian Dark Ground with Signal Amber Accent Bar"
+      }
+    },
+    {
+      "asset_id": "graph_12",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#E8E8E8",
+        "#838589",
+        "#B5B6B7",
+        "#202123",
+        "#515254"
+      ],
+      "akb_prior_asset_id": "01M7SKQHSDDFGQ0X27ST0MKZB0",
+      "akb_board_hint": "宣传板us",
+      "akb_palette_distance": 0.0207,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Monochrome Op-Art Stepped Isometric Optical Print"
+      }
+    },
+    {
+      "asset_id": "graph_13",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#EEE4D3",
+        "#224C97",
+        "#D88C3B",
+        "#DEB689",
+        "#7A7F94"
+      ],
+      "akb_prior_asset_id": "01M7SM0KS22Z4HPA4ARNJJP5PM",
+      "akb_board_hint": "配色",
+      "akb_palette_distance": 0.0693,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Warm Ochre & Ultramarine Paper-Cut Architectural Print"
+      }
+    },
+    {
+      "asset_id": "graph_14",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#DCD7CB",
+        "#7B9A8B",
+        "#A5ADA5",
+        "#373C3A",
+        "#B3B5AC"
+      ],
+      "akb_prior_asset_id": "01M7SKTGA6KWEZ79C5KYVPR2TF",
+      "akb_board_hint": "标志设计",
+      "akb_palette_distance": 0.0312,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Muted Sage & Limestone Minimalist Geometric Division"
+      }
+    },
+    {
+      "asset_id": "graph_15",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#1B1527",
+        "#C5EB3F",
+        "#383638",
+        "#E2E4E0",
+        "#778259"
+      ],
+      "akb_prior_asset_id": "01M7SKNKWFZMVTASWBDWKQ7Q1C",
+      "akb_board_hint": "MUSE",
+      "akb_palette_distance": 0.0531,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Acid Lime & Deep Violet Experimental Graphic Study"
+      }
+    },
+    {
+      "asset_id": "graph_16",
+      "domain": "graphic",
+      "is_personal_prior": false,
+      "redistribution_safe": true,
+      "palette_oklab_hex": [
+        "#2A3C4C",
+        "#D5D1C7",
+        "#894933",
+        "#3C5163",
+        "#96918E"
+      ],
+      "akb_prior_asset_id": "01M7SMF7EX030GNBC7KD954M2A",
+      "akb_board_hint": "UI",
+      "akb_palette_distance": 0.048,
+      "provenance": {
+        "license": "CC0-SELF-GENERATED",
+        "source_kind": "procedural_constructivist_render",
+        "source_url": "self://pipeline/curate_80.py",
+        "creator": "AetherVault Procedural Engine",
+        "original_title": "Woodblock Grain Abstract Geometric Horizon Print"
+      }
+    }
+  ]
+}

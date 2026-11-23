@@ -1,0 +1,5071 @@
+{
+  "arch_01": {
+    "asset_id": "arch_01",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "architectural structure",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.3
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.75
+        }
+      },
+      "optics_camera": "35mm, orthogonal, shallow DoF",
+      "material_stack": "weathered steel, concrete, seamless joints",
+      "lighting_rig": "diffused overcast, soft, neutral",
+      "positive_tokens": [
+        "modern",
+        "minimalist",
+        "architectural",
+        "textured",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "overly ornate",
+        "distracting",
+        "bright"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6087,
+      "cached_tokens": 0,
+      "uncached_prompt_tokens": 6087,
+      "completion_tokens": 232,
+      "latency_ms": 6951.0
+    }
+  },
+  "arch_06": {
+    "asset_id": "arch_06",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Architectural Structure",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -1.0,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": -1.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": -1.0,
+          "salience": 0.25
+        },
+        "geometric_order": {
+          "score": -1.0,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, orthographic",
+      "material_stack": "smooth plaster, seamless joints",
+      "lighting_rig": "soft diffuse, overcast, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "smooth",
+        "curvilinear",
+        "seamless",
+        "light"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "harsh",
+        "angular",
+        "distracting",
+        "dark"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6086,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3014,
+      "completion_tokens": 231,
+      "latency_ms": 4634.4
+    }
+  },
+  "arch_03": {
+    "asset_id": "arch_03",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "architecture",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.6
+        }
+      },
+      "optics_camera": "24mm, perspective, shallow",
+      "material_stack": "wood, glass, metal, smooth finish",
+      "lighting_rig": "directional, soft, warm",
+      "positive_tokens": [
+        "modern",
+        "inviting",
+        "natural",
+        "functional",
+        "well-lit"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "dark",
+        "overly complex",
+        "harsh lighting",
+        "cold"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 223,
+      "latency_ms": 4647.7
+    }
+  },
+  "arch_04": {
+    "asset_id": "arch_04",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "interior",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "35mm, orthogonal, shallow DoF",
+      "material_stack": "wood, plaster, paper, joinery",
+      "lighting_rig": "soft directional, diffused, warm",
+      "positive_tokens": [
+        "minimalist",
+        "harmonious",
+        "natural",
+        "warm",
+        "inviting"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "harsh",
+        "cold",
+        "overly bright",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 233,
+      "latency_ms": 4806.7
+    }
+  },
+  "arch_05": {
+    "asset_id": "arch_05",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "architectural space",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, orthogonal",
+      "material_stack": "concrete, smooth finish, no visible joints",
+      "lighting_rig": "directional sunlight, soft diffusion, daylight",
+      "positive_tokens": [
+        "minimalist",
+        "contemporary",
+        "open space",
+        "natural light"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "dark",
+        "overly ornate"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 224,
+      "latency_ms": 5359.6
+    }
+  },
+  "arch_07": {
+    "asset_id": "arch_07",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "interior space",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "35mm, linear perspective, shallow DoF",
+      "material_stack": "concrete, smooth finish, no visible joints",
+      "lighting_rig": "directional light, hard edge, cool temperature, no haze",
+      "positive_tokens": [
+        "dramatic lighting",
+        "minimalist design",
+        "concrete texture"
+      ],
+      "negative_guardrails": [
+        "cluttered space",
+        "bright colors",
+        "soft lighting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6080,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3008,
+      "completion_tokens": 233,
+      "latency_ms": 5372.9
+    }
+  },
+  "arch_02": {
+    "asset_id": "arch_02",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Stairs",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, perspective, shallow",
+      "material_stack": "concrete, textured surface, metal handrail",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "textured",
+        "layered",
+        "geometric",
+        "structured",
+        "monochromatic"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "chaotic",
+        "overexposed",
+        "colorful",
+        "disorganized"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 228,
+      "latency_ms": 5372.6
+    }
+  },
+  "arch_09": {
+    "asset_id": "arch_09",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "architectural space",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, orthogonal, shallow DoF",
+      "material_stack": "concrete, plaster, glass, stone",
+      "lighting_rig": "diffused daylight, soft shadows, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "contemporary",
+        "textured surfaces",
+        "natural light"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "vibrant colors",
+        "harsh shadows"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6076,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3004,
+      "completion_tokens": 228,
+      "latency_ms": 4094.3
+    }
+  },
+  "arch_10": {
+    "asset_id": "arch_10",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Architectural Interior",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": -1.0,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "24mm, wide-angle, shallow DoF",
+      "material_stack": "concrete, smooth finish, seamless joints",
+      "lighting_rig": "natural light, diffused, daylight",
+      "positive_tokens": [
+        "fluidity",
+        "organic forms",
+        "architectural elegance"
+      ],
+      "negative_guardrails": [
+        "harsh shadows",
+        "cluttered space",
+        "rigid geometry"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 228,
+      "latency_ms": 3970.4
+    }
+  },
+  "arch_08": {
+    "asset_id": "arch_08",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Architectural Structure",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, orthographic",
+      "material_stack": "concrete, smooth finish, exposed joints",
+      "lighting_rig": "directional, soft diffusion, neutral",
+      "positive_tokens": [
+        "structured",
+        "geometric",
+        "architectural",
+        "monochrome",
+        "textured"
+      ],
+      "negative_guardrails": [
+        "chaotic",
+        "colorful",
+        "organic",
+        "cluttered",
+        "soft"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 228,
+      "latency_ms": 4377.4
+    }
+  },
+  "arch_12": {
+    "asset_id": "arch_12",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "kettle",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.95
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "ceramic, wood, plaster",
+      "lighting_rig": "directional, soft, warm",
+      "positive_tokens": [
+        "warmth",
+        "intimacy",
+        "craftsmanship"
+      ],
+      "negative_guardrails": [
+        "cold",
+        "sterile",
+        "harsh"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6080,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3008,
+      "completion_tokens": 215,
+      "latency_ms": 4030.6
+    }
+  },
+  "arch_13": {
+    "asset_id": "arch_13",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "architectural facade",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.7
+        }
+      },
+      "optics_camera": "35mm, perspective, shallow",
+      "material_stack": "glass, metal, concrete",
+      "lighting_rig": "directional, diffused, 5500K",
+      "positive_tokens": [
+        "reflective surfaces",
+        "geometric patterns",
+        "modern architecture"
+      ],
+      "negative_guardrails": [
+        "no organic forms",
+        "no heavy textures",
+        "no warm colors"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 224,
+      "latency_ms": 4031.2
+    }
+  },
+  "arch_11": {
+    "asset_id": "arch_11",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "interior architecture",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "24mm, perspective, shallow",
+      "material_stack": "concrete, glass, metal, smooth finishes",
+      "lighting_rig": "diffused daylight, soft, 5000K",
+      "positive_tokens": [
+        "modern",
+        "minimalist",
+        "clean lines",
+        "spacious",
+        "geometric"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "overly warm",
+        "distracting elements"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 235,
+      "latency_ms": 4304.7
+    }
+  },
+  "arch_14": {
+    "asset_id": "arch_14",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "modern architecture",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.3
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.6
+        }
+      },
+      "optics_camera": "35mm, perspective, shallow",
+      "material_stack": "glass, metal, concrete",
+      "lighting_rig": "overcast, diffused, neutral",
+      "positive_tokens": [
+        "modern",
+        "architectural",
+        "dynamic",
+        "glass",
+        "sculptural"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "chaotic",
+        "cluttered",
+        "dull"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 223,
+      "latency_ms": 3817.8
+    }
+  },
+  "arch_16": {
+    "asset_id": "arch_16",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "interior architecture",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, rectilinear, shallow DoF",
+      "material_stack": "exposed brick, steel framing, glass",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "industrial",
+        "minimalist",
+        "natural light",
+        "textured surfaces",
+        "open space"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "overly bright",
+        "harsh shadows",
+        "cold colors",
+        "chaotic composition"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 238,
+      "latency_ms": 3893.7
+    }
+  },
+  "arch_15": {
+    "asset_id": "arch_15",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "modern architecture",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "35mm, orthogonal, shallow DoF",
+      "material_stack": "metal cladding, glass, concrete",
+      "lighting_rig": "directional, soft, warm",
+      "positive_tokens": [
+        "modern",
+        "minimalist",
+        "clean lines",
+        "architectural",
+        "inviting"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "overly ornate",
+        "dark",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6080,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3008,
+      "completion_tokens": 229,
+      "latency_ms": 4252.6
+    }
+  },
+  "ind_01": {
+    "asset_id": "ind_01",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "camera lens",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.65
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.75
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field, slight distortion",
+      "material_stack": "metal, glass, anodized finish, threaded joints",
+      "lighting_rig": "directional, soft diffusion, cool temperature, minimal haze",
+      "positive_tokens": [
+        "high-quality",
+        "detailed",
+        "professional",
+        "sleek",
+        "modern"
+      ],
+      "negative_guardrails": [
+        "blurry",
+        "overexposed",
+        "distracting",
+        "cluttered",
+        "low-quality"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 241,
+      "latency_ms": 3825.0
+    }
+  },
+  "ind_03": {
+    "asset_id": "ind_03",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "camera lens",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field, slight distortion",
+      "material_stack": "metal, glass, smooth finish",
+      "lighting_rig": "directional, soft diffusion, cool temperature, low haze",
+      "positive_tokens": [
+        "sharp",
+        "detailed",
+        "industrial",
+        "modern",
+        "photographic"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "overexposed",
+        "chaotic",
+        "distracting",
+        "colorful"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6076,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3004,
+      "completion_tokens": 234,
+      "latency_ms": 3711.6
+    }
+  },
+  "ind_02": {
+    "asset_id": "ind_02",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Industrial Control Panel",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.7
+        }
+      },
+      "optics_camera": "50mm, orthogonal, shallow DoF",
+      "material_stack": "metal, plastic, anodized finish, visible fasteners",
+      "lighting_rig": "top-down, diffused, neutral",
+      "positive_tokens": [
+        "industrial",
+        "functional",
+        "mechanical",
+        "precise"
+      ],
+      "negative_guardrails": [
+        "chaotic",
+        "organic",
+        "soft",
+        "colorful"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6084,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3012,
+      "completion_tokens": 226,
+      "latency_ms": 4087.1
+    }
+  },
+  "ind_04": {
+    "asset_id": "ind_04",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Refrigerator",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "metal, smooth finish, seamless joints",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "modern",
+        "minimalist",
+        "industrial",
+        "sleek",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "ornate",
+        "colorful",
+        "rustic",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 232,
+      "latency_ms": 3383.3
+    }
+  },
+  "ind_06": {
+    "asset_id": "ind_06",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "industrial component",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.65
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.75
+        }
+      },
+      "optics_camera": "50mm, orthogonal, shallow DoF",
+      "material_stack": "aluminum, anodized finish, seamless joints",
+      "lighting_rig": "top-down, diffused, neutral",
+      "positive_tokens": [
+        "industrial",
+        "sleek",
+        "modern",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "chaotic",
+        "colorful",
+        "organic",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 225,
+      "latency_ms": 3283.3
+    }
+  },
+  "ind_05": {
+    "asset_id": "ind_05",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "industrial knob",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "metal, anodized finish, plastic base",
+      "lighting_rig": "directional, soft diffusion, neutral",
+      "positive_tokens": [
+        "industrial",
+        "modern",
+        "functional",
+        "high-contrast",
+        "textured"
+      ],
+      "negative_guardrails": [
+        "overly complex",
+        "distracting elements",
+        "low-quality materials",
+        "flat lighting",
+        "monochrome"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 231,
+      "latency_ms": 3459.9
+    }
+  },
+  "ind_07": {
+    "asset_id": "ind_07",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "industrial equipment",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "35mm, perspective, shallow",
+      "material_stack": "metal, polished, joints",
+      "lighting_rig": "directional, diffused, cool",
+      "positive_tokens": [
+        "industrial",
+        "precision",
+        "clean",
+        "modern"
+      ],
+      "negative_guardrails": [
+        "chaotic",
+        "rusty",
+        "organic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6088,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3016,
+      "completion_tokens": 214,
+      "latency_ms": 3219.6
+    }
+  },
+  "ind_09": {
+    "asset_id": "ind_09",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "industrial object",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, orthographic, shallow",
+      "material_stack": "ceramic, glossy finish, molded joints",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "industrial",
+        "minimalist",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "overly complex"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 217,
+      "latency_ms": 3413.8
+    }
+  },
+  "ind_08": {
+    "asset_id": "ind_08",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "industrial control panel",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.25
+        }
+      },
+      "optics_camera": "50mm, orthogonal, shallow DoF",
+      "material_stack": "metal, plastic, rubber, textured finish",
+      "lighting_rig": "diffused overhead, soft, neutral",
+      "positive_tokens": [
+        "industrial",
+        "detailed",
+        "functional",
+        "textured",
+        "mechanical"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "chaotic",
+        "disorganized",
+        "soft"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6077,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3005,
+      "completion_tokens": 230,
+      "latency_ms": 3636.9
+    }
+  },
+  "ind_10": {
+    "asset_id": "ind_10",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "mechanical watch components",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "macro, close-up, shallow DoF",
+      "material_stack": "metal, brass, gears, screws",
+      "lighting_rig": "directional, soft, warm, low haze",
+      "positive_tokens": [
+        "intricate",
+        "mechanical",
+        "detailed",
+        "textured",
+        "industrial"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "minimalist",
+        "abstract",
+        "chaotic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 231,
+      "latency_ms": 3674.1
+    }
+  },
+  "ind_13": {
+    "asset_id": "ind_13",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "chair",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.3
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, orthogonal",
+      "material_stack": "metal, plastic, welded joints",
+      "lighting_rig": "soft directional, diffuse, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "modern",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "ornate",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 212,
+      "latency_ms": 3398.6
+    }
+  },
+  "ind_11": {
+    "asset_id": "ind_11",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "bicycle frame",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "35mm, rectilinear, shallow DoF",
+      "material_stack": "aluminum, paint, decals",
+      "lighting_rig": "natural light, soft diffusion, neutral",
+      "positive_tokens": [
+        "modern",
+        "sleek",
+        "industrial",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "overexposed",
+        "distracting elements"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 222,
+      "latency_ms": 3645.4
+    }
+  },
+  "ind_12": {
+    "asset_id": "ind_12",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "coffee grinder and brewing equipment",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "metal, wood, plastic, textured surface",
+      "lighting_rig": "directional, soft, warm, low haze",
+      "positive_tokens": [
+        "modern",
+        "minimalist",
+        "functional",
+        "elegant",
+        "textured"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "bright",
+        "harsh",
+        "distracting",
+        "colorful"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 234,
+      "latency_ms": 3678.0
+    }
+  },
+  "ind_14": {
+    "asset_id": "ind_14",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "caliper",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, macro, shallow",
+      "material_stack": "metal, brushed finish, engraved markings",
+      "lighting_rig": "directional, soft, neutral",
+      "positive_tokens": [
+        "precision",
+        "industrial",
+        "detail"
+      ],
+      "negative_guardrails": [
+        "chaotic",
+        "colorful",
+        "organic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 212,
+      "latency_ms": 4292.6
+    }
+  },
+  "ind_15": {
+    "asset_id": "ind_15",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "industrial",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.8,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field, macro perspective",
+      "material_stack": "metal, anodized finish, linear grooves",
+      "lighting_rig": "directional light, soft diffusion, neutral color temperature, no haze",
+      "positive_tokens": [
+        "textured",
+        "industrial",
+        "geometric",
+        "monochrome",
+        "linear"
+      ],
+      "negative_guardrails": [
+        "chaotic",
+        "colorful",
+        "organic",
+        "soft",
+        "irregular"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6077,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3005,
+      "completion_tokens": 236,
+      "latency_ms": 4213.2
+    }
+  },
+  "ind_16": {
+    "asset_id": "ind_16",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "lamp",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "metal, matte finish, wood base",
+      "lighting_rig": "directional, soft diffusion, warm",
+      "positive_tokens": [
+        "elegant",
+        "minimalist",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "overly bright",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 218,
+      "latency_ms": 3675.1
+    }
+  },
+  "edit_01": {
+    "asset_id": "edit_01",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "landscape",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "natural terrain, water surface",
+      "lighting_rig": "soft diffused light, overcast, neutral",
+      "positive_tokens": [
+        "serene",
+        "dramatic",
+        "textured",
+        "natural",
+        "monochrome"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "harsh",
+        "bright",
+        "colorful",
+        "chaotic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 232,
+      "latency_ms": 3639.3
+    }
+  },
+  "edit_02": {
+    "asset_id": "edit_02",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "portrait",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, portrait, shallow DoF",
+      "material_stack": "cotton fabric, soft texture, no visible joints",
+      "lighting_rig": "diffused overcast, soft light, neutral temperature, no haze",
+      "positive_tokens": [
+        "natural",
+        "intimate",
+        "soft",
+        "subdued",
+        "realistic"
+      ],
+      "negative_guardrails": [
+        "harsh",
+        "clinical",
+        "bright",
+        "distracting",
+        "overexposed"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 239,
+      "latency_ms": 3784.9
+    }
+  },
+  "edit_03": {
+    "asset_id": "edit_03",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "suit jacket",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "chromatic_tension": {
+          "score": -1.0,
+          "salience": 0.95
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field, slight tilt-shift",
+      "material_stack": "wool fabric, textured surface, no visible seams",
+      "lighting_rig": "directional light, high contrast, monochromatic",
+      "positive_tokens": [
+        "textured",
+        "dramatic",
+        "monochrome",
+        "tailored",
+        "elegant"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "colorful",
+        "chaotic",
+        "distracting",
+        "overexposed"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6073,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3001,
+      "completion_tokens": 247,
+      "latency_ms": 4113.9
+    }
+  },
+  "edit_05": {
+    "asset_id": "edit_05",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "a person wearing a coat in an architectural setting",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "fabric, concrete, smooth finish",
+      "lighting_rig": "diffused, soft, neutral",
+      "positive_tokens": [
+        "modern",
+        "minimalist",
+        "urban",
+        "textured",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "bright",
+        "distracting",
+        "overly colorful"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 232,
+      "latency_ms": 3523.4
+    }
+  },
+  "edit_04": {
+    "asset_id": "edit_04",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Tailored Suit Jacket",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow DoF",
+      "material_stack": "linen, tailored seams",
+      "lighting_rig": "soft directional light, warm color temperature, minimal haze",
+      "positive_tokens": [
+        "elegant",
+        "textured",
+        "tailored",
+        "neutral",
+        "warm"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "chaotic",
+        "harsh",
+        "cold",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 227,
+      "latency_ms": 3602.3
+    }
+  },
+  "edit_06": {
+    "asset_id": "edit_06",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "garment",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "fabric, soft texture, no visible seams",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "elegant",
+        "minimalist",
+        "textured",
+        "warm",
+        "contemporary"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "harsh",
+        "bright",
+        "cold",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 227,
+      "latency_ms": 3438.3
+    }
+  },
+  "edit_08": {
+    "asset_id": "edit_08",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "fashion model in tailored suit",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.7
+        }
+      },
+      "optics_camera": "50mm, shallow DoF",
+      "material_stack": "linen, tailored seams",
+      "lighting_rig": "directional, soft diffusion, warm",
+      "positive_tokens": [
+        "elegant",
+        "minimalist",
+        "tailored",
+        "warm tones",
+        "fashion-forward"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "harsh lighting",
+        "distracting patterns",
+        "cold colors",
+        "overly complex"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 234,
+      "latency_ms": 3451.1
+    }
+  },
+  "edit_09": {
+    "asset_id": "edit_09",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "figure in forest",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.7
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "fabric, synthetic, seams",
+      "lighting_rig": "diffused, soft, cool",
+      "positive_tokens": [
+        "mood",
+        "atmosphere",
+        "nature",
+        "fashion",
+        "portrait"
+      ],
+      "negative_guardrails": [
+        "bright",
+        "colorful",
+        "chaotic",
+        "urban",
+        "harsh"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 222,
+      "latency_ms": 3330.1
+    }
+  },
+  "edit_07": {
+    "asset_id": "edit_07",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "natural landscape",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, perspective, shallow",
+      "material_stack": "earth, foliage, water",
+      "lighting_rig": "backlight, soft diffusion, warm",
+      "positive_tokens": [
+        "serene",
+        "natural",
+        "tranquil"
+      ],
+      "negative_guardrails": [
+        "harsh",
+        "artificial",
+        "chaotic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 214,
+      "latency_ms": 4210.8
+    }
+  },
+  "edit_10": {
+    "asset_id": "edit_10",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "figure in a coat",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "chromatic_tension": {
+          "score": 1.0,
+          "salience": 0.95
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "fabric, paint, smooth finish",
+      "lighting_rig": "directional, soft, daylight",
+      "positive_tokens": [
+        "vibrant colors",
+        "strong contrast",
+        "dynamic composition"
+      ],
+      "negative_guardrails": [
+        "lack of texture",
+        "monochrome elements",
+        "flat lighting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 0,
+      "uncached_prompt_tokens": 6081,
+      "completion_tokens": 222,
+      "latency_ms": 3009.0
+    }
+  },
+  "edit_11": {
+    "asset_id": "edit_11",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "reflection in water",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "water, organic reflections",
+      "lighting_rig": "soft directional light, diffused, cool",
+      "positive_tokens": [
+        "reflection",
+        "nature",
+        "tranquil",
+        "serene",
+        "depth"
+      ],
+      "negative_guardrails": [
+        "harsh lighting",
+        "clutter",
+        "artificial elements"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 223,
+      "latency_ms": 3416.5
+    }
+  },
+  "edit_12": {
+    "asset_id": "edit_12",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "fabric",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "cotton, linen, soft texture",
+      "lighting_rig": "natural light, diffused, warm",
+      "positive_tokens": [
+        "soft",
+        "textured",
+        "natural",
+        "warm",
+        "inviting"
+      ],
+      "negative_guardrails": [
+        "harsh",
+        "clinical",
+        "cold",
+        "synthetic",
+        "flat"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 222,
+      "latency_ms": 3388.6
+    }
+  },
+  "edit_13": {
+    "asset_id": "edit_13",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "glasses",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -1.0,
+          "salience": 0.9
+        },
+        "spatial_density": {
+          "score": -1.0,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": -1.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, orthogonal, shallow DoF",
+      "material_stack": "metal, clear acrylic, seamless joints",
+      "lighting_rig": "soft frontal, diffused, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "elegant",
+        "modern"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "distracting",
+        "overly complex"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6088,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3016,
+      "completion_tokens": 227,
+      "latency_ms": 3510.5
+    }
+  },
+  "edit_14": {
+    "asset_id": "edit_14",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "fashion garment",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": -1.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "leather, smooth finish, stitched seams",
+      "lighting_rig": "directional, soft diffusion, neutral",
+      "positive_tokens": [
+        "sleek",
+        "modern",
+        "textured",
+        "elegant"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "bright",
+        "colorful"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 222,
+      "latency_ms": 3488.5
+    }
+  },
+  "edit_15": {
+    "asset_id": "edit_15",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "figure in desert",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.75
+        }
+      },
+      "optics_camera": "50mm, shallow DoF",
+      "material_stack": "fabric, sand",
+      "lighting_rig": "directional, soft, warm",
+      "positive_tokens": [
+        "serene",
+        "contemplative",
+        "natural",
+        "warm",
+        "textured"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "harsh",
+        "cold",
+        "clinical",
+        "flat"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 222,
+      "latency_ms": 3306.8
+    }
+  },
+  "edit_16": {
+    "asset_id": "edit_16",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "curtains",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow DoF",
+      "material_stack": "velvet fabric, metal frame",
+      "lighting_rig": "directional warm light, soft diffusion",
+      "positive_tokens": [
+        "rich texture",
+        "dramatic lighting",
+        "luxurious feel"
+      ],
+      "negative_guardrails": [
+        "flat lighting",
+        "monochrome palette",
+        "lack of depth"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 222,
+      "latency_ms": 3406.1
+    }
+  },
+  "craft_01": {
+    "asset_id": "craft_01",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "ceramic bowl",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field, slight distortion",
+      "material_stack": "ceramic, matte glaze, hand-painted patterns",
+      "lighting_rig": "diffused overhead light, soft shadows, neutral white",
+      "positive_tokens": [
+        "handcrafted",
+        "textured",
+        "artisanal",
+        "natural",
+        "organic"
+      ],
+      "negative_guardrails": [
+        "digital",
+        "flat",
+        "synthetic",
+        "industrial",
+        "monochrome"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 234,
+      "latency_ms": 3708.1
+    }
+  },
+  "craft_02": {
+    "asset_id": "craft_02",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "ceramic pot",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "ceramic, unglazed, textured surface",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "textured",
+        "earthy",
+        "handcrafted",
+        "organic",
+        "historical"
+      ],
+      "negative_guardrails": [
+        "modern",
+        "synthetic",
+        "glossy",
+        "bright",
+        "digital"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6086,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3014,
+      "completion_tokens": 228,
+      "latency_ms": 3628.6
+    }
+  },
+  "craft_03": {
+    "asset_id": "craft_03",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "wooden tray",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "wood, smooth finish, finger joints",
+      "lighting_rig": "soft directional light, warm color temperature, minimal haze",
+      "positive_tokens": [
+        "warm",
+        "natural",
+        "crafted",
+        "inviting",
+        "tactile"
+      ],
+      "negative_guardrails": [
+        "harsh",
+        "clinical",
+        "cold",
+        "synthetic",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 229,
+      "latency_ms": 3447.9
+    }
+  },
+  "craft_04": {
+    "asset_id": "craft_04",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Natural Materiality",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "natural stone, wood, smooth finish, tight joints",
+      "lighting_rig": "soft directional light, diffused, warm color temperature, minimal haze",
+      "positive_tokens": [
+        "natural",
+        "textured",
+        "warm",
+        "crafted",
+        "earthy"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "synthetic",
+        "harsh",
+        "clinical",
+        "cold"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 231,
+      "latency_ms": 3499.6
+    }
+  },
+  "craft_06": {
+    "asset_id": "craft_06",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "tea set",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "ceramic, wood, bamboo",
+      "lighting_rig": "soft directional light, diffused, warm",
+      "positive_tokens": [
+        "calm",
+        "natural",
+        "inviting",
+        "craftsmanship",
+        "warmth"
+      ],
+      "negative_guardrails": [
+        "harsh",
+        "clinical",
+        "chaotic",
+        "cold",
+        "sterile"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6085,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3013,
+      "completion_tokens": 225,
+      "latency_ms": 3422.3
+    }
+  },
+  "craft_05": {
+    "asset_id": "craft_05",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "pottery",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, standard perspective, shallow DoF",
+      "material_stack": "ceramic, unglazed, hand-formed, natural finish",
+      "lighting_rig": "soft directional light, diffused, neutral white",
+      "positive_tokens": [
+        "natural",
+        "handcrafted",
+        "earthy",
+        "textured",
+        "cultural"
+      ],
+      "negative_guardrails": [
+        "industrial",
+        "synthetic",
+        "high-gloss",
+        "modern",
+        "mass-produced"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6080,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3008,
+      "completion_tokens": 237,
+      "latency_ms": 3599.6
+    }
+  },
+  "craft_07": {
+    "asset_id": "craft_07",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "teapot",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "cast iron, textured surface, no visible joints",
+      "lighting_rig": "directional light, soft diffusion, warm color temperature",
+      "positive_tokens": [
+        "textured",
+        "craftsmanship",
+        "functional",
+        "elegant",
+        "traditional"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "clinical",
+        "harsh",
+        "modern"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 231,
+      "latency_ms": 4047.3
+    }
+  },
+  "craft_08": {
+    "asset_id": "craft_08",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "bowl",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field, slight distortion",
+      "material_stack": "ceramic, matte glaze, smooth finish",
+      "lighting_rig": "soft directional light, diffused, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "elegant",
+        "functional"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "overly ornate",
+        "harsh lighting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6080,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3008,
+      "completion_tokens": 227,
+      "latency_ms": 3752.2
+    }
+  },
+  "craft_09": {
+    "asset_id": "craft_09",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "fabric",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, flat perspective, shallow DoF",
+      "material_stack": "cotton, dyed fabric, woven texture",
+      "lighting_rig": "diffused overhead light, soft, neutral",
+      "positive_tokens": [
+        "textured",
+        "woven",
+        "dyed",
+        "fabric",
+        "patterned"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "smooth",
+        "synthetic",
+        "plastic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 227,
+      "latency_ms": 3787.0
+    }
+  },
+  "craft_10": {
+    "asset_id": "craft_10",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "bowl",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, perspective, shallow",
+      "material_stack": "ceramic, matte finish, smooth edges",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "crafted",
+        "textured",
+        "functional",
+        "artistic",
+        "unique"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "digital",
+        "untextured",
+        "generic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6085,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3013,
+      "completion_tokens": 225,
+      "latency_ms": 3688.4
+    }
+  },
+  "craft_11": {
+    "asset_id": "craft_11",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "wooden stool",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, orthogonal",
+      "material_stack": "wood, carved details, aged finish",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "craftsmanship",
+        "intricate design",
+        "natural materials"
+      ],
+      "negative_guardrails": [
+        "modern aesthetics",
+        "synthetic materials",
+        "minimalism"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6086,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3014,
+      "completion_tokens": 217,
+      "latency_ms": 3614.8
+    }
+  },
+  "craft_12": {
+    "asset_id": "craft_12",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "woven basket",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, orthogonal",
+      "material_stack": "woven fibers, natural dyes, metal handle",
+      "lighting_rig": "soft frontal, diffuse, neutral",
+      "positive_tokens": [
+        "handcrafted",
+        "textured",
+        "natural materials"
+      ],
+      "negative_guardrails": [
+        "digital flatness",
+        "harsh lighting",
+        "monochrome"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6080,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3008,
+      "completion_tokens": 217,
+      "latency_ms": 4107.1
+    }
+  },
+  "craft_13": {
+    "asset_id": "craft_13",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "ceramic vase",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "35mm, perspective, shallow",
+      "material_stack": "ceramic, glossy glaze, embossed details",
+      "lighting_rig": "soft directional, diffused, neutral",
+      "positive_tokens": [
+        "elegant",
+        "intricate",
+        "textured",
+        "artisanal"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "harsh",
+        "clinical"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6086,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3014,
+      "completion_tokens": 225,
+      "latency_ms": 3773.8
+    }
+  },
+  "craft_14": {
+    "asset_id": "craft_14",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "spoon",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow DoF",
+      "material_stack": "metal, polished, hammered finish",
+      "lighting_rig": "soft directional light, warm color temperature, minimal haze",
+      "positive_tokens": [
+        "handcrafted",
+        "textured",
+        "warmth",
+        "metallic",
+        "artisan"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "digital",
+        "cold",
+        "synthetic",
+        "mass-produced"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 225,
+      "latency_ms": 3515.6
+    }
+  },
+  "graph_01": {
+    "asset_id": "graph_01",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 1.0,
+          "salience": 1.0
+        },
+        "surface_entropy": {
+          "score": -1.0,
+          "salience": 0.0
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 1.0,
+          "salience": 1.0
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.0
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -1.0,
+          "salience": 0.0
+        },
+        "reality_abstraction": {
+          "score": 1.0,
+          "salience": 1.0
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "geometric",
+        "bold",
+        "contrasting",
+        "minimalist"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "realistic",
+        "textured",
+        "organic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 207,
+      "latency_ms": 3146.3
+    }
+  },
+  "craft_15": {
+    "asset_id": "craft_15",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "textured surface",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": -1.0,
+          "salience": 0.25
+        },
+        "geometric_order": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "lighting_drama": {
+          "score": -0.5,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, flat perspective, shallow DoF",
+      "material_stack": "paper, textured surface, no joints",
+      "lighting_rig": "diffused ambient, soft light, neutral temperature, no haze",
+      "positive_tokens": [
+        "textured",
+        "natural",
+        "earthy",
+        "subtle",
+        "organic"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "harsh",
+        "clinical",
+        "synthetic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 235,
+      "latency_ms": 3510.6
+    }
+  },
+  "craft_16": {
+    "asset_id": "craft_16",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "ceramic bowl",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "50mm, shallow depth of field",
+      "material_stack": "ceramic, glazed finish",
+      "lighting_rig": "soft directional light, neutral temperature, no haze",
+      "positive_tokens": [
+        "elegant",
+        "crafted",
+        "textured",
+        "subtle",
+        "organic"
+      ],
+      "negative_guardrails": [
+        "overly bright",
+        "harsh shadows",
+        "flat colors",
+        "cluttered background"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 230,
+      "latency_ms": 3413.6
+    }
+  },
+  "graph_02": {
+    "asset_id": "graph_02",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "abstract geometric composition",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 1.0,
+          "salience": 1.0
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, orthographic, shallow",
+      "material_stack": "paper, ink, flat color",
+      "lighting_rig": "front, diffuse, neutral, none",
+      "positive_tokens": [
+        "bold",
+        "geometric",
+        "colorful",
+        "abstract"
+      ],
+      "negative_guardrails": [
+        "realistic",
+        "photographic",
+        "textured",
+        "dim"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6085,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3013,
+      "completion_tokens": 218,
+      "latency_ms": 3242.8
+    }
+  },
+  "graph_03": {
+    "asset_id": "graph_03",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 1.0,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "geometric",
+        "minimalist",
+        "abstract"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "realistic",
+        "photographic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6079,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3007,
+      "completion_tokens": 199,
+      "latency_ms": 3248.4
+    }
+  },
+  "graph_04": {
+    "asset_id": "graph_04",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "50mm, orthographic, shallow",
+      "material_stack": "paper, ink, flat finish",
+      "lighting_rig": "soft ambient, diffuse, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "geometric",
+        "monochrome"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "colorful",
+        "textured"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6090,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3018,
+      "completion_tokens": 217,
+      "latency_ms": 3124.4
+    }
+  },
+  "graph_06": {
+    "asset_id": "graph_06",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -1.0,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": -1.0,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": -1.0,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": -0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "minimalist",
+        "geometric",
+        "monochrome"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "colorful",
+        "distracting"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 210,
+      "latency_ms": 3043.1
+    }
+  },
+  "graph_05": {
+    "asset_id": "graph_05",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "geometric",
+        "stylized",
+        "colorful"
+      ],
+      "negative_guardrails": [
+        "photorealistic",
+        "dull",
+        "chaotic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 202,
+      "latency_ms": 3308.8
+    }
+  },
+  "graph_07": {
+    "asset_id": "graph_07",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Geometric Structure",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": -1.0,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, orthographic, shallow DoF",
+      "material_stack": "wireframe, digital rendering, no joints",
+      "lighting_rig": "directional, soft, cool",
+      "positive_tokens": [
+        "geometric",
+        "structured",
+        "minimalist"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "colorful",
+        "organic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 222,
+      "latency_ms": 3449.9
+    }
+  },
+  "graph_08": {
+    "asset_id": "graph_08",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 1.0,
+          "salience": 0.95
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "dynamic",
+        "layered",
+        "abstract",
+        "bold",
+        "contrasting"
+      ],
+      "negative_guardrails": [
+        "flat",
+        "monochrome",
+        "realistic",
+        "minimalist",
+        "traditional"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6078,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3006,
+      "completion_tokens": 208,
+      "latency_ms": 3243.2
+    }
+  },
+  "graph_09": {
+    "asset_id": "graph_09",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.15
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.1
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "wave pattern",
+        "subtle gradients",
+        "cool color palette"
+      ],
+      "negative_guardrails": [
+        "lack of depth",
+        "absence of texture",
+        "no strong contrasts"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6087,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3015,
+      "completion_tokens": 207,
+      "latency_ms": 3586.9
+    }
+  },
+  "graph_11": {
+    "asset_id": "graph_11",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.75
+        }
+      },
+      "optics_camera": "35mm, orthographic, shallow",
+      "material_stack": "digital vector, flat color, no joints",
+      "lighting_rig": "soft ambient, diffuse, neutral",
+      "positive_tokens": [
+        "geometric",
+        "minimalist",
+        "contrasting",
+        "bold",
+        "structured"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "overly complex",
+        "dull",
+        "monotonous"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 229,
+      "latency_ms": 3108.9
+    }
+  },
+  "graph_10": {
+    "asset_id": "graph_10",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.8
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "organic forms",
+        "layered composition",
+        "soft color palette"
+      ],
+      "negative_guardrails": [
+        "harsh contrasts",
+        "rigid structures",
+        "high detail"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6085,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3013,
+      "completion_tokens": 207,
+      "latency_ms": 3504.9
+    }
+  },
+  "graph_12": {
+    "asset_id": "graph_12",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "Geometric Pattern",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.6
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.9
+        },
+        "geometric_order": {
+          "score": 1.0,
+          "salience": 1.0
+        },
+        "lighting_drama": {
+          "score": -0.5,
+          "salience": 0.4
+        },
+        "chromatic_tension": {
+          "score": -0.5,
+          "salience": 0.7
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.5
+        },
+        "reality_abstraction": {
+          "score": 0.0,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "50mm, orthographic, shallow",
+      "material_stack": "digital print, flat color, no joints",
+      "lighting_rig": "front light, diffuse, neutral",
+      "positive_tokens": [
+        "geometric",
+        "patterned",
+        "monochrome",
+        "structured",
+        "abstract"
+      ],
+      "negative_guardrails": [
+        "no organic forms",
+        "no color variation",
+        "no depth cues",
+        "no texture"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6081,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3009,
+      "completion_tokens": 231,
+      "latency_ms": 3434.0
+    }
+  },
+  "graph_14": {
+    "asset_id": "graph_14",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": -0.5,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.0,
+          "salience": 0.8
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.7
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "paper, matte finish",
+      "lighting_rig": "soft ambient, neutral",
+      "positive_tokens": [
+        "minimalist",
+        "geometric",
+        "calm",
+        "balanced"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "chaotic",
+        "harsh",
+        "overly bright"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6086,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3014,
+      "completion_tokens": 212,
+      "latency_ms": 2919.2
+    }
+  },
+  "graph_13": {
+    "asset_id": "graph_13",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.0,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.5
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.85
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "paper, flat color",
+      "lighting_rig": "ambient, diffuse, neutral",
+      "positive_tokens": [
+        "geometric",
+        "colorful",
+        "abstract"
+      ],
+      "negative_guardrails": [
+        "realistic",
+        "photographic",
+        "detailed"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6083,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3011,
+      "completion_tokens": 204,
+      "latency_ms": 3207.2
+    }
+  },
+  "graph_15": {
+    "asset_id": "graph_15",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.85
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.25
+        },
+        "spatial_density": {
+          "score": 0.5,
+          "salience": 0.75
+        },
+        "geometric_order": {
+          "score": 1.0,
+          "salience": 0.9
+        },
+        "lighting_drama": {
+          "score": 0.0,
+          "salience": 0.2
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": -0.5,
+          "salience": 0.4
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.9
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "geometric",
+        "vibrant",
+        "modern"
+      ],
+      "negative_guardrails": [
+        "cluttered",
+        "dull",
+        "realistic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6082,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3010,
+      "completion_tokens": 202,
+      "latency_ms": 2772.7
+    }
+  },
+  "graph_16": {
+    "asset_id": "graph_16",
+    "model": "gpt-4o-mini",
+    "parsed": {
+      "primary_subject": "graphic",
+      "style_spectrums": {
+        "tectonic_honesty": {
+          "score": -0.5,
+          "salience": 0.25
+        },
+        "surface_entropy": {
+          "score": 0.0,
+          "salience": 0.15
+        },
+        "spatial_density": {
+          "score": -0.5,
+          "salience": 0.4
+        },
+        "geometric_order": {
+          "score": -0.5,
+          "salience": 0.75
+        },
+        "lighting_drama": {
+          "score": -1.0,
+          "salience": 0.1
+        },
+        "chromatic_tension": {
+          "score": 0.5,
+          "salience": 0.85
+        },
+        "thermal_mood": {
+          "score": 0.0,
+          "salience": 0.6
+        },
+        "reality_abstraction": {
+          "score": 0.5,
+          "salience": 0.8
+        }
+      },
+      "optics_camera": "n/a",
+      "material_stack": "n/a",
+      "lighting_rig": "n/a",
+      "positive_tokens": [
+        "abstract",
+        "geometric",
+        "minimalist"
+      ],
+      "negative_guardrails": [
+        "photorealistic",
+        "detailed",
+        "realistic"
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 6084,
+      "cached_tokens": 3072,
+      "uncached_prompt_tokens": 3012,
+      "completion_tokens": 204,
+      "latency_ms": 3497.7
+    }
+  }
+}

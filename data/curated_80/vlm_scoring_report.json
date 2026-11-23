@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-11-22T06:03:24.557293+00:00",
+  "vlm_model": "gpt-4o-mini",
+  "pydantic_validation_passed": 80,
+  "total_assets": 80,
+  "mean_spearman_rho": 0.6107,
+  "per_axis_spearman_rho": {
+    "tectonic_honesty": 0.5843,
+    "surface_entropy": 0.5143,
+    "spatial_density": 0.511,
+    "geometric_order": 0.7511,
+    "lighting_drama": 0.5128,
+    "chromatic_tension": 0.7349,
+    "thermal_mood": 0.7311,
+    "reality_abstraction": 0.5463
+  },
+  "cost_metrics": {
+    "scored_count": 80,
+    "total_prompt_tokens": 486519,
+    "total_cached_tokens": 239616,
+    "total_uncached_prompt_tokens": 246903,
+    "total_completion_tokens": 17923,
+    "cache_hit_rate": 0.4925,
+    "avg_prompt_tokens_per_img": 6081.5,
+    "avg_completion_tokens_per_img": 224.0,
+    "observed_online_total_cny": 0.4768,
+    "observed_online_cny_per_img": 0.00596,
+    "batch_api_equivalent_cny_per_img": 0.00298,
+    "target_ceiling_cny_per_img": 0.008,
+    "within_budget": true
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-11-22T06:06:06.584144+00:00",
+  "total_pairs": 6,
+  "pairs": [
+    {
+      "pair_id": "cmp_01",
+      "title_zh": "荒野孤寂咖啡亭 × CNC 机械节点 × 极地阴天漫射",
+      "subtitle_zh": "Architecture + Industrial + Editorial",
+      "subject_core": "Compact 25sqm outdoor modular pop-up coffee kiosk set in open coastal volcanic basalt terrain",
+      "slots": {
+        "optics": "arch_01",
+        "material": "ind_02",
+        "lighting": "edit_01"
+      },
+      "naive_image_url": "/assets/ast_comparisons/cmp_01_naive.webp",
+      "ast_image_url": "/assets/ast_comparisons/cmp_01_ast.webp",
+      "compiled_prompt": "[SUBJECT_CORE]\nCompact 25sqm outdoor modular pop-up coffee kiosk set in open coastal volcanic basalt terrain\n\n[OPTICS_LAYER]\n[arch_01] 35mm, orthogonal, shallow DoF\n\n[MATERIAL_TECTONICS]\n[ind_02] localized to primary structural assemblies and joinery: metal, plastic, anodized finish, visible fasteners, controlled subtle weathering with crisp precision mechanical joints\n\n[ATMOSPHERE_LIGHTING]\n[edit_01] soft diffused light, overcast, neutral",
+      "negative_guardrails": [
+        "plastic CGI gloss",
+        "floating structural members",
+        "post-apocalyptic trash",
+        "crumbling ruins",
+        "chaotic rust stains",
+        "oversaturated neon",
+        "HDR color clipping",
+        "harsh midday cast shadows",
+        "blown-out highlights",
+        "chaotic",
+        "organic",
+        "soft",
+        "colorful"
+      ],
+      "conflicts_isolated_count": 2,
+      "naive_failure_summary": "多图直喂导致合成器旋钮/按键物体实体泄漏进建筑屋面与墙体，且耐候钢锈色与极地冷灰发生泥泞串色。",
+      "ast_decoupling_summary": "严守作用域隔离：仅保留 arch_01 广角构筑骨架，将 ind_02 转化为局部精密 CNC 铝板与外露紧固节点，并锁死 edit_01 阴天漫射冷调。"
+    },
+    {
+      "pair_id": "cmp_02",
+      "title_zh": "东方静谧茶器展亭 × 柴烧灰釉肌理 × 暖金暮色氛围",
+      "subtitle_zh": "Architecture + Craft + Architecture",
+      "subject_core": "Interior of a quiet 90sqm Kyoto tea and ceramic exhibition pavilion with recessed timber post-and-beam alcove",
+      "slots": {
+        "optics": "arch_04",
+        "material": "craft_01",
+        "lighting": "arch_12"
+      },
+      "naive_image_url": "/assets/ast_comparisons/cmp_02_naive.webp",
+      "ast_image_url": "/assets/ast_comparisons/cmp_02_ast.webp",
+      "compiled_prompt": "[SUBJECT_CORE]\nInterior of a quiet 90sqm Kyoto tea and ceramic exhibition pavilion with recessed timber post-and-beam alcove\n\n[OPTICS_LAYER]\n[arch_04] 35mm, orthogonal, shallow DoF\n\n[MATERIAL_TECTONICS]\n[craft_01] localized to primary structural assemblies and joinery: ceramic, matte glaze, hand-painted patterns, pronounced natural weathering patina confined to primary cladding panels\n\n[ATMOSPHERE_LIGHTING]\n[arch_12] directional, soft, warm",
+      "negative_guardrails": [
+        "plastic CGI gloss",
+        "floating structural members",
+        "digital",
+        "flat",
+        "synthetic",
+        "industrial",
+        "monochrome"
+      ],
+      "conflicts_isolated_count": 2,
+      "naive_failure_summary": "直喂混合把巨大茶碗轮廓直接叠拼成建筑体块，同时障子格栅冷白光与暗室暖灯互搏导致空间透视塌陷。",
+      "ast_decoupling_summary": "保留 arch_04 坐姿水平透视与木构架，将 craft_01 的粗陶窑变颗粒精准限定于台面与墙裙饰面，继承 arch_12 2700K 暮色氛围。"
+    },
+    {
+      "pair_id": "cmp_03",
+      "title_zh": "高技派品牌快闪馆 × 光学镀膜金属 × 5800K 实验室冷光",
+      "subtitle_zh": "Architecture + Industrial + Industrial",
+      "subject_core": "High-tech modular brand pavilion featuring tension steel struts and glazed showcase canopy",
+      "slots": {
+        "optics": "arch_14",
+        "material": "ind_01",
+        "lighting": "ind_07"
+      },
+      "naive_image_url": "/assets/ast_comparisons/cmp_03_naive.webp",
+      "ast_image_url": "/assets/ast_comparisons/cmp_03_ast.webp",
+      "compiled_prompt": "[SUBJECT_CORE]\nHigh-tech modular brand pavilion featuring tension steel struts and glazed showcase canopy\n\n[OPTICS_LAYER]\n[arch_14] 35mm, perspective, shallow\n\n[MATERIAL_TECTONICS]\n[ind_01] localized to primary structural assemblies and joinery: metal, glass, anodized finish, threaded joints, ultra-clean factory-machined surface tolerance\n\n[ATMOSPHERE_LIGHTING]\n[ind_07] directional, diffused, cool",
+      "negative_guardrails": [
+        "plastic CGI gloss",
+        "floating structural members",
+        "post-apocalyptic trash",
+        "crumbling ruins",
+        "chaotic rust stains",
+        "oversaturated neon",
+        "HDR color clipping",
+        "blurry",
+        "overexposed",
+        "distracting",
+        "cluttered",
+        "low-quality"
+      ],
+      "conflicts_isolated_count": 2,
+      "naive_failure_summary": "多图直接拼接使巨大相机镜头筒与光学实验台直接穿透建筑屋顶，破坏室外快闪展馆的真实尺度比例。",
+      "ast_decoupling_summary": "仅从 ind_01 继承镜面钛金属与减反镀膜光泽到构件接头处，保持 arch_14 仰视张拉索网透视与 ind_07 5800K 洁净冷光。"
+    },
+    {
+      "pair_id": "cmp_04",
+      "title_zh": "暗调黑曜石买手店门头 × 信号橙阳极细节 × 雨夜街拍反光",
+      "subtitle_zh": "Architecture + Industrial + Editorial",
+      "subject_core": "Contemporary street-level concept retail facade with matte dark metal rainscreen and recessed glass portal",
+      "slots": {
+        "optics": "arch_15",
+        "material": "ind_05",
+        "lighting": "edit_11"
+      },
+      "naive_image_url": "/assets/ast_comparisons/cmp_04_naive.webp",
+      "ast_image_url": "/assets/ast_comparisons/cmp_04_ast.webp",
+      "compiled_prompt": "[SUBJECT_CORE]\nContemporary street-level concept retail facade with matte dark metal rainscreen and recessed glass portal\n\n[OPTICS_LAYER]\n[arch_15] 35mm, orthogonal, shallow DoF\n\n[MATERIAL_TECTONICS]\n[ind_05] localized to primary structural assemblies and joinery: metal, anodized finish, plastic base, ultra-clean factory-machined surface tolerance\n\n[ATMOSPHERE_LIGHTING]\n[edit_11] soft directional light, diffused, cool",
+      "negative_guardrails": [
+        "plastic CGI gloss",
+        "floating structural members",
+        "post-apocalyptic trash",
+        "crumbling ruins",
+        "chaotic rust stains",
+        "overly complex",
+        "distracting elements",
+        "low-quality materials",
+        "flat lighting",
+        "monochrome"
+      ],
+      "conflicts_isolated_count": 2,
+      "naive_failure_summary": "直接融合会把巨型橙色旋钮悬浮镶嵌在马路或门头上，且人物倒影与立面几何产生错乱重叠。",
+      "ast_decoupling_summary": "按 35mm 街景透视组装暗调金属挂板立面，将信号橙严格限定在门把手与极窄指示件，并在人行道引入 edit_11 雨夜微湿反光。"
+    },
+    {
+      "pair_id": "cmp_05",
+      "title_zh": "极简狭缝混凝土展厅 × 南部铁器铸铁肌理 × 戏剧性光刀切割",
+      "subtitle_zh": "Architecture + Craft + Editorial",
+      "subject_core": "Minimalist architectural concrete exhibition gallery interior with austere monolith plinth",
+      "slots": {
+        "optics": "arch_07",
+        "material": "craft_07",
+        "lighting": "edit_07"
+      },
+      "naive_image_url": "/assets/ast_comparisons/cmp_05_naive.webp",
+      "ast_image_url": "/assets/ast_comparisons/cmp_05_ast.webp",
+      "compiled_prompt": "[SUBJECT_CORE]\nMinimalist architectural concrete exhibition gallery interior with austere monolith plinth\n\n[OPTICS_LAYER]\n[arch_07] 35mm, linear perspective, shallow DoF\n\n[MATERIAL_TECTONICS]\n[craft_07] localized to primary structural assemblies and joinery: cast iron, textured surface, no visible joints, controlled subtle weathering with crisp precision mechanical joints\n\n[ATMOSPHERE_LIGHTING]\n[edit_07] backlight, soft diffusion, warm",
+      "negative_guardrails": [
+        "plastic CGI gloss",
+        "floating structural members",
+        "post-apocalyptic trash",
+        "crumbling ruins",
+        "chaotic rust stains",
+        "oversaturated neon",
+        "HDR color clipping",
+        "flat",
+        "monochrome",
+        "clinical",
+        "harsh",
+        "modern"
+      ],
+      "conflicts_isolated_count": 2,
+      "naive_failure_summary": "直接融合把铁壶壶嘴/提梁、森林树干与混凝土狭缝硬塞在同一画面，破坏美术馆室内的空间纯度。",
+      "ast_decoupling_summary": "守住 arch_07 24mm 轴线深邃空间，将 craft_07 铸铁霰粒肌理限定于展台与门框饰面，引入 edit_07 强斜向光束氛围。"
+    },
+    {
+      "pair_id": "cmp_06",
+      "title_zh": "构成主义艺术书店立面 × 包豪斯原色色块 × 高阳几何硬影",
+      "subtitle_zh": "Architecture + Graphic + Editorial",
+      "subject_core": "Modernist art bookstore facade with recessed entry steps and sculptural plastered wall planes",
+      "slots": {
+        "optics": "arch_05",
+        "material": "graph_02",
+        "lighting": "edit_10"
+      },
+      "naive_image_url": "/assets/ast_comparisons/cmp_06_naive.webp",
+      "ast_image_url": "/assets/ast_comparisons/cmp_06_ast.webp",
+      "compiled_prompt": "[SUBJECT_CORE]\nModernist art bookstore facade with recessed entry steps and sculptural plastered wall planes\n\n[OPTICS_LAYER]\n[arch_05] 35mm, orthogonal\n\n[MATERIAL_TECTONICS]\n[graph_02] localized to primary structural assemblies and joinery: paper, ink, flat color, controlled subtle weathering with crisp precision mechanical joints\n\n[ATMOSPHERE_LIGHTING]\n[edit_10] directional, soft, daylight",
+      "negative_guardrails": [
+        "plastic CGI gloss",
+        "floating structural members",
+        "post-apocalyptic trash",
+        "crumbling ruins",
+        "chaotic rust stains",
+        "realistic",
+        "photographic",
+        "textured",
+        "dim"
+      ],
+      "conflicts_isolated_count": 2,
+      "naive_failure_summary": "2D 海报平面与 3D 建筑照片直接混合后产生贴图错位、透视坍缩，人物模特突兀穿插在台阶上。",
+      "ast_decoupling_summary": "将 graph_02 纯正包豪斯红蓝黄几何色块转译为立面粉刷涂装分区，同时锁定 arch_05 实体尺度透视与 edit_10 明快高阳阴影。"
+    }
+  ]
+}

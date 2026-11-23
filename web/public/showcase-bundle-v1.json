@@ -1,0 +1,52 @@
+{
+  "manifest_version": "1.0.0",
+  "generated_at": "2026-11-23T05:11:10.429650+00:00",
+  "project_title": "Spatial AI 双引擎作品集 · AetherVault & TectonicLoop",
+  "public_url": "https://frostales-code.github.io/spatial-ai-portfolio/",
+  "modes": [
+    "instant_showcase",
+    "live_engine"
+  ],
+  "data_sources": [
+    "/data/aethervault_showcase_v1.json",
+    "/data/ast_comparisons_v1.json",
+    "/data/tectonic_showcase_v1.json"
+  ],
+  "aethervault_summary": {
+    "total_assets": 80,
+    "domain_counts": {
+      "architecture": 16,
+      "industrial": 16,
+      "editorial": 16,
+      "craft": 16,
+      "graphic": 16
+    },
+    "axes_count": 8,
+    "golden_anchors_count": 8,
+    "ast_comparison_pairs": 6,
+    "pydantic_validation_passed": 80,
+    "mean_spearman_rho": 0.6107,
+    "observed_online_cny_per_img": 0.00596,
+    "cache_hit_rate": 0
+  },
+  "tectonicloop_summary": {
+    "total_assemblies": 30,
+    "benchmark_date": "2026-11-23",
+    "category_counts": {
+      "wall_cladding": 12,
+      "glazing_portal": 8,
+      "edge_weatherproofing": 5,
+      "interior_threshold": 5
+    },
+    "case_count": 3,
+    "tier_count": 9,
+    "cad_svg_count": 8,
+    "lint_rules_count": 8
+  },
+  "static_assets_audit": {
+    "total_webp_files": 101,
+    "total_json_files": 3,
+    "public_payload_mb": 5.28,
+    "all_referenced_assets_present": true
+  }
+}

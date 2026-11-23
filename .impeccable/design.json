@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-23T12:30:00+08:00",
+  "title": "Design System: AetherVault & TectonicLoop — Spatial AI Monograph",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Signal Cobalt",
+        "canonical": "#153CE8",
+        "tonalRamp": ["#061352", "#091D7A", "#0E2BB5", "#153CE8", "#4465F0", "#7C93F5", "#B8C4FA", "#EEF2FF"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Gallery Paper",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#0E1015", "#262A33", "#525866", "#7E8594", "#B0B6C2", "#CBD0D8", "#F4F5F7", "#FFFFFF"]
+      },
+      "obsidian-ink": {
+        "role": "neutral",
+        "displayName": "Obsidian Ink",
+        "canonical": "#0E1015",
+        "tonalRamp": ["#0E1015", "#1C2029", "#2F3542", "#525866", "#788091", "#A6ADB9", "#E2E5EA", "#FFFFFF"]
+      },
+      "teal-verified": {
+        "role": "semantic",
+        "displayName": "Verified Teal",
+        "canonical": "#0F766E",
+        "tonalRamp": ["#042F2E", "#0B4F4A", "#0F766E", "#149B91", "#34BEB4", "#7ADBD4", "#BDF0EC", "#F0FDFA"]
+      },
+      "crimson-alert": {
+        "role": "semantic",
+        "displayName": "Alert Crimson",
+        "canonical": "#C62828",
+        "tonalRamp": ["#4A0A0A", "#7F1616", "#A61E1E", "#C62828", "#DF4B4B", "#EC7C7C", "#F7BDBD", "#FEF2F2"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Architectural Display", "purpose": "Primary thesis statements on Monograph Hero and Methodology spreads." },
+      "headline": { "displayName": "Section Headline", "purpose": "Section introductions across Specimen Gallery, Elevation Sandbox, and EDD Benchmark." },
+      "title": { "displayName": "Monograph Title", "purpose": "Dialog headers and primary two-column subsystem headings." },
+      "body": { "displayName": "Prose Copy", "purpose": "Technical architecture narratives and contextual explanations (max 70ch)." },
+      "label": { "displayName": "Tabular Telemetry", "purpose": "Sub-millisecond timings, CNY ledgers, Spearman scores, and control labels (strict >=12px floor)." }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-monograph",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Subtle hover zoom on unobstructed specimen plates and slider thumb response (disabled under prefers-reduced-motion)."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Cobalt Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid Signal Cobalt square-edged CTA used for primary calibration, AST compiler trigger, and active slot selection.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">启动 2 轮视觉校准</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 20px; background: var(--cobalt, #153CE8); color: #FFFFFF; border: none; border-radius: 0; font-family: 'Manrope', 'Noto Sans SC', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.15s ease; } .ds-btn-primary:hover { background: var(--cobalt-deep, #0E2BB5); } .ds-btn-primary:focus-visible { outline: 2px solid var(--cobalt, #153CE8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Hairline Action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "High-contrast obsidian-outlined white button for secondary inspection and gallery navigation.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">浏览 80 图标本库</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 20px; background: #FFFFFF; color: var(--ink, #0E1015); border: 1px solid var(--ink, #0E1015); border-radius: 0; font-family: 'Manrope', 'Noto Sans SC', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 0.15s ease; } .ds-btn-secondary:hover { background: var(--surface, #F4F5F7); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--cobalt, #153CE8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Intent Parser Search Input",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Full-height rectangular query field mapping spatial keywords to 8-axis weights in <1ms.",
+      "html": "<div class=\"ds-input-wrap\"><svg class=\"ds-search-icon\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input class=\"ds-input-search\" type=\"text\" placeholder=\"输入审美意图或材质关键词…\" /><button class=\"ds-input-submit\" type=\"button\">解析意图</button></div>",
+      "css": ".ds-input-wrap { display: flex; align-items: stretch; border: 1px solid var(--hairline, #E2E5EA); background: #FFFFFF; } .ds-input-wrap:focus-within { border-color: var(--cobalt, #153CE8); } .ds-search-icon { margin: auto 0 auto 12px; color: var(--muted, #525866); flex-shrink: 0; } .ds-input-search { flex: 1; min-width: 0; min-height: 42px; padding: 8px 12px; border: none; background: transparent; color: var(--ink, #0E1015); font-size: 14px; outline: none; } .ds-input-submit { min-height: 42px; padding: 0 16px; border: none; background: var(--ink, #0E1015); color: #FFFFFF; font-size: 12px; font-weight: 600; cursor: pointer; } .ds-input-submit:hover { background: var(--cobalt, #153CE8); }"
+    },
+    {
+      "name": "Monograph Navigation Tab",
+      "kind": "nav",
+      "refersTo": "nav-tab",
+      "description": "Minimal masthead tab using bottom Signal Cobalt rule rather than boxed pills.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-nav-tab ds-nav-tab--active\" type=\"button\">AetherVault</button><button class=\"ds-nav-tab\" type=\"button\">双引擎方法论</button><button class=\"ds-nav-tab\" type=\"button\">TectonicLoop</button><button class=\"ds-nav-tab\" type=\"button\">评测基准</button></nav>",
+      "css": ".ds-nav { display: flex; gap: 28px; height: 56px; border-bottom: 1px solid var(--hairline, #E2E5EA); background: #FFFFFF; padding: 0 16px; } .ds-nav-tab { height: 100%; padding: 0 2px; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted, #525866); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; } .ds-nav-tab:hover { color: var(--ink, #0E1015); } .ds-nav-tab--active { border-bottom-color: var(--cobalt, #153CE8); color: var(--ink, #0E1015); font-weight: 600; }"
+    },
+    {
+      "name": "3-Slot Specimen Assigner Strip",
+      "kind": "custom",
+      "refersTo": "button-secondary",
+      "description": "Flush 3-column orthogonal assignment strip anchored cleanly underneath each unbadged 4:3 photograph.",
+      "html": "<div class=\"ds-slot-strip\"><button class=\"ds-slot-btn ds-slot-btn--active\" type=\"button\">镜头</button><button class=\"ds-slot-btn\" type=\"button\">材质</button><button class=\"ds-slot-btn\" type=\"button\">光影</button></div>",
+      "css": ".ds-slot-strip { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--hairline, #E2E5EA); } .ds-slot-btn { min-height: 36px; border: none; border-right: 1px solid var(--hairline, #E2E5EA); background: #FFFFFF; color: var(--ink, #0E1015); font-size: 12px; font-weight: 500; cursor: pointer; } .ds-slot-btn:last-child { border-right: none; } .ds-slot-btn:hover { background: var(--surface, #F4F5F7); } .ds-slot-btn--active { background: var(--cobalt, #153CE8); color: #FFFFFF; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Architectural Monograph & Specimen Index",
+    "overview": "This visual system frames spatial AI tooling as an authored Swiss architectural publication and precision drafting instrument rather than a dark software telemetry panel. Every structural surface relies on pure paper whiteness, measured 1px orthogonal rules, and generous spatial cadence so photography and material color palettes carry 100% of the chromatic expression without environmental UI tinting.",
+    "keyCharacteristics": [
+      "Uncast gallery paper canvas paired with 1px structural Swiss hairlines instead of bordered card clusters.",
+      "Single committed Signal Cobalt focal accent reserved exclusively for active selections, focus states, primary conversions, and curtain manipulation handles.",
+      "Complete image sovereignty on 4:3 photography plates with all metadata, OKLab swatches, and 3-slot assignment actions cleanly anchored outside the photographic frame.",
+      "Progressive disclosure: headline proof and borderless curation plates lead; 8-axis deep calibration and structured AST compilation live in focused slide-over dialogs."
+    ],
+    "rules": [
+      {
+        "name": "The One-Signal Restraint Rule",
+        "body": "Signal Cobalt (primary) appears on less than 10% of the viewport so active AST slots, the diff curtain handle, and primary CTAs read immediately without competing against the photography.",
+        "section": "colors"
+      },
+      {
+        "name": "The Uncast Neutral Plate Rule",
+        "body": "Curated images and OKLab swatches sit strictly on #FFFFFF or #F4F5F7 neutral grounds—never tinted dark panels—preventing optical white-balance distortion.",
+        "section": "colors"
+      },
+      {
+        "name": "The Honest Semantic Contrast Rule",
+        "body": "Every foreground label and button state meets or exceeds WCAG AA (>= 4.5:1), placing pure white ink over Signal Cobalt (7.2:1) and Obsidian Ink (19.0:1), and Verified Teal or Alert Crimson cleanly on Gallery Paper (>= 5.4:1).",
+        "section": "colors"
+      },
+      {
+        "name": "The 12px Floor Rule",
+        "body": "No user-facing text drops below 12px (0.75rem); sub-12px eyebrow tags and 9px-11px micro-badges are permanently prohibited.",
+        "section": "typography"
+      },
+      {
+        "name": "The Heading Self-Sufficiency Rule",
+        "body": "Headings never carry ALL-CAPS decorative eyebrow kickers above them; strong weight (700-800) and generous top margin establish hierarchy alone.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline-Over-Shadow Rule",
+        "body": "Never rely on ambient gray drop-shadows or bordered rounded cards to separate panels; structure density with clean 1px Swiss grid lines and whitespace.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep all gallery photography 100% free of floating badges, source tags, or watermarks—place provenance and match telemetry cleanly below the frame or inside SpecimenLightbox.",
+      "Do separate dense multi-metric rows with gap-px bg-[#E2E5EA] matrices or border-t-2 border-[#0E1015] monograph rules so breakpoints wrap cleanly.",
+      "Do maintain :focus-visible rings on every custom control including range sliders and closeable role='dialog' modals (Escape + backdrop click).",
+      "Do wrap data tables in overflow-x-auto containers and preserve workspace state across tab switches."
+    ],
+    "donts": [
+      "Don't place colored vertical stripes (border-l-2 / border-l-4) on the left edge of cards, pillars, or alerts.",
+      "Don't introduce two-axis background grid lines (.bg-tech-grid) behind prose or page shells; keep technical drafting grids strictly inside the TectonicLoop orthographic SVG plate.",
+      "Don't use Inter, JetBrains Mono, Space Grotesk, Playfair Display, or <12px typography classes anywhere in the interface.",
+      "Don't render raw emojis, internal sprint IDs (MIC-*, P-MIC-*), or candidate interview coaching prompts in user-facing copy."
+    ]
+  }
+}

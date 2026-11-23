@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spatial-ai-portfolio"
+version = "0.1.0"
+description = "Dual-mode Spatial AI portfolio engine: AetherVault (0->1) & TectonicLoop (1->N)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+    "pydantic>=2.9.0",
+    "numpy>=1.26.0",
+    "scipy>=1.13.0",
+    "opencv-python-headless>=4.10.0",
+    "pillow>=10.4.0",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+]
+
+# Security note: API keys for optional Live VLM / Image Gen calls MUST be injected
+# solely via OS environment variables (e.g., OPENAI_API_KEY, GEMINI_API_KEY).
+# Never commit secrets into source files, logs, or static showcase bundles.
+
+[tool.setuptools.packages.find]
+include = ["pipeline*", "server*"]

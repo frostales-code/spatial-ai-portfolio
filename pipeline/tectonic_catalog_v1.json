@@ -1,0 +1,2678 @@
+{
+  "version": "1.0.0",
+  "benchmark_date": "2026-11-23",
+  "total_assemblies": 30,
+  "category_counts": {
+    "wall_cladding": 12,
+    "glazing_portal": 8,
+    "edge_weatherproofing": 5,
+    "interior_threshold": 5
+  },
+  "assemblies": [
+    {
+      "sku_id": "cast_concrete_in_situ",
+      "category": "wall_cladding",
+      "name": "现浇弧形清水混凝土整体墙体（高风险湿作业）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "wet_cast_in_situ",
+      "detail_drawing_code": "WARN-WET-CAST-01",
+      "assembly_layers": [
+        "现场双面钢木组合定型模板支设",
+        "P6 抗渗C40细石清水混凝土浇筑",
+        "28天占道带模保湿养护"
+      ],
+      "unit_cost_cny_sqm": "3800.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.12",
+      "lead_time_days": 28,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 7.2,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "uhpc_dry_hang_1200",
+      "category": "wall_cladding",
+      "name": "18mm 预制 UHPC 超高性能混凝土干挂板 (1200×2400)",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-UHPC-04",
+      "assembly_layers": [
+        "基层：原砖墙水泥砂浆找平 + 防水涂膜",
+        "龙骨：50×50×4mm 热镀锌方钢主龙骨",
+        "饰面：18mm 预制 UHPC 肌理板（10mm 明缝）"
+      ],
+      "unit_cost_cny_sqm": "520.00",
+      "substructure_amortization_cny_sqm": "100.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 12,
+      "panel_modulus_mm": {
+        "width": 1200,
+        "height": 2400,
+        "joint_gap_mm": 10,
+        "joint_type": "open_shadow_gap"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "fiber_cement_600",
+      "category": "wall_cladding",
+      "name": "12mm 高密纤维水泥挂板 + 拉铆钉明装 (600×1200)",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "基层：单向防潮呼吸纸敷贴",
+        "龙骨：1.5mm Z 型轻钢龙骨体系",
+        "饰面：12mm 穿心高密纤维水泥板（8mm 阳极铝分缝条）"
+      ],
+      "unit_cost_cny_sqm": "210.00",
+      "substructure_amortization_cny_sqm": "80.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 7,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 1200,
+        "joint_gap_mm": 8,
+        "joint_type": "anodized_alu_spline"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "perforated_alu_900",
+      "category": "wall_cladding",
+      "name": "2.5mm 氟碳喷涂穿孔铝单板多折线干挂 (900×2400)",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-ALU-12",
+      "assembly_layers": [
+        "基层：防水深灰吸音无纺布衬底",
+        "龙骨：40×40 镀锌角钢骨架系统",
+        "饰面：2.5mm 氟碳折边微穿孔铝单板"
+      ],
+      "unit_cost_cny_sqm": "280.00",
+      "substructure_amortization_cny_sqm": "80.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 9,
+      "panel_modulus_mm": {
+        "width": 900,
+        "height": 2400,
+        "joint_gap_mm": 10,
+        "joint_type": "silicone_weather_seal"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "limestone_dry_hang_900",
+      "category": "wall_cladding",
+      "name": "25mm 莱姆石背栓式干挂石材幕墙 (900×1800)",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-UHPC-04",
+      "assembly_layers": [
+        "防水：聚合物水泥渗透结晶底涂",
+        "龙骨：8#热镀锌槽钢主柱 + 不锈钢背栓",
+        "饰面：25mm 米白荔枝面莱姆石板（6mm 胶缝）"
+      ],
+      "unit_cost_cny_sqm": "780.00",
+      "substructure_amortization_cny_sqm": "140.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.12",
+      "lead_time_days": 15,
+      "panel_modulus_mm": {
+        "width": 900,
+        "height": 1800,
+        "joint_gap_mm": 6,
+        "joint_type": "recessed_silicone"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "terracotta_baguette_600",
+      "category": "wall_cladding",
+      "name": "30mm 挤出自然窑变陶土板开放幕墙 (600×1500)",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-TERRA-06",
+      "assembly_layers": [
+        "基层：防水保温一体化岩棉层",
+        "龙骨：定制T型铝合金干挂挂件系统",
+        "饰面：30mm 空心挤压陶土板（12mm 通风开放缝）"
+      ],
+      "unit_cost_cny_sqm": "560.00",
+      "substructure_amortization_cny_sqm": "120.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.10",
+      "lead_time_days": 14,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 1500,
+        "joint_gap_mm": 12,
+        "joint_type": "open_drained_joint"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "weathering_steel_1200",
+      "category": "wall_cladding",
+      "name": "3mm 耐候考登钢预锈折边干挂板 (1200×2400)",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-UHPC-04",
+      "assembly_layers": [
+        "底部设防锈溢流导水槽防污染铺装",
+        "龙骨：镀锌角钢双向焊接背架",
+        "饰面：3mm 厂内促锈钝化耐候钢板（10mm 明缝）"
+      ],
+      "unit_cost_cny_sqm": "480.00",
+      "substructure_amortization_cny_sqm": "100.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.10",
+      "lead_time_days": 11,
+      "panel_modulus_mm": {
+        "width": 1200,
+        "height": 2400,
+        "joint_gap_mm": 10,
+        "joint_type": "shadow_reveal_gap"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "flexible_stone_sheet_600",
+      "category": "wall_cladding",
+      "name": "4mm MCM 改性无机土柔性石材切片 (600×1200)",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "基层：原有实墙防碱封闭底漆+耐碱玻纤网",
+        "粘结：柔性高弹聚合物瓷砖胶满刮",
+        "饰面：4mm 柔性夯土/石材纹理切片（600 模数勾缝）"
+      ],
+      "unit_cost_cny_sqm": "195.00",
+      "substructure_amortization_cny_sqm": "45.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 5,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 1200,
+        "joint_gap_mm": 4,
+        "joint_type": "grouted_modular_seam"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "mineral_stucco_grooved",
+      "category": "wall_cladding",
+      "name": "预制金属分隔条无机矿物泥灰分格墙体 (600×1200)",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "基层：水泥纤维板干式基底+不锈钢分缝条",
+        "中间：抗裂网格布增强层",
+        "饰面：2.5mm 天然无机石灰基哑光涂料 + 硅烷防潮封闭"
+      ],
+      "unit_cost_cny_sqm": "240.00",
+      "substructure_amortization_cny_sqm": "55.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 6,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 1200,
+        "joint_gap_mm": 6,
+        "joint_type": "metal_reveal_bead"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "charred_cedar_siding",
+      "category": "wall_cladding",
+      "name": "22mm 碳化红雪松直纹木挂板装配系统 (600×2400)",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-WOOD-08",
+      "assembly_layers": [
+        "防蚁防水呼吸膜全墙铺设",
+        "龙骨：防腐花旗松双向通风顺水木龙骨",
+        "饰面：22mm 碳化拉丝红雪松实木挂板（防白蚁阻燃处理）"
+      ],
+      "unit_cost_cny_sqm": "460.00",
+      "substructure_amortization_cny_sqm": "90.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.12",
+      "lead_time_days": 10,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 2400,
+        "joint_gap_mm": 8,
+        "joint_type": "ventilated_tongue_groove"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "curved_grg_monolith",
+      "category": "wall_cladding",
+      "name": "双曲面定制 GRG + 现场批嵌无缝弧形门头（超标异形）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "raw_hallucination",
+      "detail_drawing_code": "WARN-CURVE-GRG-02",
+      "assembly_layers": [
+        "三维扫描与CNC异形泡沫模具制作",
+        "手工双曲玻璃纤维石膏拼装打磨",
+        "室外现场 4 遍无缝抗裂腻子与养护"
+      ],
+      "unit_cost_cny_sqm": "4200.00",
+      "substructure_amortization_cny_sqm": "350.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.15",
+      "lead_time_days": 32,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 32.0,
+      "default_span_m": 8.4,
+      "is_curved_geometry": true
+    },
+    {
+      "sku_id": "bespoke_bronze_patina_unpriced",
+      "category": "wall_cladding",
+      "name": "定制手工锻铜硫肝做旧艺术挂板（待厂商实时询价 · 缺价验证）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-ALU-12",
+      "assembly_layers": [
+        "不锈钢双保险背栓龙骨系统",
+        "手工锤纹锻铜表皮与天然抗氧化蜡封",
+        "当前季度原材料铜价剧烈波动：暂无认证定额单价"
+      ],
+      "unit_cost_cny_sqm": null,
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.10",
+      "lead_time_days": 20,
+      "panel_modulus_mm": {
+        "width": 900,
+        "height": 1800,
+        "joint_gap_mm": 8,
+        "joint_type": "bronze_reveal_joint"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "jumbo_frameless_5200",
+      "category": "glazing_portal",
+      "name": "5.2m 整块超限无框超白夹胶玻璃（特种吊装）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "raw_hallucination",
+      "detail_drawing_code": "STD-FAC-UHPC-04",
+      "assembly_layers": [
+        "定制 15+15mm 超长超重钢化SGP夹胶玻璃",
+        "地埋重型U型槽暗框",
+        "封路特种随车吊夜间施工"
+      ],
+      "unit_cost_cny_sqm": "6500.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.10",
+      "lead_time_days": 22,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 10.5,
+      "default_span_m": 5.2,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "mullion_steel_1700",
+      "category": "glazing_portal",
+      "name": "1.7m 三等分极窄黑钢竖梃中空玻璃幕墙",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "curtain_wall_framed",
+      "detail_drawing_code": "STD-FAC-UHPC-04",
+      "assembly_layers": [
+        "38×140mm 氟碳极窄精密黑钢竖梃立柱",
+        "6+12A+6mm 双钢化 Low-E 节能中空玻璃",
+        "常规地下货梯分段运输安装"
+      ],
+      "unit_cost_cny_sqm": "1650.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 8,
+      "panel_modulus_mm": {
+        "width": 1700,
+        "height": 2400,
+        "joint_gap_mm": 12,
+        "joint_type": "narrow_steel_mullion"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 10.5,
+      "default_span_m": 1.7,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "folding_alu_4leaf",
+      "category": "glazing_portal",
+      "name": "窄边隔热断桥铝合金四扇折叠开启窗 + 咖啡外摆台",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "curtain_wall_framed",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "重型上承重不锈钢隐藏滑轨五金",
+        "四扇 1300mm 模数断桥铝合金折叠窗扇",
+        "下方配 900mm 矮墙支撑外摆吧台挑板"
+      ],
+      "unit_cost_cny_sqm": "1480.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 7,
+      "panel_modulus_mm": {
+        "width": 1300,
+        "height": 2200,
+        "joint_gap_mm": 10,
+        "joint_type": "thermal_break_mullion"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 10.5,
+      "default_span_m": 1.3,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "curved_jumbo_glass_4800",
+      "category": "glazing_portal",
+      "name": "4.8m 整块热弯异形超白无框弧形橱窗玻璃（高破损风险）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "raw_hallucination",
+      "detail_drawing_code": "WARN-CURVE-GRG-02",
+      "assembly_layers": [
+        "开模定制热弯超白夹胶玻璃",
+        "弧形地面暗埋固定槽",
+        "非标海运木箱专车运输"
+      ],
+      "unit_cost_cny_sqm": "7400.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.12",
+      "lead_time_days": 30,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 14.0,
+      "default_span_m": 4.8,
+      "is_curved_geometry": true
+    },
+    {
+      "sku_id": "faceted_steel_curtain_1200",
+      "category": "glazing_portal",
+      "name": "1.2m 折线拼接平玻黑钢幕墙系统（多折面拟合弧形）",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "curtain_wall_framed",
+      "detail_drawing_code": "STD-FAC-ALU-12",
+      "assembly_layers": [
+        "1.2m 等分折线高精度钢结构转换竖框",
+        "平板钢化中空玻璃（零热弯开模费）",
+        "标准化 EPDM 等压防水胶条"
+      ],
+      "unit_cost_cny_sqm": "1820.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.09",
+      "lead_time_days": 10,
+      "panel_modulus_mm": {
+        "width": 1200,
+        "height": 2400,
+        "joint_gap_mm": 12,
+        "joint_type": "faceted_steel_transom"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 14.0,
+      "default_span_m": 1.2,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "timber_alu_composite_1500",
+      "category": "glazing_portal",
+      "name": "1.5m 模数室外铝包内部实木框格栅落地窗",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "curtain_wall_framed",
+      "detail_drawing_code": "STD-FAC-WOOD-08",
+      "assembly_layers": [
+        "外侧耐候喷涂氟碳铝型材保护罩",
+        "内侧天然花旗松指接方木视觉暖质感框",
+        "中空双银 Low-E 高透玻璃"
+      ],
+      "unit_cost_cny_sqm": "1960.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 12,
+      "panel_modulus_mm": {
+        "width": 1500,
+        "height": 2400,
+        "joint_gap_mm": 10,
+        "joint_type": "timber_alu_mullion"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 9.6,
+      "default_span_m": 1.5,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "sliding_pocket_alu_1600",
+      "category": "glazing_portal",
+      "name": "1.6m 三轨嵌入式铝合金口袋推拉窗门系统",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "curtain_wall_framed",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "下沉式平齐地轨铝合金门槽",
+        "极窄边推拉窗扇可 2/3 面积全开启",
+        "防夹手缓冲阻尼五金套件"
+      ],
+      "unit_cost_cny_sqm": "1380.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 6,
+      "panel_modulus_mm": {
+        "width": 1600,
+        "height": 2400,
+        "joint_gap_mm": 10,
+        "joint_type": "slim_alu_sliding_frame"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 9.6,
+      "default_span_m": 1.6,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "low_e_modular_1400",
+      "category": "glazing_portal",
+      "name": "1.4m 标准模数铝合金明框高隔热幕墙",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "curtain_wall_framed",
+      "detail_drawing_code": "STD-FAC-ALU-12",
+      "assembly_layers": [
+        "PA66 尼龙隔热断桥铝主框",
+        "1.4m 标准工厂流水线裁切玻璃板",
+        "快装压块免打胶外饰盖板"
+      ],
+      "unit_cost_cny_sqm": "1550.00",
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 9,
+      "panel_modulus_mm": {
+        "width": 1400,
+        "height": 2400,
+        "joint_gap_mm": 10,
+        "joint_type": "modular_alu_cap"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 14.0,
+      "default_span_m": 1.4,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "zero_edge_raw_hallucination",
+      "category": "edge_weatherproofing",
+      "name": "零厚度刀锋挑檐 + 无踢脚墙皮直落人行道（缺防水构造）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "raw_hallucination",
+      "detail_drawing_code": "WARN-WET-CAST-01",
+      "assembly_layers": [
+        "概念渲染零厚度悬挑边缘",
+        "无金属压顶与滴水凹槽",
+        "地面无缝衔接但无防水泛水收口"
+      ],
+      "unit_cost_cny_sqm": null,
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": "26950.00",
+      "wastage_factor": "1.00",
+      "lead_time_days": 18,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": false,
+      "has_recessed_plinth": false,
+      "default_area_sqm": 7.2,
+      "default_span_m": 7.2,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "alu_coping_plinth_canopy_std",
+      "category": "edge_weatherproofing",
+      "name": "3mm 氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚 + 拉杆雨棚",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-UHPC-04",
+      "assembly_layers": [
+        "顶口：3mm 氟碳铝板泛水坡度 5% + 12mm 防滴水鹰嘴",
+        "基座：80mm 304 拉丝不锈钢内凹防潮踢脚线",
+        "门口：斜拉杆钢构雨棚防水引流"
+      ],
+      "unit_cost_cny_sqm": null,
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": "8400.00",
+      "wastage_factor": "1.00",
+      "lead_time_days": 5,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 7.2,
+      "default_span_m": 2.4,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "galvanized_drip_plinth_econ",
+      "category": "edge_weatherproofing",
+      "name": "2mm 烤漆镀锌钢泛水押顶 + 水泥基防潮收边踢脚（经济型）",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "2mm 热镀锌钢板折弯卡扣泛水押顶",
+        "50mm 聚合物防水砂浆深色防潮踢脚边"
+      ],
+      "unit_cost_cny_sqm": null,
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": "5600.00",
+      "wastage_factor": "1.00",
+      "lead_time_days": 4,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 7.2,
+      "default_span_m": 2.4,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "stainless_drip_recessed_curb",
+      "category": "edge_weatherproofing",
+      "name": "4mm 黑钛不锈钢折边押顶 + 120mm 烧毛玄武岩防潮台基",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-ALU-12",
+      "assembly_layers": [
+        "4mm 黑钛 304 不锈钢隐蔽自攻钉扣压顶",
+        "120mm 高硬度烧毛黑玄武岩整石防踢底座",
+        "隐藏线性落水暗槽"
+      ],
+      "unit_cost_cny_sqm": null,
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": "9800.00",
+      "wastage_factor": "1.00",
+      "lead_time_days": 6,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 8.4,
+      "default_span_m": 2.4,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "copper_eave_stone_plinth",
+      "category": "edge_weatherproofing",
+      "name": "历史风貌仿青铜氧化压顶檐口 + 120mm 花岗岩防潮勒脚",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-WOOD-08",
+      "assembly_layers": [
+        "传统老街深棕金属折边滴水屋檐压顶",
+        "120mm 剁斧面灰麻花岗岩防水防返碱勒脚",
+        "隐形导水檐沟"
+      ],
+      "unit_cost_cny_sqm": null,
+      "substructure_amortization_cny_sqm": "0.00",
+      "lump_sum_cny": "10600.00",
+      "wastage_factor": "1.00",
+      "lead_time_days": 8,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 6.6,
+      "default_span_m": 2.2,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "flamed_basalt_600",
+      "category": "interior_threshold",
+      "name": "25mm 烧毛福鼎黑玄武岩入口防滑铺装 (600×1200)",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-WOOD-08",
+      "assembly_layers": [
+        "C25 半干硬性防水结合层",
+        "25mm 烧毛防滑高致密玄武岩整板",
+        "3mm 耐候聚氨酯伸缩缝"
+      ],
+      "unit_cost_cny_sqm": "440.00",
+      "substructure_amortization_cny_sqm": "65.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.10",
+      "lead_time_days": 6,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 1200,
+        "joint_gap_mm": 6,
+        "joint_type": "expansion_stone_joint"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "terrazzo_precast_600",
+      "category": "interior_threshold",
+      "name": "20mm 无机水泥预制水磨石模块化墙地挂板 (600×600)",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "12mm 胶泥调平防潮基座",
+        "20mm 预制哑光水磨石标准板",
+        "渗入型抗油污纳米密封保护层"
+      ],
+      "unit_cost_cny_sqm": "380.00",
+      "substructure_amortization_cny_sqm": "50.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.09",
+      "lead_time_days": 5,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 600,
+        "joint_gap_mm": 4,
+        "joint_type": "flush_brass_divider"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "microcement_sealed",
+      "category": "interior_threshold",
+      "name": "室外级聚氨酯双组份罩面微水泥护墙板 (600×1200)",
+      "active_tier": "Tier_C_Value",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-FCB-09",
+      "assembly_layers": [
+        "防水纤维水泥预制衬板",
+        "两道耐水微水泥批刮",
+        "双组份哑光脂肪族聚氨酯抗紫外罩面"
+      ],
+      "unit_cost_cny_sqm": "310.00",
+      "substructure_amortization_cny_sqm": "40.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 5,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 1200,
+        "joint_gap_mm": 4,
+        "joint_type": "hairline_control_joint"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "raw_rammed_earth_unsealed",
+      "category": "interior_threshold",
+      "name": "25mm 原生态无保护现夯土入口墙体（易渗湿粉化隐患）",
+      "active_tier": "Tier_A_Bespoke",
+      "construction_method": "raw_hallucination",
+      "detail_drawing_code": "WARN-EARTH-UNSEALED-03",
+      "assembly_layers": [
+        "现场调配生土直接批覆在木砖基面上",
+        "未掺加固化硅酸钠也无底层石材防潮踢脚",
+        "多雨季直接面临雨水冲刷溶蚀风险"
+      ],
+      "unit_cost_cny_sqm": "2950.00",
+      "substructure_amortization_cny_sqm": "200.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.14",
+      "lead_time_days": 26,
+      "panel_modulus_mm": null,
+      "has_parapet_flashing": false,
+      "has_recessed_plinth": false,
+      "default_area_sqm": 21.0,
+      "default_span_m": 6.6,
+      "is_curved_geometry": false
+    },
+    {
+      "sku_id": "acoustic_timber_slat_600",
+      "category": "interior_threshold",
+      "name": "门廊吸音实木格栅预制组件 (600×2400)",
+      "active_tier": "Tier_B_Balanced",
+      "construction_method": "dry_hanging_prefab",
+      "detail_drawing_code": "STD-FAC-WOOD-08",
+      "assembly_layers": [
+        "9mm 黑色高密聚酯纤维吸音背板",
+        "阻燃处理白橡/杉木实木格栅条",
+        "免油漆快卡扣挂件安装"
+      ],
+      "unit_cost_cny_sqm": "390.00",
+      "substructure_amortization_cny_sqm": "60.00",
+      "lump_sum_cny": null,
+      "wastage_factor": "1.08",
+      "lead_time_days": 5,
+      "panel_modulus_mm": {
+        "width": 600,
+        "height": 2400,
+        "joint_gap_mm": 6,
+        "joint_type": "slat_shadow_reveal"
+      },
+      "has_parapet_flashing": true,
+      "has_recessed_plinth": true,
+      "default_area_sqm": 24.0,
+      "default_span_m": 3.0,
+      "is_curved_geometry": false
+    }
+  ],
+  "lint_rules": [
+    {
+      "code": "WET_WORK_STREET_CONFLICT",
+      "severity": "BLOCKING",
+      "title": "临街现浇湿作业跨度越界",
+      "standard_basis": "《商业微更新快装施工与占道围挡限额规范 §3.2》",
+      "physical_limit": "连续现浇清水混凝土跨度 > 4.5m 且养护期 > 21 天时，街区人行道不具备全封闭支模条件。",
+      "remediation": "替换为 18mm 预制 UHPC 干挂板（1200×2400mm）或纤维水泥挂板装配体系。"
+    },
+    {
+      "code": "JUMBO_GLASS_SPAN_EXCEEDED",
+      "severity": "BLOCKING",
+      "title": "无框超大玻璃运输与风压超限",
+      "standard_basis": "《常见建筑玻璃制造极值与货梯进深规程 §4.1》",
+      "physical_limit": "无竖梃玻璃单块净跨 > 3.2m 时，超出常规电梯与搬运极限，需特种吊车封路作业且热炸裂率陡增。",
+      "remediation": "按 1200–1700mm 经济分格加设极窄黑钢竖梃或改用四扇折叠开启窗。"
+    },
+    {
+      "code": "WEATHERPROOF_DETAIL_MISSING",
+      "severity": "BLOCKING",
+      "title": "檐口金属泛水与防潮踢脚缺失",
+      "standard_basis": "《外墙饰面防水防返碱构造图集 J103-2》",
+      "physical_limit": "女儿墙缺 3mm 滴水泛水压顶或墙脚直落人行道未设 ≥80mm 金属踢脚，雨季 6 个月内必然渗污返碱。",
+      "remediation": "增设 3mm 氟碳铝板压顶滴水线、80mm 内凹不锈钢勒脚及雨棚结构斜拉杆。"
+    },
+    {
+      "code": "CURVED_BESPOKE_FORMWORK_OVERFLOW",
+      "severity": "BLOCKING",
+      "title": "异形无缝双曲面定制工期与造价失控",
+      "standard_basis": "《商业零售定制模具经济批量导则 §2.4》",
+      "physical_limit": "连续异形曲面未作直板折线拆分（panel_modulus = None 且工期 > 21 天），模具摊销可达常规 6 倍。",
+      "remediation": "采用多折线干挂铝合金板或预制水磨石/陶板小模数（600–900mm）分段拟合。"
+    },
+    {
+      "code": "MOISTURE_UNSEALED_GROUND_CONTACT",
+      "severity": "BLOCKING",
+      "title": "多孔吸湿材质直触地面毛细虹吸隐患",
+      "standard_basis": "《历史街区生土/无机墙体耐水耐久性指引 §5.1》",
+      "physical_limit": "夯土、多孔灰泥等吸水性表皮直接接触街面地坪，雨水飞溅与地下潮气导致底层粉化脱落。",
+      "remediation": "底层增设 ≥120mm 烧毛玄武岩或不锈钢防潮基座，表面喷涂透气有机硅憎水剂。"
+    },
+    {
+      "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+      "severity": "WARNING",
+      "title": "关键构件周期超出商业快装 21 天窗口",
+      "standard_basis": "《90–300㎡ 商业街区免租金装修工期模型》",
+      "physical_limit": "单一分项采购与现场固化周期超过 21 天，直接挤压门店免租期并推高综合财务成本。",
+      "remediation": "优先选择标准化库存干挂板材或工厂预制模块化门窗框架。"
+    },
+    {
+      "code": "EXCESSIVE_PANEL_MODULE_WEIGHT",
+      "severity": "WARNING",
+      "title": "单块预制板面积超过双人人工安装极值",
+      "standard_basis": "《外墙干挂单板现场吊装安全标准 §6.3》",
+      "physical_limit": "单块干挂饰面板面积 > 3.20 ㎡（例如 >1200×2400mm）时，单板自重超出双人徒手托举能力。",
+      "remediation": "拆分为 1200×2400mm（2.88 ㎡）或 600×1200mm 标准规格。"
+    },
+    {
+      "code": "UNKNOWN_PRICE_MISSING",
+      "severity": "WARNING",
+      "title": "定额库缺价强阻断（严禁静默置 0）",
+      "standard_basis": "Zero-LLM Decimal 诚实工程计价规范 §1.1",
+      "physical_limit": "定制非标手工饰面若尚未核定最新地区含税单价，算法绝不编造估算单价或折算为 0。",
+      "remediation": "保留 UNKNOWN_PRICE_MISSING 标记并待供应商核价，或切换至已核价标准构造包。"
+    }
+  ],
+  "cad_details": {
+    "WARN-WET-CAST-01": {
+      "code": "WARN-WET-CAST-01",
+      "title": "现场定制木模现浇清水混凝土断面（受阻风险做法）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"现浇清水混凝土风险节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#C62828\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#C62828\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#C62828\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">原基层结构</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">双面木模支撑(占道)</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#C62828\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#C62828\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">无分隔膨胀缝</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">200mm现浇墙</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL WARN-WET-CAST-01</text></svg>"
+    },
+    "WARN-CURVE-GRG-02": {
+      "code": "WARN-CURVE-GRG-02",
+      "title": "连续异形双曲 GRG/抹灰定制体块（造价工期双超标）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"异形双曲定制风险节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#C62828\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#C62828\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#C62828\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">钢网骨架</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">异形 CNC 模具</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#C62828\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#C62828\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">32天湿养护期</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">连续批嵌面层</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL WARN-CURVE-GRG-02</text></svg>"
+    },
+    "WARN-EARTH-UNSEALED-03": {
+      "code": "WARN-EARTH-UNSEALED-03",
+      "title": "无踢脚防潮直落地生土饰面（雨水虹吸受潮风险）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"无防潮踢脚生土风险节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#C62828\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#C62828\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#C62828\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">旧砖墙基层</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">直接粘接找平</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#C62828\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#C62828\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">直触地面返潮!</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">25mm未封闭生土</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL WARN-EARTH-UNSEALED-03</text></svg>"
+    },
+    "STD-FAC-UHPC-04": {
+      "code": "STD-FAC-UHPC-04",
+      "title": "18mm 预制 UHPC 肌理挂板干挂标准节点（10mm 开放明缝）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"18mm UHPC 干挂节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">原墙防水砂浆</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">50x50镀锌钢龙骨</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#153CE8\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">10mm开放阴影缝</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">18mm预制UHPC板</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL STD-FAC-UHPC-04</text></svg>"
+    },
+    "STD-FAC-FCB-09": {
+      "code": "STD-FAC-FCB-09",
+      "title": "12mm 高密纤维水泥挂板明装铆钉装配节点（600×1200 模数）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"12mm 纤维水泥快装节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">防潮呼吸纸</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">Z型轻钢龙骨</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#153CE8\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">8mm铝分缝+铆钉</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">12mm纤维水泥板</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL STD-FAC-FCB-09</text></svg>"
+    },
+    "STD-FAC-ALU-12": {
+      "code": "STD-FAC-ALU-12",
+      "title": "2.5mm 氟碳穿孔铝单板多折线干挂节点（900×2400 模数）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"穿孔铝单板多折线干挂\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">防水吸音无纺布</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">40x40角钢副框</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#153CE8\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">10mm硅酮耐候胶缝</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">2.5mm折边铝单板</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL STD-FAC-ALU-12</text></svg>"
+    },
+    "STD-FAC-TERRA-06": {
+      "code": "STD-FAC-TERRA-06",
+      "title": "30mm 空心陶瓷陶板幕墙干挂节点（600×1500 模数）",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"预制陶板干挂节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">保温防水基层</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">铝合金挂槽龙骨</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#153CE8\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">12mm通槽开放缝</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">30mm挤出陶土板</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL STD-FAC-TERRA-06</text></svg>"
+    },
+    "STD-FAC-WOOD-08": {
+      "code": "STD-FAC-WOOD-08",
+      "title": "碳化红雪松木条挂板通风幕墙与石材防潮基座节点",
+      "svg": "<svg viewBox=\"0 0 360 220\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"碳化木条+石材勒脚节点\"><defs><pattern id=\"cadHatch\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\"><line x1=\"0\" y1=\"8\" x2=\"8\" y2=\"0\" stroke=\"#525866\" stroke-width=\"0.7\" opacity=\"0.45\"/></pattern></defs><rect x=\"0\" y=\"0\" width=\"360\" height=\"220\" fill=\"#FAFBFD\"/><rect x=\"36\" y=\"34\" width=\"68\" height=\"152\" fill=\"url(#cadHatch)\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"108\" y1=\"34\" x2=\"108\" y2=\"186\" stroke=\"#0F766E\" stroke-width=\"2\" stroke-dasharray=\"4 2\"/><rect x=\"122\" y=\"54\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><rect x=\"122\" y=\"138\" width=\"48\" height=\"16\" fill=\"#E2E5EA\" stroke=\"#0E1015\" stroke-width=\"1.2\"/><line x1=\"146\" y1=\"34\" x2=\"146\" y2=\"186\" stroke=\"#525866\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><rect x=\"176\" y=\"34\" width=\"16\" height=\"68\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><rect x=\"176\" y=\"112\" width=\"16\" height=\"74\" fill=\"#FFFFFF\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"168\" y1=\"102\" x2=\"206\" y2=\"102\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"168\" y1=\"112\" x2=\"206\" y2=\"112\" stroke=\"#153CE8\" stroke-width=\"1\"/><line x1=\"200\" y1=\"96\" x2=\"200\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1.2\"/><line x1=\"24\" y1=\"186\" x2=\"220\" y2=\"186\" stroke=\"#0E1015\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"48\" x2=\"224\" y2=\"48\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"51\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">防白蚁呼吸膜</text><line x1=\"146\" y1=\"62\" x2=\"224\" y2=\"82\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"85\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">防腐实木顺水条</text><line x1=\"192\" y1=\"107\" x2=\"224\" y2=\"118\" stroke=\"#153CE8\" stroke-width=\"1\"/><text x=\"228\" y=\"121\" fill=\"#153CE8\" font-size=\"10.5\" font-weight=\"600\" font-family=\"Chivo Mono, sans-serif\">120mm石材防潮基</text><line x1=\"184\" y1=\"148\" x2=\"224\" y2=\"152\" stroke=\"#525866\" stroke-width=\"0.8\"/><text x=\"228\" y=\"155\" fill=\"#0E1015\" font-size=\"10.5\" font-family=\"Chivo Mono, sans-serif\">22mm碳化木挂板</text><text x=\"36\" y=\"206\" fill=\"#525866\" font-size=\"10\" font-family=\"Chivo Mono, sans-serif\">DETAIL STD-FAC-WOOD-08</text></svg>"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "case_01_corner_cafe",
+      "title": "90㎡ 街角精品咖啡馆立面改造",
+      "subtitle": "清水质感概念图的干挂化与外摆开启窗价值工程",
+      "site_context": "沿街一层转角老房底层更新，人行道紧邻门店，禁止长时间封路现浇支模，黄昏有高大梧桐树影投射在右侧墙面与人行道。",
+      "scale_anchor": {
+        "facade_width_mm": 7200,
+        "facade_height_mm": 3400,
+        "door_height_mm": 2200,
+        "label": "门高 2,200mm | 总面宽 7,200mm | 总饰面面积 34.5 ㎡"
+      },
+      "tiers": [
+        {
+          "tier_id": "tier_0_raw",
+          "tier_label": "状态 0 · 原始 AI 概念图（物理与工期隐患）",
+          "short_label": "原始概念态",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 主立面墙体 (24.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_wall.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "24.0",
+                "max_continuous_span_m": "7.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "现场双面钢木组合定型模板支设",
+                  "P6 抗渗C40细石清水混凝土浇筑",
+                  "28天占道带模保湿养护"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "wet_cast_in_situ",
+                "detail_drawing_code": "WARN-WET-CAST-01",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "3800.00",
+                "wastage_factor": "1.12",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 28,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "cast_concrete_in_situ",
+              "sku_name": "现浇弧形清水混凝土整体墙体（高风险湿作业）"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 临街采光界面 (10.5 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_glass.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "10.5",
+                "max_continuous_span_m": "5.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "定制 15+15mm 超长超重钢化SGP夹胶玻璃",
+                  "地埋重型U型槽暗框",
+                  "封路特种随车吊夜间施工"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "STD-FAC-UHPC-04",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "6500.00",
+                "wastage_factor": "1.10",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 22,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "jumbo_frameless_5200",
+              "sku_name": "5.2m 整块超限无框超白夹胶玻璃（特种吊装）"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 檐口泛水与勒脚 (7.2 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_edge.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "7.2",
+                "max_continuous_span_m": "7.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "概念渲染零厚度悬挑边缘",
+                  "无金属压顶与滴水凹槽",
+                  "地面无缝衔接但无防水泛水收口"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "WARN-WET-CAST-01",
+                "has_parapet_flashing": false,
+                "has_recessed_plinth": false,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "26950.00",
+                "lead_time_days": 18,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "zero_edge_raw_hallucination",
+              "sku_name": "零厚度刀锋挑檐 + 无踢脚墙皮直落人行道（缺防水构造）"
+            }
+          ],
+          "alerts": [
+            {
+              "code": "WET_WORK_STREET_CONFLICT",
+              "severity": "BLOCKING",
+              "zone_id": "facade_wall_01",
+              "message": "连续 7.2m 现浇清水混凝土在临街商铺微更新场景需占道支模养护 (28 天)，审批与工期风险极高。",
+              "remediation_hint": "切换为 18mm 预制 UHPC 干挂板 (1200x2400) 或纤维水泥挂板全干法体系。"
+            },
+            {
+              "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+              "severity": "WARNING",
+              "zone_id": "facade_wall_01",
+              "message": "当前工艺总生产/养护周期达 28 天，超出 90-300㎡ 街区商铺高周转黄金窗口 (≤21 天)。",
+              "remediation_hint": "优先切换工厂预制干挂或装配式模块化立面体系。"
+            },
+            {
+              "code": "JUMBO_GLASS_SPAN_EXCEEDED",
+              "severity": "BLOCKING",
+              "zone_id": "glazing_portal_02",
+              "message": "无框单块玻璃跨度达 5.2m，超出常规货梯运输与钢化炉经济极值，需封路动用重型随车吊。",
+              "remediation_hint": "按 1700mm 模数增设极窄黑钢竖梃或切换为四扇铝合金折叠开启窗。"
+            },
+            {
+              "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+              "severity": "WARNING",
+              "zone_id": "glazing_portal_02",
+              "message": "当前工艺总生产/养护周期达 22 天，超出 90-300㎡ 街区商铺高周转黄金窗口 (≤21 天)。",
+              "remediation_hint": "优先切换工厂预制干挂或装配式模块化立面体系。"
+            },
+            {
+              "code": "WEATHERPROOF_DETAIL_MISSING",
+              "severity": "BLOCKING",
+              "zone_id": "edge_weather_03",
+              "message": "检测到女儿墙缺少金属泛水滴水线或底部直抵地面无防潮勒脚，交付半年内极易流挂返碱。",
+              "remediation_hint": "注入 3mm 氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚节点。"
+            },
+            {
+              "code": "MOISTURE_UNSEALED_GROUND_CONTACT",
+              "severity": "BLOCKING",
+              "zone_id": "edge_weather_03",
+              "message": "多孔吸湿表皮（生土/夯土/无机粉刷）直接触地且无疏水防潮勒脚，毛细虹吸将在首个雨季引起粉化剥落。",
+              "remediation_hint": "增设 ≥120mm 花岗岩/不锈钢内凹防潮台基，并在饰面表面加注透气硅烷憎水封闭剂。"
+            }
+          ],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "24.0",
+              "effective_area_with_wastage_sqm": "26.88",
+              "material_and_substructure_cny": "102144.00",
+              "low_estimate_cny": "89886.72",
+              "high_estimate_cny": "114401.28",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "10.5",
+              "effective_area_with_wastage_sqm": "11.55",
+              "material_and_substructure_cny": "75075.00",
+              "low_estimate_cny": "66066.00",
+              "high_estimate_cny": "84084.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "7.2",
+              "effective_area_with_wastage_sqm": "7.20",
+              "material_and_substructure_cny": "26950.00",
+              "low_estimate_cny": "23716.00",
+              "high_estimate_cny": "30184.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "204169.00",
+            "low_estimate_cny": "179668.72",
+            "high_estimate_cny": "228669.28",
+            "max_lead_time_days": 28,
+            "blocking_alerts_count": 4,
+            "warning_alerts_count": 2,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        },
+        {
+          "tier_id": "tier_1_balanced",
+          "tier_label": "反向约束 A · 商业均衡 UHPC 干挂（1200×2400mm）",
+          "short_label": "商业均衡干挂",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 主立面墙体 (24.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_wall.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "24.0",
+                "max_continuous_span_m": "1.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "基层：原砖墙水泥砂浆找平 + 防水涂膜",
+                  "龙骨：50×50×4mm 热镀锌方钢主龙骨",
+                  "饰面：18mm 预制 UHPC 肌理板（10mm 明缝）"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1200,
+                  "height": 2400,
+                  "joint_gap_mm": 10,
+                  "joint_type": "open_shadow_gap"
+                },
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-UHPC-04",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "520.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "100.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 12,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "uhpc_dry_hang_1200",
+              "sku_name": "18mm 预制 UHPC 超高性能混凝土干挂板 (1200×2400)"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 临街采光界面 (10.5 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_glass.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "10.5",
+                "max_continuous_span_m": "1.7",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "38×140mm 氟碳极窄精密黑钢竖梃立柱",
+                  "6+12A+6mm 双钢化 Low-E 节能中空玻璃",
+                  "常规地下货梯分段运输安装"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1700,
+                  "height": 2400,
+                  "joint_gap_mm": 12,
+                  "joint_type": "narrow_steel_mullion"
+                },
+                "construction_method": "curtain_wall_framed",
+                "detail_drawing_code": "STD-FAC-UHPC-04",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "1650.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 8,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "mullion_steel_1700",
+              "sku_name": "1.7m 三等分极窄黑钢竖梃中空玻璃幕墙"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 檐口泛水与勒脚 (7.2 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_edge.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "7.2",
+                "max_continuous_span_m": "2.4",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "顶口：3mm 氟碳铝板泛水坡度 5% + 12mm 防滴水鹰嘴",
+                  "基座：80mm 304 拉丝不锈钢内凹防潮踢脚线",
+                  "门口：斜拉杆钢构雨棚防水引流"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-UHPC-04",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "8400.00",
+                "lead_time_days": 5,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "alu_coping_plinth_canopy_std",
+              "sku_name": "3mm 氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚 + 拉杆雨棚"
+            }
+          ],
+          "alerts": [],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "24.0",
+              "effective_area_with_wastage_sqm": "25.92",
+              "material_and_substructure_cny": "16070.40",
+              "low_estimate_cny": "14141.95",
+              "high_estimate_cny": "17998.85",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "10.5",
+              "effective_area_with_wastage_sqm": "11.34",
+              "material_and_substructure_cny": "18711.00",
+              "low_estimate_cny": "16465.68",
+              "high_estimate_cny": "20956.32",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "7.2",
+              "effective_area_with_wastage_sqm": "7.20",
+              "material_and_substructure_cny": "8400.00",
+              "low_estimate_cny": "7392.00",
+              "high_estimate_cny": "9408.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "43181.40",
+            "low_estimate_cny": "37999.63",
+            "high_estimate_cny": "48363.17",
+            "max_lead_time_days": 12,
+            "blocking_alerts_count": 0,
+            "warning_alerts_count": 0,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        },
+        {
+          "tier_id": "tier_2_value",
+          "tier_label": "反向约束 B · 7 天快装控本纤维水泥板（600×1200mm）",
+          "short_label": "极限快装控本",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 主立面墙体 (24.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_wall.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "24.0",
+                "max_continuous_span_m": "0.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "基层：单向防潮呼吸纸敷贴",
+                  "龙骨：1.5mm Z 型轻钢龙骨体系",
+                  "饰面：12mm 穿心高密纤维水泥板（8mm 阳极铝分缝条）"
+                ],
+                "panel_modulus_mm": {
+                  "width": 600,
+                  "height": 1200,
+                  "joint_gap_mm": 8,
+                  "joint_type": "anodized_alu_spline"
+                },
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "210.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "80.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 7,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "fiber_cement_600",
+              "sku_name": "12mm 高密纤维水泥挂板 + 拉铆钉明装 (600×1200)"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 临街采光界面 (10.5 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_glass.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "10.5",
+                "max_continuous_span_m": "1.3",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "重型上承重不锈钢隐藏滑轨五金",
+                  "四扇 1300mm 模数断桥铝合金折叠窗扇",
+                  "下方配 900mm 矮墙支撑外摆吧台挑板"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1300,
+                  "height": 2200,
+                  "joint_gap_mm": 10,
+                  "joint_type": "thermal_break_mullion"
+                },
+                "construction_method": "curtain_wall_framed",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "1480.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 7,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "folding_alu_4leaf",
+              "sku_name": "窄边隔热断桥铝合金四扇折叠开启窗 + 咖啡外摆台"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 檐口泛水与勒脚 (7.2 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c1_edge.png",
+                "perspective_plane_normal": [
+                  0.04,
+                  0.99,
+                  0.12
+                ],
+                "estimated_area_sqm": "7.2",
+                "max_continuous_span_m": "2.4",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "2mm 热镀锌钢板折弯卡扣泛水押顶",
+                  "50mm 聚合物防水砂浆深色防潮踢脚边"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "5600.00",
+                "lead_time_days": 4,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "galvanized_drip_plinth_econ",
+              "sku_name": "2mm 烤漆镀锌钢泛水押顶 + 水泥基防潮收边踢脚（经济型）"
+            }
+          ],
+          "alerts": [],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "24.0",
+              "effective_area_with_wastage_sqm": "25.92",
+              "material_and_substructure_cny": "7516.80",
+              "low_estimate_cny": "6614.78",
+              "high_estimate_cny": "8418.82",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "10.5",
+              "effective_area_with_wastage_sqm": "11.34",
+              "material_and_substructure_cny": "16783.20",
+              "low_estimate_cny": "14769.22",
+              "high_estimate_cny": "18797.18",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "7.2",
+              "effective_area_with_wastage_sqm": "7.20",
+              "material_and_substructure_cny": "5600.00",
+              "low_estimate_cny": "4928.00",
+              "high_estimate_cny": "6272.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "29900.00",
+            "low_estimate_cny": "26312.00",
+            "high_estimate_cny": "33488.00",
+            "max_lead_time_days": 7,
+            "blocking_alerts_count": 0,
+            "warning_alerts_count": 0,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "case_02_concept_boutique",
+      "title": "180㎡ 设计师买手店超限弧形门头更新",
+      "subtitle": "双曲面开模幻觉拆解为多折线阳极金属与平玻幕墙体系",
+      "site_context": "商圈核心铺位改造，原方案包含超限双曲连续 GRG 与整块热弯玻璃，总周期超 32 天且单方破 4 千；需维持雕塑级几何张力并控本至 10 天全干法安装。",
+      "scale_anchor": {
+        "facade_width_mm": 8400,
+        "facade_height_mm": 4200,
+        "door_height_mm": 2400,
+        "label": "门高 2,400mm | 总面宽 8,400mm | 总饰面面积 46.0 ㎡"
+      },
+      "tiers": [
+        {
+          "tier_id": "tier_0_raw",
+          "tier_label": "状态 0 · 原始 AI 概念图（异形模具与热弯超限）",
+          "short_label": "原始概念态",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 弧形主门头表皮 (32.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_wall.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "32.0",
+                "max_continuous_span_m": "8.4",
+                "is_curved_geometry": true
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "三维扫描与CNC异形泡沫模具制作",
+                  "手工双曲玻璃纤维石膏拼装打磨",
+                  "室外现场 4 遍无缝抗裂腻子与养护"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "WARN-CURVE-GRG-02",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "4200.00",
+                "wastage_factor": "1.15",
+                "substructure_amortization_cny_sqm": "350.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 32,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "curved_grg_monolith",
+              "sku_name": "双曲面定制 GRG + 现场批嵌无缝弧形门头（超标异形）"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 热弯弧形大橱窗 (14.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_glass.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "14.0",
+                "max_continuous_span_m": "4.8",
+                "is_curved_geometry": true
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "开模定制热弯超白夹胶玻璃",
+                  "弧形地面暗埋固定槽",
+                  "非标海运木箱专车运输"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "WARN-CURVE-GRG-02",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "7400.00",
+                "wastage_factor": "1.12",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 30,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "curved_jumbo_glass_4800",
+              "sku_name": "4.8m 整块热弯异形超白无框弧形橱窗玻璃（高破损风险）"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 女儿墙收口与踢脚 (8.4 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_edge.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "8.4",
+                "max_continuous_span_m": "8.4",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "概念渲染零厚度悬挑边缘",
+                  "无金属压顶与滴水凹槽",
+                  "地面无缝衔接但无防水泛水收口"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "WARN-WET-CAST-01",
+                "has_parapet_flashing": false,
+                "has_recessed_plinth": false,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "26950.00",
+                "lead_time_days": 18,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "zero_edge_raw_hallucination",
+              "sku_name": "零厚度刀锋挑檐 + 无踢脚墙皮直落人行道（缺防水构造）"
+            }
+          ],
+          "alerts": [
+            {
+              "code": "CURVED_BESPOKE_FORMWORK_OVERFLOW",
+              "severity": "BLOCKING",
+              "zone_id": "facade_wall_01",
+              "message": "双曲面异形无分缝定制整体饰面需 CNC 异形模具与现场分段批嵌养护 (32 天)，单方造价与接缝开裂风险显著超限。",
+              "remediation_hint": "改用小幅面折叠直板多折线拟合曲面（600/900mm 干挂模数），彻底取消异形现场湿作业。"
+            },
+            {
+              "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+              "severity": "WARNING",
+              "zone_id": "facade_wall_01",
+              "message": "当前工艺总生产/养护周期达 32 天，超出 90-300㎡ 街区商铺高周转黄金窗口 (≤21 天)。",
+              "remediation_hint": "优先切换工厂预制干挂或装配式模块化立面体系。"
+            },
+            {
+              "code": "JUMBO_GLASS_SPAN_EXCEEDED",
+              "severity": "BLOCKING",
+              "zone_id": "glazing_portal_02",
+              "message": "无框单块玻璃跨度达 4.8m，超出常规货梯运输与钢化炉经济极值，需封路动用重型随车吊。",
+              "remediation_hint": "按 1700mm 模数增设极窄黑钢竖梃或切换为四扇铝合金折叠开启窗。"
+            },
+            {
+              "code": "CURVED_BESPOKE_FORMWORK_OVERFLOW",
+              "severity": "BLOCKING",
+              "zone_id": "glazing_portal_02",
+              "message": "双曲面异形无分缝定制整体饰面需 CNC 异形模具与现场分段批嵌养护 (30 天)，单方造价与接缝开裂风险显著超限。",
+              "remediation_hint": "改用小幅面折叠直板多折线拟合曲面（600/900mm 干挂模数），彻底取消异形现场湿作业。"
+            },
+            {
+              "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+              "severity": "WARNING",
+              "zone_id": "glazing_portal_02",
+              "message": "当前工艺总生产/养护周期达 30 天，超出 90-300㎡ 街区商铺高周转黄金窗口 (≤21 天)。",
+              "remediation_hint": "优先切换工厂预制干挂或装配式模块化立面体系。"
+            },
+            {
+              "code": "WEATHERPROOF_DETAIL_MISSING",
+              "severity": "BLOCKING",
+              "zone_id": "edge_weather_03",
+              "message": "检测到女儿墙缺少金属泛水滴水线或底部直抵地面无防潮勒脚，交付半年内极易流挂返碱。",
+              "remediation_hint": "注入 3mm 氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚节点。"
+            },
+            {
+              "code": "MOISTURE_UNSEALED_GROUND_CONTACT",
+              "severity": "BLOCKING",
+              "zone_id": "edge_weather_03",
+              "message": "多孔吸湿表皮（生土/夯土/无机粉刷）直接触地且无疏水防潮勒脚，毛细虹吸将在首个雨季引起粉化剥落。",
+              "remediation_hint": "增设 ≥120mm 花岗岩/不锈钢内凹防潮台基，并在饰面表面加注透气硅烷憎水封闭剂。"
+            }
+          ],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "32.0",
+              "effective_area_with_wastage_sqm": "36.80",
+              "material_and_substructure_cny": "167440.00",
+              "low_estimate_cny": "147347.20",
+              "high_estimate_cny": "187532.80",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "14.0",
+              "effective_area_with_wastage_sqm": "15.68",
+              "material_and_substructure_cny": "116032.00",
+              "low_estimate_cny": "102108.16",
+              "high_estimate_cny": "129955.84",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "8.4",
+              "effective_area_with_wastage_sqm": "8.40",
+              "material_and_substructure_cny": "26950.00",
+              "low_estimate_cny": "23716.00",
+              "high_estimate_cny": "30184.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "310422.00",
+            "low_estimate_cny": "273171.36",
+            "high_estimate_cny": "347672.64",
+            "max_lead_time_days": 32,
+            "blocking_alerts_count": 5,
+            "warning_alerts_count": 2,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        },
+        {
+          "tier_id": "tier_1_balanced",
+          "tier_label": "反向约束 A · 多折线穿孔铝单板 + 1.2m 折面钢玻幕墙",
+          "short_label": "多折线金属干挂",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 折线主门头表皮 (32.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_wall.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "32.0",
+                "max_continuous_span_m": "0.9",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "基层：防水深灰吸音无纺布衬底",
+                  "龙骨：40×40 镀锌角钢骨架系统",
+                  "饰面：2.5mm 氟碳折边微穿孔铝单板"
+                ],
+                "panel_modulus_mm": {
+                  "width": 900,
+                  "height": 2400,
+                  "joint_gap_mm": 10,
+                  "joint_type": "silicone_weather_seal"
+                },
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-ALU-12",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "280.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "80.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 9,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "perforated_alu_900",
+              "sku_name": "2.5mm 氟碳喷涂穿孔铝单板多折线干挂 (900×2400)"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 折线平玻钢构橱窗 (14.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_glass.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "14.0",
+                "max_continuous_span_m": "1.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "1.2m 等分折线高精度钢结构转换竖框",
+                  "平板钢化中空玻璃（零热弯开模费）",
+                  "标准化 EPDM 等压防水胶条"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1200,
+                  "height": 2400,
+                  "joint_gap_mm": 12,
+                  "joint_type": "faceted_steel_transom"
+                },
+                "construction_method": "curtain_wall_framed",
+                "detail_drawing_code": "STD-FAC-ALU-12",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "1820.00",
+                "wastage_factor": "1.09",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 10,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "faceted_steel_curtain_1200",
+              "sku_name": "1.2m 折线拼接平玻黑钢幕墙系统（多折面拟合弧形）"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 压顶与玄武岩台基 (8.4 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_edge.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "8.4",
+                "max_continuous_span_m": "2.4",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "4mm 黑钛 304 不锈钢隐蔽自攻钉扣压顶",
+                  "120mm 高硬度烧毛黑玄武岩整石防踢底座",
+                  "隐藏线性落水暗槽"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-ALU-12",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "9800.00",
+                "lead_time_days": 6,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "stainless_drip_recessed_curb",
+              "sku_name": "4mm 黑钛不锈钢折边押顶 + 120mm 烧毛玄武岩防潮台基"
+            }
+          ],
+          "alerts": [],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "32.0",
+              "effective_area_with_wastage_sqm": "34.56",
+              "material_and_substructure_cny": "12441.60",
+              "low_estimate_cny": "10948.61",
+              "high_estimate_cny": "13934.59",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "14.0",
+              "effective_area_with_wastage_sqm": "15.26",
+              "material_and_substructure_cny": "27773.20",
+              "low_estimate_cny": "24440.42",
+              "high_estimate_cny": "31105.98",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "8.4",
+              "effective_area_with_wastage_sqm": "8.40",
+              "material_and_substructure_cny": "9800.00",
+              "low_estimate_cny": "8624.00",
+              "high_estimate_cny": "10976.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "50014.80",
+            "low_estimate_cny": "44013.02",
+            "high_estimate_cny": "56016.58",
+            "max_lead_time_days": 10,
+            "blocking_alerts_count": 0,
+            "warning_alerts_count": 0,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        },
+        {
+          "tier_id": "tier_2_value",
+          "tier_label": "反向约束 B · 耐候金属分隔泥灰挂板 + 1.4m 标准模数玻璃",
+          "short_label": "极简快装控本",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 分格矿物质挂板 (32.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_wall.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "32.0",
+                "max_continuous_span_m": "0.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "基层：水泥纤维板干式基底+不锈钢分缝条",
+                  "中间：抗裂网格布增强层",
+                  "饰面：2.5mm 天然无机石灰基哑光涂料 + 硅烷防潮封闭"
+                ],
+                "panel_modulus_mm": {
+                  "width": 600,
+                  "height": 1200,
+                  "joint_gap_mm": 6,
+                  "joint_type": "metal_reveal_bead"
+                },
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "240.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "55.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 6,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "mineral_stucco_grooved",
+              "sku_name": "预制金属分隔条无机矿物泥灰分格墙体 (600×1200)"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 1.4m 模数断桥玻璃 (14.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_glass.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "14.0",
+                "max_continuous_span_m": "1.4",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "PA66 尼龙隔热断桥铝主框",
+                  "1.4m 标准工厂流水线裁切玻璃板",
+                  "快装压块免打胶外饰盖板"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1400,
+                  "height": 2400,
+                  "joint_gap_mm": 10,
+                  "joint_type": "modular_alu_cap"
+                },
+                "construction_method": "curtain_wall_framed",
+                "detail_drawing_code": "STD-FAC-ALU-12",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "1550.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 9,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "low_e_modular_1400",
+              "sku_name": "1.4m 标准模数铝合金明框高隔热幕墙"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 镀锌泛水与防潮踢脚 (8.4 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c2_edge.png",
+                "perspective_plane_normal": [
+                  0.08,
+                  0.98,
+                  0.15
+                ],
+                "estimated_area_sqm": "8.4",
+                "max_continuous_span_m": "2.4",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "2mm 热镀锌钢板折弯卡扣泛水押顶",
+                  "50mm 聚合物防水砂浆深色防潮踢脚边"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "5600.00",
+                "lead_time_days": 4,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "galvanized_drip_plinth_econ",
+              "sku_name": "2mm 烤漆镀锌钢泛水押顶 + 水泥基防潮收边踢脚（经济型）"
+            }
+          ],
+          "alerts": [],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "32.0",
+              "effective_area_with_wastage_sqm": "34.56",
+              "material_and_substructure_cny": "10195.20",
+              "low_estimate_cny": "8971.78",
+              "high_estimate_cny": "11418.62",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "14.0",
+              "effective_area_with_wastage_sqm": "15.12",
+              "material_and_substructure_cny": "23436.00",
+              "low_estimate_cny": "20623.68",
+              "high_estimate_cny": "26248.32",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "8.4",
+              "effective_area_with_wastage_sqm": "8.40",
+              "material_and_substructure_cny": "5600.00",
+              "low_estimate_cny": "4928.00",
+              "high_estimate_cny": "6272.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "39231.20",
+            "low_estimate_cny": "34523.46",
+            "high_estimate_cny": "43938.94",
+            "max_lead_time_days": 9,
+            "blocking_alerts_count": 0,
+            "warning_alerts_count": 0,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "case_03_oldstreet_teahouse",
+      "title": "120㎡ 历史老街茶空间立面微更新",
+      "subtitle": "防潮台基加注与陶板/碳化木同效温润肌理降本替补",
+      "site_context": "江南历史街区青石板街侧立面，原概念渲染呈现未经防潮封闭直接触地的夯土壁面，需替换为耐雨淋装配式东方质感材料并严守街巷竹影光感。",
+      "scale_anchor": {
+        "facade_width_mm": 6600,
+        "facade_height_mm": 3200,
+        "door_height_mm": 2150,
+        "label": "门高 2,150mm | 总面宽 6,600mm | 总饰面面积 30.6 ㎡"
+      },
+      "tiers": [
+        {
+          "tier_id": "tier_0_raw",
+          "tier_label": "状态 0 · 原始 AI 概念图（生土直触地与无泛水风险）",
+          "short_label": "原始概念态",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 主立面墙体 (21.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_wall.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "21.0",
+                "max_continuous_span_m": "6.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "现场调配生土直接批覆在木砖基面上",
+                  "未掺加固化硅酸钠也无底层石材防潮踢脚",
+                  "多雨季直接面临雨水冲刷溶蚀风险"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "WARN-EARTH-UNSEALED-03",
+                "has_parapet_flashing": false,
+                "has_recessed_plinth": false,
+                "unit_cost_cny_sqm": "2950.00",
+                "wastage_factor": "1.14",
+                "substructure_amortization_cny_sqm": "200.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 26,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "raw_rammed_earth_unsealed",
+              "sku_name": "25mm 原生态无保护现夯土入口墙体（易渗湿粉化隐患）"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 茶室采光大窗 (9.6 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_glass.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "9.6",
+                "max_continuous_span_m": "4.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "定制 15+15mm 超长超重钢化SGP夹胶玻璃",
+                  "地埋重型U型槽暗框",
+                  "封路特种随车吊夜间施工"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "STD-FAC-UHPC-04",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "6500.00",
+                "wastage_factor": "1.10",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 22,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "jumbo_frameless_5200",
+              "sku_name": "5.2m 整块超限无框超白夹胶玻璃（特种吊装）"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 挑檐与底部勒脚 (6.6 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_edge.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "6.6",
+                "max_continuous_span_m": "6.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_A_Bespoke",
+                "assembly_layers": [
+                  "概念渲染零厚度悬挑边缘",
+                  "无金属压顶与滴水凹槽",
+                  "地面无缝衔接但无防水泛水收口"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "raw_hallucination",
+                "detail_drawing_code": "WARN-WET-CAST-01",
+                "has_parapet_flashing": false,
+                "has_recessed_plinth": false,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "26950.00",
+                "lead_time_days": 18,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "zero_edge_raw_hallucination",
+              "sku_name": "零厚度刀锋挑檐 + 无踢脚墙皮直落人行道（缺防水构造）"
+            }
+          ],
+          "alerts": [
+            {
+              "code": "WEATHERPROOF_DETAIL_MISSING",
+              "severity": "BLOCKING",
+              "zone_id": "facade_wall_01",
+              "message": "检测到女儿墙缺少金属泛水滴水线或底部直抵地面无防潮勒脚，交付半年内极易流挂返碱。",
+              "remediation_hint": "注入 3mm 氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚节点。"
+            },
+            {
+              "code": "MOISTURE_UNSEALED_GROUND_CONTACT",
+              "severity": "BLOCKING",
+              "zone_id": "facade_wall_01",
+              "message": "多孔吸湿表皮（生土/夯土/无机粉刷）直接触地且无疏水防潮勒脚，毛细虹吸将在首个雨季引起粉化剥落。",
+              "remediation_hint": "增设 ≥120mm 花岗岩/不锈钢内凹防潮台基，并在饰面表面加注透气硅烷憎水封闭剂。"
+            },
+            {
+              "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+              "severity": "WARNING",
+              "zone_id": "facade_wall_01",
+              "message": "当前工艺总生产/养护周期达 26 天，超出 90-300㎡ 街区商铺高周转黄金窗口 (≤21 天)。",
+              "remediation_hint": "优先切换工厂预制干挂或装配式模块化立面体系。"
+            },
+            {
+              "code": "JUMBO_GLASS_SPAN_EXCEEDED",
+              "severity": "BLOCKING",
+              "zone_id": "glazing_portal_02",
+              "message": "无框单块玻璃跨度达 4.2m，超出常规货梯运输与钢化炉经济极值，需封路动用重型随车吊。",
+              "remediation_hint": "按 1700mm 模数增设极窄黑钢竖梃或切换为四扇铝合金折叠开启窗。"
+            },
+            {
+              "code": "LEAD_TIME_COMMERCIAL_EXCEEDED",
+              "severity": "WARNING",
+              "zone_id": "glazing_portal_02",
+              "message": "当前工艺总生产/养护周期达 22 天，超出 90-300㎡ 街区商铺高周转黄金窗口 (≤21 天)。",
+              "remediation_hint": "优先切换工厂预制干挂或装配式模块化立面体系。"
+            },
+            {
+              "code": "WEATHERPROOF_DETAIL_MISSING",
+              "severity": "BLOCKING",
+              "zone_id": "edge_weather_03",
+              "message": "检测到女儿墙缺少金属泛水滴水线或底部直抵地面无防潮勒脚，交付半年内极易流挂返碱。",
+              "remediation_hint": "注入 3mm 氟碳铝板压顶滴水线 + 80mm 不锈钢内凹防潮踢脚节点。"
+            },
+            {
+              "code": "MOISTURE_UNSEALED_GROUND_CONTACT",
+              "severity": "BLOCKING",
+              "zone_id": "edge_weather_03",
+              "message": "多孔吸湿表皮（生土/夯土/无机粉刷）直接触地且无疏水防潮勒脚，毛细虹吸将在首个雨季引起粉化剥落。",
+              "remediation_hint": "增设 ≥120mm 花岗岩/不锈钢内凹防潮台基，并在饰面表面加注透气硅烷憎水封闭剂。"
+            }
+          ],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "21.0",
+              "effective_area_with_wastage_sqm": "23.94",
+              "material_and_substructure_cny": "75411.00",
+              "low_estimate_cny": "66361.68",
+              "high_estimate_cny": "84460.32",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "9.6",
+              "effective_area_with_wastage_sqm": "10.56",
+              "material_and_substructure_cny": "68640.00",
+              "low_estimate_cny": "60403.20",
+              "high_estimate_cny": "76876.80",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "6.6",
+              "effective_area_with_wastage_sqm": "6.60",
+              "material_and_substructure_cny": "26950.00",
+              "low_estimate_cny": "23716.00",
+              "high_estimate_cny": "30184.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "171001.00",
+            "low_estimate_cny": "150480.88",
+            "high_estimate_cny": "191521.12",
+            "max_lead_time_days": 26,
+            "blocking_alerts_count": 5,
+            "warning_alerts_count": 2,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        },
+        {
+          "tier_id": "tier_1_balanced",
+          "tier_label": "反向约束 A · 碳化红雪松木挂板 + 铝包木窗 + 花岗岩勒脚",
+          "short_label": "碳化木与石材勒脚",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 主立面墙体 (21.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_wall.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "21.0",
+                "max_continuous_span_m": "0.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "防蚁防水呼吸膜全墙铺设",
+                  "龙骨：防腐花旗松双向通风顺水木龙骨",
+                  "饰面：22mm 碳化拉丝红雪松实木挂板（防白蚁阻燃处理）"
+                ],
+                "panel_modulus_mm": {
+                  "width": 600,
+                  "height": 2400,
+                  "joint_gap_mm": 8,
+                  "joint_type": "ventilated_tongue_groove"
+                },
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-WOOD-08",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "460.00",
+                "wastage_factor": "1.12",
+                "substructure_amortization_cny_sqm": "90.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 10,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "charred_cedar_siding",
+              "sku_name": "22mm 碳化红雪松直纹木挂板装配系统 (600×2400)"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 铝包木格栅落地窗 (9.6 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_glass.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "9.6",
+                "max_continuous_span_m": "1.5",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "外侧耐候喷涂氟碳铝型材保护罩",
+                  "内侧天然花旗松指接方木视觉暖质感框",
+                  "中空双银 Low-E 高透玻璃"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1500,
+                  "height": 2400,
+                  "joint_gap_mm": 10,
+                  "joint_type": "timber_alu_mullion"
+                },
+                "construction_method": "curtain_wall_framed",
+                "detail_drawing_code": "STD-FAC-WOOD-08",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "1960.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 12,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "timber_alu_composite_1500",
+              "sku_name": "1.5m 模数室外铝包内部实木框格栅落地窗"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 铜色泛水与花岗岩勒脚 (6.6 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_edge.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "6.6",
+                "max_continuous_span_m": "2.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_B_Balanced",
+                "assembly_layers": [
+                  "传统老街深棕金属折边滴水屋檐压顶",
+                  "120mm 剁斧面灰麻花岗岩防水防返碱勒脚",
+                  "隐形导水檐沟"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-WOOD-08",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "10600.00",
+                "lead_time_days": 8,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "copper_eave_stone_plinth",
+              "sku_name": "历史风貌仿青铜氧化压顶檐口 + 120mm 花岗岩防潮勒脚"
+            }
+          ],
+          "alerts": [],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "21.0",
+              "effective_area_with_wastage_sqm": "23.52",
+              "material_and_substructure_cny": "12936.00",
+              "low_estimate_cny": "11383.68",
+              "high_estimate_cny": "14488.32",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "9.6",
+              "effective_area_with_wastage_sqm": "10.37",
+              "material_and_substructure_cny": "20325.20",
+              "low_estimate_cny": "17886.18",
+              "high_estimate_cny": "22764.22",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "6.6",
+              "effective_area_with_wastage_sqm": "6.60",
+              "material_and_substructure_cny": "10600.00",
+              "low_estimate_cny": "9328.00",
+              "high_estimate_cny": "11872.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "43861.20",
+            "low_estimate_cny": "38597.86",
+            "high_estimate_cny": "49124.54",
+            "max_lead_time_days": 12,
+            "blocking_alerts_count": 0,
+            "warning_alerts_count": 0,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        },
+        {
+          "tier_id": "tier_2_value",
+          "tier_label": "反向约束 B · MCM 柔性夯土切片 + 推拉开启窗（5 天极速）",
+          "short_label": "柔性夯土快装",
+          "zones": [
+            {
+              "zone_id": "facade_wall_01",
+              "zone_label": "Zone A · 柔性夯土纹理墙体 (21.0 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_wall.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "21.0",
+                "max_continuous_span_m": "0.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "基层：原有实墙防碱封闭底漆+耐碱玻纤网",
+                  "粘结：柔性高弹聚合物瓷砖胶满刮",
+                  "饰面：4mm 柔性夯土/石材纹理切片（600 模数勾缝）"
+                ],
+                "panel_modulus_mm": {
+                  "width": 600,
+                  "height": 1200,
+                  "joint_gap_mm": 4,
+                  "joint_type": "grouted_modular_seam"
+                },
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "195.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "45.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 5,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "flexible_stone_sheet_600",
+              "sku_name": "4mm MCM 改性无机土柔性石材切片 (600×1200)"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "zone_label": "Zone B · 三轨推拉开启门窗 (9.6 ㎡)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_glass.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "9.6",
+                "max_continuous_span_m": "1.6",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "下沉式平齐地轨铝合金门槽",
+                  "极窄边推拉窗扇可 2/3 面积全开启",
+                  "防夹手缓冲阻尼五金套件"
+                ],
+                "panel_modulus_mm": {
+                  "width": 1600,
+                  "height": 2400,
+                  "joint_gap_mm": 10,
+                  "joint_type": "slim_alu_sliding_frame"
+                },
+                "construction_method": "curtain_wall_framed",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": "1380.00",
+                "wastage_factor": "1.08",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": null,
+                "lead_time_days": 6,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "sliding_pocket_alu_1600",
+              "sku_name": "1.6m 三轨嵌入式铝合金口袋推拉窗门系统"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "zone_label": "Zone C · 镀锌压顶与防潮边 (6.6 m)",
+              "visual_binding": {
+                "sam_mask_ref": "mask_c3_edge.png",
+                "perspective_plane_normal": [
+                  -0.05,
+                  0.99,
+                  0.11
+                ],
+                "estimated_area_sqm": "6.6",
+                "max_continuous_span_m": "2.2",
+                "is_curved_geometry": false
+              },
+              "engineering_state": {
+                "active_tier": "Tier_C_Value",
+                "assembly_layers": [
+                  "2mm 热镀锌钢板折弯卡扣泛水押顶",
+                  "50mm 聚合物防水砂浆深色防潮踢脚边"
+                ],
+                "panel_modulus_mm": null,
+                "construction_method": "dry_hanging_prefab",
+                "detail_drawing_code": "STD-FAC-FCB-09",
+                "has_parapet_flashing": true,
+                "has_recessed_plinth": true,
+                "unit_cost_cny_sqm": null,
+                "wastage_factor": "1.00",
+                "substructure_amortization_cny_sqm": "0.00",
+                "lump_sum_cny": "5600.00",
+                "lead_time_days": 4,
+                "data_benchmark_date": "2026-11-23"
+              },
+              "sku_id": "galvanized_drip_plinth_econ",
+              "sku_name": "2mm 烤漆镀锌钢泛水押顶 + 水泥基防潮收边踢脚（经济型）"
+            }
+          ],
+          "alerts": [],
+          "cost_breakdowns": [
+            {
+              "zone_id": "facade_wall_01",
+              "status": "CALCULATED",
+              "net_area_sqm": "21.0",
+              "effective_area_with_wastage_sqm": "22.68",
+              "material_and_substructure_cny": "5443.20",
+              "low_estimate_cny": "4790.02",
+              "high_estimate_cny": "6096.38",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "glazing_portal_02",
+              "status": "CALCULATED",
+              "net_area_sqm": "9.6",
+              "effective_area_with_wastage_sqm": "10.37",
+              "material_and_substructure_cny": "14310.60",
+              "low_estimate_cny": "12593.33",
+              "high_estimate_cny": "16027.87",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            },
+            {
+              "zone_id": "edge_weather_03",
+              "status": "CALCULATED",
+              "net_area_sqm": "6.6",
+              "effective_area_with_wastage_sqm": "6.60",
+              "material_and_substructure_cny": "5600.00",
+              "low_estimate_cny": "4928.00",
+              "high_estimate_cny": "6272.00",
+              "currency": "CNY",
+              "confidence_band_pct": 12,
+              "data_benchmark_date": "2026-11-23"
+            }
+          ],
+          "summary": {
+            "known_subtotal_cny": "25353.80",
+            "low_estimate_cny": "22311.34",
+            "high_estimate_cny": "28396.26",
+            "max_lead_time_days": 6,
+            "blocking_alerts_count": 0,
+            "warning_alerts_count": 0,
+            "has_missing_prices": false,
+            "missing_price_zone_ids": [],
+            "cost_status": "CALCULATED",
+            "currency": "CNY"
+          }
+        }
+      ]
+    }
+  ]
+}
