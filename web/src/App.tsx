@@ -102,6 +102,14 @@ export const App: React.FC = () => {
   useEffect(() => {
     loadShowcaseData();
     let cancelled = false;
+    const isLocalHost =
+      typeof window !== 'undefined' &&
+      (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+    if (!isLocalHost) {
+      return () => {
+        cancelled = true;
+      };
+    }
     async function probeLiveEngine() {
       try {
         const res = await fetch('/api/health', { signal: AbortSignal.timeout(1200) });
@@ -144,6 +152,18 @@ export const App: React.FC = () => {
       return;
     }
 
+    const offlineMessage =
+      '未检测到本地 FastAPI Live Engine (127.0.0.1:8780)。公网展示已保持在零延迟 Instant Showcase 模式，所有交互、AST 对比与 Zero-LLM 造价算账均可在浏览器离线运行。';
+    const isLocalHost =
+      typeof window !== 'undefined' &&
+      (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+    if (!isLocalHost) {
+      setIsLiveEngine(false);
+      setLiveNotice(offlineMessage);
+      trackShowcaseEvent('mode_switch', { mode: 'live_engine', connected: false, host: 'cdn' });
+      return;
+    }
+
     setProbingEngine(true);
     setLiveNotice(null);
     try {
@@ -157,15 +177,11 @@ export const App: React.FC = () => {
         }
       }
       setIsLiveEngine(false);
-      setLiveNotice(
-        '未检测到本地 FastAPI Live Engine (127.0.0.1:8780)。公网展示已保持在零延迟 Instant Showcase 模式，所有交互、AST 对比与 Zero-LLM 造价算账均可在浏览器离线运行。'
-      );
+      setLiveNotice(offlineMessage);
       trackShowcaseEvent('mode_switch', { mode: 'live_engine', connected: false });
     } catch {
       setIsLiveEngine(false);
-      setLiveNotice(
-        '未检测到本地 FastAPI Live Engine (127.0.0.1:8780)。公网展示已保持在零延迟 Instant Showcase 模式，所有交互、AST 对比与 Zero-LLM 造价算账均可在浏览器离线运行。'
-      );
+      setLiveNotice(offlineMessage);
       trackShowcaseEvent('mode_switch', { mode: 'live_engine', connected: false });
     } finally {
       setProbingEngine(false);

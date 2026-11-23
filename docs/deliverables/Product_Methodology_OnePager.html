@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spatial AI 双引擎产品方法论一页纸 — AetherVault & TectonicLoop</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 9mm 11mm;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      background: #FFFFFF;
+      color: #0E1015;
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 9pt;
+      line-height: 1.44;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .mono {
+      font-family: "Chivo Mono", "Cascadia Mono", "Consolas", monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    .cobalt { color: #153CE8; }
+    .teal { color: #0F766E; }
+    .muted { color: #525866; }
+
+    .header {
+      border-bottom: 2px solid #0E1015;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .eyebrow {
+      font-size: 7.8pt;
+      font-weight: 700;
+      color: #153CE8;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .title {
+      font-size: 13.8pt;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0E1015;
+      white-space: nowrap;
+    }
+    .header-meta {
+      text-align: right;
+      font-size: 7.6pt;
+      color: #525866;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .header-meta a { color: #153CE8; text-decoration: none; font-weight: 600; }
+
+    .thesis-banner {
+      border: 1px solid #E2E5EA;
+      background: #F4F5F7;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+    }
+    .thesis-banner strong { color: #153CE8; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .card {
+      border: 1px solid #E2E5EA;
+      padding: 8px 10px;
+      background: #FFFFFF;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      border-bottom: 1px solid #E2E5EA;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .card-title { font-size: 9.3pt; font-weight: 800; color: #0E1015; white-space: nowrap; }
+    .card-tag { font-size: 7.2pt; color: #153CE8; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+
+    ul.clean { list-style: none; }
+    ul.clean li {
+      position: relative;
+      padding-left: 10px;
+      margin-bottom: 3.5px;
+      font-size: 8.4pt;
+    }
+    ul.clean li::before {
+      content: "■";
+      position: absolute;
+      left: 0;
+      top: 1px;
+      font-size: 6pt;
+      color: #153CE8;
+    }
+
+    table.eval {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.2pt;
+      margin-top: 4px;
+    }
+    table.eval th, table.eval td {
+      border: 1px solid #E2E5EA;
+      padding: 4.5px 7px;
+      text-align: left;
+    }
+    table.eval th {
+      background: #F4F5F7;
+      font-weight: 700;
+      color: #0E1015;
+    }
+
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #0E1015;
+      padding-bottom: 2px;
+      margin-bottom: 6px;
+      margin-top: 8px;
+    }
+    .sec-title { font-size: 9.6pt; font-weight: 800; }
+    .sec-tag { font-size: 7.5pt; color: #153CE8; }
+
+    .flow-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #E2E5EA;
+      margin-bottom: 10px;
+    }
+    .flow-step {
+      padding: 6px 8px;
+      border-right: 1px solid #E2E5EA;
+      background: #FFFFFF;
+    }
+    .flow-step:last-child { border-right: none; }
+    .flow-num { font-size: 7.5pt; font-weight: 700; color: #153CE8; margin-bottom: 2px; }
+    .flow-name { font-size: 8.6pt; font-weight: 700; margin-bottom: 2px; }
+    .flow-desc { font-size: 7.8pt; color: #525866; }
+
+    .footer-note {
+      margin-top: 8px;
+      padding-top: 5px;
+      border-top: 1px solid #E2E5EA;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7.8pt;
+      color: #525866;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div>
+      <div class="eyebrow mono">SPATIAL AI PRODUCT METHODOLOGY ONE-PAGER</div>
+      <h1 class="title">从「主观审美编译」到「物理可建闭环」的产品方法论</h1>
+    </div>
+    <div class="header-meta">
+      <div>交互站点：<a href="https://frostales-code.github.io/spatial-ai-portfolio/">frostales-code.github.io/spatial-ai-portfolio</a></div>
+      <div class="mono">Dual-Engine Architecture: AetherVault + TectonicLoop</div>
+    </div>
+  </header>
+
+  <section class="thesis-banner">
+    <strong>核心产品哲学：</strong>行业级空间生成产品的壁垒不在于更长的 Prompt，而在于严格划定 <strong>AI 概率生成</strong> 与 <strong>Non-AI 确定性计算</strong> 的边界——让 VLM 只解决冷启动高模糊度打标，让矩阵几何、规则排雷与 Decimal 账本守住成本与施工底线。
+  </section>
+
+  <!-- Dual-Engine Loop -->
+  <section>
+    <div class="sec-head">
+      <h2 class="sec-title">双引擎端到端协同流（GUI + LUI 混合范式）</h2>
+      <span class="sec-tag mono">0 → 1 COMPOSABILITY · 1 → N FEASIBILITY</span>
+    </div>
+    <div class="flow-strip">
+      <div class="flow-step">
+        <div class="flow-num mono">01 · CANONICALIZE</div>
+        <div class="flow-name">跨界美学入库</div>
+        <div class="flow-desc">80 件跨 5 门类标本按 8 轴五点黄金锚点结构化落盘，VLM 冷启动仅 ¥0.00596/图。</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num mono">02 · RE-RANK &amp; AST</div>
+        <div class="flow-name">&lt;20ms 重排与无串色编译</div>
+        <div class="flow-desc">纯前端显著性向量排序 (ρ=0.611) + 光学/材质/光影三槽隔离编译，切断实物泄漏。</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num mono">03 · HOMOGRAPHY H/H⁻¹</div>
+        <div class="flow-name">立面拼缝单应性投影</div>
+        <div class="flow-desc">80/20 平面透视变换将预制板模数缝贴合实景立面，竖向消隐误差 0.000°。</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num mono">04 · LINT &amp; VE LEDGER</div>
+        <div class="flow-name">物理排雷与三档造价</div>
+        <div class="flow-desc">8 条构造红线检验 + Decimal 定额核算；未知价格明示 UNKNOWN_PRICE_MISSING。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Two Engines Compared -->
+  <section class="grid-2">
+    <div class="card">
+      <div class="card-top">
+        <span class="card-title">AetherVault [0→1] · 正交美学编译器</span>
+        <span class="card-tag mono">SEMANTIC CONTROL</span>
+      </div>
+      <ul class="clean">
+        <li><strong>痛点破局：</strong>解决“只可意会的灵感”无法精准检索、以及多图直接喂入大模型引发交叉物体污染的业界难题。</li>
+        <li><strong>混合交互设计：</strong>左侧 2 轮视觉校准与 8 轴连续滑块（GUI）配合自然语言意图解析（LUI）及三槽位 AST 锁止（Scoped AST）。</li>
+        <li><strong>工程克制：</strong>滑块拖拽触发浏览器本地毫秒级计算，完全零推理延迟、零后端 Token 费用。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <span class="card-title">TectonicLoop [1→N] · 建构与 VE 闭环</span>
+        <span class="card-tag mono">PHYSICAL GROUNDING</span>
+      </div>
+      <ul class="clean">
+        <li><strong>痛点破局：</strong>解决空间效果图“脱离结构常识与预算约束、无法向甲方交付造价口径”的落地断层。</li>
+        <li><strong>80/20 务实方案：</strong>不堆砌重型 3D BIM，用 <code>H/H⁻¹</code> 平面正投 + 30 SKU 材料库 + 8 幅 SVG 节点大样交付施工确定性。</li>
+        <li><strong>资金审计严谨度：</strong>沿袭 02-aurora 金融级 <code>Decimal</code> 口径，严格区分材料/龙骨摊销与损耗，杜绝 LLM 数字幻觉。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Quantified Verification Table -->
+  <section>
+    <div class="sec-head">
+      <h2 class="sec-title">EDD 量化评测门禁与实测成绩单（Benchmark Report）</h2>
+      <span class="sec-tag mono">EVIDENCE-DRIVEN DEVELOPMENT</span>
+    </div>
+    <table class="eval">
+      <thead>
+        <tr>
+          <th style="width: 24%;">评估维度</th>
+          <th style="width: 28%;">指标定义与防线阈值</th>
+          <th style="width: 24%;">当前线上实测结果</th>
+          <th style="width: 24%;">核心设计决策与归因</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>VLM 冷启动成本与契约</strong></td>
+          <td>单图入库 ≤ ¥0.008；Pydantic 全校验</td>
+          <td class="mono cobalt"><strong>¥0.00596/图</strong>（80/80 通过）</td>
+          <td>Prompt Cache (49.25% 命中) + Batch 等效 ¥0.00298</td>
+        </tr>
+        <tr>
+          <td><strong>跨域美学检索排序</strong></td>
+          <td>8 轴向量重排相关性与响应时延</td>
+          <td class="mono cobalt"><strong>ρ = 0.611</strong>（&lt;1ms ~0.10ms）</td>
+          <td>显著性门控加权优于均值基线 (ρ=0.540, +13.1%)</td>
+        </tr>
+        <tr>
+          <td><strong>立面投影与局部保真</strong></td>
+          <td>竖向消隐角偏移；非编辑区 PSNR</td>
+          <td class="mono teal"><strong>0.000°</strong>；PSNR ≥ <strong>38 dB</strong></td>
+          <td>80/20 H/H⁻¹ 单应性正投替代大算力 3D 重建</td>
+        </tr>
+        <tr>
+          <td><strong>零延迟公网秒开体验</strong></td>
+          <td>静态资产完备性、移动端横向溢出</td>
+          <td class="mono teal"><strong>5.28MB / 0 Error / 0 Overflow</strong></td>
+          <td>双模同构（Instant Showcase CDN + Live Engine API）</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Bad Case Taxonomy & Guardrails -->
+  <section style="margin-top: 10px;">
+    <div class="sec-head">
+      <h2 class="sec-title">Bad Case 归因与防线演进（Failure Taxonomy &amp; Guardrails）</h2>
+      <span class="sec-tag mono">ROOT CAUSE &amp; DETERMINISTIC MITIGATION</span>
+    </div>
+    <div class="grid-2" style="margin-bottom: 6px;">
+      <div class="card">
+        <div class="card-top">
+          <span class="card-title">多图混喂泄漏 → Scoped AST 隔离</span>
+          <span class="card-tag mono">BAD CASE 01</span>
+        </div>
+        <ul class="clean">
+          <li><strong>失败根因：</strong>将工业硬件或瓷器参考图与建筑共喂生图模型时，实体器件（旋钮、瓷纹）越界泄漏进建筑表皮并混色。</li>
+          <li><strong>防线收敛：</strong>三槽词法锁止 + 负向防泄漏规则，并在 6 组公开对照组实现 Curtain 像素级自证。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="card-title">LLM 造价幻觉 → 缺失价显式阻断</span>
+          <span class="card-tag mono">BAD CASE 02</span>
+        </div>
+        <ul class="clean">
+          <li><strong>失败根因：</strong>直接用文本模型估计面积与装修单价会在缺失定额项时悄悄填 <code>¥0</code> 或凭印象瞎编折损系数。</li>
+          <li><strong>防线收敛：</strong>8 条物理红线规则（阻断现浇越限、缺泛水等隐患）+ Zero-LLM Decimal 定额发动机，缺价强制显式阻断。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-note">
+    <span>核心设计基因传承：02-aurora（Decimal 精确算账 / 253 例基线回归）× 03-super-agent（HITL 确认门禁 / 可追溯产物交付）</span>
+    <span class="mono">VERIFIED · M3 MILESTONE RELEASE</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI 产品经理简历 — Spatial AI & 多智能体产品</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 9mm 11mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      background: #FFFFFF;
+      color: #0E1015;
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 9.2pt;
+      line-height: 1.42;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      width: 100%;
+    }
+    .mono {
+      font-family: "Chivo Mono", "Cascadia Mono", "Consolas", monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    .cobalt { color: #153CE8; }
+    .muted { color: #525866; }
+
+    /* Masthead */
+    .masthead {
+      border-bottom: 2px solid #0E1015;
+      padding-bottom: 8px;
+      margin-bottom: 9px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .name-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+    }
+    .name {
+      font-size: 18pt;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0E1015;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .target-role {
+      font-size: 9.2pt;
+      font-weight: 700;
+      color: #153CE8;
+      letter-spacing: 0.01em;
+    }
+    .contact-line {
+      margin-top: 3px;
+      font-size: 8.1pt;
+      color: #525866;
+    }
+    .links-box {
+      text-align: right;
+      font-size: 7.8pt;
+      line-height: 1.45;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .links-box a {
+      color: #153CE8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Core Thesis KPI Strip */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #E2E5EA;
+      background: #F4F5F7;
+      margin-bottom: 10px;
+    }
+    .kpi-cell {
+      padding: 6px 8px;
+      border-right: 1px solid #E2E5EA;
+    }
+    .kpi-cell:last-child { border-right: none; }
+    .kpi-val {
+      font-size: 10.3pt;
+      font-weight: 800;
+      color: #153CE8;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .kpi-lbl {
+      font-size: 7.5pt;
+      color: #525866;
+      margin-top: 2px;
+    }
+
+    /* Section Headings */
+    .section {
+      margin-bottom: 9px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px solid #0E1015;
+      padding-bottom: 2px;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 10pt;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: #0E1015;
+      text-transform: uppercase;
+    }
+    .section-tag {
+      font-size: 7.6pt;
+      color: #153CE8;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Project Block */
+    .proj-card {
+      margin-bottom: 8px;
+    }
+    .proj-card:last-child {
+      margin-bottom: 0;
+    }
+    .proj-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+    .proj-title {
+      font-size: 9.4pt;
+      font-weight: 700;
+      color: #0E1015;
+    }
+    .proj-meta {
+      font-size: 7.6pt;
+      color: #525866;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .proj-sub {
+      font-size: 8.3pt;
+      color: #525866;
+      background: #F4F5F7;
+      border: 1px solid #E2E5EA;
+      padding: 3px 7px;
+      margin-bottom: 4px;
+    }
+    ul.bullets {
+      list-style: none;
+    }
+    ul.bullets li {
+      position: relative;
+      padding-left: 11px;
+      margin-bottom: 3px;
+      font-size: 8.6pt;
+      color: #0E1015;
+      text-align: justify;
+    }
+    ul.bullets li::before {
+      content: "▪";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #153CE8;
+      font-size: 8pt;
+    }
+    strong {
+      font-weight: 700;
+      color: #0E1015;
+    }
+
+    /* AI vs Non-AI Split Matrix */
+    .boundary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid #E2E5EA;
+      margin-top: 4px;
+    }
+    .boundary-col {
+      padding: 5px 8px;
+      font-size: 8pt;
+    }
+    .boundary-col:first-child {
+      border-right: 1px solid #E2E5EA;
+      background: #F4F5F7;
+    }
+    .boundary-label {
+      font-size: 7.5pt;
+      font-weight: 700;
+      margin-bottom: 2px;
+      color: #0E1015;
+    }
+
+    /* Two-column Footer Grid */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 12px;
+    }
+    .compact-item {
+      font-size: 8.4pt;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header class="masthead">
+      <div>
+        <div class="name-row">
+          <span class="name">[姓名]</span>
+          <span class="target-role">AI 产品经理（多模态生成控制 / Agent 系统 / 空间与设计智能方向）</span>
+        </div>
+        <div class="contact-line mono">
+          [+86 手机号] &nbsp;|&nbsp; [个人邮箱] &nbsp;|&nbsp; [现居城市 / 到岗时间] &nbsp;|&nbsp; GitHub: github.com/frostales-code
+        </div>
+      </div>
+      <div class="links-box">
+        <div>在线零延迟 Showcase：<a href="https://frostales-code.github.io/spatial-ai-portfolio/">frostales-code.github.io/spatial-ai-portfolio</a></div>
+        <div class="mono muted">源码仓库：github.com/frostales-code/spatial-ai-portfolio</div>
+      </div>
+    </header>
+
+    <!-- Core Quantified KPI Strip -->
+    <section class="kpi-strip" aria-label="核心量化战果">
+      <div class="kpi-cell">
+        <div class="kpi-val mono">¥0.00596 / 图</div>
+        <div class="kpi-lbl">冷启动 VLM 入库实测成本（Batch 等效 ¥0.00298）</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val mono">ρ = 0.611 (+13.1%)</div>
+        <div class="kpi-lbl">8 轴显著性加权排序相关性（vs 均值基线 0.540）</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val mono">0.000° / ≥38 dB</div>
+        <div class="kpi-lbl">单应性透视偏差与非掩码区重照明 PSNR 保真度</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val mono">80/80 · 30 SKU · 8 Rules</div>
+        <div class="kpi-lbl">Pydantic 契约通过率、建材定额库与零幻觉排雷引擎</div>
+      </div>
+    </section>
+
+    <!-- Flagship Project 1 & 2 -->
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">核心 AI 产品代表作（可公网实测体验）</h2>
+        <span class="section-tag mono">DUAL-ENGINE SPATIAL AI PORTFOLIO</span>
+      </div>
+
+      <!-- AetherVault -->
+      <article class="proj-card">
+        <div class="proj-head">
+          <div class="proj-title">1. AetherVault — 正交美学光谱编译器（[0→1] 产品定义与全栈实现）</div>
+          <div class="proj-meta mono">独立负责人 | 80 标本 × 8 轴 × Zero-Drift AST</div>
+        </div>
+        <div class="proj-sub">
+          <strong>产品痛点：</strong>设计师用多张跨媒介参考图提示文生图时，大模型常把参照物的实体物件（如合成器旋钮）泄漏进空间画面并导致色调串色；“审美直觉”缺乏结构化检索语言。
+        </div>
+        <ul class="bullets">
+          <li><strong>跨界正交表征与语义压缩：</strong>构建跨建筑/工业/平面/器物/摄影 5 门类（各 16 件）的 80 件样本库，定义 <strong>8 轴×5 点黄金锚点</strong>，通过 2 轮视觉校准收敛主观审美，使跨学科风格映射无需反复试错调参。</li>
+          <li><strong>克制的 AI vs 非 AI 边界决策：</strong>将 VLM 严格收敛于冷启动离线打标与自然语言意图解析；前端 8 轴拖拽使用 <strong>&lt;20ms 纯前端显著性加权欧氏距离</strong>重排，实现零 Token 消耗的跟手交互（Spearman ρ 由 0.540 提升至 <strong>0.611</strong>）。</li>
+          <li><strong>作用域隔离 Prompt AST 编译器：</strong>设计「光学镜头 / 材质构造 / 光影氛围」三槽位 AST 编译与负向防泄漏词，配合 6 组可控对照实验（多图直喂 vs AST 正交编译）在交互端提供实时 diff 检验。</li>
+          <li><strong>冷启动经济学与评测闭环：</strong>采用 Prompt Cache（命中率 <strong>49.25%</strong>）与批处理设计将单图冷启动入库成本压控至 <strong>¥0.00596/图</strong>（远低于 ¥0.008 预算上限），Pydantic 结构化输出通过率达 <strong>80/80</strong>。</li>
+        </ul>
+      </article>
+
+      <!-- TectonicLoop -->
+      <article class="proj-card">
+        <div class="proj-head">
+          <div class="proj-title">2. TectonicLoop — 商业立面排雷与 VE 造价闭环（[1→N] 商业可行性引擎）</div>
+          <div class="proj-meta mono">产品架构 + Zero-LLM 确定性引擎 · 融合 02-aurora</div>
+        </div>
+        <div class="proj-sub">
+          <strong>产品痛点：</strong>AIGC 商业改造方案“图很美但造价不可控、施工无法落地”（曲面越限、无泛水收口）；而大模型直接算造价与面积会产生致命数字幻觉。
+        </div>
+        <ul class="bullets">
+          <li><strong>确定性几何与算账边界：</strong>继承并演进 <strong>02-aurora</strong> 零 LLM 算账经验，用 <strong>Zero-LLM Decimal 定额引擎</strong>计算 30 项真实构件（含龙骨摊销与损耗系数），严格执行缺价即报 <code>UNKNOWN_PRICE_MISSING</code>、绝不臆造 0 值。</li>
+          <li><strong>二维几何降维替代重型三维：</strong>舍弃高成本 BIM 全量解析，用 <strong>80/20 H/H⁻¹ 单应性平面投影</strong>将标准化立面拼缝落入透视图（实测竖向消隐偏差 <strong>0.000°</strong>，局部重照明非掩码 PSNR ≥ <strong>38 dB</strong>）。</li>
+          <li><strong>规则排雷与三档 VE 价值工程协同：</strong>内置 <strong>8 条可建造性规则（BLOCKING/WARNING）</strong>与 8 份构造大样 SVG，支持在 3 组实景案例中一键切换「高定落地图 / 平衡降本 / 快装方案」并实时导出甲方 VE 任务书。</li>
+        </ul>
+      </article>
+
+      <!-- 03-super-agent -->
+      <article class="proj-card">
+        <div class="proj-head">
+          <div class="proj-title">3. Super Agent Workbench（03-super-agent）— 复杂多 Agent 协同工作台</div>
+          <div class="proj-meta mono">HITL 人工门禁编排 · 可追溯专业交付</div>
+        </div>
+        <ul class="bullets">
+          <li><strong>透明调度与可干预流程设计：</strong>针对复杂行业任务长链路黑盒问题，设计具备透明阶段状态栏与高风险节点 <strong>人工确认门禁（HITL）</strong> 的多 Agent 协同交互，实现跨工具调用的可解释、可回退交付。</li>
+          <li><strong>跨域专业资产联动（含 02-aurora 沉淀）：</strong>打通自主检索+识图双通道物料大脑与可执行专业产物（追溯文档与 Rhino 8 工程交付件），结合 <strong>253 例基线回归</strong>经验沉淀为本作品集的自动化评测方法论。</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- AI Product Architecture Matrix -->
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">AI 产品架构与 EDD 方法论总结</h2>
+        <span class="section-tag mono">AI VS NON-AI DISCIPLINE</span>
+      </div>
+      <div class="boundary-grid">
+        <div class="boundary-col">
+          <div class="boundary-label cobalt">AI 能力介入点（仅处理高模糊度语义任务）</div>
+          离线 VLM 8 轴结构化打标（Prompt Cache 49.25% 降本）· 模糊审美意图多维解析 · 作用域隔离材质与氛围局部重绘（保证非掩码结构与光影一致性）
+        </div>
+        <div class="boundary-col">
+          <div class="boundary-label">Non-AI 确定性底座（零延迟 · 零幻觉）</div>
+          &lt;20ms 前端加权欧氏向量重排 · 作用域冲突编译词法检查 · H/H⁻¹ 单应性几何落图 · 8 条物理构造排雷 · Decimal 精确造价与工期核算
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Capabilities -->
+    <section class="section two-col">
+      <div>
+        <div class="section-head">
+          <h2 class="section-title">教育背景与过往经历</h2>
+          <span class="section-tag mono">EDUCATION & EXPERIENCE</span>
+        </div>
+        <div class="compact-item"><strong>[院校名称]</strong> · [建筑学 / 设计 / 计算机相关专业 · 学历] <span class="mono muted">([入学-毕业年份])</span></div>
+        <div class="compact-item muted">[请按真实情况补充过往实习/工作/竞赛经历与可量化产出，例如项目交付周期、团队协同规模等]</div>
+      </div>
+      <div>
+        <div class="section-head">
+          <h2 class="section-title">产品工具链与技术理解</h2>
+          <span class="section-tag mono">PRODUCT & TECH STACK</span>
+        </div>
+        <div class="compact-item"><strong>AI 产品设计：</strong>GUI+LUI 混合工作流、EDD 评测集设计、Prompt Caching & Batch 成本压控</div>
+        <div class="compact-item"><strong>工程原型力：</strong>Python (FastAPI / Pydantic)、React + TypeScript、OpenCV 单应性投影、自动化浏览器验收</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

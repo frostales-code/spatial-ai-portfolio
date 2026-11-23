@@ -1,59 +1,56 @@
 # Spatial AI 双引擎作品集 · AetherVault & TectonicLoop
 
-> **Dual-Mode Showcase + Compound AI Pipeline**  
-> **Upstream Aesthetics (`AetherVault`, 0→1)** ↔ **Downstream Constructability & VE (`TectonicLoop`, 1→N)**
+**线上零延迟展示 URL**：https://frostales-code.github.io/spatial-ai-portfolio/  
+**开源工程仓库**：https://github.com/frostales-code/spatial-ai-portfolio
 
-## 快速导航与工作区入口
+---
 
-- [**项目工作区规范 (`AGENTS.md`)**](file:///D:/Projects/spatial-ai-portfolio/AGENTS.md)
-- [**M1 开工主蓝图 (`docs/SESSION_PLAN.md`)**](file:///D:/Projects/spatial-ai-portfolio/docs/SESSION_PLAN.md) ← **新开 Session 先读这份**
-- [**三位一体总计划 (`docs/MASTER_PLAN.md`)**](file:///D:/Projects/spatial-ai-portfolio/docs/MASTER_PLAN.md)
-- [**简历、3 分钟演示与面试防御库 (`docs/RESUME_AND_INTERVIEW_PLAYBOOK.md`)**](file:///D:/Projects/spatial-ai-portfolio/docs/RESUME_AND_INTERVIEW_PLAYBOOK.md)
-- **Linear 全链路看板 (`P-MIC-5`)**：https://linear.app/merle/project/spatial-ai-双引擎作品集-aethervault-and-tectonicloop-2cd268daef88
+## 核心产品与技术定位
 
-## 架构设计：双模同构（Dual-Mode Architecture）
+本仓库是 **Spatial AI 双引擎作品集** 的全栈工程与评测中心，针对创意与空间设计生成工作流中「灵感只可意会且多图混用串色」与「渲染效果图脱离造价与结构约束」两大痛点，分别给出边界克制的双引擎解决方案：
 
-本仓库采用同一套前后端数据契约，支持两种运行模式：
+1. **AetherVault（`[0→1]` 正交美学光谱编译器）**：
+   - 策展跨建筑、工业、平面、器物与摄影 5 门类（各 16 件）的 **80 件设计标本**与 **8 轴×5 点黄金锚点**；
+   - VLM 仅用于冷启动离线打标（Prompt Cache 命中率 **49.25%**，实测单图成本 **¥0.00596/图**，Batch 等效 **¥0.00298/图**，Pydantic 契约 **80/80** 通过）；
+   - 前端交互使用 **&lt;20ms 纯矢量显著性加权欧氏重排**（Spearman **ρ = 0.611** vs 均匀欧氏基线 0.540）配合「光学镜头 / 材质构造 / 光影氛围」三槽隔离 **Prompt AST 编译器**，含 **6 组可控对照对比**验证防泄漏效果。
+2. **TectonicLoop（`[1→N]` 物理建构排雷与 VE 造价反向闭环）**：
+   - 整合 `02-aurora` Zero-LLM 金融级 `Decimal` 计价核与 `03-super-agent` 透明阶段闸门方法论，构建 **30 项真实构件定额 SKU**、**8 条物理排雷规则**与 **8 幅 SVG 节点构造大样**；
+   - 放弃高开销三维 BIM 重建，使用 **80/20 `H/H⁻¹` 单应性平面投影**（竖向消隐角偏差实测 **0.000°**，非掩码局部重照明 **PSNR ≥ 38 dB**）；
+   - 覆盖 **3 组商业实景案例 × 3 档造价分层**（`Tier 0 概念原图` / `Tier 1 平衡造价` / `Tier 2 降本快装`），缺失单价强制报 `UNKNOWN_PRICE_MISSING`，绝不幻觉臆造 0 值，支持一键导出甲方 VE 任务书。
 
-1. **`⚡ Instant Showcase Mode`（默认公开线上版 · 零延迟 / 零 GPU 依赖）**
-   - 前端 `web/` 直接加载经离线管线标定与预烘焙的 JSON 数据包与对比图像，保证招聘官与设计师点开网页后在 `0ms~20ms` 内流畅体验 8 维光谱重排、2 轮二分校准、Before/After 立面重绘窗帘滑块及 VE 任务书导出。
-2. **`🧪 Live Engine & Eval Mode`（本地演示与技术面试深挖版）**
-   - 通过 `server/`（FastAPI on `127.0.0.1:8780`）调用 `pipeline/` 中的确定性内核与多模态工作流：
-     - `aethervault_schema.py`：8 维连续光谱本体、显著度门控距离 $D(\mathbf{q}, \mathbf{x})$、无冲突 Prompt AST 编译器；
-     - `tectonic_state.py`：构件级图文孪生状态树、建构禁忌排雷器（Constructability Linter）、Zero-LLM `Decimal` 精确算账内核；
-     - `homography_seam.py`：基于 `numpy` DLT 的单应性矩阵 $H / H^{-1}$ 正交模数网格透视逆投影与洞口避让算法；
-   - 并通过 `eval/` 跑出可复现的 EDD 量化基准报告。
+---
 
-## 目录结构
+## 双模同构架构（Dual-Mode Architecture）
 
-```text
-spatial-ai-portfolio/
-├── AGENTS.md                    # Antigravity 项目级规范与 AI PM 优先准则
-├── docs/                        # SESSION_PLAN / MASTER_PLAN / 简历防御库 / 原始 PRD
-├── legacy-prototype/
-│   └── ai-thesis-v0.html        # 早期单文件概念交互原型归档
-├── pipeline/                    # 核心算法、领域本体与确定性规则内核
-│   ├── __init__.py
-│   ├── aethervault_schema.py    # 8 维光谱 + 显著度门控 + AST 编译器
-│   ├── tectonic_state.py        # 图文状态树 + 排雷器 + Zero-LLM Decimal 算账
-│   └── homography_seam.py       # H / H^-1 透视模数网格与灭点几何校验
-├── server/                      # FastAPI Live Engine 接口 (127.0.0.1:8780)
-│   ├── __init__.py
-│   └── main.py
-├── eval/                        # EDD 量化评测基准规范与脚本
-│   └── README.md
-├── web/                         # Vite + React 19 + TS + Tailwind 前端 (127.0.0.1:5174)
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── vite.config.ts
-│   ├── index.html
-│   └── src/engine/salienceMetric.ts
-├── pyproject.toml
-└── README.md
+| 运行模式 | 默认入口 | 技术特性 | 适用场景 |
+| :--- | :--- | :--- | :--- |
+| **Instant Showcase Mode** | 公网 GitHub Pages（`5.28 MB` 静态负载） | 0 秒冷启动、无登录、60fps 交互；内置向量重排、AST 编译、单应性拼缝与 TS `Decimal` 造价全离线引擎 | 简历投递、HR/面试官手机端与电脑端零门槛即时体验 |
+| **Live Engine & Eval Mode** | `127.0.0.1:8780`（FastAPI） | 实时调用 Python `pipeline/` 解析与定额内核，运行四大自动化 Benchmark 回归 | 现场技术深挖演示、新增样本/定额本地实测 |
+
+---
+
+## 核心目录导览
+
+- `web/`：React 18 + TypeScript + Vite 前端应用（Concept A 白纸信号蓝瑞士刊物风设计，`4` 大功能 Tab + `3 分钟导览`浮窗 + 双模切换顶栏）
+- `pipeline/`：Python 3.12 离线/在线核心管线（策展打标、AST 对照集生成、30 SKU 定额库、8 规则排雷、单应性 `H/H⁻¹` 投影与静态 Manifest 打包器）
+- `server/`：本地 FastAPI `Live Engine` API 服务（绑定 `127.0.0.1:8780`）
+- `tests/`：M1/M2 全链路自动化回归测试集
+- `docs/`：PRD、黄金锚点规范、3 分钟演示剧本及 A4 单页简历/方法论一页纸交付物（见 [`docs/deliverables/`](docs/deliverables)）
+
+---
+
+## 本地启动与回归测试
+
+```powershell
+# 1. 启动前端（127.0.0.1:5174）
+cd web
+npm.cmd install
+npm.cmd run dev
+
+# 2. 启动本地实时引擎（可选，127.0.0.1:8780，API Key 通过本机环境变量注入）
+python -m uvicorn server.main:app --host 127.0.0.1 --port 8780
+
+# 3. 构建统一静态 Showcase 清单并执行子路径/全量回归
+python -m pipeline.build_showcase_manifest
+python -m pytest tests/test_m1_curation_and_anchors.py tests/test_m1_scorer_and_comparisons.py tests/test_m2_tectonic_pipeline.py
 ```
-
-## 本地启动与安全守则
-
-- **Web 前端**：在 `web/` 下运行 `npm.cmd run dev`（绑定 `http://127.0.0.1:5174`）
-- **Live API 后端**：在根目录运行 `uvicorn server.main:app --host 127.0.0.1 --port 8780`
-- **安全与凭据**：严禁将任何 API Key / Token 写入源码或配置文件；外部 VLM / 生图调用统一从本机环境变量（如 `GEMINI_API_KEY`、`OPENAI_API_KEY`）读取。

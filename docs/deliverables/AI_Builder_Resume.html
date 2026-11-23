@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>AIGC / 空间智能应用研发简历 — 全栈与工程架构</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 9mm 11mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      background: #FFFFFF;
+      color: #0E1015;
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 9.1pt;
+      line-height: 1.42;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page { width: 100%; }
+    .mono {
+      font-family: "Chivo Mono", "Cascadia Mono", "Consolas", monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    .cobalt { color: #153CE8; }
+    .muted { color: #525866; }
+
+    .masthead {
+      border-bottom: 2px solid #0E1015;
+      padding-bottom: 8px;
+      margin-bottom: 9px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .name-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; }
+    .name { font-size: 18pt; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; flex-shrink: 0; }
+    .target-role { font-size: 9pt; font-weight: 700; color: #153CE8; }
+    .contact-line { margin-top: 3px; font-size: 8pt; color: #525866; }
+    .links-box { text-align: right; font-size: 7.8pt; line-height: 1.45; white-space: nowrap; flex-shrink: 0; }
+    .links-box a { color: #153CE8; text-decoration: none; font-weight: 600; }
+
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #E2E5EA;
+      background: #F4F5F7;
+      margin-bottom: 9px;
+    }
+    .kpi-cell { padding: 6px 8px; border-right: 1px solid #E2E5EA; }
+    .kpi-cell:last-child { border-right: none; }
+    .kpi-val { font-size: 10.2pt; font-weight: 800; color: #153CE8; line-height: 1.2; white-space: nowrap; }
+    .kpi-lbl { font-size: 7.4pt; color: #525866; margin-top: 2px; }
+
+    .section { margin-bottom: 9px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px solid #0E1015;
+      padding-bottom: 2px;
+      margin-bottom: 6px;
+    }
+    .section-title { font-size: 9.8pt; font-weight: 800; letter-spacing: 0.03em; }
+    .section-tag { font-size: 7.5pt; color: #153CE8; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+
+    .proj-card { margin-bottom: 8px; }
+    .proj-card:last-child { margin-bottom: 0; }
+    .proj-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+    .proj-title { font-size: 9.4pt; font-weight: 700; }
+    .proj-meta { font-size: 7.6pt; color: #525866; white-space: nowrap; flex-shrink: 0; }
+    .arch-line {
+      font-size: 8pt;
+      background: #F4F5F7;
+      border: 1px solid #E2E5EA;
+      padding: 3px 7px;
+      margin-bottom: 4px;
+      color: #0E1015;
+    }
+    ul.bullets { list-style: none; }
+    ul.bullets li {
+      position: relative;
+      padding-left: 11px;
+      margin-bottom: 3px;
+      font-size: 8.55pt;
+      text-align: justify;
+    }
+    ul.bullets li::before {
+      content: "▪";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #153CE8;
+      font-size: 8pt;
+    }
+    code {
+      font-family: "Chivo Mono", "Consolas", monospace;
+      font-size: 7.9pt;
+      background: #F4F5F7;
+      padding: 0 3px;
+      border: 1px solid #E2E5EA;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid #E2E5EA;
+      margin-top: 4px;
+    }
+    .stack-col {
+      padding: 5px 8px;
+      font-size: 8pt;
+      border-right: 1px solid #E2E5EA;
+    }
+    .stack-col:last-child { border-right: none; }
+    .stack-head { font-weight: 700; color: #153CE8; margin-bottom: 2px; font-size: 7.8pt; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+    }
+    .compact-item { font-size: 8.3pt; margin-bottom: 3px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div>
+        <div class="name-row">
+          <span class="name">[姓名]</span>
+          <span class="target-role">AIGC / AI 应用全栈研发工程师（多模态管线 / Agent 工程 / 前端计算沙盒）</span>
+        </div>
+        <div class="contact-line mono">
+          [+86 手机号] &nbsp;|&nbsp; [个人邮箱] &nbsp;|&nbsp; [现居城市] &nbsp;|&nbsp; GitHub: github.com/frostales-code
+        </div>
+      </div>
+      <div class="links-box">
+        <div>Online Demo：<a href="https://frostales-code.github.io/spatial-ai-portfolio/">frostales-code.github.io/spatial-ai-portfolio</a></div>
+        <div class="mono muted">Repo：github.com/frostales-code/spatial-ai-portfolio</div>
+      </div>
+    </header>
+
+    <section class="kpi-strip">
+      <div class="kpi-cell">
+        <div class="kpi-val mono">80/80 Pydantic · ρ=0.611</div>
+        <div class="kpi-lbl">结构化多模态入库校验与显著性重排相关性</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val mono">0.10ms / 0.000°</div>
+        <div class="kpi-lbl">前端向量重排耗时 &amp; H/H⁻¹ 单应性消隐线误差</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val mono">¥0.00596 · 49.25% Hit</div>
+        <div class="kpi-lbl">VLM 单图实测成本与 Prompt Cache 命中率</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val mono">5.28MB · HTTP 200</div>
+        <div class="kpi-lbl">101 张 WebP 静态包体与 CI 自动部署双模同构</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">核心工程项目经历</h2>
+        <span class="section-tag mono">ENGINEERING ARCHITECTURE & PIPELINE</span>
+      </div>
+
+      <article class="proj-card">
+        <div class="proj-head">
+          <div class="proj-title">1. Spatial AI 双引擎全栈系统 — AetherVault &amp; TectonicLoop</div>
+          <div class="proj-meta mono">Python 3.12 · FastAPI · React 18 · TypeScript · OpenCV</div>
+        </div>
+        <div class="arch-line mono">
+          Offline VLM Pipeline (Pydantic+Cache) → Pre-baked WebP/JSON (Instant Showcase) ⇄ FastAPI Live Engine (127.0.0.1:8780)
+        </div>
+        <ul class="bullets">
+          <li><strong>高并发鲁棒 VLM 管线与显著性检索：</strong>编写 <code>pipeline/anchor_scorer.py</code> 对 80 件跨 5 门类素材执行 8 轴结构化打标（<code>80/80</code> Schema 全通过），利用前缀缓存与响应缓存实现 <strong>49.25%</strong> 命中率与 <strong>¥0.00596/图</strong>；前端 <code>salienceMetric.ts</code> 实现纯矢量加权欧氏检索，将 Spearman ρ 从 0.540 提升至 <strong>0.611</strong>（&lt;1ms 响应）。</li>
+          <li><strong>Prompt AST 作用域编译器与可复现对比集：</strong>研发 <code>ast_compare_gen.py</code> 将参考图强制隔离至镜头、材质、氛围三正交语义槽并注入负向防泄漏规则，生成 6 组可控对比实验以量化消除多图直喂引发的实体泄漏。</li>
+          <li><strong>单应性几何变换与 Zero-LLM Decimal 引擎：</strong>基于 <code>homography_seam.py</code> 求解商业立面 <code>H/H⁻¹</code> 矩阵投影预制板缝（竖向偏差 <strong>0.000°</strong>），结合 <code>relight_inpaint.py</code> 保障非掩码区 PSNR ≥ <strong>38 dB</strong>；复用并重构高精度 <code>Decimal</code> 核算核心（<code>tectonic_state.py</code> + TS 同构引擎），联动 30 项 SKU 与 8 条排雷规则，缺失单价强制输出 <code>UNKNOWN_PRICE_MISSING</code>。</li>
+          <li><strong>双模同构构建与 CI/CD 自动化验证：</strong>设计 <code>build_showcase_manifest.py</code> 校验全量静态依赖与零密钥扫描，通过 GitHub Actions + Vite <code>VITE_BASE_PATH</code> 实现子路径零延迟公网发布，结合 Pytest 全套管线单测、headless browser 实测与 Slop/Design Lint 零报错门禁。</li>
+        </ul>
+      </article>
+
+      <article class="proj-card">
+        <div class="proj-head">
+          <div class="proj-title">2. Super Agent Workbench（03-super-agent）&amp; Aurora（02-aurora）</div>
+          <div class="proj-meta mono">多 Agent 编排 · Rhino 8 集成 · 253-Case 自动化回归</div>
+        </div>
+        <ul class="bullets">
+          <li><strong>多 Agent 任务流与人机确认门禁：</strong>主导 <code>03-super-agent</code> 复杂任务编排台工程实现，内置阶段可观测性与关键节点人机确认闸门，打通语义检索至可执行工程产物（追踪文档与 Rhino 8 交付物）的可信链路。</li>
+          <li><strong>双通道物料引擎与高精度数学核算：</strong>开发 <code>02-aurora</code> 自主搜索 + 图像识别双通道管道，实现 60fps 鞋带公式几何算量与严格 <code>Decimal</code> 损益计价，建立 <strong>253 例基线回归</strong>测试集确保迭代零回退。</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">核心技术栈与工程能力矩阵</h2>
+        <span class="section-tag mono">TECHNICAL CAPABILITIES</span>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-col">
+          <div class="stack-head">AI Pipeline &amp; Vision</div>
+          Python 3.12 · Pydantic · OpenAI/Gemini 结构化输出 · Prompt Caching · OpenCV 单应性矩阵 · PSNR/亮度相关性评估
+        </div>
+        <div class="stack-col">
+          <div class="stack-head">Backend &amp; Verification</div>
+          FastAPI · Uvicorn · Decimal 金融/造价高精度运算 · Pytest 多维回归 · 自动化 E2E 浏览器与无障碍验收
+        </div>
+        <div class="stack-col">
+          <div class="stack-head">Frontend &amp; Delivery</div>
+          React 18 · TypeScript 5 · Vite 子路径便携构建 · TailwindCSS · 交互式 Diff 帘幕与 SVG CAD 参数化视图
+        </div>
+      </div>
+    </section>
+
+    <section class="section two-col">
+      <div>
+        <div class="section-head">
+          <h2 class="section-title">教育背景与过往工作/实习经历</h2>
+          <span class="section-tag mono">EDUCATION &amp; EXPERIENCE</span>
+        </div>
+        <div class="compact-item"><strong>[院校名称]</strong> · [计算机 / 建筑数字技术 / 相关专业 · 学历] <span class="mono muted">([时间])</span></div>
+        <div class="compact-item muted">[请填写过往实际工程经历、开源贡献或竞赛奖项]</div>
+      </div>
+      <div>
+        <div class="section-head">
+          <h2 class="section-title">代码质量与工程习惯</h2>
+          <span class="section-tag mono">ENGINEERING DISCIPLINE</span>
+        </div>
+        <div class="compact-item">• 严格前后端类型契约（Pydantic ⇄ TypeScript 接口对齐），未知单价/缺省边界绝不隐式降级。</div>
+        <div class="compact-item">• 坚持密钥环境变量隔离与自动化 CI 检查，保证公开演示与本地实时引擎双模零摩擦。</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
