@@ -1,56 +1,74 @@
-# Spatial AI 双引擎作品集 · AetherVault & TectonicLoop
+# Spatial AI 双引擎作品集 / Dual-Engine Portfolio
 
-**线上零延迟展示 URL**：https://frostales-code.github.io/spatial-ai-portfolio/  
-**开源工程仓库**：https://github.com/frostales-code/spatial-ai-portfolio
+[![Live Instant Showcase](https://img.shields.io/badge/Live-Instant%20Showcase-007f88)](https://frostales-code.github.io/spatial-ai-portfolio/) ![Next.js 15](https://img.shields.io/badge/Next.js-15-black) ![Three.js](https://img.shields.io/badge/Three.js-3D-black) ![FastAPI](https://img.shields.io/badge/FastAPI-Live%20Engine-009688) ![Python EDD Suite](https://img.shields.io/badge/Python-EDD%20Suite-3776AB)
 
----
+![Spatial AI Dual-Engine Showcase](docs/media/hero_showcase.gif)
 
-## 核心产品与技术定位
+[立即体验 / Live Showcase](https://frostales-code.github.io/spatial-ai-portfolio/) · [90 秒演示 / Showreel](docs/media/showreel_90s.mp4) · [评测报告 / Evaluation](eval/reports/EDD_BENCHMARK_REPORT.md) · [三分钟演示剧本](docs/THREE_MINUTE_DEMO_SCRIPT.md)
 
-本仓库是 **Spatial AI 双引擎作品集** 的全栈工程与评测中心，针对创意与空间设计生成工作流中「灵感只可意会且多图混用串色」与「渲染效果图脱离造价与结构约束」两大痛点，分别给出边界克制的双引擎解决方案：
+灵感跨图混合时容易串色；商业立面效果图也可能忽略施工与造价。这里用两个引擎连接创意与建造：**AetherVault [0→1]** 将跨领域美学拆成可组合的作用域；**TectonicLoop [1→N]** 将立面方案连接到构造规则、透视拼缝与确定性计价。
 
-1. **AetherVault（`[0→1]` 正交美学光谱编译器）**：
-   - 策展跨建筑、工业、平面、器物与摄影 5 门类（各 16 件）的 **80 件设计标本**与 **8 轴×5 点黄金锚点**；
-   - VLM 仅用于冷启动离线打标（Prompt Cache 命中率 **49.25%**，实测单图成本 **¥0.00596/图**，Batch 等效 **¥0.00298/图**，Pydantic 契约 **80/80** 通过）；
-   - 前端交互使用 **&lt;20ms 纯矢量显著性加权欧氏重排**（Spearman **ρ = 0.611** vs 均匀欧氏基线 0.540）配合「光学镜头 / 材质构造 / 光影氛围」三槽隔离 **Prompt AST 编译器**，含 **6 组可控对照对比**验证防泄漏效果。
-2. **TectonicLoop（`[1→N]` 物理建构排雷与 VE 造价反向闭环）**：
-   - 整合 `02-aurora` Zero-LLM 金融级 `Decimal` 计价核与 `03-super-agent` 透明阶段闸门方法论，构建 **30 项真实构件定额 SKU**、**8 条物理排雷规则**与 **8 幅 SVG 节点构造大样**；
-   - 放弃高开销三维 BIM 重建，使用 **80/20 `H/H⁻¹` 单应性平面投影**（竖向消隐角偏差实测 **0.000°**，非掩码局部重照明 **PSNR ≥ 38 dB**）；
-   - 覆盖 **3 组商业实景案例 × 3 档造价分层**（`Tier 0 概念原图` / `Tier 1 平衡造价` / `Tier 2 降本快装`），缺失单价强制报 `UNKNOWN_PRICE_MISSING`，绝不幻觉臆造 0 值，支持一键导出甲方 VE 任务书。
+## 架构 / Architecture
 
----
+```mermaid
+flowchart LR
+    User[设计师 / Designer] --> UI[Next.js + Three.js UI]
+    UI --> Instant[Instant Showcase<br/>预烘焙数据 · 客户端交互]
+    UI --> Live[Live Engine<br/>本地 FastAPI + EDD]
+    AI[AI：离线 VLM 感知与生成] --> Catalog[80 标本 + 8 轴锚点]
+    Catalog --> Instant
+    Catalog --> Live
+    Instant --> Deterministic[非 AI：向量重排 · Prompt AST<br/>H / H⁻¹ · Decimal 计价]
+    Live --> Deterministic
+    Deterministic --> Evidence[构造排雷 · 造价 · 评测与 Bad Cases]
+```
 
-## 双模同构架构（Dual-Mode Architecture）
+线上版使用预烘焙数据；本地模式运行 Python 管线与评测。前端为 Next.js 15 静态导出、shadcn/ui、Three.js 和 Recharts；后端为 FastAPI。
 
-| 运行模式 | 默认入口 | 技术特性 | 适用场景 |
-| :--- | :--- | :--- | :--- |
-| **Instant Showcase Mode** | 公网 GitHub Pages（`5.28 MB` 静态负载） | 0 秒冷启动、无登录、60fps 交互；内置向量重排、AST 编译、单应性拼缝与 TS `Decimal` 造价全离线引擎 | 简历投递、HR/面试官手机端与电脑端零门槛即时体验 |
-| **Live Engine & Eval Mode** | `127.0.0.1:8780`（FastAPI） | 实时调用 Python `pipeline/` 解析与定额内核，运行四大自动化 Benchmark 回归 | 现场技术深挖演示、新增样本/定额本地实测 |
+## 评测与边界 / Evidence and limits
 
----
+| 维度 | 已验证结果与范围 |
+| --- | --- |
+| 标注与检索 | 80 标本、5 领域；8 轴 × 5 点锚点。首轮 Spearman ρ=0.6107，盲基线 0.540；校准后目录 ρ=0.8577。20 个跨域查询 Top-5 对齐 100.0%。 |
+| 交互与成本 | 客户端重排 p50 0.107 ms；VLM 在线冷启动实测 ¥0.00596/图，Batch 等效 ¥0.00298/图；缓存命中 49.25%，schema 80/80。 |
+| Prompt AST | 20 个三槽任务复合解耦 100.0%、外来实体泄漏 0；朴素 IP-Adapter 基线 45.0%；6 组受控视觉对比。 |
+| 建造与投影 | 30 SKU、8 条规则、8 张 CAD 节点图；3 案例 × 3 档。垂直消失角最大偏差 0.000°，往返 RMSE 0.0 px；非 mask 重照明 PSNR 实测 99.0 dB。 |
+| 造价 | 15 个历史结算中 13 个落在 ±15% 区间（86.7%）；缺价返回 `UNKNOWN_PRICE_MISSING`。人工对照 2–3 天。 |
+| BC-01 | 极端透视：拉伸比 ≥1.48x 或倾角 ≥32° 时转人工四点校正。 |
+| BC-02 | 抽象图形显著性噪声：通过 salience gating 抑制对 `tectonic_honesty` 的干扰。 |
+| BC-03 | 定制 SKU 缺价：阻断造价并返回 `UNKNOWN_PRICE_MISSING`，不填零。 |
 
-## 核心目录导览
+评测条件和边界详见 [EDD 报告](eval/reports/EDD_BENCHMARK_REPORT.md) 与 [演示剧本](docs/THREE_MINUTE_DEMO_SCRIPT.md)。这些结果属于所列样本，不能直接外推至所有项目。
 
-- `web/`：**Next.js 15 App Router**（静态导出）+ **shadcn/ui**（Radix UI + `next-themes` 深浅双主题）+ **Three.js**（AetherVault 80 标本 3D 美学流形 & TectonicLoop 3D 立面单应性投影）+ **Recharts** 交互评测看板 + Framer Motion
-- `pipeline/`：Python 3.12 离线/在线核心管线（策展打标、AST 对照集生成、30 SKU 定额库、8 规则排雷、单应性 `H/H⁻¹` 投影与静态 Manifest 打包器）
-- `server/`：本地 FastAPI `Live Engine` API 服务（绑定 `127.0.0.1:8780`）
-- `tests/`：M1/M2 全链路自动化回归测试集
-- `docs/`：PRD、黄金锚点规范、3 分钟演示剧本及 A4 单页简历/方法论一页纸交付物（见 [`docs/deliverables/`](docs/deliverables)）
+## 本地启动与验证 / Quick start
 
----
-
-## 本地启动与回归测试
+在仓库根目录的 PowerShell 中：
 
 ```powershell
-# 1. 启动前端（127.0.0.1:5174）
+# 前端，另开终端启动本地引擎
 cd web
 npm.cmd install
 npm.cmd run dev
-
-# 2. 启动本地实时引擎（可选，127.0.0.1:8780，API Key 通过本机环境变量注入）
-python -m uvicorn server.main:app --host 127.0.0.1 --port 8780
-
-# 3. 构建统一静态 Showcase 清单并执行子路径/全量回归
-python -m pipeline.build_showcase_manifest
-python -m pytest tests/test_m1_curation_and_anchors.py tests/test_m1_scorer_and_comparisons.py tests/test_m2_tectonic_pipeline.py
 ```
+
+```powershell
+# 仓库根目录；Python 依赖定义于 pyproject.toml
+python -m pip install -e .
+python -m uvicorn server.main:app --host 127.0.0.1 --port 8780
+```
+
+```powershell
+# 仓库根目录
+python -m unittest tests/test_m2_tectonic_pipeline.py tests/test_m4_edd_and_live_engine.py -v
+$env:PYTHONPATH='.'
+python tests/test_m1_curation_and_anchors.py
+python tests/test_m1_scorer_and_comparisons.py
+cd web
+npm.cmd run build
+```
+
+## English Executive Summary
+
+**AetherVault** organizes 80 specimens across five domains into an eight-axis aesthetic spectrum. A scoped Prompt AST keeps optical, material and lighting intent separate. In 20 three-slot tasks, the evaluation recorded zero foreign entity leaks; client-side reranking measured 0.107 ms p50.
+
+**TectonicLoop** connects facade concepts to 30 construction SKUs, eight lint rules, planar homography and deterministic `Decimal` costing. Its 15-settlement backtest reached 86.7% within ±15%; missing prices explicitly block calculation. The public static showcase and local FastAPI engine share the same product logic. See the linked report for methodology and bad cases.
