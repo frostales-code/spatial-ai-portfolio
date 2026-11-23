@@ -11,6 +11,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { ThesisOverview, type MainTabId } from '@/components/ThesisOverview';
 import { Button } from '@/components/ui/button';
 import type { AetherVaultShowcaseBundle, AstComparisonBundle } from '@/types/aethervault';
+import type { EddBenchmarkBundle } from '@/types/eval';
 import type { TectonicShowcaseBundle } from '@/types/tectonic';
 import { trackShowcaseEvent } from '@/utils/analytics';
 import { resolvePublicUrl } from '@/utils/assetUrl';
@@ -69,6 +70,7 @@ export const App: React.FC = () => {
   const [bundle, setBundle] = useState<AetherVaultShowcaseBundle | null>(null);
   const [comparisonBundle, setComparisonBundle] = useState<AstComparisonBundle | null>(null);
   const [tectonicBundle, setTectonicBundle] = useState<TectonicShowcaseBundle | null>(null);
+  const [eddBenchmark, setEddBenchmark] = useState<EddBenchmarkBundle | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLiveEngine, setIsLiveEngine] = useState(false);
@@ -81,10 +83,11 @@ export const App: React.FC = () => {
     setLoading(true);
     setLoadError(null);
     try {
-      const [showcaseRes, compareRes, tectonicRes] = await Promise.all([
+      const [showcaseRes, compareRes, tectonicRes, eddRes] = await Promise.all([
         fetch(resolvePublicUrl('/data/aethervault_showcase_v1.json')),
         fetch(resolvePublicUrl('/data/ast_comparisons_v1.json')).catch(() => null),
         fetch(resolvePublicUrl('/data/tectonic_showcase_v1.json')).catch(() => null),
+        fetch(resolvePublicUrl('/data/edd_benchmark_v1.json')).catch(() => null),
       ]);
       if (!showcaseRes.ok) {
         throw new Error(`数据包读取失败 (HTTP ${showcaseRes.status})`);
@@ -94,9 +97,12 @@ export const App: React.FC = () => {
         compareRes && compareRes.ok ? await compareRes.json() : null;
       const tecData: TectonicShowcaseBundle | null =
         tectonicRes && tectonicRes.ok ? await tectonicRes.json() : null;
+      const eddData: EddBenchmarkBundle | null =
+        eddRes && eddRes.ok ? await eddRes.json() : null;
       setBundle(normalizeBundleUrls(data));
       setComparisonBundle(normalizeComparisonUrls(cmpData));
       setTectonicBundle(normalizeTectonicUrls(tecData));
+      setEddBenchmark(eddData);
     } catch (err) {
       setLoadError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -450,6 +456,7 @@ export const App: React.FC = () => {
             costLedger={bundle?.cost_ledger ?? null}
             vlmReport={bundle?.vlm_scoring_report ?? null}
             tectonicBundle={tectonicBundle}
+            eddBenchmark={eddBenchmark}
           />
         </section>
       </main>

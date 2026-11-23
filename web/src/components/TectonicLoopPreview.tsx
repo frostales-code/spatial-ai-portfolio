@@ -7,6 +7,7 @@ import {
   BookOpen,
   Box,
   Check,
+  Crosshair,
   FileText,
   Info,
   X,
@@ -21,6 +22,7 @@ import type {
 } from '../types/tectonic';
 import { BeforeAfterSlider } from './BeforeAfterSlider';
 import { CadDetailViewer } from './CadDetailViewer';
+import { LiveHomographyCalibrator } from './LiveHomographyCalibrator';
 import { TectonicVeReportModal } from './TectonicVeReportModal';
 import { trackShowcaseEvent } from '../utils/analytics';
 
@@ -65,6 +67,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
   const [veReportOpen, setVeReportOpen] = useState(false);
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
+  const [calibratorOpen, setCalibratorOpen] = useState(false);
   const [catalogTab, setCatalogTab] = useState<'assemblies' | 'rules'>('assemblies');
 
   const [liveVeLoading, setLiveVeLoading] = useState(false);
@@ -253,8 +256,16 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
               type="button"
+              onClick={() => setCalibratorOpen(true)}
+              className="min-h-[42px] px-4 rounded-md border border-border hover:border-primary bg-card text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
+            >
+              <Crosshair className="w-3.5 h-3.5 text-primary" />
+              <span>自定义 4 点透视标定</span>
+            </button>
+            <button
+              type="button"
               onClick={() => setCatalogModalOpen(true)}
-              className="min-h-[42px] px-4 border border-border hover:border-foreground/70 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
+              className="min-h-[42px] px-4 rounded-md border border-border hover:border-foreground/70 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
             >
               <BookOpen className="w-3.5 h-3.5 text-primary" />
               <span>30 项定额库与 8 条排雷规则</span>
@@ -265,7 +276,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 setVeReportOpen(true);
                 trackShowcaseEvent('tectonic_ve_open', { case_id: selectedCaseId });
               }}
-              className="min-h-[42px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+              className="min-h-[42px] px-5 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-2 transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>导出甲方 VE 任务书</span>
@@ -826,6 +837,15 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Interactive Custom 4-Point Homography Calibrator (MIC-166 Live Engine + Offline Fallback) */}
+      <LiveHomographyCalibrator
+        open={calibratorOpen}
+        onOpenChange={setCalibratorOpen}
+        defaultImageUrl={activePresetTier.image_url}
+        defaultQuad={activeCase.geometry?.facade_quad_px ?? []}
+        isLiveEngine={isLiveEngine}
+      />
 
       {/* Exportable VE Monograph Sheet Modal */}
       <TectonicVeReportModal

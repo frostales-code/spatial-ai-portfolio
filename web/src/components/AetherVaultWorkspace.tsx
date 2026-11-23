@@ -377,9 +377,40 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
     setLiveCompileStatus(null);
   };
 
-  const handleIntentSubmit = (e: React.FormEvent) => {
+  const handleIntentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    applyIntentQuery(fuzzyInput);
+    const trimmed = fuzzyInput.trim();
+    if (!trimmed) {
+      applyIntentQuery('');
+      return;
+    }
+    if (!isLiveEngine) {
+      applyIntentQuery(trimmed);
+      return;
+    }
+    try {
+      const res = await fetch('/api/aethervault/parse-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: trimmed, use_llm: false }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const targetScores = data.target_scores as Record<SpectrumAxisId, number> | undefined;
+      if (targetScores && Object.keys(targetScores).length > 0) {
+        setActivePresetKey('custom');
+        setQueryScores((prev) => ({ ...prev, ...targetScores }));
+        setAttentionWeights(data.attention_weights ?? {});
+        setLiteralTermsFilter([]);
+        setIntentSummary(
+          `[Live Engine] 已实时解析「${(data.matched_tokens ?? []).join(' · ')}」并同步至 8 轴光谱与 3D 流形`
+        );
+        return;
+      }
+    } catch {
+      // Fall back cleanly to deterministic browser intent parser
+    }
+    applyIntentQuery(trimmed);
   };
 
   const handlePresetChange = (presetKey: string) => {

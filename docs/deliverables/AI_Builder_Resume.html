@@ -190,7 +190,7 @@
         </div>
         <ul class="bullets">
           <li><strong>高并发鲁棒 VLM 管线与显著性检索：</strong>编写 <code>pipeline/anchor_scorer.py</code> 对 80 件跨 5 门类素材执行 8 轴结构化打标（<code>80/80</code> Schema 全通过），利用前缀缓存与响应缓存实现 <strong>49.25%</strong> 命中率与 <strong>¥0.00596/图</strong>；前端 <code>salienceMetric.ts</code> 实现纯矢量加权欧氏检索，将 Spearman ρ 从 0.540 提升至 <strong>0.611</strong>（&lt;1ms 响应）。</li>
-          <li><strong>Prompt AST 作用域编译器与可复现对比集：</strong>研发 <code>ast_compare_gen.py</code> 将参考图强制隔离至镜头、材质、氛围三正交语义槽并注入负向防泄漏规则，生成 6 组可控对比实验以量化消除多图直喂引发的实体泄漏。</li>
+          <li><strong>Prompt AST 作用域编译器与 EDD 自动化评测：</strong>研发 <code>ast_compare_gen.py</code> 与 <code>eval/</code> 四大离线 Benchmark，在 <strong>20 组正交混搭任务</strong>实现 <strong>100% 零实体泄漏</strong>，并对 <strong>15 宗商业门头历史结算</strong>取得 <strong>86.7%（±15%）</strong> 区间命中率。</li>
           <li><strong>单应性几何变换与 Zero-LLM Decimal 引擎：</strong>基于 <code>homography_seam.py</code> 求解商业立面 <code>H/H⁻¹</code> 矩阵投影预制板缝（竖向偏差 <strong>0.000°</strong>），结合 <code>relight_inpaint.py</code> 保障非掩码区 PSNR ≥ <strong>38 dB</strong>；复用并重构高精度 <code>Decimal</code> 核算核心（<code>tectonic_state.py</code> + TS 同构引擎），联动 30 项 SKU 与 8 条排雷规则，缺失单价强制输出 <code>UNKNOWN_PRICE_MISSING</code>。</li>
           <li><strong>双模同构构建与 CI/CD 自动化验证：</strong>设计 <code>build_showcase_manifest.py</code> 校验全量静态依赖与零密钥扫描，通过 GitHub Actions + Vite <code>VITE_BASE_PATH</code> 实现子路径零延迟公网发布，结合 Pytest 全套管线单测、headless browser 实测与 Slop/Design Lint 零报错门禁。</li>
         </ul>

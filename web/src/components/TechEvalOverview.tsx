@@ -7,6 +7,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   PolarAngleAxis,
   PolarGrid,
   PolarRadiusAxis,
@@ -14,13 +15,17 @@ import {
   RadarChart,
   ReferenceLine,
   ResponsiveContainer,
+  Scatter,
+  ScatterChart,
   Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
+  ZAxis,
 } from 'recharts';
 import { useTheme } from 'next-themes';
-import { Activity, CheckCircle2, Cpu, DollarSign, Layers, ShieldCheck } from 'lucide-react';
+import { Activity, AlertTriangle, CheckCircle2, Cpu, DollarSign, Layers, ShieldAlert, ShieldCheck } from 'lucide-react';
 import type { ColdStartCostLedger, VlmScoringReport } from '@/types/aethervault';
+import type { EddBenchmarkBundle } from '@/types/eval';
 import type { TectonicShowcaseBundle } from '@/types/tectonic';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,6 +36,7 @@ interface TechEvalOverviewProps {
   costLedger: ColdStartCostLedger | null;
   vlmReport: VlmScoringReport | null;
   tectonicBundle?: TectonicShowcaseBundle | null;
+  eddBenchmark?: EddBenchmarkBundle | null;
 }
 
 const AXIS_SHORT_ZH: Record<string, string> = {
@@ -51,6 +57,7 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
   costLedger,
   vlmReport,
   tectonicBundle,
+  eddBenchmark,
 }) => {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
@@ -433,10 +440,17 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
       <section className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <Card className="lg:col-span-3">
           <CardHeader className="pb-3">
-            <CardTitle>TectonicLoop 非掩码局部重照明保真度（PSNR ≥ 38 dB）</CardTitle>
-            <CardDescription>
-              3 组商业实景改造方案在平衡与降本档位下，非修改区结构与环境阴影相关性实测
-            </CardDescription>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <CardTitle>TectonicLoop 非掩码局部重照明保真度</CardTitle>
+                <CardDescription>
+                  3 组商业实景改造方案在平衡与降本档位下的非修改区 PSNR 实测（虚线 = 38 dB 门禁）
+                </CardDescription>
+              </div>
+              <Badge variant="success" className="mono">
+                门禁 ≥ 38 dB · 全过检
+              </Badge>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="h-[260px] w-full">
@@ -456,12 +470,6 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
                     y={38}
                     stroke={chartPalette.amber}
                     strokeDasharray="4 4"
-                    label={{
-                      value: '38 dB 验收底线',
-                      position: 'insideBottomRight',
-                      fill: chartPalette.amber,
-                      fontSize: 11,
-                    }}
                   />
                   <RechartsTooltip
                     contentStyle={{
@@ -512,6 +520,284 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
           </CardContent>
         </Card>
       </section>
+
+      {/* M4 Empirical EDD Suite: Real Scatter + 15-Case Settlement Backtest + Bad Case Attribution */}
+      {eddBenchmark && (
+        <>
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Scatter Chart: Expert Ground Truth vs VLM Anchored Calibration */}
+            <Card>
+              <CardHeader className="pb-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <CardTitle>M4-1 实测散点：专家锚定真值 vs VLM 读数</CardTitle>
+                    <CardDescription className="mt-1">
+                      溯源 `eval_01_spearman.py` · 跨 5 门类锚定校准库 ρ ={' '}
+                      {eddBenchmark.eval_01_spearman.observed_mean_spearman_rho.toFixed(4)}（首轮 VLM ρ ={' '}
+                      {eddBenchmark.eval_01_spearman.raw_vlm_first_pass_rho.toFixed(4)}）
+                    </CardDescription>
+                  </div>
+                  <Badge variant="default" className="mono">
+                    p50 = {eddBenchmark.eval_01_spearman.rerank_latency_p50_ms}ms
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[260px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ScatterChart margin={{ top: 10, right: 16, left: -14, bottom: 12 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} />
+                      <XAxis
+                        type="number"
+                        dataKey="expert_score"
+                        name="专家真值"
+                        domain={[-1, 1]}
+                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                      />
+                      <YAxis
+                        type="number"
+                        dataKey="vlm_score"
+                        name="模型打分"
+                        domain={[-1, 1]}
+                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                      />
+                      <ZAxis type="number" dataKey="salience" range={[28, 72]} name="显著度" />
+                      <ReferenceLine
+                        segment={[
+                          { x: -1, y: -1 },
+                          { x: 1, y: 1 },
+                        ]}
+                        stroke={chartPalette.mutedLine}
+                        strokeDasharray="4 4"
+                      />
+                      <RechartsTooltip
+                        cursor={{ strokeDasharray: '3 3' }}
+                        contentStyle={{
+                          backgroundColor: chartPalette.tooltipBg,
+                          borderColor: chartPalette.tooltipBorder,
+                          color: chartPalette.tooltipText,
+                          borderRadius: 8,
+                          fontSize: 12,
+                        }}
+                      />
+                      <Scatter
+                        name="80 件标本读数"
+                        data={eddBenchmark.eval_01_spearman.scatter_points}
+                        fill={chartPalette.primary}
+                        fillOpacity={0.75}
+                      />
+                    </ScatterChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Settlement Backtest: 15 Commercial Storefront Cases (±15% Interval Hit Rate) */}
+            <Card>
+              <CardHeader className="pb-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <CardTitle>M4-4 15 宗历史商业门头结算回测（±15% 误差率）</CardTitle>
+                    <CardDescription className="mt-1">
+                      溯源 `eval_04_cost_backtest.py` · 区间命中率{' '}
+                      {(eddBenchmark.eval_04_cost_backtest.interval_hit_rate * 100).toFixed(1)}%（
+                      {eddBenchmark.eval_04_cost_backtest.hits_within_15pct}/
+                      {eddBenchmark.eval_04_cost_backtest.settlements_evaluated}，均耗时{' '}
+                      {eddBenchmark.eval_04_cost_backtest.avg_calc_latency_ms}ms）
+                    </CardDescription>
+                  </div>
+                  <Badge variant="success" className="mono">
+                    命中 {(eddBenchmark.eval_04_cost_backtest.interval_hit_rate * 100).toFixed(1)}% ≥ 80%
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[260px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={eddBenchmark.eval_04_cost_backtest.case_results.map((r, i) => ({
+                        idx: `S${i + 1}`,
+                        name: r.name,
+                        variancePct: r.variance_pct,
+                        within: r.within_15pct,
+                      }))}
+                      margin={{ top: 10, right: 12, left: -12, bottom: 8 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
+                      <XAxis dataKey="idx" tick={{ fill: chartPalette.tick, fontSize: 10 }} interval={0} />
+                      <YAxis
+                        domain={[-35, 25]}
+                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                        tickFormatter={(v) => `${v}%`}
+                      />
+                      <ReferenceLine y={15} stroke={chartPalette.amber} strokeDasharray="4 4" />
+                      <ReferenceLine y={-15} stroke={chartPalette.amber} strokeDasharray="4 4" />
+                      <ReferenceLine y={0} stroke={chartPalette.mutedLine} />
+                      <RechartsTooltip
+                        formatter={(val: number | string) => [`${Number(val).toFixed(2)}%`, '预测偏差']}
+                        labelFormatter={(_lbl, payload) =>
+                          (payload?.[0]?.payload as { name?: string })?.name ?? ''
+                        }
+                        contentStyle={{
+                          backgroundColor: chartPalette.tooltipBg,
+                          borderColor: chartPalette.tooltipBorder,
+                          color: chartPalette.tooltipText,
+                          borderRadius: 8,
+                          fontSize: 12,
+                        }}
+                      />
+                      <Bar dataKey="variancePct" name="预测偏差 (%)" radius={[4, 4, 0, 0]}>
+                        {eddBenchmark.eval_04_cost_backtest.case_results.map((entry) => (
+                          <Cell
+                            key={entry.case_id}
+                            fill={entry.within_15pct ? chartPalette.teal : chartPalette.amber}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Bad Case Attribution & Deterministic Guardrail Drawer (MIC-165) */}
+          <Card>
+            <CardHeader className="pb-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <ShieldAlert className="w-4 h-4 text-destructive" />
+                    <span>典型 Bad Case 归因与确定性工程兜底（可溯源至 eval/reports/edd_benchmark_v1.json）</span>
+                  </CardTitle>
+                  <CardDescription className="mt-1">
+                    主动暴露系统失效边界与确定性护栏：强透视大仰角拉伸 · 抽象图形构造轴噪声 · 非标无定额构件缺价拦截
+                  </CardDescription>
+                </div>
+                <Badge variant="outline" className="mono">
+                  AST 20 组解耦率 {(eddBenchmark.eval_02_decouple.ast_composite_decoupling_rate * 100).toFixed(0)}%
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="bc1" className="w-full">
+                <TabsList className="mb-4 flex-wrap h-auto">
+                  <TabsTrigger value="bc1">BC-01 · 极端仰角单应性拉伸</TabsTrigger>
+                  <TabsTrigger value="bc2">BC-02 · 抽象平面构造轴噪声</TabsTrigger>
+                  <TabsTrigger value="bc3">BC-03 · 非标定制缺价阻断</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="bc1" className="mt-0 space-y-3">
+                  <div className="rounded-lg border border-border bg-secondary/40 p-4 space-y-2 text-xs">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-semibold text-foreground">
+                        {eddBenchmark.eval_03_homography.bad_case_trace.title}
+                      </span>
+                      <Badge variant="destructive" className="mono">
+                        阈值压缩比 ≥ {eddBenchmark.eval_03_homography.bad_case_trace.stretch_threshold_ratio}
+                      </Badge>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {eddBenchmark.eval_03_homography.bad_case_trace.mitigation}
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-lg border border-border">
+                    <table className="w-full min-w-[520px] text-left border-collapse text-xs">
+                      <thead>
+                        <tr className="border-b border-border bg-secondary/60">
+                          <th className="py-2.5 px-3">相机仰角</th>
+                          <th className="py-2.5 px-3">顶底透视压缩比</th>
+                          <th className="py-2.5 px-3">灭点偏差</th>
+                          <th className="py-2.5 px-3">系统兜底策略</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        {eddBenchmark.eval_03_homography.bad_case_trace.tilt_sweep.map((row) => (
+                          <tr key={row.tilt_deg}>
+                            <td className="py-2 px-3 mono font-semibold">{row.tilt_deg}°</td>
+                            <td className="py-2 px-3 mono">{row.edge_stretch_ratio}x</td>
+                            <td className="py-2 px-3 mono">{row.vanishing_deviation_deg.toFixed(3)}°</td>
+                            <td className="py-2 px-3">
+                              <Badge variant={row.guardrail_triggered ? 'destructive' : 'success'}>
+                                {row.action}
+                              </Badge>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="bc2" className="mt-0">
+                  <div className="rounded-lg border border-border bg-secondary/40 p-4 space-y-3 text-xs">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-semibold text-foreground">
+                        {eddBenchmark.eval_01_spearman.bad_case_trace.title}
+                      </span>
+                      <Badge variant="default" className="mono">
+                        {eddBenchmark.eval_01_spearman.bad_case_trace.case_code}
+                      </Badge>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {eddBenchmark.eval_01_spearman.bad_case_trace.mitigation}
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div className="rounded-md border border-border bg-card p-3 space-y-1">
+                        <div className="text-muted-foreground">无门控均匀欧氏 Top-10 误召回平面样本</div>
+                        <div className="mono font-semibold text-destructive">
+                          {eddBenchmark.eval_01_spearman.bad_case_trace.uniform_top10_graphic_leaks.length > 0
+                            ? eddBenchmark.eval_01_spearman.bad_case_trace.uniform_top10_graphic_leaks.join(', ')
+                            : '0 件'}
+                        </div>
+                      </div>
+                      <div className="rounded-md border border-border bg-card p-3 space-y-1">
+                        <div className="text-muted-foreground">启用显著度门控 s_i 后 Top-10 平面误召回</div>
+                        <div className="mono font-semibold text-teal-ok">
+                          {eddBenchmark.eval_01_spearman.bad_case_trace.salience_gated_top10_graphic_leaks.length > 0
+                            ? eddBenchmark.eval_01_spearman.bad_case_trace.salience_gated_top10_graphic_leaks.join(', ')
+                            : '0 件（完全抑制）'}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="bc3" className="mt-0">
+                  <div className="rounded-lg border border-border bg-secondary/40 p-4 space-y-3 text-xs">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+                        {eddBenchmark.eval_04_cost_backtest.bad_case_trace.title}
+                      </span>
+                      <Badge variant="destructive" className="mono">
+                        {eddBenchmark.eval_04_cost_backtest.bad_case_trace.cost_status_returned}
+                      </Badge>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {eddBenchmark.eval_04_cost_backtest.bad_case_trace.mitigation}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <Badge variant="outline" className="mono">
+                        汇总状态：{eddBenchmark.eval_04_cost_backtest.bad_case_trace.summary_cost_status}
+                      </Badge>
+                      <Badge variant="success" className="mono">
+                        0 值幻觉拦截：
+                        {eddBenchmark.eval_04_cost_backtest.bad_case_trace.fabricated_zero_blocked ? 'TRUE' : 'FALSE'}
+                      </Badge>
+                      {eddBenchmark.eval_04_cost_backtest.bad_case_trace.lint_alerts_triggered.map((code) => (
+                        <Badge key={code} variant="destructive" className="mono">
+                          Lint: {code}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </>
+      )}
 
       {/* Modernized EDD Scorecard Table */}
       <Card>

@@ -79,6 +79,7 @@ def build_showcase_manifest() -> dict[str, Any]:
             "/data/aethervault_showcase_v1.json",
             "/data/ast_comparisons_v1.json",
             "/data/tectonic_showcase_v1.json",
+            "/data/edd_benchmark_v1.json",
         ],
         "aethervault_summary": {
             "total_assets": aether.get("total_assets", 0),

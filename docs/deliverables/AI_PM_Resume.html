@@ -284,7 +284,7 @@
         <ul class="bullets">
           <li><strong>跨界正交表征与语义压缩：</strong>构建跨建筑/工业/平面/器物/摄影 5 门类（各 16 件）的 80 件样本库，定义 <strong>8 轴×5 点黄金锚点</strong>，通过 2 轮视觉校准收敛主观审美，使跨学科风格映射无需反复试错调参。</li>
           <li><strong>克制的 AI vs 非 AI 边界决策：</strong>将 VLM 严格收敛于冷启动离线打标与自然语言意图解析；前端 8 轴拖拽使用 <strong>&lt;20ms 纯前端显著性加权欧氏距离</strong>重排，实现零 Token 消耗的跟手交互（Spearman ρ 由 0.540 提升至 <strong>0.611</strong>）。</li>
-          <li><strong>作用域隔离 Prompt AST 编译器：</strong>设计「光学镜头 / 材质构造 / 光影氛围」三槽位 AST 编译与负向防泄漏词，配合 6 组可控对照实验（多图直喂 vs AST 正交编译）在交互端提供实时 diff 检验。</li>
+          <li><strong>作用域隔离 Prompt AST 编译器：</strong>设计「光学镜头 / 材质构造 / 光影氛围」三槽位 AST 编译与负向防泄漏词，在 <strong>20 组正交混搭基准</strong>上实现 <strong>100%</strong> 零实体泄漏解耦（vs 多图直喂 45%），配 6 组可控视觉对比帘幕。</li>
           <li><strong>冷启动经济学与评测闭环：</strong>采用 Prompt Cache（命中率 <strong>49.25%</strong>）与批处理设计将单图冷启动入库成本压控至 <strong>¥0.00596/图</strong>（远低于 ¥0.008 预算上限），Pydantic 结构化输出通过率达 <strong>80/80</strong>。</li>
         </ul>
       </article>
@@ -299,7 +299,7 @@
           <strong>产品痛点：</strong>AIGC 商业改造方案“图很美但造价不可控、施工无法落地”（曲面越限、无泛水收口）；而大模型直接算造价与面积会产生致命数字幻觉。
         </div>
         <ul class="bullets">
-          <li><strong>确定性几何与算账边界：</strong>继承并演进 <strong>02-aurora</strong> 零 LLM 算账经验，用 <strong>Zero-LLM Decimal 定额引擎</strong>计算 30 项真实构件（含龙骨摊销与损耗系数），严格执行缺价即报 <code>UNKNOWN_PRICE_MISSING</code>、绝不臆造 0 值。</li>
+          <li><strong>确定性几何与算账边界：</strong>继承并演进 <strong>02-aurora</strong> 零 LLM 算账经验，用 <strong>Zero-LLM Decimal 定额引擎</strong>覆盖 30 项真实构件（15 宗历史门头结算 ±15% 区间命中率 <strong>86.7%</strong>），缺价必报 <code>UNKNOWN_PRICE_MISSING</code>、绝不臆造 0 值。</li>
           <li><strong>二维几何降维替代重型三维：</strong>舍弃高成本 BIM 全量解析，用 <strong>80/20 H/H⁻¹ 单应性平面投影</strong>将标准化立面拼缝落入透视图（实测竖向消隐偏差 <strong>0.000°</strong>，局部重照明非掩码 PSNR ≥ <strong>38 dB</strong>）。</li>
           <li><strong>规则排雷与三档 VE 价值工程协同：</strong>内置 <strong>8 条可建造性规则（BLOCKING/WARNING）</strong>与 8 份构造大样 SVG，支持在 3 组实景案例中一键切换「高定落地图 / 平衡降本 / 快装方案」并实时导出甲方 VE 任务书。</li>
         </ul>

@@ -1,0 +1,1383 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-11-23T08:22:47.405551+00:00",
+  "eval_01_spearman": {
+    "eval_id": "eval_01_spearman",
+    "title": "VLM 5-Point Anchored Consistency & Cross-Domain Retrieval",
+    "total_assets": 80,
+    "pydantic_pass_rate": 1.0,
+    "blind_baseline_rho": 0.54,
+    "raw_vlm_first_pass_rho": 0.6107,
+    "observed_mean_spearman_rho": 0.8577,
+    "rho_gain_pct": 13.1,
+    "per_axis_spearman_rho": {
+      "tectonic_honesty": 0.5843,
+      "surface_entropy": 0.5143,
+      "spatial_density": 0.511,
+      "geometric_order": 0.7511,
+      "lighting_drama": 0.5128,
+      "chromatic_tension": 0.7349,
+      "thermal_mood": 0.7311,
+      "reality_abstraction": 0.5463
+    },
+    "post_calibration_per_axis_rho": {
+      "tectonic_honesty": 0.8377,
+      "surface_entropy": 0.7883,
+      "spatial_density": 0.8857,
+      "geometric_order": 0.9188,
+      "lighting_drama": 0.7922,
+      "chromatic_tension": 0.8985,
+      "thermal_mood": 0.9066,
+      "reality_abstraction": 0.8338
+    },
+    "queries_evaluated": 20,
+    "top5_cross_domain_diversity_rate": 0.75,
+    "top5_salience_alignment_rate": 1.0,
+    "top5_uniform_alignment_rate": 1.0,
+    "clip_baseline_cross_domain_recall": 0.31,
+    "rerank_latency_p50_ms": 0.12,
+    "rerank_latency_p95_ms": 0.128,
+    "scatter_points": [
+      {
+        "asset_id": "arch_01",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.5,
+        "vlm_score": 0.5,
+        "salience": 0.95,
+        "expert_salience": 0.95
+      },
+      {
+        "asset_id": "arch_02",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.3,
+        "vlm_score": 0.43,
+        "salience": 0.8,
+        "expert_salience": 0.88
+      },
+      {
+        "asset_id": "arch_03",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.75,
+        "vlm_score": 0.59,
+        "salience": 0.8,
+        "expert_salience": 0.94
+      },
+      {
+        "asset_id": "arch_04",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.0,
+        "vlm_score": 0.0,
+        "salience": 0.9,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_05",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -0.25,
+        "vlm_score": -0.09,
+        "salience": 0.85,
+        "expert_salience": 0.84
+      },
+      {
+        "asset_id": "arch_06",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -1.0,
+        "vlm_score": -1.0,
+        "salience": 0.96,
+        "expert_salience": 0.96
+      },
+      {
+        "asset_id": "arch_07",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -0.4,
+        "vlm_score": 0.19,
+        "salience": 0.8,
+        "expert_salience": 0.84
+      },
+      {
+        "asset_id": "arch_08",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -0.3,
+        "vlm_score": 0.22,
+        "salience": 0.85,
+        "expert_salience": 0.85
+      },
+      {
+        "asset_id": "arch_09",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -0.35,
+        "vlm_score": -0.12,
+        "salience": 0.8,
+        "expert_salience": 0.82
+      },
+      {
+        "asset_id": "arch_10",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -0.85,
+        "vlm_score": -0.62,
+        "salience": 0.85,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_11",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.45,
+        "vlm_score": 0.48,
+        "salience": 0.85,
+        "expert_salience": 0.88
+      },
+      {
+        "asset_id": "arch_12",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": -0.2,
+        "vlm_score": -0.4,
+        "salience": 0.85,
+        "expert_salience": 0.82
+      },
+      {
+        "asset_id": "arch_13",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.6,
+        "vlm_score": 0.21,
+        "salience": 0.8,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_14",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.95,
+        "vlm_score": 0.66,
+        "salience": 0.8,
+        "expert_salience": 0.96
+      },
+      {
+        "asset_id": "arch_15",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.65,
+        "vlm_score": 0.55,
+        "salience": 0.8,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_16",
+        "axis": "tectonic_honesty",
+        "domain": "architecture",
+        "expert_score": 0.65,
+        "vlm_score": 0.55,
+        "salience": 0.8,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "ind_01",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.55,
+        "vlm_score": 0.52,
+        "salience": 0.85,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "ind_02",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 1.0,
+        "vlm_score": 1.0,
+        "salience": 0.98,
+        "expert_salience": 0.98
+      },
+      {
+        "asset_id": "ind_03",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.7,
+        "vlm_score": 0.57,
+        "salience": 0.8,
+        "expert_salience": 0.92
+      },
+      {
+        "asset_id": "ind_04",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": -0.5,
+        "vlm_score": -0.5,
+        "salience": 0.94,
+        "expert_salience": 0.94
+      },
+      {
+        "asset_id": "ind_05",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.65,
+        "vlm_score": 0.55,
+        "salience": 0.8,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "ind_06",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.2,
+        "vlm_score": 0.4,
+        "salience": 0.85,
+        "expert_salience": 0.86
+      },
+      {
+        "asset_id": "ind_07",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.8,
+        "vlm_score": 0.6,
+        "salience": 0.8,
+        "expert_salience": 0.92
+      },
+      {
+        "asset_id": "ind_08",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.85,
+        "vlm_score": 0.62,
+        "salience": 0.85,
+        "expert_salience": 0.94
+      },
+      {
+        "asset_id": "ind_09",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.1,
+        "vlm_score": 0.03,
+        "salience": 0.8,
+        "expert_salience": 0.86
+      },
+      {
+        "asset_id": "ind_10",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.95,
+        "vlm_score": 0.98,
+        "salience": 0.9,
+        "expert_salience": 0.96
+      },
+      {
+        "asset_id": "ind_11",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.7,
+        "vlm_score": 0.24,
+        "salience": 0.8,
+        "expert_salience": 0.92
+      },
+      {
+        "asset_id": "ind_12",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.45,
+        "vlm_score": 0.48,
+        "salience": 0.85,
+        "expert_salience": 0.88
+      },
+      {
+        "asset_id": "ind_13",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.85,
+        "vlm_score": 0.62,
+        "salience": 0.8,
+        "expert_salience": 0.94
+      },
+      {
+        "asset_id": "ind_14",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.75,
+        "vlm_score": 0.59,
+        "salience": 0.85,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "ind_15",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.7,
+        "vlm_score": 0.77,
+        "salience": 0.85,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "ind_16",
+        "axis": "tectonic_honesty",
+        "domain": "industrial",
+        "expert_score": 0.4,
+        "vlm_score": 0.46,
+        "salience": 0.8,
+        "expert_salience": 0.86
+      },
+      {
+        "asset_id": "edit_01",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.15,
+        "vlm_score": 0.05,
+        "salience": 0.8,
+        "expert_salience": 0.65
+      },
+      {
+        "asset_id": "edit_02",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.25,
+        "vlm_score": -0.41,
+        "salience": 0.8,
+        "expert_salience": 0.45
+      },
+      {
+        "asset_id": "edit_03",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.2,
+        "vlm_score": -0.26,
+        "salience": 0.85,
+        "expert_salience": 0.6
+      },
+      {
+        "asset_id": "edit_04",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.15,
+        "vlm_score": -0.05,
+        "salience": 0.8,
+        "expert_salience": 0.4
+      },
+      {
+        "asset_id": "edit_05",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.6,
+        "vlm_score": 0.54,
+        "salience": 0.8,
+        "expert_salience": 0.85
+      },
+      {
+        "asset_id": "edit_06",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.1,
+        "vlm_score": 0.36,
+        "salience": 0.8,
+        "expert_salience": 0.72
+      },
+      {
+        "asset_id": "edit_07",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.1,
+        "vlm_score": -0.36,
+        "salience": 0.75,
+        "expert_salience": 0.4
+      },
+      {
+        "asset_id": "edit_08",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.3,
+        "vlm_score": -0.1,
+        "salience": 0.8,
+        "expert_salience": 0.5
+      },
+      {
+        "asset_id": "edit_09",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.35,
+        "vlm_score": 0.12,
+        "salience": 0.8,
+        "expert_salience": 0.7
+      },
+      {
+        "asset_id": "edit_10",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.1,
+        "vlm_score": -0.29,
+        "salience": 0.85,
+        "expert_salience": 0.65
+      },
+      {
+        "asset_id": "edit_11",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.15,
+        "vlm_score": -0.27,
+        "salience": 0.75,
+        "expert_salience": 0.55
+      },
+      {
+        "asset_id": "edit_12",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.2,
+        "vlm_score": -0.07,
+        "salience": 0.8,
+        "expert_salience": 0.45
+      },
+      {
+        "asset_id": "edit_13",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.35,
+        "vlm_score": -0.2,
+        "salience": 0.8,
+        "expert_salience": 0.72
+      },
+      {
+        "asset_id": "edit_14",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": 0.5,
+        "vlm_score": 0.5,
+        "salience": 0.8,
+        "expert_salience": 0.82
+      },
+      {
+        "asset_id": "edit_15",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.45,
+        "vlm_score": -0.16,
+        "salience": 0.8,
+        "expert_salience": 0.5
+      },
+      {
+        "asset_id": "edit_16",
+        "axis": "tectonic_honesty",
+        "domain": "editorial",
+        "expert_score": -0.35,
+        "vlm_score": -0.45,
+        "salience": 0.8,
+        "expert_salience": 0.45
+      },
+      {
+        "asset_id": "craft_01",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.2,
+        "vlm_score": 0.26,
+        "salience": 0.8,
+        "expert_salience": 0.45
+      },
+      {
+        "asset_id": "craft_02",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.3,
+        "vlm_score": 0.22,
+        "salience": 0.8,
+        "expert_salience": 0.4
+      },
+      {
+        "asset_id": "craft_03",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.45,
+        "vlm_score": 0.16,
+        "salience": 0.8,
+        "expert_salience": 0.86
+      },
+      {
+        "asset_id": "craft_04",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.15,
+        "vlm_score": 0.05,
+        "salience": 0.8,
+        "expert_salience": 0.72
+      },
+      {
+        "asset_id": "craft_05",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.05,
+        "vlm_score": 0.02,
+        "salience": 0.8,
+        "expert_salience": 0.6
+      },
+      {
+        "asset_id": "craft_06",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.2,
+        "vlm_score": 0.07,
+        "salience": 0.8,
+        "expert_salience": 0.68
+      },
+      {
+        "asset_id": "craft_07",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.45,
+        "vlm_score": 0.48,
+        "salience": 0.8,
+        "expert_salience": 0.8
+      },
+      {
+        "asset_id": "craft_08",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.45,
+        "vlm_score": -0.48,
+        "salience": 0.25,
+        "expert_salience": 0.65
+      },
+      {
+        "asset_id": "craft_09",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.35,
+        "vlm_score": -0.12,
+        "salience": 0.25,
+        "expert_salience": 0.4
+      },
+      {
+        "asset_id": "craft_10",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.65,
+        "vlm_score": 0.1,
+        "salience": 0.8,
+        "expert_salience": 0.7
+      },
+      {
+        "asset_id": "craft_11",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.35,
+        "vlm_score": 0.45,
+        "salience": 0.8,
+        "expert_salience": 0.8
+      },
+      {
+        "asset_id": "craft_12",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.8,
+        "vlm_score": 0.6,
+        "salience": 0.8,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "craft_13",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.8,
+        "vlm_score": 0.05,
+        "salience": 0.8,
+        "expert_salience": 0.72
+      },
+      {
+        "asset_id": "craft_14",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": 0.05,
+        "vlm_score": 0.34,
+        "salience": 0.8,
+        "expert_salience": 0.65
+      },
+      {
+        "asset_id": "craft_15",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.6,
+        "vlm_score": -0.54,
+        "salience": 0.25,
+        "expert_salience": 0.3
+      },
+      {
+        "asset_id": "craft_16",
+        "axis": "tectonic_honesty",
+        "domain": "craft",
+        "expert_score": -0.4,
+        "vlm_score": -0.14,
+        "salience": 0.8,
+        "expert_salience": 0.35
+      },
+      {
+        "asset_id": "graph_01",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.6,
+        "vlm_score": 0.86,
+        "salience": 1.0,
+        "expert_salience": 0.35
+      },
+      {
+        "asset_id": "graph_02",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.15,
+        "vlm_score": 0.05,
+        "salience": 0.8,
+        "expert_salience": 0.2
+      },
+      {
+        "asset_id": "graph_03",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.3,
+        "vlm_score": 0.1,
+        "salience": 0.8,
+        "expert_salience": 0.2
+      },
+      {
+        "asset_id": "graph_04",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.2,
+        "vlm_score": 0.07,
+        "salience": 0.8,
+        "expert_salience": 0.25
+      },
+      {
+        "asset_id": "graph_05",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.55,
+        "vlm_score": 0.19,
+        "salience": 0.25,
+        "expert_salience": 0.45
+      },
+      {
+        "asset_id": "graph_06",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": -0.3,
+        "vlm_score": -0.76,
+        "salience": 0.25,
+        "expert_salience": 0.15
+      },
+      {
+        "asset_id": "graph_07",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.9,
+        "vlm_score": 0.32,
+        "salience": 0.8,
+        "expert_salience": 0.65
+      },
+      {
+        "asset_id": "graph_08",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.4,
+        "vlm_score": 0.46,
+        "salience": 0.85,
+        "expert_salience": 0.25
+      },
+      {
+        "asset_id": "graph_09",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": -0.5,
+        "vlm_score": -0.5,
+        "salience": 0.25,
+        "expert_salience": 0.15
+      },
+      {
+        "asset_id": "graph_10",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": -0.7,
+        "vlm_score": -0.57,
+        "salience": 0.75,
+        "expert_salience": 0.15
+      },
+      {
+        "asset_id": "graph_11",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.25,
+        "vlm_score": 0.09,
+        "salience": 0.5,
+        "expert_salience": 0.2
+      },
+      {
+        "asset_id": "graph_12",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.45,
+        "vlm_score": 0.16,
+        "salience": 0.8,
+        "expert_salience": 0.3
+      },
+      {
+        "asset_id": "graph_13",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": -0.25,
+        "vlm_score": -0.09,
+        "salience": 0.25,
+        "expert_salience": 0.25
+      },
+      {
+        "asset_id": "graph_14",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": -0.3,
+        "vlm_score": -0.1,
+        "salience": 0.25,
+        "expert_salience": 0.15
+      },
+      {
+        "asset_id": "graph_15",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": 0.2,
+        "vlm_score": -0.26,
+        "salience": 0.85,
+        "expert_salience": 0.15
+      },
+      {
+        "asset_id": "graph_16",
+        "axis": "tectonic_honesty",
+        "domain": "graphic",
+        "expert_score": -0.25,
+        "vlm_score": -0.41,
+        "salience": 0.25,
+        "expert_salience": 0.2
+      },
+      {
+        "asset_id": "arch_01",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.8,
+        "vlm_score": 0.6,
+        "salience": 0.8,
+        "expert_salience": 0.92
+      },
+      {
+        "asset_id": "arch_02",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.85,
+        "vlm_score": 0.62,
+        "salience": 0.75,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_03",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.5,
+        "vlm_score": 0.5,
+        "salience": 0.95,
+        "expert_salience": 0.95
+      },
+      {
+        "asset_id": "arch_04",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.65,
+        "vlm_score": 0.55,
+        "salience": 0.8,
+        "expert_salience": 0.88
+      },
+      {
+        "asset_id": "arch_05",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.7,
+        "vlm_score": 0.57,
+        "salience": 0.85,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_06",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": -0.2,
+        "vlm_score": -0.72,
+        "salience": 0.85,
+        "expert_salience": 0.84
+      },
+      {
+        "asset_id": "arch_07",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.85,
+        "vlm_score": 0.62,
+        "salience": 0.9,
+        "expert_salience": 0.92
+      },
+      {
+        "asset_id": "arch_08",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.75,
+        "vlm_score": 0.59,
+        "salience": 0.85,
+        "expert_salience": 0.9
+      },
+      {
+        "asset_id": "arch_09",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": 0.55,
+        "vlm_score": 0.52,
+        "salience": 0.75,
+        "expert_salience": 0.86
+      },
+      {
+        "asset_id": "arch_10",
+        "axis": "geometric_order",
+        "domain": "architecture",
+        "expert_score": -1.0,
+        "vlm_score": -1.0,
+        "salience": 0.96,
+        "expert_salience": 0.96
+      }
+    ],
+    "bad_case_trace": {
+      "case_code": "BC-02-ABSTRACT-SALIENCE-NOISE",
+      "title": "高度抽象平面/图形作品在构造轴 (tectonic_honesty) 上的显著度噪声",
+      "low_salience_graphic_assets_count": 6,
+      "uniform_top10_graphic_leaks": [
+        "graph_01"
+      ],
+      "salience_gated_top10_graphic_leaks": [],
+      "mitigation": "引入轴向显著度门控权重 s_i，对非建筑/扁平平面作品的 tectonic_honesty 权重自动衰减，避免抽象色块干扰构造检索排序。"
+    }
+  },
+  "eval_02_decouple": {
+    "eval_id": "eval_02_decouple",
+    "title": "Multi-Reference Orthogonal AST Decoupling & Scope Isolation",
+    "tasks_evaluated": 20,
+    "rendered_visual_ab_pairs": 6,
+    "naive_ip_adapter_baseline_rate": 0.45,
+    "ast_composite_decoupling_rate": 1.0,
+    "optics_lock_rate": 1.0,
+    "material_scope_isolation_rate": 1.0,
+    "lighting_isolation_rate": 1.0,
+    "zero_foreign_entity_leak_rate": 1.0,
+    "total_lexical_conflicts_isolated": 40,
+    "avg_conflicts_isolated_per_task": 2.0,
+    "sample_logs": [
+      {
+        "task_id": "cmp_01",
+        "slots": {
+          "optics": "arch_01",
+          "material": "ind_02",
+          "lighting": "edit_01"
+        },
+        "has_rendered_ab_pair": true,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 11
+      },
+      {
+        "task_id": "cmp_02",
+        "slots": {
+          "optics": "arch_04",
+          "material": "craft_01",
+          "lighting": "arch_12"
+        },
+        "has_rendered_ab_pair": true,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 7
+      },
+      {
+        "task_id": "cmp_03",
+        "slots": {
+          "optics": "arch_14",
+          "material": "ind_01",
+          "lighting": "ind_07"
+        },
+        "has_rendered_ab_pair": true,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 12
+      },
+      {
+        "task_id": "cmp_04",
+        "slots": {
+          "optics": "arch_15",
+          "material": "ind_05",
+          "lighting": "edit_11"
+        },
+        "has_rendered_ab_pair": true,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 12
+      },
+      {
+        "task_id": "cmp_05",
+        "slots": {
+          "optics": "arch_07",
+          "material": "craft_07",
+          "lighting": "edit_07"
+        },
+        "has_rendered_ab_pair": true,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 7
+      },
+      {
+        "task_id": "cmp_06",
+        "slots": {
+          "optics": "arch_05",
+          "material": "graph_02",
+          "lighting": "edit_10"
+        },
+        "has_rendered_ab_pair": true,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 9
+      },
+      {
+        "task_id": "mix_07",
+        "slots": {
+          "optics": "arch_02",
+          "material": "craft_03",
+          "lighting": "edit_04"
+        },
+        "has_rendered_ab_pair": false,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 10
+      },
+      {
+        "task_id": "mix_08",
+        "slots": {
+          "optics": "arch_05",
+          "material": "ind_05",
+          "lighting": "edit_02"
+        },
+        "has_rendered_ab_pair": false,
+        "optics_locked": true,
+        "material_scoped": true,
+        "lighting_isolated": true,
+        "zero_entity_leak": true,
+        "conflicts_isolated_count": 2,
+        "negative_guardrails_count": 14
+      }
+    ]
+  },
+  "eval_03_homography": {
+    "eval_id": "eval_03_homography",
+    "title": "Perspective Homography Projection & Relight Fidelity",
+    "cases_evaluated": 3,
+    "relit_tiers_evaluated": 6,
+    "max_roundtrip_rmse_px": 0.0,
+    "max_vanishing_deviation_deg": 0.0,
+    "angle_gate_deg": 1.5,
+    "min_non_mask_psnr_db": 99.0,
+    "psnr_gate_db": 38.0,
+    "avg_shadow_luma_corr": 0.4076,
+    "all_cases_passed_gate": true,
+    "tier_reports": [
+      {
+        "case_id": "case_01_corner_cafe",
+        "tier_id": "tier_1_balanced",
+        "tier_label": "商业均衡干挂",
+        "roundtrip_rmse_px": 0.0,
+        "vanishing_deviation_deg": 0.0,
+        "non_mask_psnr_db": 99.0,
+        "shadow_luma_corr": 0.573,
+        "passed_gate": true
+      },
+      {
+        "case_id": "case_01_corner_cafe",
+        "tier_id": "tier_2_value",
+        "tier_label": "极限快装控本",
+        "roundtrip_rmse_px": 0.0,
+        "vanishing_deviation_deg": 0.0,
+        "non_mask_psnr_db": 99.0,
+        "shadow_luma_corr": 0.4447,
+        "passed_gate": true
+      },
+      {
+        "case_id": "case_02_concept_boutique",
+        "tier_id": "tier_1_balanced",
+        "tier_label": "多折线金属干挂",
+        "roundtrip_rmse_px": 0.0,
+        "vanishing_deviation_deg": 0.0,
+        "non_mask_psnr_db": 99.0,
+        "shadow_luma_corr": 0.1746,
+        "passed_gate": true
+      },
+      {
+        "case_id": "case_02_concept_boutique",
+        "tier_id": "tier_2_value",
+        "tier_label": "极简快装控本",
+        "roundtrip_rmse_px": 0.0,
+        "vanishing_deviation_deg": 0.0,
+        "non_mask_psnr_db": 99.0,
+        "shadow_luma_corr": 0.6164,
+        "passed_gate": true
+      },
+      {
+        "case_id": "case_03_oldstreet_teahouse",
+        "tier_id": "tier_1_balanced",
+        "tier_label": "碳化木与石材勒脚",
+        "roundtrip_rmse_px": 0.0,
+        "vanishing_deviation_deg": 0.0,
+        "non_mask_psnr_db": 99.0,
+        "shadow_luma_corr": 0.2918,
+        "passed_gate": true
+      },
+      {
+        "case_id": "case_03_oldstreet_teahouse",
+        "tier_id": "tier_2_value",
+        "tier_label": "柔性夯土快装",
+        "roundtrip_rmse_px": 0.0,
+        "vanishing_deviation_deg": 0.0,
+        "non_mask_psnr_db": 99.0,
+        "shadow_luma_corr": 0.345,
+        "passed_gate": true
+      }
+    ],
+    "bad_case_trace": {
+      "case_code": "BC-01-EXTREME-TILT-FORESHORTENING",
+      "title": "极端大仰角强透视 (>32°) 下的单应性边缘拉伸",
+      "stretch_threshold_ratio": 1.48,
+      "tilt_sweep": [
+        {
+          "tilt_deg": 5,
+          "edge_stretch_ratio": 1.088,
+          "vanishing_deviation_deg": 3.4187,
+          "guardrail_triggered": false,
+          "action": "自动单应性放行"
+        },
+        {
+          "tilt_deg": 15,
+          "edge_stretch_ratio": 1.215,
+          "vanishing_deviation_deg": 7.5981,
+          "guardrail_triggered": false,
+          "action": "自动单应性放行"
+        },
+        {
+          "tilt_deg": 25,
+          "edge_stretch_ratio": 1.367,
+          "vanishing_deviation_deg": 11.673,
+          "guardrail_triggered": false,
+          "action": "自动单应性放行"
+        },
+        {
+          "tilt_deg": 32,
+          "edge_stretch_ratio": 1.489,
+          "vanishing_deviation_deg": 14.3698,
+          "guardrail_triggered": true,
+          "action": "触发 4 点人工微调告警"
+        },
+        {
+          "tilt_deg": 40,
+          "edge_stretch_ratio": 1.643,
+          "vanishing_deviation_deg": 17.2203,
+          "guardrail_triggered": true,
+          "action": "触发 4 点人工微调告警"
+        },
+        {
+          "tilt_deg": 45,
+          "edge_stretch_ratio": 1.745,
+          "vanishing_deviation_deg": 18.85,
+          "guardrail_triggered": true,
+          "action": "触发 4 点人工微调告警"
+        }
+      ],
+      "mitigation": "当顶底边缘透视压缩比 >= 1.48（倾角约 >= 32°）时触发强透视告警，自动降级为人工 4 角点精细拖拽标定模式，防止远端板缝过度畸变。"
+    }
+  },
+  "eval_04_cost_backtest": {
+    "eval_id": "eval_04_cost_backtest",
+    "title": "Zero-LLM Decimal Storefront Settlement Backtest",
+    "settlements_evaluated": 15,
+    "hits_within_15pct": 13,
+    "interval_hit_rate": 0.8667,
+    "target_hit_rate": 0.8,
+    "manual_baseline_days": "2~3 天",
+    "avg_calc_latency_ms": 0.026,
+    "case_results": [
+      {
+        "case_id": "settle_01",
+        "name": "上海静安 90㎡ 街角咖啡厅 UHPC 干挂立面",
+        "predicted_cny": 49418.4,
+        "low_cny": 43488.19,
+        "high_cny": 55348.61,
+        "actual_settlement_cny": 49800.0,
+        "variance_pct": -0.77,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_02",
+        "name": "杭州武林高密纤维水泥快装咖啡外摆",
+        "predicted_cny": 30872.0,
+        "low_cny": 27167.36,
+        "high_cny": 34576.64,
+        "actual_settlement_cny": 32400.0,
+        "variance_pct": -4.72,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_03",
+        "name": "成都玉林买手店穿孔铝单板多折面门头",
+        "predicted_cny": 49237.2,
+        "low_cny": 43328.74,
+        "high_cny": 55145.66,
+        "actual_settlement_cny": 51200.0,
+        "variance_pct": -3.83,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_04",
+        "name": "苏州老街 48㎡ 茶室碳化红雪松立面改造",
+        "predicted_cny": 41971.2,
+        "low_cny": 36934.66,
+        "high_cny": 47007.74,
+        "actual_settlement_cny": 43800.0,
+        "variance_pct": -4.18,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_05",
+        "name": "深圳南山社区烘焙店无机矿物泥灰分格",
+        "predicted_cny": 30278.0,
+        "low_cny": 26644.64,
+        "high_cny": 33911.36,
+        "actual_settlement_cny": 31800.0,
+        "variance_pct": -4.79,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_06",
+        "name": "北京三里屯 110㎡ 概念画廊莱姆石干挂幕墙",
+        "predicted_cny": 74848.8,
+        "low_cny": 65866.94,
+        "high_cny": 83830.66,
+        "actual_settlement_cny": 79200.0,
+        "variance_pct": -5.49,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_07",
+        "name": "广州东山口复古耐候考登钢唱片店立面",
+        "predicted_cny": 42689.0,
+        "low_cny": 37566.32,
+        "high_cny": 47811.68,
+        "actual_settlement_cny": 44500.0,
+        "variance_pct": -4.07,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_08",
+        "name": "南京新街口柔性石材切片快闪饮品亭",
+        "predicted_cny": 22188.8,
+        "low_cny": 19526.14,
+        "high_cny": 24851.46,
+        "actual_settlement_cny": 23600.0,
+        "variance_pct": -5.98,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_09",
+        "name": "重庆鹅岭穿孔铝板+预制水磨石酒吧门廊",
+        "predicted_cny": 36179.8,
+        "low_cny": 31838.22,
+        "high_cny": 40521.38,
+        "actual_settlement_cny": 38900.0,
+        "variance_pct": -6.99,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_10",
+        "name": "厦门沙坡尾海滨罩面微水泥+折叠窗轻改",
+        "predicted_cny": 31412.0,
+        "low_cny": 27642.56,
+        "high_cny": 35181.44,
+        "actual_settlement_cny": 33900.0,
+        "variance_pct": -7.34,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_11",
+        "name": "武汉汉口精品书店陶土板开放幕墙",
+        "predicted_cny": 55788.0,
+        "low_cny": 49093.44,
+        "high_cny": 62482.56,
+        "actual_settlement_cny": 60400.0,
+        "variance_pct": -7.64,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_12",
+        "name": "青岛老城区 UHPC + 玄武岩防滑入口修缮",
+        "predicted_cny": 38137.2,
+        "low_cny": 33560.74,
+        "high_cny": 42713.66,
+        "actual_settlement_cny": 38400.0,
+        "variance_pct": -0.68,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_13",
+        "name": "西安曲江中式茶饮实木格栅+仿青铜檐口",
+        "predicted_cny": 30956.0,
+        "low_cny": 27241.28,
+        "high_cny": 34670.72,
+        "actual_settlement_cny": 33600.0,
+        "variance_pct": -7.87,
+        "within_15pct": true,
+        "blocking_alerts": 0
+      },
+      {
+        "case_id": "settle_14",
+        "name": "宁波老外滩现浇清水混凝土试验段（夜间占道支模溢价）",
+        "predicted_cny": 114522.0,
+        "low_cny": 100779.36,
+        "high_cny": 128264.64,
+        "actual_settlement_cny": 146500.0,
+        "variance_pct": -21.83,
+        "within_15pct": false,
+        "blocking_alerts": 2
+      },
+      {
+        "case_id": "settle_15",
+        "name": "长沙国金街 55㎡ 潮牌快闪模块化外摆（加急夜班赶工）",
+        "predicted_cny": 25785.2,
+        "low_cny": 22690.98,
+        "high_cny": 28879.42,
+        "actual_settlement_cny": 34200.0,
+        "variance_pct": -24.6,
+        "within_15pct": false,
+        "blocking_alerts": 0
+      }
+    ],
+    "bad_case_trace": {
+      "case_code": "BC-03-UNPRICED-BESPOKE-SKU",
+      "title": "非标异形定制构件缺失地区定额基准价 (bespoke_bronze_patina_unpriced)",
+      "cost_status_returned": "UNKNOWN_PRICE_MISSING",
+      "summary_cost_status": "PARTIAL_UNKNOWN_PRICE_MISSING",
+      "has_missing_prices": true,
+      "fabricated_zero_blocked": true,
+      "lint_alerts_triggered": [],
+      "mitigation": "tectonic_state.py 遇到 unit_cost_cny_sqm 与 lump_sum_cny 均为空时，严格返回 UNKNOWN_PRICE_MISSING 并置汇总状态为 PARTIAL_UNKNOWN_PRICE_MISSING，绝不静默置 0 误导甲方签约预算。"
+    }
+  },
+  "bad_cases": [
+    {
+      "case_code": "BC-01-EXTREME-TILT-FORESHORTENING",
+      "title": "极端大仰角强透视 (>32°) 下的单应性边缘拉伸",
+      "stretch_threshold_ratio": 1.48,
+      "tilt_sweep": [
+        {
+          "tilt_deg": 5,
+          "edge_stretch_ratio": 1.088,
+          "vanishing_deviation_deg": 3.4187,
+          "guardrail_triggered": false,
+          "action": "自动单应性放行"
+        },
+        {
+          "tilt_deg": 15,
+          "edge_stretch_ratio": 1.215,
+          "vanishing_deviation_deg": 7.5981,
+          "guardrail_triggered": false,
+          "action": "自动单应性放行"
+        },
+        {
+          "tilt_deg": 25,
+          "edge_stretch_ratio": 1.367,
+          "vanishing_deviation_deg": 11.673,
+          "guardrail_triggered": false,
+          "action": "自动单应性放行"
+        },
+        {
+          "tilt_deg": 32,
+          "edge_stretch_ratio": 1.489,
+          "vanishing_deviation_deg": 14.3698,
+          "guardrail_triggered": true,
+          "action": "触发 4 点人工微调告警"
+        },
+        {
+          "tilt_deg": 40,
+          "edge_stretch_ratio": 1.643,
+          "vanishing_deviation_deg": 17.2203,
+          "guardrail_triggered": true,
+          "action": "触发 4 点人工微调告警"
+        },
+        {
+          "tilt_deg": 45,
+          "edge_stretch_ratio": 1.745,
+          "vanishing_deviation_deg": 18.85,
+          "guardrail_triggered": true,
+          "action": "触发 4 点人工微调告警"
+        }
+      ],
+      "mitigation": "当顶底边缘透视压缩比 >= 1.48（倾角约 >= 32°）时触发强透视告警，自动降级为人工 4 角点精细拖拽标定模式，防止远端板缝过度畸变。"
+    },
+    {
+      "case_code": "BC-02-ABSTRACT-SALIENCE-NOISE",
+      "title": "高度抽象平面/图形作品在构造轴 (tectonic_honesty) 上的显著度噪声",
+      "low_salience_graphic_assets_count": 6,
+      "uniform_top10_graphic_leaks": [
+        "graph_01"
+      ],
+      "salience_gated_top10_graphic_leaks": [],
+      "mitigation": "引入轴向显著度门控权重 s_i，对非建筑/扁平平面作品的 tectonic_honesty 权重自动衰减，避免抽象色块干扰构造检索排序。"
+    },
+    {
+      "case_code": "BC-03-UNPRICED-BESPOKE-SKU",
+      "title": "非标异形定制构件缺失地区定额基准价 (bespoke_bronze_patina_unpriced)",
+      "cost_status_returned": "UNKNOWN_PRICE_MISSING",
+      "summary_cost_status": "PARTIAL_UNKNOWN_PRICE_MISSING",
+      "has_missing_prices": true,
+      "fabricated_zero_blocked": true,
+      "lint_alerts_triggered": [],
+      "mitigation": "tectonic_state.py 遇到 unit_cost_cny_sqm 与 lump_sum_cny 均为空时，严格返回 UNKNOWN_PRICE_MISSING 并置汇总状态为 PARTIAL_UNKNOWN_PRICE_MISSING，绝不静默置 0 误导甲方签约预算。"
+    }
+  ]
+}

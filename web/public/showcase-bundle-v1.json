@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2026-11-23T05:25:06.111573+00:00",
+  "generated_at": "2026-11-23T08:22:44.318420+00:00",
   "project_title": "Spatial AI 双引擎作品集 · AetherVault & TectonicLoop",
   "public_url": "https://frostales-code.github.io/spatial-ai-portfolio/",
   "modes": [
@@ -10,7 +10,8 @@
   "data_sources": [
     "/data/aethervault_showcase_v1.json",
     "/data/ast_comparisons_v1.json",
-    "/data/tectonic_showcase_v1.json"
+    "/data/tectonic_showcase_v1.json",
+    "/data/edd_benchmark_v1.json"
   ],
   "aethervault_summary": {
     "total_assets": 80,
@@ -45,8 +46,8 @@
   },
   "static_assets_audit": {
     "total_webp_files": 101,
-    "total_json_files": 3,
-    "public_payload_mb": 5.28,
+    "total_json_files": 4,
+    "public_payload_mb": 5.32,
     "all_referenced_assets_present": true
   }
 }
