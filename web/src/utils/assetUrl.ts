@@ -1,6 +1,7 @@
 /**
  * Normalize static asset paths so both root deploys (`/`) and subpath
- * hosts such as GitHub Pages (`/spatial-ai-portfolio/`) resolve reliably.
+ * hosts such as GitHub Pages (`/spatial-ai-portfolio`) resolve reliably
+ * under Next.js static export (`NEXT_PUBLIC_BASE_PATH`).
  */
 export function resolvePublicUrl(rawUrl: string): string {
   const trimmed = rawUrl.trim();
@@ -9,13 +10,13 @@ export function resolvePublicUrl(rawUrl: string): string {
     return trimmed;
   }
 
-  const rawBase = import.meta.env.BASE_URL || '/';
-  const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+  const rawBase = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const cleanBase = rawBase.replace(/\/+$/, '');
 
-  if (base !== '/' && trimmed.startsWith(base)) {
+  if (cleanBase && (trimmed === cleanBase || trimmed.startsWith(`${cleanBase}/`))) {
     return trimmed;
   }
 
   const cleanPath = trimmed.replace(/^\/+/, '');
-  return `${base}${cleanPath}`;
+  return cleanBase ? `${cleanBase}/${cleanPath}` : `/${cleanPath}`;
 }

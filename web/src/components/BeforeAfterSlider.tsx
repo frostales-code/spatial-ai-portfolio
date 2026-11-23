@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useState } from 'react';
 import { ArrowLeftRight } from 'lucide-react';
 
@@ -63,7 +65,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           if (e.key === 'Home') setPosition(10);
           if (e.key === 'End') setPosition(90);
         }}
-        className="relative w-full aspect-[4/3] overflow-hidden border border-[#0E1015] bg-[#F4F5F7] select-none cursor-ew-resize touch-none"
+        className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-border bg-secondary/60 shadow-sm select-none cursor-ew-resize touch-none"
       >
         {/* Right / Base Layer: AST Compiled */}
         <img
@@ -92,28 +94,28 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         )}
 
         {/* Crisp Polarity Labels */}
-        <span className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-[#0E1015]/90 text-[#FFFFFF] text-xs font-medium pointer-events-none">
+        <span className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-black/80 backdrop-blur-sm text-white text-xs font-medium pointer-events-none">
           {beforeLabel}
         </span>
-        <span className="absolute top-3 right-3 z-20 px-2.5 py-1 bg-[#153CE8] text-[#FFFFFF] text-xs font-medium pointer-events-none">
+        <span className="absolute top-3 right-3 z-20 px-2.5 py-1 bg-primary text-primary-foreground text-xs font-medium pointer-events-none">
           {afterLabel}
         </span>
 
         {/* Divider Line & Tactile Cobalt Handle */}
         <div
-          className="absolute top-0 bottom-0 z-20 w-0.5 bg-[#FFFFFF] pointer-events-none"
+          className="absolute top-0 bottom-0 z-20 w-0.5 bg-card pointer-events-none"
           style={{ left: `${position}%` }}
         >
-          <div className="absolute inset-y-0 -left-px w-0.5 bg-[#153CE8]/80" />
-          <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#153CE8] text-[#FFFFFF] border-2 border-[#FFFFFF] flex items-center justify-center shadow-sm">
+          <div className="absolute inset-y-0 -left-px w-0.5 bg-primary/80" />
+          <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-primary text-primary-foreground border-2 border-[#FFFFFF] flex items-center justify-center shadow-sm">
             <ArrowLeftRight className="w-4 h-4" strokeWidth={1.75} />
           </div>
         </div>
       </div>
 
       {/* Accessible Scrub Control without misleading score percentages */}
-      <div className="flex items-center gap-4 text-xs text-[#525866]">
-        <span className="font-medium text-[#0E1015] shrink-0">{beforeLabel}</span>
+      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+        <span className="font-medium text-foreground shrink-0">{beforeLabel}</span>
         <input
           type="range"
           min={4}
@@ -124,7 +126,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           onChange={(e) => setPosition(parseFloat(e.target.value))}
           className="w-full"
         />
-        <span className="font-semibold text-[#153CE8] shrink-0">{afterLabel}</span>
+        <span className="font-semibold text-primary shrink-0">{afterLabel}</span>
       </div>
     </div>
   );

@@ -1,7 +1,11 @@
+'use client';
+
 import React, { useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 import {
   AlertTriangle,
   BookOpen,
+  Box,
   Check,
   FileText,
   Info,
@@ -19,6 +23,18 @@ import { BeforeAfterSlider } from './BeforeAfterSlider';
 import { CadDetailViewer } from './CadDetailViewer';
 import { TectonicVeReportModal } from './TectonicVeReportModal';
 import { trackShowcaseEvent } from '../utils/analytics';
+
+const TectonicPlane3D = dynamic(
+  () => import('./three/TectonicPlane3D').then((m) => m.TectonicPlane3D),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[440px] rounded-lg border border-border bg-card flex items-center justify-center text-xs text-muted-foreground">
+        正在初始化 Three.js 3D 单应性投影平面...
+      </div>
+    ),
+  }
+);
 
 interface TectonicLoopPreviewProps {
   tectonicBundle: TectonicShowcaseBundle | null;
@@ -42,7 +58,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
   const [selectedTierId, setSelectedTierId] = useState<TectonicTierState['tier_id']>('tier_1_balanced');
   const [customSkus, setCustomSkus] = useState<Record<string, string>>({});
 
-  const [viewportMode, setViewportMode] = useState<'photoreal' | 'orthographic'>('photoreal');
+  const [viewportMode, setViewportMode] = useState<'photoreal' | 'orthographic' | '3d'>('photoreal');
   const [showSeams, setShowSeams] = useState(true);
   const [showPins, setShowPins] = useState(true);
   const [selectedPinIndex, setSelectedPinIndex] = useState(0);
@@ -208,7 +224,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
   if (!tectonicBundle || !activeCase || !rawTier || !activePresetTier) {
     return (
-      <div className="py-20 text-center text-sm text-[#525866] border border-[#E2E5EA] bg-[#F4F5F7]">
+      <div className="py-20 text-center text-sm text-muted-foreground border border-border bg-secondary/60">
         正在加载 3 套实景商业立面重绘案例、30 项构造定额库与单应性分缝投影数据…
       </div>
     );
@@ -223,13 +239,13 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
   return (
     <div className="space-y-8">
       {/* Header + 3-Case Selector + Export Report CTA */}
-      <section className="pb-6 border-b border-[#E2E5EA] space-y-5">
+      <section className="pb-6 border-b border-border space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5">
           <div className="space-y-2 max-w-2xl">
-            <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-[#0E1015]">
+            <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-foreground">
               TectonicLoop · 物理建构排雷与树影锁定价值工程
             </h1>
-            <p className="text-sm text-[#525866] leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               通过单应性矩阵（H/H⁻¹）透视模数投影与本征树影锁定重绘，在保留街景氛围与自然树影的前提下，对 90–300㎡ 商业门头执行 30 项构造包选型、隐患拦截与 Zero-LLM Decimal 实时核算。
             </p>
           </div>
@@ -238,9 +254,9 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             <button
               type="button"
               onClick={() => setCatalogModalOpen(true)}
-              className="min-h-[42px] px-4 border border-[#E2E5EA] hover:border-[#0E1015] bg-[#FFFFFF] text-xs font-semibold text-[#0E1015] inline-flex items-center gap-2 transition-colors"
+              className="min-h-[42px] px-4 border border-border hover:border-foreground/70 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
             >
-              <BookOpen className="w-3.5 h-3.5 text-[#153CE8]" />
+              <BookOpen className="w-3.5 h-3.5 text-primary" />
               <span>30 项定额库与 8 条排雷规则</span>
             </button>
             <button
@@ -249,7 +265,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 setVeReportOpen(true);
                 trackShowcaseEvent('tectonic_ve_open', { case_id: selectedCaseId });
               }}
-              className="min-h-[42px] px-5 bg-[#153CE8] hover:bg-[#0E2BB5] text-[#FFFFFF] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+              className="min-h-[42px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-2 transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>导出甲方 VE 任务书</span>
@@ -261,7 +277,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
         <div
           role="group"
           aria-label="选择 3 套实测商业改造案例"
-          className="grid grid-cols-1 md:grid-cols-3 border border-[#E2E5EA] divide-y md:divide-y-0 md:divide-x divide-[#E2E5EA]"
+          className="grid grid-cols-1 md:grid-cols-3 border border-border divide-y md:divide-y-0 md:divide-x divide-border"
         >
           {cases.map((c, idx) => {
             const isSel = c.case_id === activeCase.case_id;
@@ -273,17 +289,17 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 onClick={() => handleSelectCase(c.case_id)}
                 className={`text-left p-3.5 transition-colors ${
                   isSel
-                    ? 'bg-[#EEF2FF] text-[#0E1015] border-b-2 border-b-[#153CE8]'
-                    : 'bg-[#FFFFFF] text-[#525866] hover:bg-[#F4F5F7] hover:text-[#0E1015]'
+                    ? 'bg-accent text-foreground border-b-2 border-b-[#153CE8]'
+                    : 'bg-card text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
                 }`}
               >
                 <div className="flex items-center justify-between text-xs mono mb-1">
-                  <span className={isSel ? 'text-[#153CE8] font-semibold' : 'text-[#525866]'}>
+                  <span className={isSel ? 'text-primary font-semibold' : 'text-muted-foreground'}>
                     CASE 0{idx + 1} · {c.scale_anchor.facade_width_mm}×{c.scale_anchor.facade_height_mm}mm
                   </span>
                 </div>
-                <div className="text-sm font-bold text-[#0E1015]">{c.title}</div>
-                <div className="text-xs text-[#525866] truncate mt-0.5">{c.subtitle}</div>
+                <div className="text-sm font-bold text-foreground">{c.title}</div>
+                <div className="text-xs text-muted-foreground truncate mt-0.5">{c.subtitle}</div>
               </button>
             );
           })}
@@ -295,15 +311,15 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
         <div className="lg:col-span-7 space-y-5">
           {/* Viewport Controls Row */}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div role="group" aria-label="视图模式切换" className="inline-flex border border-[#E2E5EA] divide-x divide-[#E2E5EA]">
+            <div role="group" aria-label="视图模式切换" className="inline-flex border border-border divide-x divide-border">
               <button
                 type="button"
                 aria-pressed={viewportMode === 'photoreal'}
                 onClick={() => setViewportMode('photoreal')}
                 className={`min-h-[34px] px-3 text-xs font-semibold transition-colors ${
                   viewportMode === 'photoreal'
-                    ? 'bg-[#0E1015] text-[#FFFFFF]'
-                    : 'bg-[#FFFFFF] text-[#0E1015] hover:bg-[#F4F5F7]'
+                    ? 'bg-foreground text-background'
+                    : 'bg-card text-foreground hover:bg-secondary/60'
                 }`}
               >
                 实景重绘对比帘
@@ -314,21 +330,34 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 onClick={() => setViewportMode('orthographic')}
                 className={`min-h-[34px] px-3 text-xs font-semibold transition-colors ${
                   viewportMode === 'orthographic'
-                    ? 'bg-[#0E1015] text-[#FFFFFF]'
-                    : 'bg-[#FFFFFF] text-[#0E1015] hover:bg-[#F4F5F7]'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-card text-foreground hover:bg-secondary'
                 }`}
               >
                 正交施工立面图
               </button>
+              <button
+                type="button"
+                aria-pressed={viewportMode === '3d'}
+                onClick={() => setViewportMode('3d')}
+                className={`min-h-[34px] px-3 text-xs font-semibold inline-flex items-center gap-1.5 transition-colors ${
+                  viewportMode === '3d'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-card text-foreground hover:bg-secondary'
+                }`}
+              >
+                <Box className="w-3.5 h-3.5" />
+                <span>3D 单应性投影</span>
+              </button>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-[#0E1015]">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-foreground">
               <label className="inline-flex items-center gap-2 cursor-pointer select-none min-h-[32px]">
                 <input
                   type="checkbox"
                   checked={showSeams}
                   onChange={(e) => setShowSeams(e.target.checked)}
-                  className="w-4 h-4 accent-[#153CE8]"
+                  className="w-4 h-4 accent-primary"
                 />
                 <span>H/H⁻¹ 透视模数分缝层</span>
               </label>
@@ -337,7 +366,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                   type="checkbox"
                   checked={showPins}
                   onChange={(e) => setShowPins(e.target.checked)}
-                  className="w-4 h-4 accent-[#C62828]"
+                  className="w-4 h-4 accent-destructive"
                 />
                 <span>建构排雷标点 ({evalResult.summary.blocking_alerts_count})</span>
               </label>
@@ -345,7 +374,14 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
 
           {/* Primary Viewport Plate */}
-          {viewportMode === 'photoreal' ? (
+          {viewportMode === '3d' ? (
+            <TectonicPlane3D
+              activeCase={activeCase}
+              activeTier={activePresetTier}
+              showSeams={showSeams}
+              showPins={showPins}
+            />
+          ) : viewportMode === 'photoreal' ? (
             <BeforeAfterSlider
               beforeSrc={rawTier.image_url}
               afterSrc={activePresetTier.image_url}
@@ -398,7 +434,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                   {showPins &&
                     diagnosticMarkers.map((marker, idx) => {
                       const isSel = selectedPinIndex === idx;
-                      const badgeBg = marker.hasAnyAlert ? 'bg-[#C62828]' : 'bg-[#0F766E]';
+                      const badgeBg = marker.hasAnyAlert ? 'bg-destructive' : 'bg-teal-ok';
                       return (
                         <button
                           key={marker.zone.zone_id}
@@ -414,7 +450,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                             left: `${marker.pin.x_pct}%`,
                             top: `${marker.pin.y_pct}%`,
                           }}
-                          className={`pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-[#FFFFFF] text-[#FFFFFF] flex items-center justify-center mono text-xs font-bold shadow transition-transform ${badgeBg} ${
+                          className={`pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-[#FFFFFF] text-white flex items-center justify-center mono text-xs font-bold shadow transition-transform ${badgeBg} ${
                             isSel ? 'scale-115 ring-2 ring-[#0E1015]' : 'hover:scale-105'
                           }`}
                         >
@@ -427,7 +463,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             />
           ) : (
             /* Precision Architectural Orthographic Elevation Mode */
-            <div className="border border-[#0E1015] bg-[#FAFBFD]">
+            <div className="border border-foreground/70 bg-secondary/40">
               <div className="relative w-full">
                 <svg
                   viewBox="0 0 760 440"
@@ -485,7 +521,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 {showPins &&
                   diagnosticMarkers.map((marker, idx) => {
                     const isSel = selectedPinIndex === idx;
-                    const badgeBg = marker.hasAnyAlert ? 'bg-[#C62828]' : 'bg-[#0F766E]';
+                    const badgeBg = marker.hasAnyAlert ? 'bg-destructive' : 'bg-teal-ok';
                     return (
                       <button
                         key={marker.zone.zone_id}
@@ -494,7 +530,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                         aria-pressed={isSel}
                         onClick={() => setSelectedPinIndex(idx)}
                         style={{ left: `${marker.pin.x_pct}%`, top: `${marker.pin.y_pct}%` }}
-                        className={`-translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-[#FFFFFF] text-[#FFFFFF] flex items-center justify-center mono text-xs font-bold ${badgeBg} ${
+                        className={`-translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-[#FFFFFF] text-white flex items-center justify-center mono text-xs font-bold ${badgeBg} ${
                           isSel ? 'ring-2 ring-[#0E1015]' : ''
                         }`}
                       >
@@ -507,22 +543,22 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           )}
 
           {/* Measured Homography & Relight Quality Strip */}
-          <div className="grid grid-cols-3 gap-px bg-[#E2E5EA] border border-[#E2E5EA] text-xs">
-            <div className="bg-[#F4F5F7] p-3">
-              <div className="text-[#525866]">基准尺度锚点</div>
-              <div className="mono font-semibold text-[#0E1015] truncate mt-0.5">
+          <div className="grid grid-cols-3 gap-px bg-border border border-border text-xs">
+            <div className="bg-secondary/60 p-3">
+              <div className="text-muted-foreground">基准尺度锚点</div>
+              <div className="mono font-semibold text-foreground truncate mt-0.5">
                 {activeCase.scale_anchor.facade_width_mm} × {activeCase.scale_anchor.facade_height_mm} mm
               </div>
             </div>
-            <div className="bg-[#F4F5F7] p-3">
-              <div className="text-[#525866]">H⁻¹ 分缝灭点误差</div>
-              <div className="mono font-semibold text-[#153CE8] tabular-nums mt-0.5">
+            <div className="bg-secondary/60 p-3">
+              <div className="text-muted-foreground">H⁻¹ 分缝灭点误差</div>
+              <div className="mono font-semibold text-primary tabular-nums mt-0.5">
                 {activePresetTier.homography_projection.vertical_vanishing_deviation_deg.toFixed(3)}° (&lt;1.5°)
               </div>
             </div>
-            <div className="bg-[#F4F5F7] p-3">
-              <div className="text-[#525866]">非修改区像素保真度</div>
-              <div className="mono font-semibold text-[#0F766E] tabular-nums mt-0.5">
+            <div className="bg-secondary/60 p-3">
+              <div className="text-muted-foreground">非修改区像素保真度</div>
+              <div className="mono font-semibold text-teal-ok tabular-nums mt-0.5">
                 {activePresetTier.tier_id === 'tier_0_raw'
                   ? '原始输入底图基准'
                   : activePresetTier.relight_metrics.non_mask_psnr_db >= 90
@@ -534,26 +570,26 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
           {/* Active Diagnostic Status Strip */}
           {activeMarker && (
-            <div className="border border-[#0E1015] bg-[#FFFFFF] p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs">
-              <div className="flex items-start gap-2.5 leading-relaxed text-[#0E1015]">
+            <div className="border border-foreground/70 bg-card p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs">
+              <div className="flex items-start gap-2.5 leading-relaxed text-foreground">
                 {activeMarker.hasAnyAlert ? (
-                  <AlertTriangle className="w-4 h-4 text-[#C62828] shrink-0 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
                 ) : (
-                  <Check className="w-4 h-4 text-[#0F766E] shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-teal-ok shrink-0 mt-0.5" />
                 )}
                 <div className="space-y-1">
                   <div className="font-semibold">
                     {activeMarker.zone.zone_label} · {activeMarker.zone.sku_name ?? activeMarker.zone.engineering_state.detail_drawing_code}
                   </div>
                   {activeMarker.alerts.length === 0 ? (
-                    <p className="text-[#525866]">
+                    <p className="text-muted-foreground">
                       构造合法，模数与防潮节点符合《常见饰面极限制造尺幅与构造禁忌》。
                     </p>
                   ) : (
                     activeMarker.alerts.map((al, idx) => (
-                      <p key={idx} className="text-[#525866]">
-                        <span className="mono font-semibold text-[#C62828] mr-1.5">[{al.code}]</span>
-                        {al.message} <span className="text-[#0E1015]">建议：{al.remediation_hint}</span>
+                      <p key={idx} className="text-muted-foreground">
+                        <span className="mono font-semibold text-destructive mr-1.5">[{al.code}]</span>
+                        {al.message} <span className="text-foreground">建议：{al.remediation_hint}</span>
                       </p>
                     ))
                   )}
@@ -562,8 +598,8 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               <span
                 className={`px-2.5 py-1 font-semibold border shrink-0 whitespace-nowrap ${
                   activeMarker.hasAnyAlert
-                    ? 'border-[#C62828] text-[#C62828]'
-                    : 'border-[#0F766E] text-[#0F766E]'
+                    ? 'border-destructive text-destructive'
+                    : 'border-teal-ok text-teal-ok'
                 }`}
               >
                 {activeMarker.hasBlocking ? '阻断预警' : activeMarker.hasAnyAlert ? '周期提醒' : '构造合规'}
@@ -586,7 +622,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
         <div className="lg:col-span-5 space-y-6">
           {/* 3-Tier Preset Bar */}
           <div className="space-y-2">
-            <div className="text-xs font-bold text-[#0E1015]">一键切换同效异构价值工程档位</div>
+            <div className="text-xs font-bold text-foreground">一键切换同效异构价值工程档位</div>
             <div role="group" aria-label="三档价值工程方案" className="grid grid-cols-3 gap-2">
               {activeCase.tiers.map((tier) => {
                 const isSel = !hasCustomOverride && selectedTierId === tier.tier_id;
@@ -598,12 +634,12 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                     onClick={() => handleSelectTier(tier.tier_id)}
                     className={`min-h-[42px] px-2.5 py-2 text-xs font-semibold border text-left transition-colors ${
                       isSel
-                        ? 'bg-[#153CE8] border-[#153CE8] text-[#FFFFFF]'
-                        : 'bg-[#FFFFFF] border-[#E2E5EA] text-[#0E1015] hover:border-[#0E1015]'
+                        ? 'bg-primary border-primary text-white'
+                        : 'bg-card border-border text-foreground hover:border-foreground/70'
                     }`}
                   >
                     <div className="truncate">{tier.short_label}</div>
-                    <div className={`mono mt-0.5 tabular-nums ${isSel ? 'text-[#EEF2FF]' : 'text-[#525866]'}`}>
+                    <div className={`mono mt-0.5 tabular-nums ${isSel ? 'text-[#EEF2FF]' : 'text-muted-foreground'}`}>
                       ¥{Math.round(Number(tier.summary.known_subtotal_cny)).toLocaleString()} · {tier.summary.max_lead_time_days}天
                     </div>
                   </button>
@@ -613,15 +649,15 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
 
           {/* 3 Live Deterministic Decimal KPIs */}
-          <div className="grid grid-cols-3 gap-px bg-[#E2E5EA] border border-[#E2E5EA]">
-            <div className="bg-[#FFFFFF] p-3.5">
-              <div className="text-xs text-[#525866]">预估造价 (±12%)</div>
+          <div className="grid grid-cols-3 gap-px bg-border border border-border">
+            <div className="bg-card p-3.5">
+              <div className="text-xs text-muted-foreground">预估造价 (±12%)</div>
               {evalResult.summary.has_missing_prices ? (
                 <>
-                  <div className="mono text-sm font-bold text-[#C62828] mt-1">
+                  <div className="mono text-sm font-bold text-destructive mt-1">
                     UNKNOWN_PRICE_MISSING
                   </div>
-                  <div className="text-xs text-[#525866] mt-0.5 tabular-nums">
+                  <div className="text-xs text-muted-foreground mt-0.5 tabular-nums">
                     已知项 ¥{totalCostNum.toLocaleString()}
                   </div>
                 </>
@@ -629,56 +665,56 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 <>
                   <div
                     className={`mono text-base sm:text-lg font-bold tabular-nums mt-1 ${
-                      totalCostNum <= 80000 ? 'text-[#0F766E]' : 'text-[#C62828]'
+                      totalCostNum <= 80000 ? 'text-teal-ok' : 'text-destructive'
                     }`}
                   >
                     ¥ {totalCostNum.toLocaleString()}
                   </div>
-                  <div className="text-xs text-[#525866] mt-0.5 mono tabular-nums">
+                  <div className="text-xs text-muted-foreground mt-0.5 mono tabular-nums">
                     {Math.round(lowCostNum / 1000)}k~{Math.round(highCostNum / 1000)}k
                   </div>
                 </>
               )}
             </div>
 
-            <div className="bg-[#FFFFFF] p-3.5">
-              <div className="text-xs text-[#525866]">施工周期</div>
-              <div className="mono text-base sm:text-lg font-bold text-[#0E1015] tabular-nums mt-1">
+            <div className="bg-card p-3.5">
+              <div className="text-xs text-muted-foreground">施工周期</div>
+              <div className="mono text-base sm:text-lg font-bold text-foreground tabular-nums mt-1">
                 {evalResult.summary.max_lead_time_days} 天
               </div>
               <div
                 className={`text-xs mt-0.5 ${
-                  evalResult.summary.warning_alerts_count > 0 ? 'text-[#C62828]' : 'text-[#0F766E]'
+                  evalResult.summary.warning_alerts_count > 0 ? 'text-destructive' : 'text-teal-ok'
                 }`}
               >
                 {evalResult.summary.warning_alerts_count > 0 ? '超出快装窗口' : '干法快速装配'}
               </div>
             </div>
 
-            <div className="bg-[#FFFFFF] p-3.5">
-              <div className="text-xs text-[#525866]">建构排雷校验</div>
+            <div className="bg-card p-3.5">
+              <div className="text-xs text-muted-foreground">建构排雷校验</div>
               <div
                 className={`mono text-base sm:text-lg font-bold tabular-nums mt-1 whitespace-nowrap ${
-                  evalResult.summary.blocking_alerts_count === 0 ? 'text-[#0F766E]' : 'text-[#C62828]'
+                  evalResult.summary.blocking_alerts_count === 0 ? 'text-teal-ok' : 'text-destructive'
                 }`}
               >
                 {evalResult.summary.blocking_alerts_count === 0
                   ? '0 项阻断'
                   : `${evalResult.summary.blocking_alerts_count} 项阻断`}
               </div>
-              <div className="text-xs text-[#525866] mt-0.5 whitespace-nowrap">
+              <div className="text-xs text-muted-foreground mt-0.5 whitespace-nowrap">
                 点击左图数字排查
               </div>
             </div>
           </div>
 
           {hasCustomOverride && (
-            <div className="p-3 border border-[#153CE8] bg-[#EEF2FF] text-xs text-[#0E1015] flex items-center justify-between gap-2">
+            <div className="p-3 border border-primary bg-accent text-xs text-foreground flex items-center justify-between gap-2">
               <span>已启用自定义 SKU 搭配（CAD 详图、排雷与造价即时重算；左图当前对应所选实景基准档位）</span>
               <button
                 type="button"
                 onClick={() => setCustomSkus({})}
-                className="font-semibold text-[#153CE8] underline shrink-0"
+                className="font-semibold text-primary underline shrink-0"
               >
                 还原
               </button>
@@ -687,7 +723,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
           {/* Zone A / B / C 30-SKU Controllers */}
           <div className="space-y-4">
-            <h2 className="font-display text-base font-bold text-[#0E1015]">
+            <h2 className="font-display text-base font-bold text-foreground">
               分区域工艺替换与定额核算（30 项实库）
             </h2>
 
@@ -705,14 +741,14 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               const isMissing = bd?.status === 'UNKNOWN_PRICE_MISSING';
 
               return (
-                <div key={zone.zone_id} className="border border-[#E2E5EA] p-4 space-y-2 bg-[#FFFFFF]">
+                <div key={zone.zone_id} className="border border-border p-4 space-y-2 bg-card">
                   <div className="flex items-center justify-between gap-2 text-xs">
-                    <label htmlFor={selectId} className="font-semibold text-[#0E1015]">
+                    <label htmlFor={selectId} className="font-semibold text-foreground">
                       {zone.zone_label}
                     </label>
                     <span
                       className={`mono font-semibold tabular-nums ${
-                        isMissing ? 'text-[#C62828]' : 'text-[#153CE8]'
+                        isMissing ? 'text-destructive' : 'text-primary'
                       }`}
                     >
                       {isMissing
@@ -730,7 +766,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                       setCustomSkus((prev) => ({ ...prev, [zone.zone_id]: nextSkuId }));
                       setLiveVeStatus(null);
                     }}
-                    className="w-full min-h-[38px] px-2.5 border border-[#E2E5EA] focus:border-[#153CE8] bg-[#FFFFFF] text-xs text-[#0E1015]"
+                    className="w-full min-h-[38px] px-2.5 border border-border focus:border-primary bg-card text-xs text-foreground"
                   >
                     {options.map((opt) => (
                       <option key={opt.sku_id} value={opt.sku_id}>
@@ -751,17 +787,17 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
 
           {/* Live Backend Calc Verification + Missing Price Policy */}
-          <div className="border border-[#E2E5EA] bg-[#F4F5F7] p-4 space-y-3 text-xs">
+          <div className="border border-border bg-secondary/60 p-4 space-y-3 text-xs">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-semibold text-[#0E1015]">Zero-LLM Decimal 规则验证</span>
+              <span className="font-semibold text-foreground">Zero-LLM Decimal 规则验证</span>
               <button
                 type="button"
                 disabled={liveVeLoading}
                 onClick={handleLiveBackendVeCalc}
                 className={`min-h-[36px] px-3.5 text-xs font-semibold transition-colors ${
                   isLiveEngine
-                    ? 'bg-[#0F766E] hover:bg-[#0D5F59] text-[#FFFFFF]'
-                    : 'bg-[#0E1015] hover:bg-[#153CE8] text-[#FFFFFF]'
+                    ? 'bg-teal-ok hover:bg-[#0D5F59] text-white'
+                    : 'bg-foreground hover:bg-primary text-primary-foreground'
                 }`}
               >
                 {liveVeLoading ? '核算请求中…' : '执行 Live FastAPI 实时核算'}
@@ -771,20 +807,20 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             {liveVeStatus && (
               <div
                 role="status"
-                className={`p-3 border bg-[#FFFFFF] leading-relaxed ${
+                className={`p-3 border bg-card leading-relaxed ${
                   liveVeStatus.ok
-                    ? 'border-[#0F766E] text-[#0F766E]'
-                    : 'border-[#C62828] text-[#C62828]'
+                    ? 'border-teal-ok text-teal-ok'
+                    : 'border-destructive text-destructive'
                 }`}
               >
                 {liveVeStatus.message}
               </div>
             )}
 
-            <div className="pt-1 flex items-start gap-2 text-[#525866] leading-relaxed">
-              <Info className="w-3.5 h-3.5 text-[#153CE8] shrink-0 mt-0.5" />
+            <div className="pt-1 flex items-start gap-2 text-muted-foreground leading-relaxed">
+              <Info className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
               <span>
-                未知单价阻断测试：在 Zone A 下拉框中选择「定制手工锻铜做旧艺术挂板」，可即时观测系统阻断伪估算并输出 <code className="mono text-[#C62828] font-semibold">UNKNOWN_PRICE_MISSING</code>。
+                未知单价阻断测试：在 Zone A 下拉框中选择「定制手工锻铜做旧艺术挂板」，可即时观测系统阻断伪估算并输出 <code className="mono text-destructive font-semibold">UNKNOWN_PRICE_MISSING</code>。
               </span>
             </div>
           </div>
@@ -814,18 +850,18 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           aria-modal="true"
           aria-labelledby="tectonic-catalog-modal-title"
           onClick={() => setCatalogModalOpen(false)}
-          className="fixed inset-0 z-50 bg-[#0E1015]/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-50 bg-foreground/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#FFFFFF] border border-[#0E1015] w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden"
+            className="bg-card border border-foreground/70 w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden"
           >
-            <div className="px-5 py-4 border-b border-[#E2E5EA] flex flex-wrap items-center justify-between gap-3">
+            <div className="px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 id="tectonic-catalog-modal-title" className="font-display text-lg font-bold text-[#0E1015]">
+                <h2 id="tectonic-catalog-modal-title" className="font-display text-lg font-bold text-foreground">
                   商业立面与饰面构造定额库（{tectonicBundle.total_assemblies} 项）及排雷标准
                 </h2>
-                <p className="text-xs text-[#525866]">
+                <p className="text-xs text-muted-foreground">
                   涵盖外墙饰面、门窗幕墙、泛水压顶与入口地面四类高频商业改造节点（基准日期 {tectonicBundle.benchmark_date}）
                 </p>
               </div>
@@ -833,20 +869,20 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 type="button"
                 aria-label="关闭定额库窗口"
                 onClick={() => setCatalogModalOpen(false)}
-                className="w-10 h-10 border border-[#E2E5EA] hover:border-[#0E1015] flex items-center justify-center text-[#0E1015]"
+                className="w-10 h-10 border border-border hover:border-foreground/70 flex items-center justify-center text-foreground"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="px-5 pt-3 border-b border-[#E2E5EA] flex gap-6 text-xs">
+            <div className="px-5 pt-3 border-b border-border flex gap-6 text-xs">
               <button
                 type="button"
                 onClick={() => setCatalogTab('assemblies')}
                 className={`pb-3 font-semibold border-b-2 transition-colors ${
                   catalogTab === 'assemblies'
-                    ? 'border-[#153CE8] text-[#0E1015]'
-                    : 'border-transparent text-[#525866]'
+                    ? 'border-primary text-foreground'
+                    : 'border-transparent text-muted-foreground'
                 }`}
               >
                 全部 {tectonicBundle.total_assemblies} 项构造工艺包
@@ -856,8 +892,8 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 onClick={() => setCatalogTab('rules')}
                 className={`pb-3 font-semibold border-b-2 transition-colors ${
                   catalogTab === 'rules'
-                    ? 'border-[#153CE8] text-[#0E1015]'
-                    : 'border-transparent text-[#525866]'
+                    ? 'border-primary text-foreground'
+                    : 'border-transparent text-muted-foreground'
                 }`}
               >
                 {lintRules.length} 条物理建构排雷准则
@@ -866,10 +902,10 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
             <div className="p-5 overflow-y-auto flex-1 text-xs">
               {catalogTab === 'assemblies' ? (
-                <div className="overflow-x-auto border border-[#E2E5EA]">
+                <div className="overflow-x-auto border border-border">
                   <table className="w-full min-w-[700px] text-left border-collapse">
                     <thead>
-                      <tr className="bg-[#F4F5F7] border-b border-[#0E1015] text-[#0E1015] font-semibold">
+                      <tr className="bg-secondary/60 border-b border-foreground/70 text-foreground font-semibold">
                         <th className="py-2.5 px-3">分类</th>
                         <th className="py-2.5 px-3">构造做法名称</th>
                         <th className="py-2.5 px-3">标准模数 (mm)</th>
@@ -878,31 +914,31 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                         <th className="py-2.5 px-3">图集索引</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#E2E5EA]">
+                    <tbody className="divide-y divide-border">
                       {assemblies.map((item) => {
                         const isUnpriced = item.unit_cost_cny_sqm === null && item.lump_sum_cny === null;
                         return (
                           <tr key={item.sku_id}>
-                            <td className="py-2.5 px-3 mono text-[#525866]">{item.category}</td>
-                            <td className="py-2.5 px-3 font-semibold text-[#0E1015]">{item.name}</td>
-                            <td className="py-2.5 px-3 mono text-[#525866]">
+                            <td className="py-2.5 px-3 mono text-muted-foreground">{item.category}</td>
+                            <td className="py-2.5 px-3 font-semibold text-foreground">{item.name}</td>
+                            <td className="py-2.5 px-3 mono text-muted-foreground">
                               {item.panel_modulus_mm
                                 ? `${item.panel_modulus_mm.width}×${item.panel_modulus_mm.height}`
                                 : '无缝/非标'}
                             </td>
                             <td className="py-2.5 px-3 mono tabular-nums">
                               {isUnpriced ? (
-                                <span className="font-semibold text-[#C62828]">UNKNOWN_PRICE_MISSING</span>
+                                <span className="font-semibold text-destructive">UNKNOWN_PRICE_MISSING</span>
                               ) : item.lump_sum_cny !== null ? (
                                 `包干 ¥${Number(item.lump_sum_cny).toLocaleString()}`
                               ) : (
                                 `¥${item.unit_cost_cny_sqm} + ¥${item.substructure_amortization_cny_sqm}/㎡`
                               )}
                             </td>
-                            <td className="py-2.5 px-3 mono text-[#0E1015] tabular-nums">
+                            <td className="py-2.5 px-3 mono text-foreground tabular-nums">
                               ×{item.wastage_factor} · {item.lead_time_days}天
                             </td>
-                            <td className="py-2.5 px-3 mono text-[#153CE8]">{item.detail_drawing_code}</td>
+                            <td className="py-2.5 px-3 mono text-primary">{item.detail_drawing_code}</td>
                           </tr>
                         );
                       })}
@@ -912,20 +948,20 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {lintRules.map((r) => (
-                    <div key={r.code} className="border border-[#E2E5EA] p-4 space-y-2 bg-[#FFFFFF]">
+                    <div key={r.code} className="border border-border p-4 space-y-2 bg-card">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="font-bold text-[#0E1015]">{r.title}</span>
+                        <span className="font-bold text-foreground">{r.title}</span>
                         <span
                           className={`mono font-semibold ${
-                            r.severity === 'BLOCKING' ? 'text-[#C62828]' : 'text-[#153CE8]'
+                            r.severity === 'BLOCKING' ? 'text-destructive' : 'text-primary'
                           }`}
                         >
                           {r.code}
                         </span>
                       </div>
-                      <div className="text-[#525866] font-medium">{r.standard_basis}</div>
-                      <p className="text-[#0E1015] leading-relaxed">{r.physical_limit}</p>
-                      <p className="text-[#0F766E] border-t border-[#E2E5EA] pt-2">整改路径：{r.remediation}</p>
+                      <div className="text-muted-foreground font-medium">{r.standard_basis}</div>
+                      <p className="text-foreground leading-relaxed">{r.physical_limit}</p>
+                      <p className="text-teal-ok border-t border-border pt-2">整改路径：{r.remediation}</p>
                     </div>
                   ))}
                 </div>

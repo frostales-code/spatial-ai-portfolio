@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { ArrowDownToLine, X } from 'lucide-react';
 import type {
@@ -78,21 +80,21 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
       aria-modal="true"
       aria-labelledby="ast-compare-drawer-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-[#0E1015]/65 backdrop-blur-[2px] flex justify-end"
+      className="fixed inset-0 z-50 bg-foreground/65 backdrop-blur-[2px] flex justify-end"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#FFFFFF] border-l border-[#0E1015] w-full max-w-3xl h-full flex flex-col overflow-hidden"
+        className="bg-card border-l border-foreground/70 w-full max-w-3xl h-full flex flex-col overflow-hidden"
       >
-        <div className="px-5 py-4 border-b border-[#E2E5EA] flex items-start justify-between gap-4 bg-[#FFFFFF]">
+        <div className="px-5 py-4 border-b border-border flex items-start justify-between gap-4 bg-card">
           <div>
             <h3
               id="ast-compare-drawer-title"
-              className="font-display text-lg font-bold text-[#0E1015]"
+              className="font-display text-lg font-bold text-foreground"
             >
               多图直喂污染 vs 正交 AST 编译细节对照（{pairs.length} 组样本）
             </h3>
-            <p className="text-xs text-[#525866] mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               对比三源图作用域隔离前后的结构化 Prompt 差异与冲突词拦截记录
             </p>
           </div>
@@ -100,7 +102,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
             type="button"
             onClick={onClose}
             aria-label="关闭 AST 对比抽屉"
-            className="w-10 h-10 shrink-0 border border-[#E2E5EA] hover:border-[#0E1015] text-[#0E1015] flex items-center justify-center transition-colors"
+            className="w-10 h-10 shrink-0 border border-border hover:border-foreground/70 text-foreground flex items-center justify-center transition-colors"
           >
             <X className="w-4 h-4" strokeWidth={1.75} />
           </button>
@@ -111,7 +113,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
           {pairs.length > 0 && (
             <div className="space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="font-semibold text-[#0E1015]">切换对照样本组合</span>
+                <span className="font-semibold text-foreground">切换对照样本组合</span>
                 {activePair && (
                   <button
                     type="button"
@@ -119,7 +121,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
                       onLoadSlotsIntoMixer(activePair);
                       onClose();
                     }}
-                    className="min-h-[36px] px-3.5 bg-[#153CE8] hover:bg-[#0E2BB5] text-[#FFFFFF] text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
+                    className="min-h-[36px] px-3.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
                   >
                     <ArrowDownToLine className="w-3.5 h-3.5" />
                     <span>载入此组至底部托盘</span>
@@ -138,17 +140,17 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
                       onClick={() => setSelectedPairId(p.pair_id)}
                       className={`text-left p-2.5 border transition-colors ${
                         isSel
-                          ? 'bg-[#EEF2FF] border-[#153CE8] text-[#0E1015]'
-                          : 'bg-[#FFFFFF] border-[#E2E5EA] text-[#525866] hover:border-[#0E1015] hover:text-[#0E1015]'
+                          ? 'bg-accent border-primary text-foreground'
+                          : 'bg-card border-border text-muted-foreground hover:border-foreground/70 hover:text-foreground'
                       }`}
                     >
                       <div className="flex items-center justify-between mono text-xs">
-                        <span className={isSel ? 'text-[#153CE8] font-semibold' : 'text-[#525866]'}>
+                        <span className={isSel ? 'text-primary font-semibold' : 'text-muted-foreground'}>
                           {p.pair_id.toUpperCase()}
                         </span>
                         <span className="tabular-nums">{p.conflicts_isolated_count} 隔离</span>
                       </div>
-                      <div className="font-medium text-[#0E1015] truncate mt-1">{p.title_zh}</div>
+                      <div className="font-medium text-foreground truncate mt-1">{p.title_zh}</div>
                     </button>
                   );
                 })}
@@ -164,7 +166,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
               afterAlt={`${activePair.pair_id} AetherVault 正交 AST 编译结果`}
             />
           ) : (
-            <div className="p-8 border border-[#E2E5EA] bg-[#F4F5F7] text-center text-[#525866]">
+            <div className="p-8 border border-border bg-secondary/60 text-center text-muted-foreground">
               暂未加载对比实测样本数据集。
             </div>
           )}
@@ -176,38 +178,38 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
               { label: '材质构筑来源', asset: matAsset, field: matAsset?.granular_descriptors.material_stack },
               { label: '大气光影来源', asset: litAsset, field: litAsset?.granular_descriptors.lighting_rig },
             ].map((s) => (
-              <div key={s.label} className="border border-[#E2E5EA] bg-[#FFFFFF] p-3 space-y-2">
-                <div className="text-xs font-semibold text-[#153CE8]">{s.label}</div>
+              <div key={s.label} className="border border-border bg-card p-3 space-y-2">
+                <div className="text-xs font-semibold text-primary">{s.label}</div>
                 {s.asset && (
-                  <div className="aspect-[4/3] bg-[#F4F5F7] overflow-hidden">
+                  <div className="aspect-[4/3] bg-secondary/60 overflow-hidden">
                     <img src={s.asset.image_url} alt={s.asset.title} className="w-full h-full object-cover" />
                   </div>
                 )}
-                <div className="font-semibold text-[#0E1015] truncate">
+                <div className="font-semibold text-foreground truncate">
                   {s.asset?.title}
                 </div>
-                <p className="text-xs text-[#525866] leading-relaxed line-clamp-3">{s.field}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{s.field}</p>
               </div>
             ))}
           </div>
 
           {/* Decoupling Diagnosis */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 border border-[#E2E5EA] bg-[#F4F5F7] space-y-1.5">
-              <div className="font-semibold text-[#C62828]">
+            <div className="p-4 border border-border bg-secondary/60 space-y-1.5">
+              <div className="font-semibold text-destructive">
                 多图直喂失效归因
               </div>
-              <p className="text-[#0E1015] leading-relaxed">
+              <p className="text-foreground leading-relaxed">
                 {activePair?.naive_failure_summary ??
                   '直接将三张跨界参考图联合送入图像编辑模型，会导致原物体轮廓与冲突词条直接泄漏至目标建筑骨架。'}
               </p>
             </div>
 
-            <div className="p-4 border border-[#E2E5EA] bg-[#F4F5F7] space-y-1.5">
-              <div className="font-semibold text-[#0F766E]">
+            <div className="p-4 border border-border bg-secondary/60 space-y-1.5">
+              <div className="font-semibold text-teal-ok">
                 AST 作用域隔离机制（拦截 {activePair?.conflicts_isolated_count ?? currentConflictsCount} 项冲突）
               </div>
-              <p className="text-[#0E1015] leading-relaxed">
+              <p className="text-foreground leading-relaxed">
                 {activePair?.ast_decoupling_summary ??
                   '通过四层正交结构严格切分光学镜头、局部构件材质与全局环境光，彻底屏蔽非预期主体迁移。'}
               </p>
@@ -215,17 +217,17 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
           </div>
 
           {/* Compiled Prompt & Guardrails */}
-          <div className="border border-[#E2E5EA] p-4 space-y-2 bg-[#FFFFFF]">
+          <div className="border border-border p-4 space-y-2 bg-card">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-[#0E1015]">编译后正交 AST 结构化指令</span>
-              <span className="mono text-[#153CE8]">
+              <span className="font-semibold text-foreground">编译后正交 AST 结构化指令</span>
+              <span className="mono text-primary">
                 {activePair ? activePair.pair_id.toUpperCase() : 'LIVE MIXER'}
               </span>
             </div>
-            <pre className="p-3 bg-[#F4F5F7] border border-[#E2E5EA] text-xs mono text-[#0E1015] whitespace-pre-wrap leading-relaxed">
+            <pre className="p-3 bg-secondary/60 border border-border text-xs mono text-foreground whitespace-pre-wrap leading-relaxed">
               {activePair?.compiled_prompt ?? currentCompiledPrompt}
             </pre>
-            <div className="text-xs mono text-[#C62828] bg-[#F4F5F7] border border-[#E2E5EA] p-2.5">
+            <div className="text-xs mono text-destructive bg-secondary/60 border border-border p-2.5">
               --no {activePair ? activePair.negative_guardrails.join(', ') : currentNegativePrompt.replace(/^--no\s*/, '')}
             </div>
           </div>

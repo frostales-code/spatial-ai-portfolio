@@ -1,17 +1,22 @@
+'use client';
+
 import React, { useCallback, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Compass, RotateCw, X } from 'lucide-react';
-import { AetherVaultWorkspace } from './components/AetherVaultWorkspace';
-import { GUIDED_TOUR_STOPS, GuidedTourPopover } from './components/GuidedTourPopover';
-import { TechEvalOverview } from './components/TechEvalOverview';
-import { TectonicLoopPreview } from './components/TectonicLoopPreview';
-import { ThesisOverview, type MainTabId } from './components/ThesisOverview';
-import type { AetherVaultShowcaseBundle, AstComparisonBundle } from './types/aethervault';
-import type { TectonicShowcaseBundle } from './types/tectonic';
-import { trackShowcaseEvent } from './utils/analytics';
-import { resolvePublicUrl } from './utils/assetUrl';
+import { AetherVaultWorkspace } from '@/components/AetherVaultWorkspace';
+import { GUIDED_TOUR_STOPS, GuidedTourPopover } from '@/components/GuidedTourPopover';
+import { TechEvalOverview } from '@/components/TechEvalOverview';
+import { TectonicLoopPreview } from '@/components/TectonicLoopPreview';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { ThesisOverview, type MainTabId } from '@/components/ThesisOverview';
+import { Button } from '@/components/ui/button';
+import type { AetherVaultShowcaseBundle, AstComparisonBundle } from '@/types/aethervault';
+import type { TectonicShowcaseBundle } from '@/types/tectonic';
+import { trackShowcaseEvent } from '@/utils/analytics';
+import { resolvePublicUrl } from '@/utils/assetUrl';
 
 const TAB_TITLES: Record<MainTabId, string> = {
-  projectA: 'AetherVault — 正交美学光谱编译器 | Spatial AI Monograph',
+  projectA: 'AetherVault — 正交美学光谱编译器 | Spatial AI Studio',
   thesis: '双引擎方法论 — AetherVault & TectonicLoop',
   projectB: 'TectonicLoop — 物理建构与造价双向闭环',
   techEval: '评测基准 — 量化指标与冷启动成本账本',
@@ -153,7 +158,7 @@ export const App: React.FC = () => {
     }
 
     const offlineMessage =
-      '未检测到本地 FastAPI Live Engine (127.0.0.1:8780)。公网展示已保持在零延迟 Instant Showcase 模式，所有交互、AST 对比与 Zero-LLM 造价算账均可在浏览器离线运行。';
+      '未检测到本地 FastAPI Live Engine (127.0.0.1:8780)。公网展示已保持在零延迟 Instant Showcase 模式，所有 3D 流形、AST 对比与 Zero-LLM 造价算账均可在浏览器离线运行。';
     const isLocalHost =
       typeof window !== 'undefined' &&
       (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
@@ -208,25 +213,26 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#0E1015]">
-      {/* Compact Monograph Masthead */}
-      <header className="sticky top-0 z-40 border-b border-[#E2E5EA] bg-[#FFFFFF]/95 backdrop-blur-sm">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
+      {/* Modern Glassmorphic Architectural Studio Masthead */}
+      <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="h-12 md:h-14 flex items-center justify-between gap-2 sm:gap-4">
+          <div className="h-14 flex items-center justify-between gap-2 sm:gap-4">
             <button
               type="button"
               onClick={() => handleNavigate('projectA')}
-              className="font-display text-[13px] sm:text-[15px] font-extrabold tracking-[-0.02em] text-[#0E1015] whitespace-nowrap hover:text-[#153CE8] transition-colors shrink-0"
+              className="inline-flex items-center gap-2 font-display text-[13px] sm:text-[15px] font-extrabold tracking-[-0.02em] text-foreground whitespace-nowrap hover:text-primary transition-colors shrink-0"
             >
+              <span className="h-2.5 w-2.5 rounded-sm bg-primary shrink-0" aria-hidden="true" />
               <span className="sm:hidden">AETHERVAULT</span>
               <span className="hidden sm:inline">AETHERVAULT / TECTONICLOOP</span>
             </button>
 
-            {/* Desktop Tablist */}
+            {/* Desktop Tablist with Framer Motion Shared Indicator */}
             <nav
               role="tablist"
               aria-label="主导航"
-              className="hidden md:flex items-center h-14 gap-7"
+              className="hidden md:flex items-center h-14 gap-6"
             >
               {navItems.map((item) => {
                 const active = activeTab === item.id;
@@ -237,52 +243,60 @@ export const App: React.FC = () => {
                     role="tab"
                     aria-selected={active}
                     onClick={() => handleNavigate(item.id)}
-                    className={`h-full inline-flex items-center text-[13px] font-medium border-b-2 whitespace-nowrap transition-colors ${
+                    className={`relative h-full inline-flex items-center text-[13px] font-medium whitespace-nowrap transition-colors ${
                       active
-                        ? 'border-[#153CE8] text-[#0E1015] font-semibold'
-                        : 'border-transparent text-[#525866] hover:text-[#0E1015]'
+                        ? 'text-foreground font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
+                    {active && (
+                      <motion.span
+                        layoutId="desktop-nav-underline"
+                        transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                        className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-primary"
+                      />
+                    )}
                   </button>
                 );
               })}
             </nav>
 
-            {/* Interactive Tour + Dual-Mode Switcher */}
-            <div className="flex items-center gap-2 shrink-0">
-              <button
+            {/* Right Controls: Guided Tour + Theme Toggle + Dual-Mode Switcher */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              <Button
                 type="button"
+                variant={tourOpen ? 'default' : 'outline'}
+                size="sm"
                 onClick={handleOpenTour}
                 aria-expanded={tourOpen}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-xs font-medium whitespace-nowrap transition-colors ${
-                  tourOpen
-                    ? 'border-[#153CE8] bg-[#153CE8] text-white'
-                    : 'border-[#E2E5EA] bg-[#FFFFFF] text-[#0E1015] hover:border-[#153CE8] hover:text-[#153CE8]'
-                }`}
+                aria-label="打开 3 分钟作品集导览"
+                className="h-8 w-8 px-0 sm:w-auto sm:px-2.5 text-xs shrink-0"
               >
                 <Compass className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
-                <span>3 分钟导览</span>
-              </button>
+                <span className="hidden sm:inline">3 分钟导览</span>
+              </Button>
+
+              <ThemeToggle />
 
               <div
                 role="group"
                 aria-label="运行模式切换"
-                className="inline-flex items-center border border-[#E2E5EA] bg-[#FFFFFF]"
+                className="inline-flex items-center rounded-md border border-border bg-secondary/60 p-0.5 shrink-0"
               >
                 <button
                   type="button"
                   aria-pressed={!isLiveEngine}
                   onClick={() => handleSwitchEngineMode('instant')}
-                  className={`inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 text-xs whitespace-nowrap transition-colors ${
+                  className={`inline-flex items-center gap-1 sm:gap-1.5 rounded-[5px] px-1.5 sm:px-2.5 py-1 text-xs whitespace-nowrap transition-all ${
                     !isLiveEngine
-                      ? 'bg-[#F4F5F7] text-[#0E1015] font-semibold'
-                      : 'text-[#525866] hover:text-[#0E1015]'
+                      ? 'bg-card text-foreground font-semibold shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <span
                     className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                      !isLiveEngine ? 'bg-[#153CE8]' : 'bg-[#E2E5EA]'
+                      !isLiveEngine ? 'bg-primary' : 'bg-muted-foreground/40'
                     }`}
                     aria-hidden="true"
                   />
@@ -294,19 +308,19 @@ export const App: React.FC = () => {
                   aria-pressed={isLiveEngine}
                   disabled={probingEngine}
                   onClick={() => handleSwitchEngineMode('live')}
-                  className={`inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 text-xs border-l border-[#E2E5EA] whitespace-nowrap transition-colors disabled:opacity-60 ${
+                  className={`inline-flex items-center gap-1 sm:gap-1.5 rounded-[5px] px-1.5 sm:px-2.5 py-1 text-xs whitespace-nowrap transition-all disabled:opacity-60 ${
                     isLiveEngine
-                      ? 'bg-[#F4F5F7] text-[#0F766E] font-semibold'
-                      : 'text-[#525866] hover:text-[#0E1015]'
+                      ? 'bg-card text-teal-ok font-semibold shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <span
                     className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                      isLiveEngine ? 'bg-[#0F766E]' : 'bg-[#E2E5EA]'
+                      isLiveEngine ? 'bg-teal-ok' : 'bg-muted-foreground/40'
                     }`}
                     aria-hidden="true"
                   />
-                  <span className="sm:hidden">{probingEngine ? '探测...' : 'Live'}</span>
+                  <span className="sm:hidden">{probingEngine ? '...' : 'Live'}</span>
                   <span className="hidden sm:inline">
                     {probingEngine ? '探测中...' : 'Live Engine'}
                   </span>
@@ -315,11 +329,11 @@ export const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile Single-Row Scrollable Tab Rail (<=40px) */}
+          {/* Mobile Single-Row Scrollable Tab Rail */}
           <nav
             role="tablist"
             aria-label="移动端主导航"
-            className="md:hidden flex items-center gap-5 h-10 border-t border-[#E2E5EA] overflow-x-auto no-scrollbar"
+            className="md:hidden flex items-center gap-5 h-10 border-t border-border/80 overflow-x-auto no-scrollbar"
           >
             {navItems.map((item) => {
               const active = activeTab === item.id;
@@ -332,8 +346,8 @@ export const App: React.FC = () => {
                   onClick={() => handleNavigate(item.id)}
                   className={`h-full inline-flex items-center text-[13px] border-b-2 whitespace-nowrap shrink-0 transition-colors ${
                     active
-                      ? 'border-[#153CE8] text-[#0E1015] font-semibold'
-                      : 'border-transparent text-[#525866]'
+                      ? 'border-primary text-foreground font-semibold'
+                      : 'border-transparent text-muted-foreground'
                   }`}
                 >
                   {item.label}
@@ -348,14 +362,14 @@ export const App: React.FC = () => {
         {liveNotice && (
           <div
             role="status"
-            className="mb-6 px-4 py-3 border border-[#E2E5EA] bg-[#F4F5F7] flex items-start justify-between gap-4 text-xs text-[#0E1015]"
+            className="mb-6 px-4 py-3 rounded-lg border border-border bg-secondary/70 flex items-start justify-between gap-4 text-xs text-foreground shadow-sm"
           >
             <p className="leading-relaxed">{liveNotice}</p>
             <button
               type="button"
               onClick={() => setLiveNotice(null)}
               aria-label="关闭模式提示"
-              className="text-[#525866] hover:text-[#0E1015] shrink-0 p-0.5"
+              className="text-muted-foreground hover:text-foreground shrink-0 p-0.5 rounded-sm"
             >
               <X className="w-3.5 h-3.5" strokeWidth={1.75} />
             </button>
@@ -365,20 +379,16 @@ export const App: React.FC = () => {
         {loadError && (
           <div
             role="alert"
-            className="mb-8 p-5 border border-[#C62828] bg-[#FFFFFF] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            className="mb-8 p-5 rounded-xl border border-destructive/60 bg-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm"
           >
             <div className="space-y-1">
-              <div className="text-sm font-semibold text-[#C62828]">数据包加载异常</div>
-              <p className="text-xs text-[#525866]">{loadError}</p>
+              <div className="text-sm font-semibold text-destructive">数据包加载异常</div>
+              <p className="text-xs text-muted-foreground">{loadError}</p>
             </div>
-            <button
-              type="button"
-              onClick={loadShowcaseData}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#153CE8] hover:bg-[#0E2BB5] text-white text-xs font-semibold transition-colors shrink-0"
-            >
+            <Button type="button" onClick={loadShowcaseData} className="shrink-0">
               <RotateCw className="w-3.5 h-3.5" strokeWidth={1.75} />
               <span>重新加载</span>
-            </button>
+            </Button>
           </div>
         )}
 
@@ -394,8 +404,8 @@ export const App: React.FC = () => {
               isLiveEngine={isLiveEngine}
             />
           ) : (
-            <div className="py-20 text-center text-sm text-[#525866] border border-[#E2E5EA] bg-[#F4F5F7]">
-              {loading ? '正在加载 80 件跨界高审美样本与 8 轴五点黄金锚点数据...' : '暂无可用展示数据'}
+            <div className="py-20 text-center text-sm text-muted-foreground rounded-xl border border-border bg-card">
+              {loading ? '正在加载 80 件跨界高审美样本、3D 美学流形与黄金锚点数据...' : '暂无可用展示数据'}
             </div>
           )}
         </section>

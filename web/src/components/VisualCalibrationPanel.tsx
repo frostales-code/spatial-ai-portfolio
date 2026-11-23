@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowLeft, RotateCcw, X } from 'lucide-react';
 import type { SpectrumAxisId } from '../engine/salienceMetric';
@@ -104,21 +106,21 @@ export const VisualCalibrationPanel: React.FC<VisualCalibrationPanelProps> = ({
       aria-modal="true"
       aria-labelledby="calibration-dialog-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-[#0E1015]/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 bg-foreground/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#FFFFFF] border border-[#0E1015] w-full max-w-4xl max-h-[90vh] overflow-y-auto p-5 sm:p-7 space-y-6"
+        className="bg-card border border-foreground/70 w-full max-w-4xl max-h-[90vh] overflow-y-auto p-5 sm:p-7 space-y-6"
       >
-        <div className="flex flex-wrap items-start justify-between gap-4 pb-4 border-b border-[#E2E5EA]">
+        <div className="flex flex-wrap items-start justify-between gap-4 pb-4 border-b border-border">
           <div className="space-y-1">
             <h2
               id="calibration-dialog-title"
-              className="font-display text-lg sm:text-xl font-bold text-[#0E1015]"
+              className="font-display text-lg sm:text-xl font-bold text-foreground"
             >
               {titleText}
             </h2>
-            <p className="text-xs text-[#525866]">
+            <p className="text-xs text-muted-foreground">
               {activeSpec
                 ? `${activeSpec.promptQuestion}（${activeSpec.axisHint}）`
                 : '8 轴意图向量与注意力权重已自动更新至图库排序'}
@@ -129,7 +131,7 @@ export const VisualCalibrationPanel: React.FC<VisualCalibrationPanelProps> = ({
               <button
                 type="button"
                 onClick={onBackRound}
-                className="min-h-[36px] px-3 text-xs font-medium border border-[#E2E5EA] hover:border-[#0E1015] text-[#0E1015] inline-flex items-center gap-1.5 transition-colors"
+                className="min-h-[36px] px-3 text-xs font-medium border border-border hover:border-foreground/70 text-foreground inline-flex items-center gap-1.5 transition-colors"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>返回上一轮</span>
@@ -138,7 +140,7 @@ export const VisualCalibrationPanel: React.FC<VisualCalibrationPanelProps> = ({
             <button
               type="button"
               onClick={onReset}
-              className="min-h-[36px] px-3 text-xs font-medium border border-[#E2E5EA] hover:border-[#0E1015] text-[#0E1015] inline-flex items-center gap-1.5 transition-colors"
+              className="min-h-[36px] px-3 text-xs font-medium border border-border hover:border-foreground/70 text-foreground inline-flex items-center gap-1.5 transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>重置</span>
@@ -147,7 +149,7 @@ export const VisualCalibrationPanel: React.FC<VisualCalibrationPanelProps> = ({
               type="button"
               onClick={onClose}
               aria-label="关闭视觉二分校准"
-              className="w-10 h-10 border border-[#E2E5EA] hover:border-[#0E1015] text-[#0E1015] flex items-center justify-center transition-colors"
+              className="w-10 h-10 border border-border hover:border-foreground/70 text-foreground flex items-center justify-center transition-colors"
             >
               <X className="w-4 h-4" strokeWidth={1.75} />
             </button>
@@ -163,9 +165,9 @@ export const VisualCalibrationPanel: React.FC<VisualCalibrationPanelProps> = ({
                   key={opt.id}
                   type="button"
                   onClick={() => onSelectOption(activeSpec, opt)}
-                  className="group text-left border border-[#E2E5EA] hover:border-[#153CE8] bg-[#FFFFFF] transition-colors flex flex-col"
+                  className="group text-left border border-border hover:border-primary bg-card transition-colors flex flex-col"
                 >
-                  <div className="aspect-[4/3] w-full bg-[#F4F5F7] overflow-hidden">
+                  <div className="aspect-[4/3] w-full bg-secondary/60 overflow-hidden">
                     {asset ? (
                       <img
                         src={asset.image_url}
@@ -176,34 +178,34 @@ export const VisualCalibrationPanel: React.FC<VisualCalibrationPanelProps> = ({
                   </div>
                   <div className="p-4 space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-[#153CE8]">
+                      <span className="font-semibold text-primary">
                         选择方向 {opt.id}
                       </span>
-                      <span className="text-[#525866]">
+                      <span className="text-muted-foreground">
                         {asset?.subject_isolation.domain_label ?? opt.assetId}
                       </span>
                     </div>
-                    <div className="text-sm font-bold text-[#0E1015]">{opt.headline}</div>
-                    <p className="text-xs text-[#525866] leading-relaxed">{opt.rationale}</p>
+                    <div className="text-sm font-bold text-foreground">{opt.headline}</div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{opt.rationale}</p>
                   </div>
                 </button>
               );
             })}
           </div>
         ) : (
-          <div className="bg-[#F4F5F7] border border-[#E2E5EA] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-secondary/60 border border-border p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <div className="text-sm font-semibold text-[#0E1015]">
+              <div className="text-sm font-semibold text-foreground">
                 已锁定偏好的光谱路径：
               </div>
-              <p className="text-xs text-[#525866]">
+              <p className="text-xs text-muted-foreground">
                 {chosenLabels.join(' → ')}
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="min-h-[40px] px-5 bg-[#153CE8] hover:bg-[#0E2BB5] text-[#FFFFFF] text-xs font-semibold transition-colors shrink-0"
+              className="min-h-[40px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors shrink-0"
             >
               查看重排图库结果
             </button>

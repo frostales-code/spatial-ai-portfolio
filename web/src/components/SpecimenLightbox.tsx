@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Check, Copy, X } from 'lucide-react';
 import { ALL_AXIS_IDS, type SpectrumAxisId } from '../engine/salienceMetric';
@@ -51,24 +53,24 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
       aria-modal="true"
       aria-labelledby="lightbox-asset-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-[#0E1015]/70 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 bg-foreground/70 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#FFFFFF] border border-[#0E1015] w-full max-w-5xl max-h-[92vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-12"
+        className="bg-card border border-foreground/70 w-full max-w-5xl max-h-[92vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-12"
       >
         {/* Left: Full Unobstructed Plate */}
-        <div className="lg:col-span-7 bg-[#F4F5F7] border-b lg:border-b-0 lg:border-r border-[#E2E5EA] flex flex-col justify-between p-4 sm:p-6">
-          <div className="aspect-[4/3] w-full bg-[#FFFFFF] border border-[#E2E5EA] overflow-hidden">
+        <div className="lg:col-span-7 bg-secondary/60 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between p-4 sm:p-6">
+          <div className="aspect-[4/3] w-full bg-card border border-border overflow-hidden">
             <img
               src={asset.image_url}
               alt={asset.title}
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="pt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-[#525866]">
+          <div className="pt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
             <span>
-              编号 <span className="mono font-medium text-[#0E1015]">{asset.asset_id}</span>
+              编号 <span className="mono font-medium text-foreground">{asset.asset_id}</span>
               {' · '}
               {asset.subject_isolation.domain_label}
               {asset.subject_isolation.is_personal_prior ? ' · 个人审美先验' : ''}
@@ -82,32 +84,32 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
         {/* Right: Monograph Telemetry, Palette & Slot Assignment */}
         <div className="lg:col-span-5 p-5 sm:p-6 flex flex-col justify-between gap-6">
           <div className="space-y-5">
-            <div className="flex items-start justify-between gap-3 pb-4 border-b border-[#E2E5EA]">
+            <div className="flex items-start justify-between gap-3 pb-4 border-b border-border">
               <div>
                 <h2
                   id="lightbox-asset-title"
-                  className="font-display text-lg font-bold text-[#0E1015] leading-snug"
+                  className="font-display text-lg font-bold text-foreground leading-snug"
                 >
                   {asset.title}
                 </h2>
                 {asset.title_en && (
-                  <p className="text-xs text-[#525866] mt-0.5">{asset.title_en}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{asset.title_en}</p>
                 )}
               </div>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="关闭大图检视"
-                className="w-10 h-10 shrink-0 border border-[#E2E5EA] hover:border-[#0E1015] flex items-center justify-center text-[#0E1015] transition-colors"
+                className="w-10 h-10 shrink-0 border border-border hover:border-foreground/70 flex items-center justify-center text-foreground transition-colors"
               >
                 <X className="w-4 h-4" strokeWidth={1.75} />
               </button>
             </div>
 
             {typeof matchScore === 'number' && (
-              <div className="flex items-center justify-between text-xs pb-3 border-b border-[#E2E5EA]">
-                <span className="text-[#525866]">当前 8 轴光谱加权匹配度</span>
-                <span className="mono text-sm font-semibold text-[#153CE8] tabular-nums">
+              <div className="flex items-center justify-between text-xs pb-3 border-b border-border">
+                <span className="text-muted-foreground">当前 8 轴光谱加权匹配度</span>
+                <span className="mono text-sm font-semibold text-primary tabular-nums">
                   {matchScore}%
                 </span>
               </div>
@@ -116,8 +118,8 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
             {/* OKLab Palette Swatches */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-[#0E1015]">OKLab 提取主色板</span>
-                <span className="text-[#525866]">点击色卡复制色值</span>
+                <span className="font-semibold text-foreground">OKLab 提取主色板</span>
+                <span className="text-muted-foreground">点击色卡复制色值</span>
               </div>
               <div className="grid grid-cols-5 gap-2">
                 {asset.granular_descriptors.color_palette.slice(0, 5).map((hex) => {
@@ -128,15 +130,15 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                       type="button"
                       onClick={() => handleHexClick(hex)}
                       aria-label={`复制色值 ${hex}`}
-                      className="text-left border border-[#E2E5EA] hover:border-[#0E1015] transition-colors"
+                      className="text-left border border-border hover:border-foreground/70 transition-colors"
                     >
                       <div className="h-9 w-full" style={{ backgroundColor: hex }} />
-                      <div className="px-1.5 py-1 text-xs mono text-[#0E1015] flex items-center justify-between">
+                      <div className="px-1.5 py-1 text-xs mono text-foreground flex items-center justify-between">
                         <span className="truncate">{isCopied ? '已复制' : hex}</span>
                         {isCopied ? (
-                          <Check className="w-3 h-3 text-[#0F766E] shrink-0" />
+                          <Check className="w-3 h-3 text-teal-ok shrink-0" />
                         ) : (
-                          <Copy className="w-3 h-3 text-[#525866] shrink-0" />
+                          <Copy className="w-3 h-3 text-muted-foreground shrink-0" />
                         )}
                       </div>
                     </button>
@@ -146,26 +148,26 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
             </div>
 
             {/* Granular Layer Descriptors */}
-            <div className="space-y-2.5 text-xs border-t border-[#E2E5EA] pt-4">
+            <div className="space-y-2.5 text-xs border-t border-border pt-4">
               <div>
-                <span className="font-semibold text-[#0E1015]">光学镜头层：</span>
-                <span className="text-[#525866]">{asset.granular_descriptors.optics_camera}</span>
+                <span className="font-semibold text-foreground">光学镜头层：</span>
+                <span className="text-muted-foreground">{asset.granular_descriptors.optics_camera}</span>
               </div>
               <div>
-                <span className="font-semibold text-[#0E1015]">材质构筑层：</span>
-                <span className="text-[#525866]">{asset.granular_descriptors.material_stack}</span>
+                <span className="font-semibold text-foreground">材质构筑层：</span>
+                <span className="text-muted-foreground">{asset.granular_descriptors.material_stack}</span>
               </div>
               <div>
-                <span className="font-semibold text-[#0E1015]">大气光影层：</span>
-                <span className="text-[#525866]">{asset.granular_descriptors.lighting_rig}</span>
+                <span className="font-semibold text-foreground">大气光影层：</span>
+                <span className="text-muted-foreground">{asset.granular_descriptors.lighting_rig}</span>
               </div>
             </div>
 
             {/* 8-Axis Spectrum Readings & Salience */}
-            <div className="space-y-2 border-t border-[#E2E5EA] pt-4">
+            <div className="space-y-2 border-t border-border pt-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-[#0E1015]">8 轴正交光谱读数</span>
-                <span className="text-[#525866]" title="Salience 决定该轴在距离计算中参与权重的高低，避免局部特写产生噪声">
+                <span className="font-semibold text-foreground">8 轴正交光谱读数</span>
+                <span className="text-muted-foreground" title="Salience 决定该轴在距离计算中参与权重的高低，避免局部特写产生噪声">
                   含显著度门控 (s)
                 </span>
               </div>
@@ -176,14 +178,14 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                   const pct = Math.round(((reading.score + 1) / 2) * 100);
                   return (
                     <div key={axisId} className="space-y-1">
-                      <div className="flex items-center justify-between text-[#0E1015]">
+                      <div className="flex items-center justify-between text-foreground">
                         <span>{label}</span>
-                        <span className="mono tabular-nums text-[#525866]">
+                        <span className="mono tabular-nums text-muted-foreground">
                           {reading.score > 0 ? `+${reading.score.toFixed(1)}` : reading.score.toFixed(1)} · s={reading.salience.toFixed(1)}
                         </span>
                       </div>
-                      <div className="h-1 bg-[#E2E5EA] w-full">
-                        <div className="h-full bg-[#153CE8]" style={{ width: `${pct}%` }} />
+                      <div className="h-1 bg-border w-full">
+                        <div className="h-full bg-primary" style={{ width: `${pct}%` }} />
                       </div>
                     </div>
                   );
@@ -193,8 +195,8 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
           </div>
 
           {/* Slot Assignment Footer */}
-          <div className="border-t border-[#E2E5EA] pt-4 space-y-2">
-            <div className="text-xs font-semibold text-[#0E1015]">装配至 AST 正交混音槽位</div>
+          <div className="border-t border-border pt-4 space-y-2">
+            <div className="text-xs font-semibold text-foreground">装配至 AST 正交混音槽位</div>
             <div className="grid grid-cols-3 gap-2">
               {(
                 [
@@ -210,8 +212,8 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                   onClick={() => onAssignSlot(item.slot, asset.asset_id)}
                   className={`min-h-[40px] px-2 text-xs font-medium border transition-colors ${
                     item.active
-                      ? 'bg-[#153CE8] border-[#153CE8] text-[#FFFFFF]'
-                      : 'bg-[#FFFFFF] border-[#E2E5EA] text-[#0E1015] hover:border-[#0E1015]'
+                      ? 'bg-primary border-primary text-white'
+                      : 'bg-card border-border text-foreground hover:border-foreground/70'
                   }`}
                 >
                   {item.label}

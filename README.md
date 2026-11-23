@@ -31,7 +31,7 @@
 
 ## 核心目录导览
 
-- `web/`：React 18 + TypeScript + Vite 前端应用（Concept A 白纸信号蓝瑞士刊物风设计，`4` 大功能 Tab + `3 分钟导览`浮窗 + 双模切换顶栏）
+- `web/`：**Next.js 15 App Router**（静态导出）+ **shadcn/ui**（Radix UI + `next-themes` 深浅双主题）+ **Three.js**（AetherVault 80 标本 3D 美学流形 & TectonicLoop 3D 立面单应性投影）+ **Recharts** 交互评测看板 + Framer Motion
 - `pipeline/`：Python 3.12 离线/在线核心管线（策展打标、AST 对照集生成、30 SKU 定额库、8 规则排雷、单应性 `H/H⁻¹` 投影与静态 Manifest 打包器）
 - `server/`：本地 FastAPI `Live Engine` API 服务（绑定 `127.0.0.1:8780`）
 - `tests/`：M1/M2 全链路自动化回归测试集

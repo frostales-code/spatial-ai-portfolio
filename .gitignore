@@ -8,6 +8,8 @@
 node_modules/
 web/node_modules/
 web/dist/
+web/.next/
+web/out/
 
 # Python environments & caches
 .venv/

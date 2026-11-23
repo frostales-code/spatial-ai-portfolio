@@ -1,6 +1,9 @@
+const animate = require('tailwindcss-animate');
+
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+module.exports = {
+  darkMode: ['class'],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -8,20 +11,50 @@ export default {
         sans: ['Manrope', 'Noto Sans SC', 'system-ui', 'sans-serif'],
         mono: ['Chivo Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
       colors: {
-        paper: '#FFFFFF',
-        surface: '#F4F5F7',
-        hairline: '#E2E5EA',
-        'hairline-strong': '#CBD0D8',
-        ink: '#0E1015',
-        muted: '#525866',
-        cobalt: '#153CE8',
-        'cobalt-deep': '#0E2BB5',
-        'cobalt-tint': '#EEF2FF',
-        'teal-ok': '#0F766E',
-        crimson: '#C62828',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        teal: {
+          ok: 'hsl(var(--teal-ok))',
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 };
