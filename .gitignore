@@ -26,9 +26,20 @@ data/ast_comparisons/images/
 data/tectonic_cases/raw_1024/
 data/tectonic_cases/images/
 
+# Private personal Pinterest research & 500-image local gallery (never push to public GitHub)
+data/pinterest_500/
+web/public/assets/pinterest_500/
+web/public/data/aethervault_personal_500.json
+web/public/data/aethervault_rag_500.jsonl
+docs/PINTEREST_AESTHETIC_PROFILE_REPORT.md
+
 # OS & Editor scratch
 .DS_Store
 Thumbs.db
 *.tmp
 *.log
 *.tsbuildinfo
+
+# Session-local handoff & context reports (never push transient session state)
+.agents/HANDOFF.md
+.agents/reports/
