@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Area,
   AreaChart,
@@ -37,6 +37,7 @@ interface TechEvalOverviewProps {
   vlmReport: VlmScoringReport | null;
   tectonicBundle?: TectonicShowcaseBundle | null;
   eddBenchmark?: EddBenchmarkBundle | null;
+  isActive?: boolean;
 }
 
 const AXIS_SHORT_ZH: Record<string, string> = {
@@ -58,10 +59,18 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
   vlmReport,
   tectonicBundle,
   eddBenchmark,
+  isActive = true,
 }) => {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
   const [batchSize, setBatchSize] = useState<number>(1000);
+  const [hasMountedVisible, setHasMountedVisible] = useState<boolean>(isActive);
+
+  useEffect(() => {
+    if (isActive) {
+      setHasMountedVisible(true);
+    }
+  }, [isActive]);
 
   const chartPalette = useMemo(
     () => ({
@@ -86,7 +95,7 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
         .map((t) => ({
           caseTitle: c.title,
           tierShort: t.short_label,
-          label: `C${caseIdx + 1} · ${t.short_label.slice(0, 4)}`,
+          label: `C${caseIdx + 1}·${t.tier_id.includes('balanced') ? '均衡' : '快装'}`,
           psnr: Number(t.relight_metrics.non_mask_psnr_db.toFixed(2)),
           shadowCorrPct: Number((t.relight_metrics.shadow_luma_corr * 100).toFixed(1)),
           angleDeg: t.homography_projection.vertical_vanishing_deviation_deg,
@@ -154,7 +163,7 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
               </Badge>
               <Badge variant="success" className="mono">
                 <CheckCircle2 className="w-3 h-3" />
-                80/80 Schema Verified
+                80/80 黄金锚点集验证
               </Badge>
             </div>
             <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-foreground">
@@ -239,7 +248,7 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
               <div>
                 <CardTitle>8 轴审美排序相关性（Salience-Gated vs Baseline）</CardTitle>
                 <CardDescription className="mt-1">
-                  实盘 80 件跨门类样本在 8 条正交轴上的斯皮尔曼排序相关性对比
+                  实盘 80 件黄金锚点集在 8 条正交轴上的斯皮尔曼排序相关性对比
                 </CardDescription>
               </div>
               <Badge variant="outline" className="mono">
@@ -255,80 +264,95 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
               </TabsList>
 
               <TabsContent value="radar" className="mt-0">
-                <div className="h-[290px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={axisRadarData} outerRadius="72%">
-                      <PolarGrid stroke={chartPalette.grid} />
-                      <PolarAngleAxis
-                        dataKey="axisLabel"
-                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                      />
-                      <PolarRadiusAxis
-                        angle={30}
-                        domain={[0, 1]}
-                        tick={{ fill: chartPalette.tick, fontSize: 10 }}
-                      />
-                      <Radar
-                        name="显著性加权实测 ρ"
-                        dataKey="salienceRho"
-                        stroke={chartPalette.primary}
-                        fill={chartPalette.primary}
-                        fillOpacity={0.28}
-                        strokeWidth={2}
-                      />
-                      <Radar
-                        name="盲打基线 (0.540)"
-                        dataKey="baselineRho"
-                        stroke={chartPalette.mutedLine}
-                        fill={chartPalette.mutedLine}
-                        fillOpacity={0.1}
-                        strokeDasharray="4 4"
-                      />
-                      <RechartsTooltip
-                        contentStyle={{
-                          backgroundColor: chartPalette.tooltipBg,
-                          borderColor: chartPalette.tooltipBorder,
-                          color: chartPalette.tooltipText,
-                          borderRadius: 8,
-                          fontSize: 12,
-                        }}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
+                <div className="h-[310px] w-full">
+                  {hasMountedVisible ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart
+                        data={axisRadarData}
+                        outerRadius="62%"
+                        margin={{ top: 14, right: 24, bottom: 14, left: 24 }}
+                      >
+                        <PolarGrid stroke={chartPalette.grid} />
+                        <PolarAngleAxis
+                          dataKey="axisLabel"
+                          tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                        />
+                        <PolarRadiusAxis
+                          angle={30}
+                          domain={[0, 1]}
+                          tick={{ fill: chartPalette.tick, fontSize: 10 }}
+                        />
+                        <Radar
+                          name="显著性加权实测 ρ"
+                          dataKey="salienceRho"
+                          stroke={chartPalette.primary}
+                          fill={chartPalette.primary}
+                          fillOpacity={0.28}
+                          strokeWidth={2}
+                          isAnimationActive={false}
+                        />
+                        <Radar
+                          name="盲打基线 (0.540)"
+                          dataKey="baselineRho"
+                          stroke={chartPalette.mutedLine}
+                          fill={chartPalette.mutedLine}
+                          fillOpacity={0.1}
+                          strokeDasharray="4 4"
+                          isAnimationActive={false}
+                        />
+                        <RechartsTooltip
+                          contentStyle={{
+                            backgroundColor: chartPalette.tooltipBg,
+                            borderColor: chartPalette.tooltipBorder,
+                            color: chartPalette.tooltipText,
+                            borderRadius: 8,
+                            fontSize: 12,
+                          }}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="h-full w-full" />
+                  )}
                 </div>
               </TabsContent>
 
               <TabsContent value="bar" className="mt-0">
-                <div className="h-[290px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={axisRadarData} margin={{ top: 10, right: 12, left: -16, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
-                      <XAxis
-                        dataKey="axisLabel"
-                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                        angle={-20}
-                        textAnchor="end"
-                        interval={0}
-                      />
-                      <YAxis domain={[0, 1]} tick={{ fill: chartPalette.tick, fontSize: 11 }} />
-                      <ReferenceLine y={0.54} stroke={chartPalette.mutedLine} strokeDasharray="4 4" />
-                      <RechartsTooltip
-                        contentStyle={{
-                          backgroundColor: chartPalette.tooltipBg,
-                          borderColor: chartPalette.tooltipBorder,
-                          color: chartPalette.tooltipText,
-                          borderRadius: 8,
-                          fontSize: 12,
-                        }}
-                      />
-                      <Bar
-                        dataKey="salienceRho"
-                        name="显著性加权 ρ"
-                        fill={chartPalette.primary}
-                        radius={[4, 4, 0, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <div className="h-[310px] w-full">
+                  {hasMountedVisible ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={axisRadarData} margin={{ top: 10, right: 12, left: -16, bottom: 20 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
+                        <XAxis
+                          dataKey="axisLabel"
+                          tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                          angle={-20}
+                          textAnchor="end"
+                          interval={0}
+                        />
+                        <YAxis domain={[0, 1]} tick={{ fill: chartPalette.tick, fontSize: 11 }} />
+                        <ReferenceLine y={0.54} stroke={chartPalette.mutedLine} strokeDasharray="4 4" />
+                        <RechartsTooltip
+                          contentStyle={{
+                            backgroundColor: chartPalette.tooltipBg,
+                            borderColor: chartPalette.tooltipBorder,
+                            color: chartPalette.tooltipText,
+                            borderRadius: 8,
+                            fontSize: 12,
+                          }}
+                        />
+                        <Bar
+                          dataKey="salienceRho"
+                          name="显著性加权 ρ"
+                          fill={chartPalette.primary}
+                          radius={[4, 4, 0, 0]}
+                          isAnimationActive={false}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="h-full w-full" />
+                  )}
                 </div>
               </TabsContent>
             </Tabs>
@@ -352,65 +376,76 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="h-[225px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={costScalingSeries} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="onlineCostGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={chartPalette.primary} stopOpacity={0.35} />
-                      <stop offset="95%" stopColor={chartPalette.primary} stopOpacity={0.02} />
-                    </linearGradient>
-                    <linearGradient id="batchCostGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={chartPalette.teal} stopOpacity={0.35} />
-                      <stop offset="95%" stopColor={chartPalette.teal} stopOpacity={0.02} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
-                  <XAxis dataKey="count" tick={{ fill: chartPalette.tick, fontSize: 11 }} />
-                  <YAxis
-                    tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                    tickFormatter={(v) => `¥${v}`}
-                  />
-                  <RechartsTooltip
-                    formatter={(value: number | string) => [`¥${Number(value).toFixed(2)}`, '']}
-                    contentStyle={{
-                      backgroundColor: chartPalette.tooltipBg,
-                      borderColor: chartPalette.tooltipBorder,
-                      color: chartPalette.tooltipText,
-                      borderRadius: 8,
-                      fontSize: 12,
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="naiveCny"
-                    name="无缓存/无去重裸调"
-                    stroke={chartPalette.mutedLine}
-                    strokeDasharray="4 4"
-                    fill="transparent"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="onlineCny"
-                    name="在线实测 (Prompt Cache)"
-                    stroke={chartPalette.primary}
-                    fill="url(#onlineCostGrad)"
-                    strokeWidth={2}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="batchCny"
-                    name="Batch API 50% 折扣等效"
-                    stroke={chartPalette.teal}
-                    fill="url(#batchCostGrad)"
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              {hasMountedVisible ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={costScalingSeries} margin={{ top: 10, right: 20, left: 0, bottom: 4 }}>
+                    <defs>
+                      <linearGradient id="onlineCostGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={chartPalette.primary} stopOpacity={0.35} />
+                        <stop offset="95%" stopColor={chartPalette.primary} stopOpacity={0.02} />
+                      </linearGradient>
+                      <linearGradient id="batchCostGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={chartPalette.teal} stopOpacity={0.35} />
+                        <stop offset="95%" stopColor={chartPalette.teal} stopOpacity={0.02} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
+                    <XAxis
+                      dataKey="count"
+                      padding={{ left: 8, right: 8 }}
+                      tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                    />
+                    <YAxis
+                      tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                      tickFormatter={(v) => `¥${v}`}
+                    />
+                    <RechartsTooltip
+                      formatter={(value: number | string) => [`¥${Number(value).toFixed(2)}`, '']}
+                      contentStyle={{
+                        backgroundColor: chartPalette.tooltipBg,
+                        borderColor: chartPalette.tooltipBorder,
+                        color: chartPalette.tooltipText,
+                        borderRadius: 8,
+                        fontSize: 12,
+                      }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="naiveCny"
+                      name="无缓存/无去重裸调"
+                      stroke={chartPalette.mutedLine}
+                      strokeDasharray="4 4"
+                      fill="transparent"
+                      isAnimationActive={false}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="onlineCny"
+                      name="在线实测 (Prompt Cache)"
+                      stroke={chartPalette.primary}
+                      fill="url(#onlineCostGrad)"
+                      strokeWidth={2}
+                      isAnimationActive={false}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="batchCny"
+                      name="Batch API 50% 折扣等效"
+                      stroke={chartPalette.teal}
+                      fill="url(#batchCostGrad)"
+                      strokeWidth={2}
+                      isAnimationActive={false}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full w-full" />
+              )}
             </div>
 
             {costLedger && scaledLedger && (
               <div className="rounded-lg border border-border bg-secondary/50 p-3.5 space-y-3">
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
                   <span className="font-medium text-foreground">拖动调节图库冷启动入库规模</span>
                   <span className="mono font-semibold text-primary tabular-nums">
                     {batchSize} 张 → 约 ¥{scaledLedger.totalCny.toFixed(2)}（{scaledLedger.effectiveCalls} 次有效调用）
@@ -424,7 +459,7 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
                   onValueChange={([next]) => setBatchSize(next)}
                   aria-label="入库规模模拟滑块"
                 />
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs text-muted-foreground">
                   <span>Tier-0 pHash 拦截 {Math.round(costLedger.duplicate_skip_rate * 100)}% 重复图</span>
                   <span className="mono text-teal-ok font-medium">
                     有效摊销 ¥{scaledLedger.perImgCny.toFixed(4)} / 张
@@ -454,40 +489,45 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
           </CardHeader>
           <CardContent>
             <div className="h-[260px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={tectonicMetrics?.series ?? []}
-                  margin={{ top: 14, right: 16, left: 0, bottom: 8 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
-                  <XAxis
-                    dataKey="label"
-                    tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                    interval={0}
-                  />
-                  <YAxis domain={[0, 105]} tick={{ fill: chartPalette.tick, fontSize: 11 }} />
-                  <ReferenceLine
-                    y={38}
-                    stroke={chartPalette.amber}
-                    strokeDasharray="4 4"
-                  />
-                  <RechartsTooltip
-                    contentStyle={{
-                      backgroundColor: chartPalette.tooltipBg,
-                      borderColor: chartPalette.tooltipBorder,
-                      color: chartPalette.tooltipText,
-                      borderRadius: 8,
-                      fontSize: 12,
-                    }}
-                  />
-                  <Bar
-                    dataKey="psnr"
-                    name="非掩码区 PSNR (dB)"
-                    fill={chartPalette.teal}
-                    radius={[5, 5, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+              {hasMountedVisible ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={tectonicMetrics?.series ?? []}
+                    margin={{ top: 14, right: 16, left: 0, bottom: 8 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
+                    <XAxis
+                      dataKey="label"
+                      tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                      interval={0}
+                    />
+                    <YAxis domain={[0, 105]} tick={{ fill: chartPalette.tick, fontSize: 11 }} />
+                    <ReferenceLine
+                      y={38}
+                      stroke={chartPalette.amber}
+                      strokeDasharray="4 4"
+                    />
+                    <RechartsTooltip
+                      contentStyle={{
+                        backgroundColor: chartPalette.tooltipBg,
+                        borderColor: chartPalette.tooltipBorder,
+                        color: chartPalette.tooltipText,
+                        borderRadius: 8,
+                        fontSize: 12,
+                      }}
+                    />
+                    <Bar
+                      dataKey="psnr"
+                      name="非掩码区 PSNR (dB)"
+                      fill={chartPalette.teal}
+                      radius={[5, 5, 0, 0]}
+                      isAnimationActive={false}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full w-full" />
+              )}
             </div>
           </CardContent>
         </Card>
@@ -544,50 +584,55 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
               </CardHeader>
               <CardContent>
                 <div className="h-[260px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <ScatterChart margin={{ top: 10, right: 16, left: -14, bottom: 12 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} />
-                      <XAxis
-                        type="number"
-                        dataKey="expert_score"
-                        name="专家真值"
-                        domain={[-1, 1]}
-                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                      />
-                      <YAxis
-                        type="number"
-                        dataKey="vlm_score"
-                        name="模型打分"
-                        domain={[-1, 1]}
-                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                      />
-                      <ZAxis type="number" dataKey="salience" range={[28, 72]} name="显著度" />
-                      <ReferenceLine
-                        segment={[
-                          { x: -1, y: -1 },
-                          { x: 1, y: 1 },
-                        ]}
-                        stroke={chartPalette.mutedLine}
-                        strokeDasharray="4 4"
-                      />
-                      <RechartsTooltip
-                        cursor={{ strokeDasharray: '3 3' }}
-                        contentStyle={{
-                          backgroundColor: chartPalette.tooltipBg,
-                          borderColor: chartPalette.tooltipBorder,
-                          color: chartPalette.tooltipText,
-                          borderRadius: 8,
-                          fontSize: 12,
-                        }}
-                      />
-                      <Scatter
-                        name="80 件标本读数"
-                        data={eddBenchmark.eval_01_spearman.scatter_points}
-                        fill={chartPalette.primary}
-                        fillOpacity={0.75}
-                      />
-                    </ScatterChart>
-                  </ResponsiveContainer>
+                  {hasMountedVisible ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ScatterChart margin={{ top: 10, right: 16, left: -14, bottom: 12 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} />
+                        <XAxis
+                          type="number"
+                          dataKey="expert_score"
+                          name="专家真值"
+                          domain={[-1, 1]}
+                          tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                        />
+                        <YAxis
+                          type="number"
+                          dataKey="vlm_score"
+                          name="模型打分"
+                          domain={[-1, 1]}
+                          tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                        />
+                        <ZAxis type="number" dataKey="salience" range={[28, 72]} name="显著度" />
+                        <ReferenceLine
+                          segment={[
+                            { x: -1, y: -1 },
+                            { x: 1, y: 1 },
+                          ]}
+                          stroke={chartPalette.mutedLine}
+                          strokeDasharray="4 4"
+                        />
+                        <RechartsTooltip
+                          cursor={{ strokeDasharray: '3 3' }}
+                          contentStyle={{
+                            backgroundColor: chartPalette.tooltipBg,
+                            borderColor: chartPalette.tooltipBorder,
+                            color: chartPalette.tooltipText,
+                            borderRadius: 8,
+                            fontSize: 12,
+                          }}
+                        />
+                        <Scatter
+                          name="80 件标本读数"
+                          data={eddBenchmark.eval_01_spearman.scatter_points}
+                          fill={chartPalette.primary}
+                          fillOpacity={0.75}
+                          isAnimationActive={false}
+                        />
+                      </ScatterChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="h-full w-full" />
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -613,49 +658,58 @@ export const TechEvalOverview: React.FC<TechEvalOverviewProps> = ({
               </CardHeader>
               <CardContent>
                 <div className="h-[260px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={eddBenchmark.eval_04_cost_backtest.case_results.map((r, i) => ({
-                        idx: `S${i + 1}`,
-                        name: r.name,
-                        variancePct: r.variance_pct,
-                        within: r.within_15pct,
-                      }))}
-                      margin={{ top: 10, right: 12, left: -12, bottom: 8 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
-                      <XAxis dataKey="idx" tick={{ fill: chartPalette.tick, fontSize: 10 }} interval={0} />
-                      <YAxis
-                        domain={[-35, 25]}
-                        tick={{ fill: chartPalette.tick, fontSize: 11 }}
-                        tickFormatter={(v) => `${v}%`}
-                      />
-                      <ReferenceLine y={15} stroke={chartPalette.amber} strokeDasharray="4 4" />
-                      <ReferenceLine y={-15} stroke={chartPalette.amber} strokeDasharray="4 4" />
-                      <ReferenceLine y={0} stroke={chartPalette.mutedLine} />
-                      <RechartsTooltip
-                        formatter={(val: number | string) => [`${Number(val).toFixed(2)}%`, '预测偏差']}
-                        labelFormatter={(_lbl, payload) =>
-                          (payload?.[0]?.payload as { name?: string })?.name ?? ''
-                        }
-                        contentStyle={{
-                          backgroundColor: chartPalette.tooltipBg,
-                          borderColor: chartPalette.tooltipBorder,
-                          color: chartPalette.tooltipText,
-                          borderRadius: 8,
-                          fontSize: 12,
-                        }}
-                      />
-                      <Bar dataKey="variancePct" name="预测偏差 (%)" radius={[4, 4, 0, 0]}>
-                        {eddBenchmark.eval_04_cost_backtest.case_results.map((entry) => (
-                          <Cell
-                            key={entry.case_id}
-                            fill={entry.within_15pct ? chartPalette.teal : chartPalette.amber}
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
+                  {hasMountedVisible ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={eddBenchmark.eval_04_cost_backtest.case_results.map((r, i) => ({
+                          idx: `S${i + 1}`,
+                          name: r.name,
+                          variancePct: r.variance_pct,
+                          within: r.within_15pct,
+                        }))}
+                        margin={{ top: 10, right: 12, left: -12, bottom: 8 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" stroke={chartPalette.grid} vertical={false} />
+                        <XAxis dataKey="idx" tick={{ fill: chartPalette.tick, fontSize: 10 }} interval={0} />
+                        <YAxis
+                          domain={[-35, 25]}
+                          tick={{ fill: chartPalette.tick, fontSize: 11 }}
+                          tickFormatter={(v) => `${v}%`}
+                        />
+                        <ReferenceLine y={15} stroke={chartPalette.amber} strokeDasharray="4 4" />
+                        <ReferenceLine y={-15} stroke={chartPalette.amber} strokeDasharray="4 4" />
+                        <ReferenceLine y={0} stroke={chartPalette.mutedLine} />
+                        <RechartsTooltip
+                          formatter={(val: number | string) => [`${Number(val).toFixed(2)}%`, '预测偏差']}
+                          labelFormatter={(_lbl, payload) =>
+                            (payload?.[0]?.payload as { name?: string })?.name ?? ''
+                          }
+                          contentStyle={{
+                            backgroundColor: chartPalette.tooltipBg,
+                            borderColor: chartPalette.tooltipBorder,
+                            color: chartPalette.tooltipText,
+                            borderRadius: 8,
+                            fontSize: 12,
+                          }}
+                        />
+                        <Bar
+                          dataKey="variancePct"
+                          name="预测偏差 (%)"
+                          radius={[4, 4, 0, 0]}
+                          isAnimationActive={false}
+                        >
+                          {eddBenchmark.eval_04_cost_backtest.case_results.map((entry) => (
+                            <Cell
+                              key={entry.case_id}
+                              fill={entry.within_15pct ? chartPalette.teal : chartPalette.amber}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="h-full w-full" />
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -4,6 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  devIndicators: false,
   ...(isProd ? { output: 'export' } : {}),
   ...(basePath ? { basePath, assetPrefix: basePath } : {}),
   trailingSlash: true,

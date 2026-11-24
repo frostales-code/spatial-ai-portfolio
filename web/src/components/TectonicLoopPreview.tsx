@@ -227,7 +227,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
   if (!tectonicBundle || !activeCase || !rawTier || !activePresetTier) {
     return (
-      <div className="py-20 text-center text-sm text-muted-foreground border border-border bg-secondary/60">
+      <div className="py-20 text-center text-sm text-muted-foreground rounded-xl border border-border bg-secondary/60">
         正在加载 3 套实景商业立面重绘案例、30 项构造定额库与单应性分缝投影数据…
       </div>
     );
@@ -244,8 +244,8 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
       {/* Header + 3-Case Selector + Export Report CTA */}
       <section className="pb-6 border-b border-border space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5">
-          <div className="space-y-2 max-w-2xl">
-            <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-foreground">
+          <div className="space-y-2 max-w-3xl">
+            <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-foreground text-balance">
               TectonicLoop · 物理建构排雷与树影锁定价值工程
             </h1>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -253,11 +253,11 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+          <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2.5 shrink-0">
             <button
               type="button"
               onClick={() => setCalibratorOpen(true)}
-              className="min-h-[42px] px-4 rounded-md border border-border hover:border-primary bg-card text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto justify-center min-h-[42px] px-4 rounded-md border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
             >
               <Crosshair className="w-3.5 h-3.5 text-primary" />
               <span>自定义 4 点透视标定</span>
@@ -265,7 +265,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             <button
               type="button"
               onClick={() => setCatalogModalOpen(true)}
-              className="min-h-[42px] px-4 rounded-md border border-border hover:border-foreground/70 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto justify-center min-h-[42px] px-4 rounded-md border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
             >
               <BookOpen className="w-3.5 h-3.5 text-primary" />
               <span>30 项定额库与 8 条排雷规则</span>
@@ -276,7 +276,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 setVeReportOpen(true);
                 trackShowcaseEvent('tectonic_ve_open', { case_id: selectedCaseId });
               }}
-              className="min-h-[42px] px-5 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto justify-center min-h-[42px] px-5 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-2 transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>导出甲方 VE 任务书</span>
@@ -288,7 +288,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
         <div
           role="group"
           aria-label="选择 3 套实测商业改造案例"
-          className="grid grid-cols-1 md:grid-cols-3 border border-border divide-y md:divide-y-0 md:divide-x divide-border"
+          className="grid grid-cols-1 md:grid-cols-3 rounded-lg border border-border divide-y md:divide-y-0 md:divide-x divide-border overflow-hidden"
         >
           {cases.map((c, idx) => {
             const isSel = c.case_id === activeCase.case_id;
@@ -300,7 +300,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 onClick={() => handleSelectCase(c.case_id)}
                 className={`text-left p-3.5 transition-colors ${
                   isSel
-                    ? 'bg-accent text-foreground border-b-2 border-b-[#153CE8]'
+                    ? 'bg-accent text-foreground border-b-2 border-b-primary'
                     : 'bg-card text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
                 }`}
               >
@@ -322,7 +322,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
         <div className="lg:col-span-7 space-y-5">
           {/* Viewport Controls Row */}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div role="group" aria-label="视图模式切换" className="inline-flex border border-border divide-x divide-border">
+            <div role="group" aria-label="视图模式切换" className="inline-flex rounded-md border border-border divide-x divide-border overflow-hidden">
               <button
                 type="button"
                 aria-pressed={viewportMode === 'photoreal'}
@@ -461,8 +461,8 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                             left: `${marker.pin.x_pct}%`,
                             top: `${marker.pin.y_pct}%`,
                           }}
-                          className={`pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-[#FFFFFF] text-white flex items-center justify-center mono text-xs font-bold shadow transition-transform ${badgeBg} ${
-                            isSel ? 'scale-115 ring-2 ring-[#0E1015]' : 'hover:scale-105'
+                          className={`pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-white text-primary-foreground flex items-center justify-center mono text-xs font-bold shadow transition-transform ${badgeBg} ${
+                            isSel ? 'scale-115 ring-2 ring-ring' : 'hover:scale-105'
                           }`}
                         >
                           {idx + 1}
@@ -474,7 +474,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             />
           ) : (
             /* Precision Architectural Orthographic Elevation Mode */
-            <div className="border border-foreground/70 bg-secondary/40">
+            <div className="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
               <div className="relative w-full">
                 <svg
                   viewBox="0 0 760 440"
@@ -491,6 +491,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                       <line x1="0" y1="12" x2="12" y2="0" stroke="#153CE8" strokeWidth="0.6" opacity="0.2" />
                     </pattern>
                   </defs>
+                  <rect x="0" y="0" width="760" height="440" fill="#F8FAFC" />
                   <line x1="36" y1="92" x2="720" y2="92" stroke="#CBD0D8" strokeWidth="0.75" strokeDasharray="4 4" />
                   <text x="40" y="85" fill="#525866" fontSize="10" fontFamily="Chivo Mono">
                     +{activeCase.scale_anchor.facade_height_mm}mm 檐口
@@ -541,8 +542,8 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                         aria-pressed={isSel}
                         onClick={() => setSelectedPinIndex(idx)}
                         style={{ left: `${marker.pin.x_pct}%`, top: `${marker.pin.y_pct}%` }}
-                        className={`-translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-[#FFFFFF] text-white flex items-center justify-center mono text-xs font-bold ${badgeBg} ${
-                          isSel ? 'ring-2 ring-[#0E1015]' : ''
+                        className={`-translate-x-1/2 -translate-y-1/2 absolute w-8 h-8 rounded-full border-2 border-white text-primary-foreground flex items-center justify-center mono text-xs font-bold ${badgeBg} ${
+                          isSel ? 'ring-2 ring-ring' : ''
                         }`}
                       >
                         {idx + 1}
@@ -554,7 +555,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           )}
 
           {/* Measured Homography & Relight Quality Strip */}
-          <div className="grid grid-cols-3 gap-px bg-border border border-border text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 rounded-lg overflow-hidden gap-px bg-border border border-border text-xs">
             <div className="bg-secondary/60 p-3">
               <div className="text-muted-foreground">基准尺度锚点</div>
               <div className="mono font-semibold text-foreground truncate mt-0.5">
@@ -581,7 +582,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
           {/* Active Diagnostic Status Strip */}
           {activeMarker && (
-            <div className="border border-foreground/70 bg-card p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs">
+            <div className="rounded-lg border border-border bg-card p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs">
               <div className="flex items-start gap-2.5 leading-relaxed text-foreground">
                 {activeMarker.hasAnyAlert ? (
                   <AlertTriangle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
@@ -607,7 +608,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 </div>
               </div>
               <span
-                className={`px-2.5 py-1 font-semibold border shrink-0 whitespace-nowrap ${
+                className={`rounded-md px-2.5 py-1 font-semibold border shrink-0 whitespace-nowrap ${
                   activeMarker.hasAnyAlert
                     ? 'border-destructive text-destructive'
                     : 'border-teal-ok text-teal-ok'
@@ -634,7 +635,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           {/* 3-Tier Preset Bar */}
           <div className="space-y-2">
             <div className="text-xs font-bold text-foreground">一键切换同效异构价值工程档位</div>
-            <div role="group" aria-label="三档价值工程方案" className="grid grid-cols-3 gap-2">
+            <div role="group" aria-label="三档价值工程方案" className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {activeCase.tiers.map((tier) => {
                 const isSel = !hasCustomOverride && selectedTierId === tier.tier_id;
                 return (
@@ -643,15 +644,20 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                     type="button"
                     aria-pressed={isSel}
                     onClick={() => handleSelectTier(tier.tier_id)}
-                    className={`min-h-[42px] px-2.5 py-2 text-xs font-semibold border text-left transition-colors ${
+                    className={`min-h-[42px] px-3 py-2 rounded-md text-xs font-semibold border text-left transition-colors flex sm:block items-center justify-between gap-2 ${
                       isSel
-                        ? 'bg-primary border-primary text-white'
-                        : 'bg-card border-border text-foreground hover:border-foreground/70'
+                        ? 'bg-primary border-primary text-primary-foreground'
+                        : 'bg-card border-border text-foreground hover:border-primary/60'
                     }`}
                   >
                     <div className="truncate">{tier.short_label}</div>
-                    <div className={`mono mt-0.5 tabular-nums ${isSel ? 'text-[#EEF2FF]' : 'text-muted-foreground'}`}>
-                      ¥{Math.round(Number(tier.summary.known_subtotal_cny)).toLocaleString()} · {tier.summary.max_lead_time_days}天
+                    <div
+                      className={`mono sm:mt-0.5 tabular-nums whitespace-nowrap ${
+                        isSel ? 'text-primary-foreground/85' : 'text-muted-foreground'
+                      }`}
+                    >
+                      ¥{Math.round(Number(tier.summary.known_subtotal_cny)).toLocaleString()} ·{' '}
+                      <span className="whitespace-nowrap">{tier.summary.max_lead_time_days}天</span>
                     </div>
                   </button>
                 );
@@ -660,12 +666,12 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
 
           {/* 3 Live Deterministic Decimal KPIs */}
-          <div className="grid grid-cols-3 gap-px bg-border border border-border">
-            <div className="bg-card p-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 rounded-lg overflow-hidden gap-px bg-border border border-border">
+            <div className="bg-card p-3.5 min-w-0">
               <div className="text-xs text-muted-foreground">预估造价 (±12%)</div>
               {evalResult.summary.has_missing_prices ? (
                 <>
-                  <div className="mono text-sm font-bold text-destructive mt-1">
+                  <div className="mono text-[10px] tracking-tight leading-snug font-bold text-destructive whitespace-nowrap mt-1">
                     UNKNOWN_PRICE_MISSING
                   </div>
                   <div className="text-xs text-muted-foreground mt-0.5 tabular-nums">
@@ -688,7 +694,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               )}
             </div>
 
-            <div className="bg-card p-3.5">
+            <div className="bg-card p-3.5 min-w-0">
               <div className="text-xs text-muted-foreground">施工周期</div>
               <div className="mono text-base sm:text-lg font-bold text-foreground tabular-nums mt-1">
                 {evalResult.summary.max_lead_time_days} 天
@@ -702,7 +708,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               </div>
             </div>
 
-            <div className="bg-card p-3.5">
+            <div className="bg-card p-3.5 min-w-0">
               <div className="text-xs text-muted-foreground">建构排雷校验</div>
               <div
                 className={`mono text-base sm:text-lg font-bold tabular-nums mt-1 whitespace-nowrap ${
@@ -720,7 +726,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
 
           {hasCustomOverride && (
-            <div className="p-3 border border-primary bg-accent text-xs text-foreground flex items-center justify-between gap-2">
+            <div className="rounded-lg p-3 border border-primary bg-accent text-xs text-foreground flex items-center justify-between gap-2">
               <span>已启用自定义 SKU 搭配（CAD 详图、排雷与造价即时重算；左图当前对应所选实景基准档位）</span>
               <button
                 type="button"
@@ -752,7 +758,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               const isMissing = bd?.status === 'UNKNOWN_PRICE_MISSING';
 
               return (
-                <div key={zone.zone_id} className="border border-border p-4 space-y-2 bg-card">
+                <div key={zone.zone_id} className="rounded-lg border border-border p-4 space-y-2 bg-card">
                   <div className="flex items-center justify-between gap-2 text-xs">
                     <label htmlFor={selectId} className="font-semibold text-foreground">
                       {zone.zone_label}
@@ -777,7 +783,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                       setCustomSkus((prev) => ({ ...prev, [zone.zone_id]: nextSkuId }));
                       setLiveVeStatus(null);
                     }}
-                    className="w-full min-h-[38px] px-2.5 border border-border focus:border-primary bg-card text-xs text-foreground"
+                    className="w-full min-h-[38px] py-1.5 px-3 rounded-md border border-border focus:border-primary bg-card text-xs text-foreground"
                   >
                     {options.map((opt) => (
                       <option key={opt.sku_id} value={opt.sku_id}>
@@ -798,17 +804,17 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           </div>
 
           {/* Live Backend Calc Verification + Missing Price Policy */}
-          <div className="border border-border bg-secondary/60 p-4 space-y-3 text-xs">
+          <div className="rounded-lg border border-border bg-secondary/60 p-4 space-y-3 text-xs">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="font-semibold text-foreground">Zero-LLM Decimal 规则验证</span>
               <button
                 type="button"
                 disabled={liveVeLoading}
                 onClick={handleLiveBackendVeCalc}
-                className={`min-h-[36px] px-3.5 text-xs font-semibold transition-colors ${
+                className={`min-h-[36px] rounded-md px-3.5 text-xs font-semibold transition-colors ${
                   isLiveEngine
-                    ? 'bg-teal-ok hover:bg-[#0D5F59] text-white'
-                    : 'bg-foreground hover:bg-primary text-primary-foreground'
+                    ? 'bg-teal-ok hover:opacity-90 text-white dark:text-slate-950'
+                    : 'bg-primary hover:bg-primary/90 text-primary-foreground'
                 }`}
               >
                 {liveVeLoading ? '核算请求中…' : '执行 Live FastAPI 实时核算'}
@@ -818,7 +824,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
             {liveVeStatus && (
               <div
                 role="status"
-                className={`p-3 border bg-card leading-relaxed ${
+                className={`rounded-md p-3 border bg-card leading-relaxed ${
                   liveVeStatus.ok
                     ? 'border-teal-ok text-teal-ok'
                     : 'border-destructive text-destructive'
@@ -870,11 +876,11 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
           aria-modal="true"
           aria-labelledby="tectonic-catalog-modal-title"
           onClick={() => setCatalogModalOpen(false)}
-          className="fixed inset-0 z-50 bg-foreground/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-card border border-foreground/70 w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden"
+            className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden"
           >
             <div className="px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-3">
               <div>
@@ -889,7 +895,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
                 type="button"
                 aria-label="关闭定额库窗口"
                 onClick={() => setCatalogModalOpen(false)}
-                className="w-10 h-10 border border-border hover:border-foreground/70 flex items-center justify-center text-foreground"
+                className="w-10 h-10 rounded-md border border-border hover:border-primary/60 flex items-center justify-center text-foreground transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -922,10 +928,10 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
 
             <div className="p-5 overflow-y-auto flex-1 text-xs">
               {catalogTab === 'assemblies' ? (
-                <div className="overflow-x-auto border border-border">
+                <div className="overflow-x-auto rounded-lg border border-border">
                   <table className="w-full min-w-[700px] text-left border-collapse">
                     <thead>
-                      <tr className="bg-secondary/60 border-b border-foreground/70 text-foreground font-semibold">
+                      <tr className="bg-secondary/60 border-b border-border text-foreground font-semibold">
                         <th className="py-2.5 px-3">分类</th>
                         <th className="py-2.5 px-3">构造做法名称</th>
                         <th className="py-2.5 px-3">标准模数 (mm)</th>
@@ -968,7 +974,7 @@ export const TectonicLoopPreview: React.FC<TectonicLoopPreviewProps> = ({
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {lintRules.map((r) => (
-                    <div key={r.code} className="border border-border p-4 space-y-2 bg-card">
+                    <div key={r.code} className="rounded-lg border border-border p-4 space-y-2 bg-card">
                       <div className="flex items-center justify-between gap-2">
                         <span className="font-bold text-foreground">{r.title}</span>
                         <span

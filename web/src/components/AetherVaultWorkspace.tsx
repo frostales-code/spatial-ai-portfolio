@@ -40,7 +40,7 @@ const AetherVaultManifold3D = dynamic(
     ssr: false,
     loading: () => (
       <div className="h-[440px] rounded-xl border border-border bg-card flex items-center justify-center text-xs text-muted-foreground">
-        正在加载 Three.js 80 标本 3D 美学光谱流形...
+        正在加载 Three.js 500 标本 3D 美学光谱流形...
       </div>
     ),
   }
@@ -60,6 +60,45 @@ interface AetherVaultWorkspaceProps {
 }
 
 type ScopeFilter = 'all' | 'cross_domain' | 'architecture_only';
+type OriginFilter = 'all' | 'pinterest_personal' | 'profile_expansion';
+
+function resolveValidSlots(
+  assets: CuratedShowcaseAsset[],
+  assetsById: Record<string, CuratedShowcaseAsset>,
+  preferred: { optics: string; material: string; lighting: string },
+  targetScores: Record<SpectrumAxisId, number>,
+): { optics: string; material: string; lighting: string } {
+  if (assets.length === 0) return preferred;
+  const pickBest = (
+    preferredId: string,
+    preferredDomains: AssetDomain[],
+    exclude: Set<string>,
+  ): string => {
+    if (assetsById[preferredId]) return preferredId;
+    const domainPool = assets.filter(
+      (a) => preferredDomains.includes(a.subject_isolation.domain) && !exclude.has(a.asset_id),
+    );
+    const pool = domainPool.length > 0 ? domainPool : assets.filter((a) => !exclude.has(a.asset_id));
+    const candidates = pool.length > 0 ? pool : assets;
+    let best = candidates[0];
+    let bestDist = Infinity;
+    for (const a of candidates) {
+      const d = computeSalienceGatedDistance(targetScores, a.style_spectrums);
+      if (d < bestDist) {
+        bestDist = d;
+        best = a;
+      }
+    }
+    return best.asset_id;
+  };
+  const used = new Set<string>();
+  const optics = pickBest(preferred.optics, ['architecture'], used);
+  used.add(optics);
+  const material = pickBest(preferred.material, ['industrial', 'craft'], used);
+  used.add(material);
+  const lighting = pickBest(preferred.lighting, ['editorial', 'graphic', 'architecture'], used);
+  return { optics, material, lighting };
+}
 
 const DEFAULT_QUERY_SCORES: Record<SpectrumAxisId, number> = {
   tectonic_honesty: 0.8,
@@ -216,10 +255,18 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
   });
   const [attentionWeights, setAttentionWeights] = useState<Partial<Record<SpectrumAxisId, number>>>({});
   const [scopeFilter, setScopeFilter] = useState<ScopeFilter>('all');
+  const [originFilter, setOriginFilter] = useState<OriginFilter>('all');
   const [domainFilter, setDomainFilter] = useState<'all' | AssetDomain>('all');
+  const [subCategoryFilter, setSubCategoryFilter] = useState<string>('all');
+  const [boardFilter, setBoardFilter] = useState<string>('all');
   const [onlyPersonalPrior, setOnlyPersonalPrior] = useState(false);
   const [visibleLimit, setVisibleLimit] = useState(24);
-  const [selectedSlots, setSelectedSlots] = useState(PRESET_INTENTS[0].slots);
+  const [selectedSlots, setSelectedSlots] = useState(() => {
+    const map: Record<string, CuratedShowcaseAsset> = {};
+    for (const a of bundle.assets) map[a.asset_id] = a;
+    return resolveValidSlots(bundle.assets, map, PRESET_INTENTS[0].slots, PRESET_INTENTS[0].scores);
+  });
+  const [profileExpanded, setProfileExpanded] = useState(true);
 
   // Overlay & drawer state
   const [calibOpen, setCalibOpen] = useState(false);
@@ -285,16 +332,35 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
     return map;
   }, [bundle.axes]);
 
-  // Scoped base pool & dynamic domain counts (never stale or contradictory)
+  // Scoped base pool & dynamic domain/origin/sub-category counts (never stale or contradictory)
+  const originCounts = useMemo(() => {
+    let pin = 0;
+    let exp = 0;
+    for (const a of bundle.assets) {
+      if (a.source_origin === 'pinterest_personal' || (!a.source_origin && a.subject_isolation.is_personal_prior)) {
+        pin += 1;
+      } else {
+        exp += 1;
+      }
+    }
+    return { all: bundle.assets.length, pinterest_personal: pin, profile_expansion: exp };
+  }, [bundle.assets]);
+
   const scopedAssets = useMemo(() => {
     return bundle.assets.filter((asset) => {
       const dom = asset.subject_isolation.domain;
       if (scopeFilter === 'cross_domain' && dom === 'architecture') return false;
       if (scopeFilter === 'architecture_only' && dom !== 'architecture') return false;
+      const isPin =
+        asset.source_origin === 'pinterest_personal' ||
+        (!asset.source_origin && asset.subject_isolation.is_personal_prior);
+      if (originFilter === 'pinterest_personal' && !isPin) return false;
+      if (originFilter === 'profile_expansion' && isPin) return false;
       if (onlyPersonalPrior && !asset.subject_isolation.is_personal_prior) return false;
+      if (boardFilter !== 'all' && asset.board_name !== boardFilter) return false;
       return true;
     });
-  }, [bundle.assets, scopeFilter, onlyPersonalPrior]);
+  }, [bundle.assets, scopeFilter, originFilter, onlyPersonalPrior, boardFilter]);
 
   const dynamicDomainCounts = useMemo(() => {
     const counts: Record<string, number> = {
@@ -311,16 +377,23 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
     return counts;
   }, [scopedAssets]);
 
-  const personalPriorCount = useMemo(
-    () => bundle.assets.filter((a) => a.subject_isolation.is_personal_prior).length,
-    [bundle.assets],
-  );
+  const dynamicSubCategories = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const a of scopedAssets) {
+      if (domainFilter !== 'all' && a.subject_isolation.domain !== domainFilter) continue;
+      if (a.sub_category) {
+        counts[a.sub_category] = (counts[a.sub_category] ?? 0) + 1;
+      }
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }, [scopedAssets, domainFilter]);
 
   // High-speed <20ms client-side salience-gated re-ranking
   const { rankedAssets, matchByAssetId, rerankLatencyMs } = useMemo(() => {
     const t0 = performance.now();
     const filtered = scopedAssets.filter((asset) => {
       if (domainFilter !== 'all' && asset.subject_isolation.domain !== domainFilter) return false;
+      if (subCategoryFilter !== 'all' && asset.sub_category !== subCategoryFilter) return false;
       if (literalTermsFilter.length > 0 && !matchesAssetText(asset, literalTermsFilter)) {
         return false;
       }
@@ -337,7 +410,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
     scored.sort((a, b) => a.dist - b.dist);
     const elapsed = Math.max(0.05, performance.now() - t0);
     return { rankedAssets: scored, matchByAssetId: matchMap, rerankLatencyMs: elapsed };
-  }, [scopedAssets, domainFilter, literalTermsFilter, queryScores, attentionWeights]);
+  }, [scopedAssets, domainFilter, subCategoryFilter, literalTermsFilter, queryScores, attentionWeights]);
 
   const opticsAsset = assetsById[selectedSlots.optics] ?? bundle.assets[0];
   const materialAsset = assetsById[selectedSlots.material] ?? bundle.assets[1] ?? bundle.assets[0];
@@ -423,13 +496,37 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
     setSubjectCore(preset.subjectCore);
     setQueryScores({ ...preset.scores });
     setAttentionWeights({});
-    setSelectedSlots({ ...preset.slots });
+    setSelectedSlots(resolveValidSlots(bundle.assets, assetsById, preset.slots, preset.scores));
     setLiveCompileStatus(null);
     showToast(`已切换「${preset.label}」`);
   };
 
+  const handleApplyPersonalProfile = () => {
+    const sig = bundle.aesthetic_profile?.axis_signature;
+    if (!sig) return;
+    const nextScores = { ...DEFAULT_QUERY_SCORES };
+    for (const ax of ALL_AXIS_IDS) {
+      if (sig[ax]) {
+        nextScores[ax] = Number(sig[ax].weighted_mean.toFixed(2));
+      }
+    }
+    setActivePresetKey('custom');
+    setFuzzyInput('');
+    setLiteralTermsFilter([]);
+    setQueryScores(nextScores);
+    setAttentionWeights({
+      tectonic_honesty: 1.4,
+      thermal_mood: 1.3,
+      geometric_order: 1.25,
+      lighting_drama: 1.2,
+    });
+    setIntentSummary('已套用您的个人 Pinterest 523 图审美画像 8 轴重心向量');
+    showToast('已同步 8 轴滑块至您的个人审美画像重心');
+  };
+
   const handleScopeChange = (nextScope: ScopeFilter) => {
     setScopeFilter(nextScope);
+    setVisibleLimit(24);
     if (nextScope === 'cross_domain' && domainFilter === 'architecture') {
       setDomainFilter('all');
     } else if (nextScope === 'architecture_only') {
@@ -443,7 +540,10 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
     setIntentSummary(null);
     setLiteralTermsFilter([]);
     setScopeFilter('all');
+    setOriginFilter('all');
     setDomainFilter('all');
+    setSubCategoryFilter('all');
+    setBoardFilter('all');
     setOnlyPersonalPrior(false);
     setQueryScores({ ...DEFAULT_QUERY_SCORES });
     setAttentionWeights({});
@@ -460,7 +560,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
   };
 
   const handleLoadComparisonPair = (pair: AstComparisonPair) => {
-    setSelectedSlots({ ...pair.slots });
+    setSelectedSlots(resolveValidSlots(bundle.assets, assetsById, pair.slots, queryScores));
     setSubjectCore(pair.subject_core);
     setLiveCompileStatus(null);
     showToast(`已载入 ${pair.pair_id.toUpperCase()}（${pair.title_zh}）三槽位至底部托盘`);
@@ -598,13 +698,17 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
   const hasCustomFilters =
     fuzzyInput.trim().length > 0 ||
     scopeFilter !== 'all' ||
+    originFilter !== 'all' ||
     domainFilter !== 'all' ||
+    subCategoryFilter !== 'all' ||
+    boardFilter !== 'all' ||
     onlyPersonalPrior ||
     activePresetKey === 'custom' ||
     Object.keys(attentionWeights).length > 0;
 
   return (
-    <div className="space-y-12">
+    <>
+      <div className="space-y-12">
       {/* ACT I · ABOVE-THE-FOLD PROOF STAGE */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-9 pb-10 border-b border-border items-center">
         {/* Left 5 Cols · Architectural Thesis & Actions */}
@@ -613,7 +717,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             把只可意会的审美直觉，编译为无冲突的空间语言
           </h1>
           <p className="text-[15px] text-muted-foreground leading-relaxed max-w-[46ch]">
-            AetherVault 将主体语义与 8 维连续美学光谱正交解耦，在跨五门类 80 件黄金锚定标本间实现亚毫秒重排，并以作用域隔离语法消除多参考图混合串色。
+            AetherVault 将主体语义与 8 维连续美学光谱正交解耦，基于您的个人 Pinterest 全图库审美画像扩展至 {bundle.total_assets} 件跨五门类锚定标本，实现亚毫秒重排与无冲突 AST 编译。
           </p>
 
           {/* 3 Tabular Proof Benchmarks separated by top/vertical Swiss hairlines */}
@@ -628,7 +732,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               <div className="mono text-lg sm:text-xl font-bold text-foreground tabular-nums">
                 {bundle.total_assets} 件
               </div>
-              <div className="text-xs text-muted-foreground mt-0.5">五门类锚定样本</div>
+              <div className="text-xs text-muted-foreground mt-0.5">个人画像+扩展样本</div>
             </div>
             <div className="py-3.5 pl-3">
               <div className="mono text-lg sm:text-xl font-bold text-primary tabular-nums">
@@ -643,7 +747,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             <button
               type="button"
               onClick={() => setCalibOpen(true)}
-              className="min-h-[44px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold inline-flex items-center gap-2 transition-colors"
+              className="min-h-[44px] px-5 rounded-md shadow-sm bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold inline-flex items-center gap-2 transition-colors"
             >
               <Sparkles className="w-4 h-4" strokeWidth={1.75} />
               <span>
@@ -656,7 +760,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               className="min-h-[44px] px-5 rounded-md border border-border bg-card text-foreground hover:bg-secondary text-sm font-medium inline-flex items-center gap-2 transition-colors"
             >
               <Box className="w-4 h-4 text-primary" strokeWidth={1.75} />
-              <span>探索 3D 美学流形 &amp; 80 标本</span>
+              <span>探索 3D 美学流形 &amp; {bundle.total_assets} 标本</span>
             </a>
           </div>
         </div>
@@ -686,7 +790,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   <button
                     type="button"
                     onClick={() => handleLoadComparisonPair(activeHeroPair)}
-                    className="min-h-[36px] px-3.5 border border-border hover:border-primary text-xs font-semibold text-foreground hover:text-primary transition-colors"
+                    className="min-h-[36px] px-3.5 rounded-md border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground hover:text-primary transition-colors"
                   >
                     载入此组槽位
                   </button>
@@ -696,7 +800,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                       setCompareOpen(true);
                       trackShowcaseEvent('ast_compare_switch', { pair_id: activeHeroPair.pair_id });
                     }}
-                    className="min-h-[36px] px-3.5 border border-foreground/70 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground transition-colors"
+                    className="min-h-[36px] px-3.5 rounded-md border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground transition-colors"
                   >
                     查看 3 源图与编译细节
                   </button>
@@ -707,7 +811,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               <div
                 role="group"
                 aria-label="切换 6 组正交编译对比样本"
-                className="grid grid-cols-6 border border-border divide-x divide-border"
+                className="grid grid-cols-6 rounded-md border border-border divide-x divide-border overflow-hidden"
               >
                 {comparePairs.map((pair, idx) => {
                   const isActive = activeHeroPair.pair_id === pair.pair_id;
@@ -721,7 +825,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                       onClick={() => setHeroPairId(pair.pair_id)}
                       className={`min-h-[38px] text-xs mono font-semibold transition-colors ${
                         isActive
-                          ? 'bg-accent text-primary border-b-2 border-b-[#153CE8]'
+                          ? 'bg-accent text-primary border-b-2 border-b-primary'
                           : 'bg-card text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
                       }`}
                     >
@@ -775,7 +879,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
             <form
               onSubmit={handleIntentSubmit}
-              className="flex-1 flex items-stretch border border-border focus-within:border-primary bg-card"
+              className="flex-1 flex items-center h-[42px] rounded-md border border-border focus-within:border-primary bg-card overflow-hidden"
             >
               <label htmlFor="intent-search" className="sr-only">
                 输入空间或审美意图关键词
@@ -792,8 +896,8 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   setFuzzyInput(val);
                   applyIntentQuery(val);
                 }}
-                placeholder="输入审美意图或材质关键词（如：精密金属 留白 暖木 荒野），实时重排 80 件样本…"
-                className="flex-1 min-w-0 px-3 min-h-[42px] text-sm text-foreground bg-transparent placeholder:text-muted-foreground focus:outline-none"
+                placeholder={`输入审美意图或材质关键词（如：精密金属 留白 暖木 荒野），实时重排 ${bundle.total_assets} 件样本…`}
+                className="flex-1 min-w-0 h-full px-3 text-sm text-foreground bg-transparent placeholder:text-muted-foreground focus:outline-none"
               />
               {fuzzyInput && (
                 <button
@@ -804,21 +908,21 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                     setLiteralTermsFilter([]);
                     setIntentSummary(null);
                   }}
-                  className="px-2.5 text-muted-foreground hover:text-foreground flex items-center"
+                  className="h-full px-2.5 text-muted-foreground hover:text-foreground flex items-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
               )}
               <button
                 type="submit"
-                className="px-4 min-h-[42px] bg-foreground hover:bg-primary text-primary-foreground text-xs font-semibold shrink-0 transition-colors"
+                className="h-full px-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shrink-0 transition-colors"
               >
                 解析意图
               </button>
             </form>
 
             <div className="flex flex-wrap items-center gap-2 shrink-0">
-              <div>
+              <div className="flex items-center">
                 <label htmlFor="preset-select" className="sr-only">
                   切换意图场景预设
                 </label>
@@ -826,7 +930,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   id="preset-select"
                   value={activePresetKey}
                   onChange={(e) => handlePresetChange(e.target.value)}
-                  className="min-h-[42px] px-3 border border-border hover:border-foreground/70 bg-card text-xs font-medium text-foreground"
+                  className="h-[42px] rounded-md px-3 border border-border hover:border-primary/60 bg-card text-xs font-medium text-foreground whitespace-nowrap"
                 >
                   {activePresetKey === 'custom' && (
                     <option value="custom">当前：自定义调谐光谱</option>
@@ -842,7 +946,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               <button
                 type="button"
                 onClick={() => setSpectrumDrawerOpen(true)}
-                className="min-h-[42px] px-4 border border-foreground/70 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
+                className="h-[42px] rounded-md px-4 border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground inline-flex items-center gap-2 transition-colors"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-primary" />
                 <span>8 轴光谱调谐</span>
@@ -852,7 +956,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                 <button
                   type="button"
                   onClick={handleResetAllFilters}
-                  className="min-h-[42px] px-3 border border-border hover:border-foreground/70 text-xs font-medium text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
+                  className="h-[42px] rounded-md px-3 border border-border hover:border-primary/60 bg-card text-xs font-medium text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>重置</span>
@@ -861,17 +965,54 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             </div>
           </div>
 
-          {/* Control Row 2: Uncontradictory 3-State Scope + Dynamic Domain + Prior Toggle */}
+          {/* Control Row 2: Origin Switcher (500 = 390 Pinterest + 110 Expansion) + Scope + Domain + Sub-Category */}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5">
+              {/* Origin Switcher */}
               <div
                 role="group"
-                aria-label="跨界检索范围"
-                className="inline-flex border border-border divide-x divide-border"
+                aria-label="图库来源筛选"
+                className="inline-flex h-9 rounded-md border border-border divide-x divide-border overflow-hidden"
               >
                 {(
                   [
-                    { key: 'all', label: '全部分布' },
+                    { key: 'all', label: `全部 (${originCounts.all})` },
+                    { key: 'pinterest_personal', label: `我的 Pinterest 原图 (${originCounts.pinterest_personal})` },
+                    { key: 'profile_expansion', label: `画像扩展新图 (${originCounts.profile_expansion})` },
+                  ] as const
+                ).map((item) => {
+                  const active = originFilter === item.key;
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => {
+                        setOriginFilter(item.key);
+                        setBoardFilter('all');
+                        setVisibleLimit(24);
+                      }}
+                      className={`h-full px-3 text-xs font-medium transition-colors ${
+                        active
+                          ? 'bg-primary text-primary-foreground font-semibold'
+                          : 'bg-card text-foreground hover:bg-secondary/60'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 3-State Scope */}
+              <div
+                role="group"
+                aria-label="跨界检索范围"
+                className="inline-flex h-9 rounded-md border border-border divide-x divide-border overflow-hidden"
+              >
+                {(
+                  [
+                    { key: 'all', label: '全门类' },
                     { key: 'cross_domain', label: '跨界非建筑' },
                     { key: 'architecture_only', label: '仅建筑空间' },
                   ] as const
@@ -883,7 +1024,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                       type="button"
                       aria-pressed={active}
                       onClick={() => handleScopeChange(item.key)}
-                      className={`min-h-[36px] px-3 text-xs font-medium transition-colors ${
+                      className={`h-full px-3 text-xs font-medium transition-colors ${
                         active
                           ? 'bg-foreground text-background'
                           : 'bg-card text-foreground hover:bg-secondary/60'
@@ -896,15 +1037,19 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               </div>
 
               {scopeFilter !== 'architecture_only' && (
-                <div>
+                <div className="flex items-center">
                   <label htmlFor="domain-filter-select" className="sr-only">
                     按门类细分筛选
                   </label>
                   <select
                     id="domain-filter-select"
                     value={domainFilter}
-                    onChange={(e) => setDomainFilter(e.target.value as 'all' | AssetDomain)}
-                    className="min-h-[36px] px-3 border border-border bg-card text-xs font-medium text-foreground"
+                    onChange={(e) => {
+                      setDomainFilter(e.target.value as 'all' | AssetDomain);
+                      setSubCategoryFilter('all');
+                      setVisibleLimit(24);
+                    }}
+                    className="h-9 rounded-md px-3 border border-border hover:border-primary/60 bg-card text-xs font-medium text-foreground whitespace-nowrap"
                   >
                     {DOMAIN_OPTIONS.filter((opt) => {
                       if (scopeFilter === 'cross_domain' && opt.key === 'architecture') return false;
@@ -918,18 +1063,29 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                 </div>
               )}
 
-              <button
-                type="button"
-                aria-pressed={onlyPersonalPrior}
-                onClick={() => setOnlyPersonalPrior((p) => !p)}
-                className={`min-h-[36px] px-3 text-xs font-medium border transition-colors ${
-                  onlyPersonalPrior
-                    ? 'bg-accent border-primary text-primary'
-                    : 'bg-card border-border text-foreground hover:border-foreground/70'
-                }`}
-              >
-                个人审美先验 ({personalPriorCount})
-              </button>
+              {dynamicSubCategories.length > 0 && (
+                <div className="flex items-center">
+                  <label htmlFor="subcategory-filter-select" className="sr-only">
+                    按细分类别筛选
+                  </label>
+                  <select
+                    id="subcategory-filter-select"
+                    value={subCategoryFilter}
+                    onChange={(e) => {
+                      setSubCategoryFilter(e.target.value);
+                      setVisibleLimit(24);
+                    }}
+                    className="h-9 rounded-md px-3 border border-border hover:border-primary/60 bg-card text-xs font-medium text-foreground whitespace-nowrap"
+                  >
+                    <option value="all">全部细分类 ({dynamicSubCategories.length} 类)</option>
+                    {dynamicSubCategories.map(([cat, cnt]) => (
+                      <option key={cat} value={cat}>
+                        {cat} ({cnt})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
 
             {intentSummary && (
@@ -939,6 +1095,137 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             )}
           </div>
         </div>
+
+        {/* Personal Pinterest Aesthetic Profile Insights Card */}
+        {bundle.aesthetic_profile && (
+          <div className="rounded-xl border border-border bg-card p-4 sm:p-5 space-y-4 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+                  <h3 className="font-display text-sm font-bold text-foreground">
+                    个人 Pinterest 全图库深度研究 · 审美画像（Personal Aesthetic Profile）
+                  </h3>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  已全量 VLM 研究 {bundle.aesthetic_profile.total_pinterest_analyzed} 张 Pinterest 原图 → 精选保留{' '}
+                  <span className="mono font-semibold text-foreground">{bundle.aesthetic_profile.kept_pinterest_count}</span> 张核心美学样本 + 按画像跨源扩展{' '}
+                  <span className="mono font-semibold text-primary">{bundle.aesthetic_profile.expansion_count}</span> 张新图 ={' '}
+                  <span className="mono font-semibold text-foreground">{bundle.total_assets}</span> 件。
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleApplyPersonalProfile}
+                  className="min-h-[34px] px-3.5 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors"
+                >
+                  套用我的审美画像向量
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setProfileExpanded((v) => !v)}
+                  className="min-h-[34px] px-3 rounded-md border border-border hover:border-primary/60 text-xs font-medium text-foreground transition-colors"
+                >
+                  {profileExpanded ? '收起画像' : '展开画像'}
+                </button>
+              </div>
+            </div>
+
+            {profileExpanded && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-3 border-t border-border">
+                {/* 8-Axis Weighted Signature */}
+                <div className="lg:col-span-5 space-y-2">
+                  <div className="text-xs font-semibold text-foreground">8 轴加权审美重心（核心倾向）</div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {ALL_AXIS_IDS.map((ax) => {
+                      const val = bundle.aesthetic_profile?.axis_signature[ax]?.weighted_mean ?? 0;
+                      const strong = Math.abs(val) >= 0.2;
+                      return (
+                        <div
+                          key={ax}
+                          className={`rounded-md px-2.5 py-2 border ${
+                            strong ? 'border-primary/50 bg-accent/40' : 'border-border bg-secondary/40'
+                          }`}
+                        >
+                          <div className="text-[11px] text-muted-foreground">{AXIS_INTACT_LABELS[ax]}</div>
+                          <div
+                            className={`mono text-xs font-bold tabular-nums mt-0.5 ${
+                              strong ? 'text-primary' : 'text-foreground'
+                            }`}
+                          >
+                            {val > 0 ? `+${val.toFixed(2)}` : val.toFixed(2)}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Dominant Color Clusters */}
+                <div className="lg:col-span-3 space-y-2">
+                  <div className="text-xs font-semibold text-foreground">高频建筑色彩基底（点击复制）</div>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {bundle.aesthetic_profile.dominant_color_clusters.slice(0, 10).map((c) => (
+                      <button
+                        key={c.hex}
+                        type="button"
+                        onClick={() => copyHex(c.hex)}
+                        title={`点击复制 ${c.hex}（出现 ${c.count} 次）`}
+                        className="group rounded-sm overflow-hidden border border-border hover:border-primary/60 transition-colors text-center"
+                      >
+                        <div className="h-7 w-full" style={{ backgroundColor: c.hex }} />
+                        <div className="px-0.5 py-0.5 mono text-[10px] text-muted-foreground">
+                          {c.hex}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Top Pinterest Boards Quick Filter */}
+                <div className="lg:col-span-4 space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-foreground">主要 Pinterest 画板快捷筛选</span>
+                    {boardFilter !== 'all' && (
+                      <button
+                        type="button"
+                        onClick={() => setBoardFilter('all')}
+                        className="text-primary hover:underline"
+                      >
+                        清除画板 ({boardFilter})
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {bundle.aesthetic_profile.top_boards.slice(0, 10).map((b) => {
+                      const active = boardFilter === b.board;
+                      return (
+                        <button
+                          key={b.board}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() => {
+                            setBoardFilter(active ? 'all' : b.board);
+                            if (!active) setOriginFilter('pinterest_personal');
+                            setVisibleLimit(24);
+                          }}
+                          className={`rounded-md px-2 py-1 text-[11px] border transition-colors ${
+                            active
+                              ? 'border-primary bg-primary text-primary-foreground font-semibold'
+                              : 'border-border bg-secondary/50 text-foreground hover:border-primary/60'
+                          }`}
+                        >
+                          {b.board} <span className="mono opacity-75">({b.count})</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Interactive Three.js 3D Aesthetic Spectrum Manifold */}
         {show3DManifold && rankedAssets.length > 0 && (
@@ -960,7 +1247,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
 
         {/* Borderless 4-Column Monograph Photography Grid */}
         {rankedAssets.length === 0 ? (
-          <div className="py-16 px-6 border border-border bg-secondary/60 text-center space-y-4">
+          <div className="rounded-xl py-16 px-6 border border-border bg-secondary/60 text-center space-y-4">
             <div className="text-base font-bold text-foreground">未找到符合当前条件组合的视觉样本</div>
             <p className="text-xs text-muted-foreground">
               请放宽跨界范围、关键词过滤或个人审美先验限制后重新检索。
@@ -968,7 +1255,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             <button
               type="button"
               onClick={handleResetAllFilters}
-              className="min-h-[40px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors"
+              className="min-h-[40px] px-5 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors"
             >
               重置全部筛选与光谱
             </button>
@@ -987,7 +1274,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                     type="button"
                     onClick={() => setLightboxAsset(asset)}
                     aria-label={`放大检视 ${asset.title}`}
-                    className="group block w-full aspect-[4/3] overflow-hidden bg-secondary/60 text-left"
+                    className="group block w-full aspect-[4/3] rounded-md overflow-hidden border border-border/60 bg-secondary/60 text-left"
                   >
                     <img
                       src={asset.image_url}
@@ -1008,18 +1295,26 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>{asset.subject_isolation.domain_label}</span>
-                      {asset.subject_isolation.is_personal_prior && (
-                        <span className="font-medium text-foreground">个人先验</span>
-                      )}
+                    <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                      <span className="truncate" title={asset.sub_category ?? asset.subject_isolation.domain_label}>
+                        {asset.sub_category ?? asset.subject_isolation.domain_label}
+                      </span>
+                      {asset.source_origin === 'pinterest_personal' ? (
+                        <span className="font-medium text-foreground shrink-0 truncate max-w-[110px]" title={asset.board_name}>
+                          Pin · {asset.board_name ?? '原图'}
+                        </span>
+                      ) : asset.source_origin === 'profile_expansion' ? (
+                        <span className="font-medium text-primary shrink-0">画像扩展</span>
+                      ) : asset.subject_isolation.is_personal_prior ? (
+                        <span className="font-medium text-foreground shrink-0">个人先验</span>
+                      ) : null}
                     </div>
 
                     {/* 5-Color Continuous OKLab Palette Bar (click to copy) */}
                     <div
                       role="group"
                       aria-label={`${asset.title} 主色板`}
-                      className="flex h-7 w-full border border-border"
+                      className="flex h-7 w-full rounded-sm border border-border overflow-hidden"
                     >
                       {asset.granular_descriptors.color_palette.slice(0, 5).map((hex) => (
                         <button
@@ -1035,7 +1330,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                     </div>
 
                     {/* Crisp 3-Slot Orthogonal Assignment Strip */}
-                    <div className="grid grid-cols-3 border border-border divide-x divide-border">
+                    <div className="grid grid-cols-3 rounded-md border border-border divide-x divide-border overflow-hidden">
                       {(
                         [
                           { slot: 'optics' as const, label: '镜头', active: isOpt },
@@ -1071,13 +1366,14 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             <button
               type="button"
               onClick={() => setVisibleLimit((v) => v + 24)}
-              className="min-h-[44px] px-8 border border-foreground/70 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground transition-colors"
+              className="min-h-[44px] px-8 rounded-md border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground transition-colors"
             >
               展开更多样张（剩余 {rankedAssets.length - visibleLimit} 件）
             </button>
           </div>
         )}
       </section>
+      </div>
 
       {/* ACT III · RIGHT SLIDE-OVER 8-AXIS SPECTRUM TUNING DRAWER */}
       {spectrumDrawerOpen && (
@@ -1086,11 +1382,11 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
           aria-modal="true"
           aria-labelledby="spectrum-drawer-title"
           onClick={() => setSpectrumDrawerOpen(false)}
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm backdrop-blur-[2px] flex justify-end"
+          className="fixed inset-0 z-[60] bg-black/65 backdrop-blur-[2px] flex justify-end"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-card border-l border-foreground/70 w-full max-w-lg h-full flex flex-col overflow-hidden"
+            className="bg-card border-l border-border shadow-2xl w-full max-w-lg h-full flex flex-col overflow-hidden"
           >
             <div className="px-5 py-4 border-b border-border flex items-center justify-between">
               <div>
@@ -1098,14 +1394,14 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   8 轴正交光谱调谐器
                 </h2>
                 <p className="text-xs text-muted-foreground">
-                  实时更新 80 件跨界图库排序（当前耗时 {rerankLatencyMs.toFixed(2)} ms）
+                  实时更新 {bundle.total_assets} 件跨界图库排序（当前耗时 {rerankLatencyMs.toFixed(2)} ms）
                 </p>
               </div>
               <button
                 type="button"
                 aria-label="关闭光谱调谐器"
                 onClick={() => setSpectrumDrawerOpen(false)}
-                className="w-10 h-10 border border-border hover:border-foreground/70 flex items-center justify-center text-foreground"
+                className="w-10 h-10 rounded-md border border-border hover:border-primary/60 flex items-center justify-center text-foreground transition-colors"
               >
                 <X className="w-4 h-4" strokeWidth={1.75} />
               </button>
@@ -1113,7 +1409,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
 
             <div className="p-5 overflow-y-auto space-y-6 flex-1">
               {/* Compact 8-Axis Radar with intact 4-char labels */}
-              <div className="bg-secondary/60 border border-border p-4 flex flex-col items-center">
+              <div className="rounded-lg bg-secondary/60 border border-border p-4 flex flex-col items-center">
                 <svg viewBox="0 0 300 245" className="w-full max-w-[300px] h-auto select-none">
                   {[0.25, 0.55, 0.85, 1.0].map((rFactor) => (
                     <circle
@@ -1122,7 +1418,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                       cy={radarData.cy}
                       r={radarData.maxR * rFactor}
                       fill="none"
-                      stroke="#CBD0D8"
+                      stroke="hsl(var(--border))"
                       strokeWidth="1"
                       strokeDasharray={rFactor === 0.55 ? '3 3' : undefined}
                     />
@@ -1134,23 +1430,23 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                       y1={radarData.cy}
                       x2={pt.xEnd}
                       y2={pt.yEnd}
-                      stroke="#CBD0D8"
+                      stroke="hsl(var(--border))"
                       strokeWidth="1"
                     />
                   ))}
                   <polygon
                     points={radarData.polygonPoints}
-                    fill="rgba(21, 60, 232, 0.14)"
-                    stroke="#153CE8"
+                    fill="hsl(var(--primary) / 0.16)"
+                    stroke="hsl(var(--primary))"
                     strokeWidth="1.75"
                   />
                   {radarData.axesPoints.map((pt) => (
                     <g key={pt.axisId}>
-                      <circle cx={pt.px} cy={pt.py} r="3.5" fill="#153CE8" />
+                      <circle cx={pt.px} cy={pt.py} r="3.5" fill="hsl(var(--primary))" />
                       <text
                         x={pt.lx}
                         y={pt.ly}
-                        fill="#0E1015"
+                        fill="hsl(var(--foreground))"
                         fontSize="11.5"
                         fontWeight="600"
                         textAnchor="middle"
@@ -1188,7 +1484,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                               type="button"
                               aria-label={`查看 ${label} 5 点黄金锚点标尺`}
                               onClick={() => setActiveAnchorAxis(axisId)}
-                              className="min-h-[30px] px-2.5 border border-border hover:border-primary text-xs font-medium text-foreground hover:text-primary transition-colors"
+                              className="min-h-[30px] rounded-md px-2.5 border border-border hover:border-primary text-xs font-medium text-foreground hover:text-primary transition-colors"
                             >
                               5 点标尺
                             </button>
@@ -1224,7 +1520,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               <button
                 type="button"
                 onClick={handleResetAllFilters}
-                className="min-h-[40px] px-4 border border-border bg-card hover:border-foreground/70 text-xs font-semibold text-foreground"
+                className="min-h-[40px] rounded-md px-4 border border-border bg-card hover:border-primary/60 text-xs font-semibold text-foreground transition-colors"
               >
                 重置默认光谱
               </button>
@@ -1234,7 +1530,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   setSpectrumDrawerOpen(false);
                   setCalibOpen(true);
                 }}
-                className="min-h-[40px] px-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold"
+                className="min-h-[40px] rounded-md px-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors"
               >
                 启动 2 轮视觉校准
               </button>
@@ -1247,7 +1543,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
       <div
         role="region"
         aria-label="三槽位 AST 编译托盘"
-        className="fixed bottom-0 inset-x-0 z-30 border-t border-foreground/70 bg-card/95 backdrop-blur-sm"
+        className="fixed bottom-0 inset-x-0 z-30 border-t border-border bg-card/95 backdrop-blur-md shadow-[0_-2px_10px_rgba(0,0,0,0.04)]"
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-3">
           <div className="flex items-center gap-1.5 sm:gap-4 min-w-0 overflow-x-auto no-scrollbar">
@@ -1263,7 +1559,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                 type="button"
                 onClick={() => item.asset && setLightboxAsset(item.asset)}
                 title={item.asset ? `点击检视 ${item.label}：${item.asset.title}` : item.label}
-                className="flex items-center gap-1.5 sm:gap-2 min-w-0 shrink-0 sm:max-w-[200px] border border-border hover:border-primary pr-2 sm:pr-2.5 bg-card transition-colors"
+                className="flex items-center gap-1.5 sm:gap-2 min-w-0 shrink-0 sm:max-w-[200px] rounded-md border border-border hover:border-primary pr-2 sm:pr-2.5 bg-card overflow-hidden transition-colors"
               >
                 <div className="w-7 h-6 sm:w-9 sm:h-7 bg-secondary/60 shrink-0 overflow-hidden">
                   {item.asset && (
@@ -1292,7 +1588,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
             <button
               type="button"
               onClick={() => setCompilerOpen(true)}
-              className="min-h-[40px] px-3 sm:px-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap"
+              className="min-h-[40px] px-3 sm:px-4 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap"
             >
               <Layers className="w-3.5 h-3.5" />
               <span>展开 AST 编译器</span>
@@ -1308,11 +1604,11 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
           aria-modal="true"
           aria-labelledby="ast-sheet-title"
           onClick={() => setCompilerOpen(false)}
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm backdrop-blur-[2px] flex justify-end"
+          className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[2px] flex justify-end"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-card border-l border-foreground/70 w-full max-w-2xl h-full flex flex-col overflow-hidden"
+            className="bg-card border-l border-border shadow-2xl w-full max-w-2xl h-full flex flex-col overflow-hidden"
           >
             <div className="px-5 py-4 border-b border-border flex items-center justify-between">
               <div>
@@ -1327,7 +1623,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                 type="button"
                 aria-label="关闭 AST 编译器"
                 onClick={() => setCompilerOpen(false)}
-                className="w-10 h-10 border border-border hover:border-foreground/70 flex items-center justify-center text-foreground"
+                className="w-10 h-10 rounded-md border border-border hover:border-primary/60 flex items-center justify-center text-foreground transition-colors"
               >
                 <X className="w-4 h-4" strokeWidth={1.75} />
               </button>
@@ -1344,7 +1640,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   type="text"
                   value={subjectCore}
                   onChange={(e) => setSubjectCore(e.target.value)}
-                  className="w-full min-h-[40px] px-3 bg-card border border-border focus:border-primary text-xs text-foreground focus:outline-none"
+                  className="w-full min-h-[40px] px-3 rounded-md bg-card border border-border focus:border-primary text-xs text-foreground focus:outline-none"
                 />
               </div>
 
@@ -1355,10 +1651,10 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   { label: '材质构筑槽位', asset: materialAsset, desc: materialAsset?.granular_descriptors.material_stack },
                   { label: '光影氛围槽位', asset: lightingAsset, desc: lightingAsset?.granular_descriptors.lighting_rig },
                 ].map((s) => (
-                  <div key={s.label} className="border border-border p-3 space-y-2">
+                  <div key={s.label} className="rounded-lg border border-border p-3 space-y-2">
                     <div className="font-semibold text-primary">{s.label}</div>
                     {s.asset && (
-                      <div className="aspect-[4/3] bg-secondary/60 overflow-hidden">
+                      <div className="aspect-[4/3] rounded-md bg-secondary/60 overflow-hidden">
                         <img src={s.asset.image_url} alt={s.asset.title} className="w-full h-full object-cover" />
                       </div>
                     )}
@@ -1377,7 +1673,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   <button
                     type="button"
                     onClick={copyCompiledAst}
-                    className="min-h-[34px] px-3 border border-border hover:border-foreground/70 inline-flex items-center gap-1.5 font-semibold text-foreground"
+                    className="min-h-[34px] rounded-md px-3 border border-border hover:border-primary/60 inline-flex items-center gap-1.5 font-semibold text-foreground transition-colors"
                   >
                     {promptCopied ? (
                       <>
@@ -1392,10 +1688,10 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                     )}
                   </button>
                 </div>
-                <pre className="p-3.5 bg-secondary/60 border border-border mono text-xs text-foreground whitespace-pre-wrap leading-relaxed">
+                <pre className="p-3.5 rounded-lg bg-secondary/60 border border-border mono text-xs text-foreground whitespace-pre-wrap leading-relaxed">
                   {compiledAst.compiledPrompt}
                 </pre>
-                <div className="p-3 bg-secondary/60 border border-border mono text-xs text-destructive">
+                <div className="p-3 rounded-lg bg-secondary/60 border border-border mono text-xs text-destructive">
                   {compiledAst.negativePrompt}
                 </div>
               </div>
@@ -1404,7 +1700,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
               {liveCompileStatus && (
                 <div
                   role="status"
-                  className={`p-3.5 border text-xs leading-relaxed ${
+                  className={`p-3.5 rounded-lg border text-xs leading-relaxed ${
                     liveCompileStatus.ok
                       ? 'border-teal-ok bg-card text-teal-ok'
                       : 'border-destructive bg-card text-destructive'
@@ -1422,7 +1718,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                   setCompilerOpen(false);
                   setCompareOpen(true);
                 }}
-                className="min-h-[40px] px-4 border border-foreground/70 bg-card hover:bg-border/40 text-xs font-semibold text-foreground"
+                className="min-h-[40px] rounded-md px-4 border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-xs font-semibold text-foreground transition-colors"
               >
                 对照 6 组多图污染实证
               </button>
@@ -1430,9 +1726,9 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
                 type="button"
                 disabled={liveCompileLoading}
                 onClick={handleLiveBackendVerify}
-                className={`min-h-[40px] px-4 text-xs font-semibold transition-colors ${
+                className={`min-h-[40px] rounded-md px-4 text-xs font-semibold transition-colors ${
                   isLiveEngine
-                    ? 'bg-teal-ok hover:bg-[#0D5F59] text-white'
+                    ? 'bg-teal-ok hover:opacity-90 text-white dark:text-slate-950'
                     : 'bg-primary hover:bg-primary/90 text-primary-foreground'
                 }`}
               >
@@ -1452,7 +1748,7 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-20 right-4 sm:right-6 z-40 px-4 py-2.5 bg-foreground text-background text-xs font-medium border border-foreground/70"
+          className="fixed bottom-20 right-4 sm:right-6 z-40 rounded-md shadow-lg px-4 py-2.5 bg-foreground text-background text-xs font-medium border border-border"
         >
           {toastMessage}
         </div>
@@ -1504,6 +1800,6 @@ export const AetherVaultWorkspace: React.FC<AetherVaultWorkspaceProps> = ({
         currentConflictsCount={compiledAst.conflictsIsolatedCount}
         onLoadSlotsIntoMixer={handleLoadComparisonPair}
       />
-    </div>
+    </>
   );
 };

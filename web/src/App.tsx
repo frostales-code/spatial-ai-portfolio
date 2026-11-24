@@ -2,9 +2,10 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Compass, RotateCw, X } from 'lucide-react';
+import { ArrowLeft, Compass, Layers, RotateCw, X } from 'lucide-react';
 import { AetherVaultWorkspace } from '@/components/AetherVaultWorkspace';
 import { GUIDED_TOUR_STOPS, GuidedTourPopover } from '@/components/GuidedTourPopover';
+import { PersonalAestheticAtlas } from '@/components/PersonalAestheticAtlas';
 import { TechEvalOverview } from '@/components/TechEvalOverview';
 import { TectonicLoopPreview } from '@/components/TectonicLoopPreview';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -66,6 +67,7 @@ function normalizeTectonicUrls(
 }
 
 export const App: React.FC = () => {
+  const [surfaceMode, setSurfaceMode] = useState<'atlas' | 'studio'>('studio');
   const [activeTab, setActiveTab] = useState<MainTabId>('projectA');
   const [bundle, setBundle] = useState<AetherVaultShowcaseBundle | null>(null);
   const [comparisonBundle, setComparisonBundle] = useState<AstComparisonBundle | null>(null);
@@ -79,12 +81,30 @@ export const App: React.FC = () => {
   const [tourOpen, setTourOpen] = useState(false);
   const [tourStep, setTourStep] = useState(0);
 
+  const hasPersonalAtlas = Boolean(bundle?.rag_schema && bundle?.aesthetic_profile);
+
   const loadShowcaseData = useCallback(async () => {
     setLoading(true);
     setLoadError(null);
     try {
+      const isLocalHost =
+        typeof window !== 'undefined' &&
+        (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+
+      const fetchPrimaryBundle = async (): Promise<Response> => {
+        if (isLocalHost) {
+          const personalRes = await fetch(
+            resolvePublicUrl('/data/aethervault_personal_500.json')
+          ).catch(() => null);
+          if (personalRes && personalRes.ok) {
+            return personalRes;
+          }
+        }
+        return fetch(resolvePublicUrl('/data/aethervault_showcase_v1.json'));
+      };
+
       const [showcaseRes, compareRes, tectonicRes, eddRes] = await Promise.all([
-        fetch(resolvePublicUrl('/data/aethervault_showcase_v1.json')),
+        fetchPrimaryBundle(),
         fetch(resolvePublicUrl('/data/ast_comparisons_v1.json')).catch(() => null),
         fetch(resolvePublicUrl('/data/tectonic_showcase_v1.json')).catch(() => null),
         fetch(resolvePublicUrl('/data/edd_benchmark_v1.json')).catch(() => null),
@@ -103,6 +123,11 @@ export const App: React.FC = () => {
       setComparisonBundle(normalizeComparisonUrls(cmpData));
       setTectonicBundle(normalizeTectonicUrls(tecData));
       setEddBenchmark(eddData);
+      if (data.rag_schema && data.aesthetic_profile) {
+        setSurfaceMode('atlas');
+      } else {
+        setSurfaceMode('studio');
+      }
     } catch (err) {
       setLoadError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -112,35 +137,14 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     loadShowcaseData();
-    let cancelled = false;
-    const isLocalHost =
-      typeof window !== 'undefined' &&
-      (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
-    if (!isLocalHost) {
-      return () => {
-        cancelled = true;
-      };
-    }
-    async function probeLiveEngine() {
-      try {
-        const res = await fetch('/api/health', { signal: AbortSignal.timeout(1200) });
-        if (res.ok) {
-          const data = await res.json();
-          if (!cancelled && data?.status === 'ok') setIsLiveEngine(true);
-        }
-      } catch {
-        // Default Instant Showcase Mode when local FastAPI is not running
-      }
-    }
-    probeLiveEngine();
-    return () => {
-      cancelled = true;
-    };
   }, [loadShowcaseData]);
 
   useEffect(() => {
-    document.title = TAB_TITLES[activeTab];
-  }, [activeTab]);
+    document.title =
+      surfaceMode === 'atlas' && hasPersonalAtlas
+        ? `AetherVault · 个人审美图谱 — ${bundle?.total_assets ?? 500} 样本视觉分析与分类`
+        : TAB_TITLES[activeTab];
+  }, [surfaceMode, hasPersonalAtlas, bundle?.total_assets, activeTab]);
 
   const navItems: Array<{ id: MainTabId; label: string }> = [
     { id: 'projectA', label: 'AetherVault' },
@@ -218,6 +222,62 @@ export const App: React.FC = () => {
     trackShowcaseEvent('tour_complete', { last_step: tourStep + 1 });
   };
 
+  if (surfaceMode === 'atlas' && hasPersonalAtlas) {
+    return (
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
+        <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+            <div className="inline-flex items-center gap-2 font-display text-[13px] sm:text-[15px] font-extrabold tracking-[-0.02em] text-foreground whitespace-nowrap">
+              <span className="h-2.5 w-2.5 rounded-sm bg-primary shrink-0" aria-hidden="true" />
+              <span>AETHERVAULT · 个人审美图谱</span>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <ThemeToggle />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setSurfaceMode('studio')}
+                className="h-8 px-2.5 text-xs text-muted-foreground hover:text-foreground"
+              >
+                <Layers className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
+                <span className="hidden sm:inline">切换至双引擎作品集</span>
+                <span className="sm:hidden">作品集</span>
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16">
+          {loadError && (
+            <div
+              role="alert"
+              className="mb-8 p-5 rounded-xl border border-destructive/60 bg-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm"
+            >
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-destructive">数据包加载异常</div>
+                <p className="text-xs text-muted-foreground">{loadError}</p>
+              </div>
+              <Button type="button" onClick={loadShowcaseData} className="shrink-0">
+                <RotateCw className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <span>重新加载</span>
+              </Button>
+            </div>
+          )}
+
+          {bundle ? (
+            <PersonalAestheticAtlas bundle={bundle} />
+          ) : (
+            <div className="py-20 text-center text-sm text-muted-foreground rounded-xl border border-border bg-card">
+              {loading ? '正在加载 500 件个人审美档案、门类分类与深度美学分析...' : '暂无可用展示数据'}
+            </div>
+          )}
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
       {/* Modern Glassmorphic Architectural Studio Masthead */}
@@ -268,8 +328,25 @@ export const App: React.FC = () => {
               })}
             </nav>
 
-            {/* Right Controls: Guided Tour + Theme Toggle + Dual-Mode Switcher */}
+            {/* Right Controls: Back to Atlas (local only) + Guided Tour + Theme Toggle + Dual-Mode Switcher */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {hasPersonalAtlas && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTourOpen(false);
+                    setSurfaceMode('atlas');
+                  }}
+                  aria-label="返回个人审美图谱"
+                  className="h-8 px-2 sm:px-2.5 text-xs shrink-0"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5 shrink-0" strokeWidth={1.75} />
+                  <span className="hidden lg:inline">返回个人审美图谱</span>
+                  <span className="lg:hidden">图谱</span>
+                </Button>
+              )}
               <Button
                 type="button"
                 variant={tourOpen ? 'default' : 'outline'}
@@ -411,7 +488,7 @@ export const App: React.FC = () => {
             />
           ) : (
             <div className="py-20 text-center text-sm text-muted-foreground rounded-xl border border-border bg-card">
-              {loading ? '正在加载 80 件跨界高审美样本、3D 美学流形与黄金锚点数据...' : '暂无可用展示数据'}
+              {loading ? '正在加载跨界美学样本、3D 正交光影流形与黄金锚点...' : '暂无可用展示数据'}
             </div>
           )}
         </section>
@@ -457,6 +534,7 @@ export const App: React.FC = () => {
             vlmReport={bundle?.vlm_scoring_report ?? null}
             tectonicBundle={tectonicBundle}
             eddBenchmark={eddBenchmark}
+            isActive={activeTab === 'techEval'}
           />
         </section>
       </main>
@@ -464,6 +542,8 @@ export const App: React.FC = () => {
       <GuidedTourPopover
         isOpen={tourOpen}
         stepIndex={tourStep}
+        hasBottomDock={activeTab === 'projectA'}
+        totalAssets={bundle?.total_assets ?? 500}
         onSelectStep={handleSelectTourStep}
         onClose={handleCloseTour}
       />

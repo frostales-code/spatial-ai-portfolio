@@ -126,14 +126,14 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
       aria-modal="true"
       aria-labelledby="ve-report-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-foreground/70 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="ve-print-sheet bg-card border border-foreground/70 w-full max-w-5xl max-h-[92vh] overflow-y-auto p-5 sm:p-8 space-y-6"
+        className="ve-print-sheet rounded-xl bg-card border border-border shadow-2xl w-full max-w-5xl max-h-[92vh] overflow-y-auto p-5 sm:p-8 space-y-6"
       >
         {/* Sheet Header */}
-        <div className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b-2 border-foreground/70">
+        <div className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b border-border">
           <div className="space-y-1">
             <h2 id="ve-report-title" className="font-display text-xl sm:text-2xl font-extrabold text-foreground">
               甲方价值工程（VE）深化对比任务书
@@ -146,7 +146,7 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
             <button
               type="button"
               onClick={handleDownloadMarkdown}
-              className="min-h-[40px] px-3.5 border border-border hover:border-foreground/70 text-xs font-semibold text-foreground inline-flex items-center gap-1.5"
+              className="min-h-[40px] rounded-md px-3.5 border border-border hover:border-primary/60 text-xs font-semibold text-foreground inline-flex items-center gap-1.5 transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
               <span>下载 Markdown</span>
@@ -154,7 +154,7 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
             <button
               type="button"
               onClick={handlePrintPdf}
-              className="min-h-[40px] px-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5"
+              className="min-h-[40px] rounded-md px-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>打印 / 另存 PDF</span>
@@ -163,7 +163,7 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
               type="button"
               onClick={onClose}
               aria-label="关闭 VE 任务书预览"
-              className="w-10 h-10 border border-border hover:border-foreground/70 text-foreground flex items-center justify-center"
+              className="w-10 h-10 rounded-md border border-border hover:border-primary/60 text-foreground flex items-center justify-center transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -173,7 +173,7 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
         {/* Before / After Comparison Plates */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-2">
-            <div className="aspect-[4/3] border border-border bg-secondary/60 overflow-hidden">
+            <div className="aspect-[4/3] rounded-lg border border-border bg-secondary/60 overflow-hidden">
               <img src={rawTier.image_url} alt="原始概念立面方案" className="w-full h-full object-cover" />
             </div>
             <div className="flex items-baseline justify-between text-xs">
@@ -182,7 +182,7 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
             </div>
           </div>
           <div className="space-y-2">
-            <div className="aspect-[4/3] border border-primary bg-secondary/60 overflow-hidden">
+            <div className="aspect-[4/3] rounded-lg border border-primary bg-secondary/60 overflow-hidden">
               <img src={targetImageUrl} alt="当前深化落地立面方案" className="w-full h-full object-cover" />
             </div>
             <div className="flex items-baseline justify-between text-xs">
@@ -197,11 +197,11 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
         </div>
 
         {/* Quantified Delta Matrix */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border border border-border">
+        <div className="grid grid-cols-1 sm:grid-cols-3 rounded-lg overflow-hidden gap-px bg-border border border-border">
           <div className="bg-card p-4">
             <div className="text-xs text-muted-foreground">造价压降 / 状态对比</div>
             {currentSummary.has_missing_prices ? (
-              <div className="mono text-base font-bold text-destructive mt-1">
+              <div className="mono text-sm font-bold text-destructive break-all mt-1">
                 UNKNOWN_PRICE_MISSING
               </div>
             ) : (
@@ -229,10 +229,10 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
           <h3 className="font-display text-base font-bold text-foreground">
             分区域定额工程量与造价对比表（Zero-LLM Decimal 计算）
           </h3>
-          <div className="overflow-x-auto border border-border">
+          <div className="overflow-x-auto rounded-lg border border-border">
             <table className="w-full min-w-[660px] text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-secondary/60 border-b border-foreground/70 text-foreground font-semibold">
+                <tr className="bg-secondary/60 border-b border-border text-foreground font-semibold">
                   <th className="py-2.5 px-3">区域部位</th>
                   <th className="py-2.5 px-3">选定工艺体系</th>
                   <th className="py-2.5 px-3">净量 / 含损耗</th>
@@ -281,7 +281,7 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
               主墙体匹配标准构造节点详图（{activeCadDetail?.code ?? currentZones[0]?.engineering_state.detail_drawing_code}）
             </div>
             {activeCadDetail?.svg && (
-              <div className="border border-border bg-secondary/40 p-2 [&_svg]:w-full [&_svg]:h-auto [&_svg]:block">
+              <div className="rounded-lg border border-border bg-secondary/40 p-2 [&_svg]:w-full [&_svg]:h-auto [&_svg]:block">
                 <div dangerouslySetInnerHTML={{ __html: activeCadDetail.svg }} />
               </div>
             )}
@@ -289,13 +289,13 @@ export const TectonicVeReportModal: React.FC<TectonicVeReportModalProps> = ({
           <div className="md:col-span-6 space-y-2 text-xs">
             <div className="text-xs font-bold text-foreground">物理建构排雷核验结论</div>
             {currentAlerts.length === 0 ? (
-              <div className="p-3.5 border border-teal-ok bg-card text-teal-ok leading-relaxed">
+              <div className="rounded-lg p-3.5 border border-teal-ok bg-card text-teal-ok leading-relaxed">
                 当前所有立面区域均已通过《常见饰面极限制造尺幅与构造禁忌》检查，具备全干法快速装配与安全防潮泛水条件。
               </div>
             ) : (
               <div className="space-y-2">
                 {currentAlerts.map((a, idx) => (
-                  <div key={idx} className="p-3 border border-destructive bg-card text-destructive space-y-1">
+                  <div key={idx} className="rounded-lg p-3 border border-destructive bg-card text-destructive space-y-1">
                     <div className="font-semibold mono">
                       [{a.severity}] {a.code}
                     </div>

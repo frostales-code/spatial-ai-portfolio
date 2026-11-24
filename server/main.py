@@ -30,6 +30,8 @@ from pipeline import (
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CURATED_DIR = REPO_ROOT / "data" / "curated_80"
 CURATED_ASSETS_JSON = CURATED_DIR / "aethervault_assets_v1.json"
+PINTEREST_500_ASSETS_JSON = REPO_ROOT / "data" / "pinterest_500" / "aethervault_assets_500.json"
+WEB_PINTEREST_500_DIR = REPO_ROOT / "web" / "public" / "assets" / "pinterest_500"
 VLM_REPORT_JSON = CURATED_DIR / "vlm_scoring_report.json"
 AST_COMPARE_JSON = REPO_ROOT / "data" / "ast_comparisons" / "ast_comparisons_v1.json"
 TECTONIC_CATALOG_JSON = REPO_ROOT / "pipeline" / "tectonic_catalog_v1.json"
@@ -116,10 +118,11 @@ def api_get_anchors() -> dict[str, object]:
 
 @app.get("/api/aethervault/assets")
 def api_get_assets(domain: str | None = Query(default=None)) -> dict[str, object]:
-    """Return curated 80 cross-domain aesthetic assets, optionally filtered by domain."""
-    if not CURATED_ASSETS_JSON.exists():
-        raise HTTPException(status_code=404, detail="Curated 80 asset bundle has not been generated yet.")
-    payload = json.loads(CURATED_ASSETS_JSON.read_text(encoding="utf-8"))
+    """Return active AetherVault aesthetic assets (prefers local 500 Pinterest-expanded bundle)."""
+    active_json = PINTEREST_500_ASSETS_JSON if PINTEREST_500_ASSETS_JSON.exists() else CURATED_ASSETS_JSON
+    if not active_json.exists():
+        raise HTTPException(status_code=404, detail="AetherVault asset bundle has not been generated yet.")
+    payload = json.loads(active_json.read_text(encoding="utf-8"))
     assets = payload.get("assets", [])
     if domain:
         assets = [a for a in assets if a.get("subject_isolation", {}).get("domain") == domain]
@@ -127,6 +130,7 @@ def api_get_assets(domain: str | None = Query(default=None)) -> dict[str, object
         "version": payload.get("version", "1.0.0"),
         "total": len(assets),
         "domain_counts": payload.get("domain_counts", {}),
+        "origin_counts": payload.get("origin_counts", {}),
         "assets": assets,
     }
 
@@ -135,6 +139,9 @@ def api_get_assets(domain: str | None = Query(default=None)) -> dict[str, object
 def api_get_asset_image(asset_id: str) -> FileResponse:
     """Serve curated WebP thumbnail image for a given asset_id."""
     safe_id = Path(asset_id).name
+    p500_path = WEB_PINTEREST_500_DIR / f"{safe_id}.webp"
+    if p500_path.exists():
+        return FileResponse(p500_path, media_type="image/webp")
     img_path = CURATED_DIR / "images" / f"{safe_id}.webp"
     if not img_path.exists():
         raise HTTPException(status_code=404, detail=f"Image for asset_id={safe_id} not found.")

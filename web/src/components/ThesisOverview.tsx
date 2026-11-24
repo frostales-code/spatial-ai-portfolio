@@ -38,7 +38,7 @@ export const ThesisOverview: React.FC<ThesisOverviewProps> = ({
           <button
             type="button"
             onClick={() => onNavigate('projectA')}
-            className="min-h-[44px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center justify-between gap-6 transition-colors"
+            className="min-h-[44px] rounded-md px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center justify-between gap-6 transition-colors"
           >
             <span>进入 AetherVault 工作台</span>
             <ArrowRight className="w-4 h-4" />
@@ -46,7 +46,7 @@ export const ThesisOverview: React.FC<ThesisOverviewProps> = ({
           <button
             type="button"
             onClick={() => onNavigate('projectB')}
-            className="min-h-[44px] px-5 border border-foreground/70 bg-card hover:bg-secondary/60 text-foreground text-xs font-semibold inline-flex items-center justify-between gap-6 transition-colors"
+            className="min-h-[44px] rounded-md px-5 border border-border hover:border-primary/60 bg-card hover:bg-secondary/60 text-foreground text-xs font-semibold inline-flex items-center justify-between gap-6 transition-colors"
           >
             <span>查看 TectonicLoop 立面沙盒</span>
             <ArrowRight className="w-4 h-4" />
@@ -70,7 +70,7 @@ export const ThesisOverview: React.FC<ThesisOverviewProps> = ({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {previewAssets.map((asset) => (
               <div key={asset.asset_id} className="space-y-2">
-                <div className="aspect-[4/3] bg-secondary/60 overflow-hidden">
+                <div className="aspect-[4/3] rounded-md border border-border/60 bg-secondary/60 overflow-hidden">
                   <img
                     src={asset.image_url}
                     alt={asset.title}
@@ -90,7 +90,7 @@ export const ThesisOverview: React.FC<ThesisOverviewProps> = ({
 
       {/* Dual-Engine Architecture + Full-Width Bidirectional Bridge */}
       <section className="space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 border border-border divide-y lg:divide-y-0 lg:divide-x divide-border">
+        <div className="grid grid-cols-1 lg:grid-cols-2 rounded-xl overflow-hidden border border-border divide-y lg:divide-y-0 lg:divide-x divide-border">
           {/* Engine A */}
           <div className="p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-card">
             <div className="space-y-5">
@@ -191,7 +191,7 @@ export const ThesisOverview: React.FC<ThesisOverviewProps> = ({
         </div>
 
         {/* Full-Width Horizontal Bidirectional Data Bar */}
-        <div className="border border-border bg-secondary/60 px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div className="rounded-lg border border-border bg-secondary/60 px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <div className="font-semibold text-foreground">
             上游输出：高审美正交 AST 概念方案 + 物理尺度锚点
           </div>

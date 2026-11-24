@@ -28,11 +28,11 @@ export const GoldenAnchorDrawer: React.FC<GoldenAnchorDrawerProps> = ({
       aria-modal="true"
       aria-labelledby="golden-anchor-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-foreground/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-card border border-foreground/70 max-w-6xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+        className="bg-card border border-border rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] flex flex-col overflow-hidden"
       >
         <div className="px-5 py-4 border-b border-border flex items-start justify-between gap-4 bg-card">
           <div className="space-y-1">
@@ -48,7 +48,7 @@ export const GoldenAnchorDrawer: React.FC<GoldenAnchorDrawerProps> = ({
             type="button"
             onClick={onClose}
             aria-label="关闭黄金锚点标尺"
-            className="w-10 h-10 shrink-0 border border-border hover:border-foreground/70 text-foreground flex items-center justify-center transition-colors"
+            className="w-10 h-10 shrink-0 rounded-md border border-border hover:border-primary/60 text-foreground flex items-center justify-center transition-colors"
           >
             <X className="w-4 h-4" strokeWidth={1.75} />
           </button>
@@ -62,7 +62,7 @@ export const GoldenAnchorDrawer: React.FC<GoldenAnchorDrawerProps> = ({
             return (
               <div
                 key={pt.level}
-                className={`border flex flex-col justify-between bg-card ${
+                className={`rounded-lg overflow-hidden border flex flex-col justify-between bg-card ${
                   isNearCurrent ? 'border-primary' : 'border-border'
                 }`}
               >
@@ -103,9 +103,9 @@ export const GoldenAnchorDrawer: React.FC<GoldenAnchorDrawerProps> = ({
                       onApplyAnchorLevel(rubric.axis_id, pt.level);
                       onClose();
                     }}
-                    className={`w-full min-h-[36px] text-xs font-semibold border transition-colors ${
+                    className={`w-full min-h-[36px] rounded-md text-xs font-semibold border transition-colors ${
                       isNearCurrent
-                        ? 'bg-primary border-primary text-white'
+                        ? 'bg-primary border-primary text-primary-foreground'
                         : 'bg-card border-border text-foreground hover:border-primary hover:text-primary'
                     }`}
                   >

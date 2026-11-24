@@ -2,6 +2,88 @@ import type { SpectrumAxisId, SpectrumAxisReading } from '../engine/salienceMetr
 
 export type AssetDomain = 'architecture' | 'industrial' | 'editorial' | 'craft' | 'graphic';
 
+export type AssetArchetype =
+  | 'architecture'
+  | 'interior'
+  | 'landscape'
+  | 'industrial'
+  | 'craft'
+  | 'graphic'
+  | 'editorial';
+
+export type AestheticStyleId =
+  | 'minimalism'
+  | 'modernism'
+  | 'high_tech'
+  | 'wabi_sabi'
+  | 'brutalism'
+  | 'bauhaus'
+  | 'functionalism'
+  | 'scandinavian'
+  | 'swiss_style'
+  | 'japanese_zen'
+  | 'organic_modernism'
+  | 'deconstructivism';
+
+export type RagFacetKey = 'typology' | 'materials' | 'lighting' | 'details';
+
+export interface RagFacets {
+  typology: string;
+  materials: string[];
+  lighting: string;
+  details: string[];
+}
+
+export interface RagDoc {
+  doc_id: string;
+  archetype: AssetArchetype;
+  archetype_en: string;
+  style_id: AestheticStyleId;
+  style_zh: string;
+  style_en: string;
+  facets: RagFacets;
+  model_prompt_tokens: string[];
+  palette: string[];
+  aspect_ratio: string;
+  retrieval_text: string;
+}
+
+export interface RagSchemaMeta {
+  schema_version: string;
+  max_styles: number;
+  facet_keys: Array<{
+    key: RagFacetKey;
+    label_zh: string;
+    cardinality: string;
+    max_vocab: number;
+  }>;
+  styles: Array<{
+    style_id: AestheticStyleId;
+    zh: string;
+    en: string;
+    desc: string;
+    count: number;
+  }>;
+  facet_counts: Record<RagFacetKey, Array<{ value: string; count: number }>>;
+  jsonl_url: string;
+}
+
+export interface AestheticCritique {
+  headline_insight: string;
+  proportion_and_order: string;
+  material_and_detail: string;
+  light_and_palette: string;
+  why_you_love_it: string;
+  design_takeaways: string[];
+}
+
+export interface ArchetypeTaxonomyNode {
+  archetype: AssetArchetype;
+  label: string;
+  count: number;
+  sub_styles: Array<{ sub_style: string; count: number }>;
+}
+
 export interface SpectrumAxisMeta {
   axis_id: SpectrumAxisId;
   label_zh: string;
@@ -33,9 +115,27 @@ export interface CuratedShowcaseAsset {
   title: string;
   title_en?: string;
   image_url: string;
+  width?: number;
+  height?: number;
+  aspect_label?: string;
   license: string;
   source_kind: string;
+  source_origin?: 'pinterest_personal' | 'profile_expansion';
   source_url?: string;
+  board_name?: string;
+  archetype?: AssetArchetype;
+  archetype_label?: string;
+  aesthetic_style?: AestheticStyleId;
+  aesthetic_style_zh?: string;
+  aesthetic_style_en?: string;
+  sub_style?: string;
+  sub_category?: string;
+  rag_facets?: RagFacets;
+  rag_doc?: RagDoc;
+  aesthetic_critique?: AestheticCritique;
+  aesthetic_motifs?: string[];
+  aesthetic_quality_score?: number;
+  profile_distance?: number;
   akb_prior_asset_id?: string | null;
   akb_board_hint?: string | null;
   subject_isolation: {
@@ -128,14 +228,48 @@ export interface AstComparisonBundle {
   pairs: AstComparisonPair[];
 }
 
+export interface PersonalAestheticProfile {
+  total_pinterest_analyzed: number;
+  kept_pinterest_count: number;
+  expansion_count: number;
+  axis_signature: Record<
+    string,
+    {
+      weighted_mean: number;
+      mean: number;
+      std: number;
+      p25: number;
+      median: number;
+      p75: number;
+      mean_salience: number;
+    }
+  >;
+  dominant_color_clusters: Array<{ hex: string; count: number }>;
+  top_motifs: Array<{ motif: string; count: number }>;
+  top_boards: Array<{ board: string; count: number }>;
+  vlm_cost_audit?: {
+    model: string;
+    images_analyzed: number;
+    cache_hit_rate: number;
+    observed_total_cny: number;
+    observed_cny_per_img: number;
+  };
+}
+
 export interface AetherVaultShowcaseBundle {
   version: string;
   generated_at: string;
   total_assets: number;
   domain_counts: Record<AssetDomain, number>;
+  origin_counts?: Record<string, number>;
+  sub_category_counts?: Record<string, number>;
+  archetype_taxonomy?: ArchetypeTaxonomyNode[];
+  archetype_counts?: Record<string, number>;
+  rag_schema?: RagSchemaMeta;
   axes: SpectrumAxisMeta[];
   golden_anchors: Record<SpectrumAxisId, AxisCalibrationRubric>;
   cost_ledger: ColdStartCostLedger;
   vlm_scoring_report?: VlmScoringReport;
+  aesthetic_profile?: PersonalAestheticProfile | null;
   assets: CuratedShowcaseAsset[];
 }

@@ -94,10 +94,10 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         )}
 
         {/* Crisp Polarity Labels */}
-        <span className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-black/80 backdrop-blur-sm text-white text-xs font-medium pointer-events-none">
+        <span className="absolute top-3 left-3 z-20 rounded-md px-2 sm:px-2.5 py-1 max-w-[45%] truncate bg-black/80 backdrop-blur-sm text-white text-[11px] sm:text-xs font-medium pointer-events-none">
           {beforeLabel}
         </span>
-        <span className="absolute top-3 right-3 z-20 px-2.5 py-1 bg-primary text-primary-foreground text-xs font-medium pointer-events-none">
+        <span className="absolute top-3 right-3 z-20 rounded-md px-2 sm:px-2.5 py-1 max-w-[45%] truncate bg-primary text-primary-foreground text-[11px] sm:text-xs font-medium pointer-events-none">
           {afterLabel}
         </span>
 
@@ -107,15 +107,18 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           style={{ left: `${position}%` }}
         >
           <div className="absolute inset-y-0 -left-px w-0.5 bg-primary/80" />
-          <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-primary text-primary-foreground border-2 border-[#FFFFFF] flex items-center justify-center shadow-sm">
+          <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-primary text-primary-foreground border-2 border-white flex items-center justify-center shadow-md">
             <ArrowLeftRight className="w-4 h-4" strokeWidth={1.75} />
           </div>
         </div>
       </div>
 
-      {/* Accessible Scrub Control without misleading score percentages */}
-      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-        <span className="font-medium text-foreground shrink-0">{beforeLabel}</span>
+      {/* Accessible Full-Width Scrub Control */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between gap-2 text-xs">
+          <span className="font-medium text-foreground truncate">{beforeLabel}</span>
+          <span className="font-semibold text-primary truncate">{afterLabel}</span>
+        </div>
         <input
           type="range"
           min={4}
@@ -124,9 +127,8 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           value={Math.round(position)}
           aria-label="拖动滑块调整对比帘幕位置"
           onChange={(e) => setPosition(parseFloat(e.target.value))}
-          className="w-full"
+          className="w-full block"
         />
-        <span className="font-semibold text-primary shrink-0">{afterLabel}</span>
       </div>
     </div>
   );

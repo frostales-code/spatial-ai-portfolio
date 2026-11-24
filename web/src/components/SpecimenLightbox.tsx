@@ -53,15 +53,15 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
       aria-modal="true"
       aria-labelledby="lightbox-asset-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-foreground/70 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[2px] flex items-center justify-center p-3 sm:p-6"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-card border border-foreground/70 w-full max-w-5xl max-h-[92vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-12"
+        className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-5xl max-h-[92vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-12"
       >
         {/* Left: Full Unobstructed Plate */}
         <div className="lg:col-span-7 bg-secondary/60 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between p-4 sm:p-6">
-          <div className="aspect-[4/3] w-full bg-card border border-border overflow-hidden">
+          <div className="aspect-[4/3] w-full rounded-lg bg-card border border-border overflow-hidden">
             <img
               src={asset.image_url}
               alt={asset.title}
@@ -72,8 +72,12 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
             <span>
               编号 <span className="mono font-medium text-foreground">{asset.asset_id}</span>
               {' · '}
-              {asset.subject_isolation.domain_label}
-              {asset.subject_isolation.is_personal_prior ? ' · 个人审美先验' : ''}
+              {asset.sub_category ? `${asset.sub_category} · ` : ''}
+              {asset.source_origin === 'pinterest_personal'
+                ? `Pinterest 画板「${asset.board_name ?? '个人收藏'}」`
+                : asset.source_origin === 'profile_expansion'
+                  ? '个人审美画像扩展新图'
+                  : asset.subject_isolation.domain_label}
             </span>
             <span className="mono">
               授权溯源：{asset.license}
@@ -100,7 +104,7 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="关闭大图检视"
-                className="w-10 h-10 shrink-0 border border-border hover:border-foreground/70 flex items-center justify-center text-foreground transition-colors"
+                className="w-10 h-10 shrink-0 rounded-md border border-border hover:border-primary/60 flex items-center justify-center text-foreground transition-colors"
               >
                 <X className="w-4 h-4" strokeWidth={1.75} />
               </button>
@@ -121,7 +125,7 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                 <span className="font-semibold text-foreground">OKLab 提取主色板</span>
                 <span className="text-muted-foreground">点击色卡复制色值</span>
               </div>
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-5 gap-1.5">
                 {asset.granular_descriptors.color_palette.slice(0, 5).map((hex) => {
                   const isCopied = copiedHex === hex;
                   return (
@@ -130,16 +134,22 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                       type="button"
                       onClick={() => handleHexClick(hex)}
                       aria-label={`复制色值 ${hex}`}
-                      className="text-left border border-border hover:border-foreground/70 transition-colors"
+                      className="group text-center rounded-md overflow-hidden border border-border hover:border-primary/60 transition-colors"
                     >
-                      <div className="h-9 w-full" style={{ backgroundColor: hex }} />
-                      <div className="px-1.5 py-1 text-xs mono text-foreground flex items-center justify-between">
-                        <span className="truncate">{isCopied ? '已复制' : hex}</span>
-                        {isCopied ? (
-                          <Check className="w-3 h-3 text-teal-ok shrink-0" />
-                        ) : (
-                          <Copy className="w-3 h-3 text-muted-foreground shrink-0" />
-                        )}
+                      <div className="relative h-9 w-full" style={{ backgroundColor: hex }}>
+                        <span
+                          className={`absolute inset-0 flex items-center justify-center transition-opacity ${
+                            isCopied
+                              ? 'opacity-100 bg-black/45 text-white'
+                              : 'opacity-0 group-hover:opacity-100 bg-black/35 text-white'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        </span>
+                      </div>
+                      <div className="px-1 py-1 text-center text-[11px] mono text-foreground whitespace-nowrap">
+                        {isCopied ? '已复制' : hex}
                       </div>
                     </button>
                   );
@@ -210,10 +220,10 @@ export const SpecimenLightbox: React.FC<SpecimenLightboxProps> = ({
                   type="button"
                   aria-pressed={item.active}
                   onClick={() => onAssignSlot(item.slot, asset.asset_id)}
-                  className={`min-h-[40px] px-2 text-xs font-medium border transition-colors ${
+                  className={`min-h-[40px] rounded-md px-2 text-xs font-medium border transition-colors ${
                     item.active
-                      ? 'bg-primary border-primary text-white'
-                      : 'bg-card border-border text-foreground hover:border-foreground/70'
+                      ? 'bg-primary border-primary text-primary-foreground font-semibold'
+                      : 'bg-card border-border text-foreground hover:bg-secondary/60 hover:border-primary/60'
                   }`}
                 >
                   {item.label}

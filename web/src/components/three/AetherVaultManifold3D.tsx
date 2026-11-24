@@ -21,7 +21,8 @@ interface AetherVaultManifold3DProps {
   axes: SpectrumAxisMeta[];
   queryScores: Record<SpectrumAxisId, number>;
   onSelectAsset: (asset: CuratedShowcaseAsset) => void;
-  onAssignSlot: (slot: 'optics' | 'material' | 'lighting', assetId: string) => void;
+  onAssignSlot?: (slot: 'optics' | 'material' | 'lighting', assetId: string) => void;
+  minimalMode?: boolean;
 }
 
 const DOMAIN_COLORS: Record<string, number> = {
@@ -40,6 +41,26 @@ const DOMAIN_LABELS: Record<string, string> = {
   graphic: '平面构成',
 };
 
+const ARCHETYPE_COLORS: Record<string, number> = {
+  architecture: 0x153ce8,
+  interior: 0x2563eb,
+  landscape: 0x059669,
+  industrial: 0x0f766e,
+  craft: 0xd97706,
+  graphic: 0xe11d48,
+  editorial: 0x9333ea,
+};
+
+const ARCHETYPE_LABELS: Record<string, string> = {
+  architecture: '建筑设计',
+  interior: '室内设计',
+  landscape: '景观空间',
+  industrial: '工业设计',
+  craft: '器物工艺',
+  graphic: '平面视觉',
+  editorial: '时尚影像',
+};
+
 const SCALE = 2.35;
 
 export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
@@ -48,6 +69,7 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
   queryScores,
   onSelectAsset,
   onAssignSlot,
+  minimalMode = false,
 }) => {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
@@ -107,9 +129,17 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
       rankById.set(item.asset.asset_id, { item, rank: idx });
     });
 
+    const getCategoryHex = (asset: CuratedShowcaseAsset): number => {
+      if (minimalMode && asset.archetype) {
+        return ARCHETYPE_COLORS[asset.archetype] ?? 0x64748b;
+      }
+      return DOMAIN_COLORS[asset.subject_isolation.domain] ?? 0x64748b;
+    };
+
     for (const entry of cardEntriesRef.current) {
       const updated = rankById.get(entry.item.asset.asset_id);
       if (updated) {
+        entry.group.visible = true;
         entry.item = updated.item;
         const scores = updated.item.asset.style_spectrums;
         entry.targetPos.set(
@@ -121,15 +151,13 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
         const scaleVal = isTop6 ? 1.24 : 0.88;
         entry.group.scale.set(scaleVal, scaleVal, scaleVal);
         entry.borderMat.color.setHex(
-          isTop6
-            ? isDark
-              ? 0x4b74ff
-              : 0x153ce8
-            : DOMAIN_COLORS[updated.item.asset.subject_isolation.domain] ?? 0x64748b
+          isTop6 ? (isDark ? 0x4b74ff : 0x153ce8) : getCategoryHex(updated.item.asset)
         );
+      } else {
+        entry.group.visible = false;
       }
     }
-  }, [queryScores, rankedAssets, xAxis, yAxis, zAxis, isDark]);
+  }, [queryScores, rankedAssets, xAxis, yAxis, zAxis, isDark, minimalMode]);
 
   // Sync theme colors onto live Three.js scene
   useEffect(() => {
@@ -282,11 +310,13 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
     const tetherLines = new THREE.LineSegments(tetherGeom, tetherMat);
     scene.add(tetherLines);
 
-    // Build 80 specimen textured cards
+    // Build specimen 3D nodes: top 80 as textured WebP plates + remaining specimens as crisp clickable domain nodes (60fps at 500+ scale)
+    const MAX_TEXTURED_PLATES = 80;
     const texLoader = new THREE.TextureLoader();
     texLoader.setCrossOrigin('anonymous');
     const cardPlaneGeom = new THREE.PlaneGeometry(0.36, 0.27);
     const framePlaneGeom = new THREE.PlaneGeometry(0.4, 0.31);
+    const nodeBoxGeom = new THREE.BoxGeometry(0.085, 0.085, 0.085);
     const createdTextures: THREE.Texture[] = [];
     const createdMaterials: THREE.Material[] = [];
     const pickMeshes: THREE.Mesh[] = [];
@@ -302,34 +332,41 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
       );
       group.position.copy(pos);
 
+      const domHex =
+        minimalMode && item.asset.archetype
+          ? ARCHETYPE_COLORS[item.asset.archetype] ?? 0x64748b
+          : DOMAIN_COLORS[item.asset.subject_isolation.domain] ?? 0x64748b;
       const borderMat = new THREE.MeshBasicMaterial({
-        color:
-          idx < 6
-            ? isDark
-              ? 0x4b74ff
-              : 0x153ce8
-            : DOMAIN_COLORS[item.asset.subject_isolation.domain] ?? 0x64748b,
+        color: idx < 6 ? (isDark ? 0x4b74ff : 0x153ce8) : domHex,
         side: THREE.DoubleSide,
       });
       createdMaterials.push(borderMat);
-      const borderMesh = new THREE.Mesh(framePlaneGeom, borderMat);
-      borderMesh.position.z = -0.004;
 
-      const tex = texLoader.load(item.asset.image_url);
-      tex.colorSpace = THREE.SRGBColorSpace;
-      tex.minFilter = THREE.LinearFilter;
-      createdTextures.push(tex);
+      if (idx < MAX_TEXTURED_PLATES) {
+        const borderMesh = new THREE.Mesh(framePlaneGeom, borderMat);
+        borderMesh.position.z = -0.004;
 
-      const imgMat = new THREE.MeshBasicMaterial({
-        map: tex,
-        side: THREE.DoubleSide,
-      });
-      createdMaterials.push(imgMat);
-      const imgMesh = new THREE.Mesh(cardPlaneGeom, imgMat);
-      imgMesh.userData = { assetId: item.asset.asset_id };
-      pickMeshes.push(imgMesh);
+        const tex = texLoader.load(item.asset.image_url);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.minFilter = THREE.LinearFilter;
+        createdTextures.push(tex);
 
-      group.add(borderMesh, imgMesh);
+        const imgMat = new THREE.MeshBasicMaterial({
+          map: tex,
+          side: THREE.DoubleSide,
+        });
+        createdMaterials.push(imgMat);
+        const imgMesh = new THREE.Mesh(cardPlaneGeom, imgMat);
+        imgMesh.userData = { assetId: item.asset.asset_id };
+        pickMeshes.push(imgMesh);
+        group.add(borderMesh, imgMesh);
+      } else {
+        const nodeMesh = new THREE.Mesh(nodeBoxGeom, borderMat);
+        nodeMesh.userData = { assetId: item.asset.asset_id };
+        pickMeshes.push(nodeMesh);
+        group.add(nodeMesh);
+      }
+
       const initialScale = idx < 6 ? 1.24 : 0.88;
       group.scale.set(initialScale, initialScale, initialScale);
       scene.add(group);
@@ -425,10 +462,11 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
         entry.group.quaternion.copy(camera.quaternion);
       }
 
-      // Update k-NN tether vertices to Top-6 matches
+      // Update k-NN tether vertices to Top-6 visible matches
       if (tetherGeomRef.current) {
         const posAttr = tetherGeomRef.current.getAttribute('position') as THREE.BufferAttribute;
         const top6 = [...cardEntriesRef.current]
+          .filter((e) => e.group.visible)
           .sort((a, b) => a.item.distance - b.item.distance)
           .slice(0, 6);
         for (let i = 0; i < 6; i++) {
@@ -464,6 +502,7 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
       tetherMat.dispose();
       cardPlaneGeom.dispose();
       framePlaneGeom.dispose();
+      nodeBoxGeom.dispose();
       createdTextures.forEach((t) => t.dispose());
       createdMaterials.forEach((m) => m.dispose());
       renderer.dispose();
@@ -487,7 +526,7 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
       <div className="rounded-xl border border-border bg-card p-8 text-center space-y-2">
         <div className="text-sm font-semibold text-foreground">当前浏览器环境未启用 WebGL 3D 加速</div>
         <p className="text-xs text-muted-foreground">
-          请切换至“标本画廊”视图浏览全部 80 件跨界样张，8 轴向量重排与 AST 编译器不受影响。
+          请切换至“标本画廊”视图浏览全部 {rankedAssets.length} 件跨界样张，8 轴向量重排与 AST 编译器不受影响。
         </p>
       </div>
     );
@@ -500,10 +539,10 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="default" className="mono">
             <Sparkles className="w-3 h-3" />
-            Three.js 3D 美学光谱流形
+            {minimalMode ? 'Three.js 3D 审美星图' : 'Three.js 3D 美学光谱流形'}
           </Badge>
           <span className="text-xs text-muted-foreground hidden sm:inline">
-            80 件标本实时投影 · 钴蓝探针联动 Top-6 相似连线
+            {rankedAssets.length} 件标本投影 · {minimalMode ? '点击画片查看深度美学解析' : '钴蓝探针联动 Top-6 相似连线'}
           </span>
         </div>
 
@@ -560,7 +599,7 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
         <div
           ref={containerRef}
           className="h-full w-full"
-          aria-label="80 件跨界标本 Three.js 三维正交美学流形画布"
+          aria-label={`${rankedAssets.length} 件跨界标本 Three.js 三维正交美学流形画布`}
         />
 
         {/* Bottom-left Axis Legend */}
@@ -571,22 +610,33 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
           </div>
         </div>
 
-        {/* Bottom-right Domain Legend */}
-        <div className="pointer-events-none hidden md:flex absolute bottom-3 right-3 items-center gap-2.5 rounded-md border border-border/80 bg-card/85 backdrop-blur-md px-3 py-1.5 text-xs text-muted-foreground shadow-sm">
-          {Object.entries(DOMAIN_LABELS).map(([dom, zh]) => (
-            <span key={dom} className="inline-flex items-center gap-1">
-              <span
-                className="h-2 w-2 rounded-full"
-                style={{
-                  backgroundColor: `#${(DOMAIN_COLORS[dom] ?? 0x64748b)
-                    .toString(16)
-                    .padStart(6, '0')}`,
-                }}
-              />
-              <span>{zh}</span>
-            </span>
-          ))}
-        </div>
+        {/* Bottom-right Category Legend */}
+        {(() => {
+          const useArchetypeLegend =
+            minimalMode && rankedAssets.some((item) => Boolean(item.asset.archetype));
+          return (
+            <div className="pointer-events-none hidden md:flex absolute bottom-3 right-3 items-center gap-2.5 rounded-md border border-border/80 bg-card/85 backdrop-blur-md px-3 py-1.5 text-xs text-muted-foreground shadow-sm">
+              {Object.entries(useArchetypeLegend ? ARCHETYPE_LABELS : DOMAIN_LABELS).map(
+                ([key, zh]) => (
+                  <span key={key} className="inline-flex items-center gap-1">
+                    <span
+                      className="h-2 w-2 rounded-full"
+                      style={{
+                        backgroundColor: `#${(
+                          (useArchetypeLegend ? ARCHETYPE_COLORS[key] : DOMAIN_COLORS[key]) ??
+                          0x64748b
+                        )
+                          .toString(16)
+                          .padStart(6, '0')}`,
+                      }}
+                    />
+                    <span>{zh}</span>
+                  </span>
+                )
+              )}
+            </div>
+          );
+        })()}
 
         {/* Interactive Specimen HUD Card (Hover or Click-Pinned) */}
         {activePreview && (
@@ -600,11 +650,16 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-1">
                   <span className="mono text-xs font-semibold text-primary">
-                    {activePreview.matchPct}% 匹配
+                    {minimalMode
+                      ? activePreview.asset.archetype_label ??
+                        ARCHETYPE_LABELS[activePreview.asset.archetype ?? 'architecture']
+                      : `${activePreview.matchPct}% 匹配`}
                   </span>
-                  <span className="text-xs text-muted-foreground">
-                    {DOMAIN_LABELS[activePreview.asset.subject_isolation.domain] ??
-                      activePreview.asset.subject_isolation.domain}
+                  <span className="text-xs text-muted-foreground truncate">
+                    {minimalMode
+                      ? activePreview.asset.sub_style ?? ''
+                      : DOMAIN_LABELS[activePreview.asset.subject_isolation.domain] ??
+                        activePreview.asset.subject_isolation.domain}
                   </span>
                 </div>
                 <div className="text-xs font-semibold text-foreground line-clamp-2 mt-0.5">
@@ -622,35 +677,39 @@ export const AetherVaultManifold3D: React.FC<AetherVaultManifold3DProps> = ({
                 onClick={() => onSelectAsset(activePreview.asset)}
               >
                 <Eye className="w-3 h-3" />
-                <span>详情</span>
+                <span>{minimalMode ? '查看深度美学解析' : '详情'}</span>
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-7 px-2 text-xs"
-                onClick={() => onAssignSlot('optics', activePreview.asset.asset_id)}
-              >
-                镜
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-7 px-2 text-xs"
-                onClick={() => onAssignSlot('material', activePreview.asset.asset_id)}
-              >
-                材
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-7 px-2 text-xs"
-                onClick={() => onAssignSlot('lighting', activePreview.asset.asset_id)}
-              >
-                光
-              </Button>
+              {!minimalMode && onAssignSlot && (
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2 text-xs"
+                    onClick={() => onAssignSlot('optics', activePreview.asset.asset_id)}
+                  >
+                    镜
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2 text-xs"
+                    onClick={() => onAssignSlot('material', activePreview.asset.asset_id)}
+                  >
+                    材
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2 text-xs"
+                    onClick={() => onAssignSlot('lighting', activePreview.asset.asset_id)}
+                  >
+                    光
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}

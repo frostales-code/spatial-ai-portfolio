@@ -17,7 +17,7 @@ export const CadDetailViewer: React.FC<CadDetailViewerProps> = ({
   layers,
 }) => {
   return (
-    <div className="border border-border bg-card p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-border bg-card p-4 sm:p-5 space-y-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2 pb-3 border-b border-border">
         <div className="space-y-0.5 min-w-0">
           <h3 className="font-display text-sm font-bold text-foreground truncate">
@@ -29,7 +29,7 @@ export const CadDetailViewer: React.FC<CadDetailViewerProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-        <div className="md:col-span-6 border border-border bg-secondary/40 p-2">
+        <div className="md:col-span-6 rounded-lg overflow-hidden border border-border bg-secondary/40 p-2">
           {detail?.svg ? (
             <div
               className="w-full [&_svg]:w-full [&_svg]:h-auto [&_svg]:block"

@@ -70,9 +70,12 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
   if (!isOpen) return null;
 
   const activePair = pairs.find((p) => p.pair_id === selectedPairId) ?? pairs[0] ?? null;
-  const optAsset = activePair ? assetsById[activePair.slots.optics] : assetsById[currentSlots.optics];
-  const matAsset = activePair ? assetsById[activePair.slots.material] : assetsById[currentSlots.material];
-  const litAsset = activePair ? assetsById[activePair.slots.lighting] : assetsById[currentSlots.lighting];
+  const optAsset =
+    (activePair ? assetsById[activePair.slots.optics] : undefined) ?? assetsById[currentSlots.optics];
+  const matAsset =
+    (activePair ? assetsById[activePair.slots.material] : undefined) ?? assetsById[currentSlots.material];
+  const litAsset =
+    (activePair ? assetsById[activePair.slots.lighting] : undefined) ?? assetsById[currentSlots.lighting];
 
   return (
     <div
@@ -80,11 +83,11 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
       aria-modal="true"
       aria-labelledby="ast-compare-drawer-title"
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-foreground/65 backdrop-blur-[2px] flex justify-end"
+      className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[2px] flex justify-end"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-card border-l border-foreground/70 w-full max-w-3xl h-full flex flex-col overflow-hidden"
+        className="bg-card border-l border-border shadow-2xl w-full max-w-3xl h-full flex flex-col overflow-hidden"
       >
         <div className="px-5 py-4 border-b border-border flex items-start justify-between gap-4 bg-card">
           <div>
@@ -102,7 +105,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
             type="button"
             onClick={onClose}
             aria-label="关闭 AST 对比抽屉"
-            className="w-10 h-10 shrink-0 border border-border hover:border-foreground/70 text-foreground flex items-center justify-center transition-colors"
+            className="w-10 h-10 shrink-0 rounded-md border border-border hover:border-primary/60 text-foreground flex items-center justify-center transition-colors"
           >
             <X className="w-4 h-4" strokeWidth={1.75} />
           </button>
@@ -121,7 +124,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
                       onLoadSlotsIntoMixer(activePair);
                       onClose();
                     }}
-                    className="min-h-[36px] px-3.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
+                    className="min-h-[36px] rounded-md px-3.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
                   >
                     <ArrowDownToLine className="w-3.5 h-3.5" />
                     <span>载入此组至底部托盘</span>
@@ -138,10 +141,10 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
                       type="button"
                       aria-pressed={isSel}
                       onClick={() => setSelectedPairId(p.pair_id)}
-                      className={`text-left p-2.5 border transition-colors ${
+                      className={`text-left rounded-md p-2.5 border transition-colors ${
                         isSel
                           ? 'bg-accent border-primary text-foreground'
-                          : 'bg-card border-border text-muted-foreground hover:border-foreground/70 hover:text-foreground'
+                          : 'bg-card border-border text-muted-foreground hover:border-primary/60 hover:text-foreground'
                       }`}
                     >
                       <div className="flex items-center justify-between mono text-xs">
@@ -166,7 +169,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
               afterAlt={`${activePair.pair_id} AetherVault 正交 AST 编译结果`}
             />
           ) : (
-            <div className="p-8 border border-border bg-secondary/60 text-center text-muted-foreground">
+            <div className="rounded-lg p-8 border border-border bg-secondary/60 text-center text-muted-foreground">
               暂未加载对比实测样本数据集。
             </div>
           )}
@@ -178,10 +181,10 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
               { label: '材质构筑来源', asset: matAsset, field: matAsset?.granular_descriptors.material_stack },
               { label: '大气光影来源', asset: litAsset, field: litAsset?.granular_descriptors.lighting_rig },
             ].map((s) => (
-              <div key={s.label} className="border border-border bg-card p-3 space-y-2">
+              <div key={s.label} className="rounded-lg border border-border bg-card p-3 space-y-2">
                 <div className="text-xs font-semibold text-primary">{s.label}</div>
                 {s.asset && (
-                  <div className="aspect-[4/3] bg-secondary/60 overflow-hidden">
+                  <div className="aspect-[4/3] rounded-md bg-secondary/60 overflow-hidden">
                     <img src={s.asset.image_url} alt={s.asset.title} className="w-full h-full object-cover" />
                   </div>
                 )}
@@ -195,7 +198,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
 
           {/* Decoupling Diagnosis */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 border border-border bg-secondary/60 space-y-1.5">
+            <div className="rounded-lg p-4 border border-border bg-secondary/60 space-y-1.5">
               <div className="font-semibold text-destructive">
                 多图直喂失效归因
               </div>
@@ -205,7 +208,7 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
               </p>
             </div>
 
-            <div className="p-4 border border-border bg-secondary/60 space-y-1.5">
+            <div className="rounded-lg p-4 border border-border bg-secondary/60 space-y-1.5">
               <div className="font-semibold text-teal-ok">
                 AST 作用域隔离机制（拦截 {activePair?.conflicts_isolated_count ?? currentConflictsCount} 项冲突）
               </div>
@@ -217,17 +220,17 @@ export const AstComparisonDrawer: React.FC<AstComparisonDrawerProps> = ({
           </div>
 
           {/* Compiled Prompt & Guardrails */}
-          <div className="border border-border p-4 space-y-2 bg-card">
+          <div className="rounded-lg border border-border p-4 space-y-2 bg-card">
             <div className="flex items-center justify-between">
               <span className="font-semibold text-foreground">编译后正交 AST 结构化指令</span>
               <span className="mono text-primary">
                 {activePair ? activePair.pair_id.toUpperCase() : 'LIVE MIXER'}
               </span>
             </div>
-            <pre className="p-3 bg-secondary/60 border border-border text-xs mono text-foreground whitespace-pre-wrap leading-relaxed">
+            <pre className="p-3 rounded-md bg-secondary/60 border border-border text-xs mono text-foreground whitespace-pre-wrap leading-relaxed">
               {activePair?.compiled_prompt ?? currentCompiledPrompt}
             </pre>
-            <div className="text-xs mono text-destructive bg-secondary/60 border border-border p-2.5">
+            <div className="text-xs mono text-destructive rounded-md bg-secondary/60 border border-border p-2.5">
               --no {activePair ? activePair.negative_guardrails.join(', ') : currentNegativePrompt.replace(/^--no\s*/, '')}
             </div>
           </div>

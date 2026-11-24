@@ -59,6 +59,8 @@ export const GUIDED_TOUR_STOPS: GuidedTourStop[] = [
 interface GuidedTourPopoverProps {
   isOpen: boolean;
   stepIndex: number;
+  hasBottomDock?: boolean;
+  totalAssets?: number;
   onSelectStep: (index: number) => void;
   onClose: () => void;
 }
@@ -66,6 +68,8 @@ interface GuidedTourPopoverProps {
 export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
   isOpen,
   stepIndex,
+  hasBottomDock = false,
+  totalAssets = 500,
   onSelectStep,
   onClose,
 }) => {
@@ -83,6 +87,10 @@ export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
   const safeIndex = Math.max(0, Math.min(stepIndex, GUIDED_TOUR_STOPS.length - 1));
   const current = GUIDED_TOUR_STOPS[safeIndex];
   const isLast = safeIndex === GUIDED_TOUR_STOPS.length - 1;
+  const resolvedBody =
+    current.id === 'tour_aethervault'
+      ? current.body.replace('80 件跨门类标本', `${totalAssets} 件跨门类标本`)
+      : current.body;
 
   return (
     <AnimatePresence>
@@ -94,7 +102,9 @@ export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 12, scale: 0.98 }}
           transition={{ duration: 0.18 }}
-          className="fixed bottom-4 right-4 z-50 w-[min(400px,calc(100vw-2rem))] rounded-xl border border-border bg-card/95 backdrop-blur-md shadow-2xl overflow-hidden"
+          className={`fixed right-4 z-50 w-[min(400px,calc(100vw-2rem))] rounded-xl border border-border bg-card/95 backdrop-blur-md shadow-2xl overflow-hidden ${
+            hasBottomDock ? 'bottom-20 sm:bottom-20' : 'bottom-4'
+          }`}
         >
           <div className="px-4 py-2.5 border-b border-border bg-secondary/60 flex items-center justify-between gap-3">
             <Badge variant="default" className="mono text-xs">
@@ -104,7 +114,7 @@ export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
               type="button"
               onClick={onClose}
               aria-label="关闭导览"
-              className="inline-flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
             >
               <X className="w-3.5 h-3.5" strokeWidth={1.75} />
             </button>
@@ -114,7 +124,7 @@ export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
             <h3 className="font-display text-sm font-bold text-foreground leading-snug">
               {current.title}
             </h3>
-            <p className="text-xs leading-relaxed text-muted-foreground">{current.body}</p>
+            <p className="text-xs leading-relaxed text-muted-foreground">{resolvedBody}</p>
             <div className="px-3 py-2 rounded-lg bg-secondary/70 border border-border text-xs leading-relaxed text-foreground">
               <span className="mono font-semibold text-primary mr-1.5">AI BOUNDARY</span>
               {current.aiBoundary}
@@ -122,7 +132,7 @@ export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
           </div>
 
           <div className="px-4 py-3 border-t border-border flex items-center justify-between gap-2 bg-card">
-            <div className="flex items-center gap-1.5" role="group" aria-label="导览步骤切换">
+            <div className="flex items-center gap-0.5" role="group" aria-label="导览步骤切换">
               {GUIDED_TOUR_STOPS.map((stop, idx) => {
                 const active = idx === safeIndex;
                 return (
@@ -131,10 +141,14 @@ export const GuidedTourPopover: React.FC<GuidedTourPopoverProps> = ({
                     type="button"
                     onClick={() => onSelectStep(idx)}
                     aria-label={`跳至第 ${idx + 1} 站：${stop.title}`}
-                    className={`h-2 rounded-full transition-all ${
-                      active ? 'w-5 bg-primary' : 'w-2 bg-border hover:bg-muted-foreground'
-                    }`}
-                  />
+                    className="w-7 h-7 inline-flex items-center justify-center rounded-md hover:bg-secondary/70 transition-colors"
+                  >
+                    <span
+                      className={`h-2 rounded-full transition-all ${
+                        active ? 'w-5 bg-primary' : 'w-2 bg-border'
+                      }`}
+                    />
+                  </button>
                 );
               })}
             </div>
