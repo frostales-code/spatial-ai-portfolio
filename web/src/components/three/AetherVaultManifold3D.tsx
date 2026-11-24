@@ -42,23 +42,25 @@ const DOMAIN_LABELS: Record<string, string> = {
 };
 
 const ARCHETYPE_COLORS: Record<string, number> = {
-  architecture: 0x153ce8,
   interior: 0x2563eb,
-  landscape: 0x059669,
-  industrial: 0x0f766e,
+  architecture: 0x153ce8,
+  graphic_typography: 0xe11d48,
   craft: 0xd97706,
-  graphic: 0xe11d48,
-  editorial: 0x9333ea,
+  industrial: 0x0f766e,
+  landscape: 0x059669,
+  illustration_character: 0x9333ea,
+  fashion_photography: 0xdb2777,
 };
 
 const ARCHETYPE_LABELS: Record<string, string> = {
-  architecture: '建筑设计',
   interior: '室内设计',
-  landscape: '景观空间',
-  industrial: '工业设计',
+  architecture: '建筑设计',
+  graphic_typography: '平面与字体',
   craft: '器物工艺',
-  graphic: '平面视觉',
-  editorial: '时尚影像',
+  industrial: '工业设计',
+  landscape: '景观空间',
+  illustration_character: '插画与角色',
+  fashion_photography: '时尚摄影',
 };
 
 const SCALE = 2.35;

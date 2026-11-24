@@ -3,35 +3,24 @@ import type { SpectrumAxisId, SpectrumAxisReading } from '../engine/salienceMetr
 export type AssetDomain = 'architecture' | 'industrial' | 'editorial' | 'craft' | 'graphic';
 
 export type AssetArchetype =
-  | 'architecture'
   | 'interior'
-  | 'landscape'
-  | 'industrial'
+  | 'architecture'
+  | 'graphic_typography'
   | 'craft'
-  | 'graphic'
-  | 'editorial';
+  | 'industrial'
+  | 'landscape'
+  | 'illustration_character'
+  | 'fashion_photography';
 
-export type AestheticStyleId =
-  | 'minimalism'
-  | 'modernism'
-  | 'high_tech'
-  | 'wabi_sabi'
-  | 'brutalism'
-  | 'bauhaus'
-  | 'functionalism'
-  | 'scandinavian'
-  | 'swiss_style'
-  | 'japanese_zen'
-  | 'organic_modernism'
-  | 'deconstructivism';
+export type AestheticStyleId = string;
 
-export type RagFacetKey = 'typology' | 'materials' | 'lighting' | 'details';
+export type RagFacetKey = 'medium' | 'typology' | 'materials' | 'lighting';
 
 export interface RagFacets {
+  medium: string;
   typology: string;
   materials: string[];
   lighting: string;
-  details: string[];
 }
 
 export interface RagDoc {
@@ -41,15 +30,21 @@ export interface RagDoc {
   style_id: AestheticStyleId;
   style_zh: string;
   style_en: string;
+  native_style_primary?: string;
+  native_style_secondary?: string;
+  is_canonical_ism?: boolean;
   facets: RagFacets;
+  visual_traits?: string[];
   model_prompt_tokens: string[];
   palette: string[];
   aspect_ratio: string;
+  resonance_mode?: 'core_match' | 'contrast_inspiration';
   retrieval_text: string;
 }
 
 export interface RagSchemaMeta {
   schema_version: string;
+  vision_model?: string;
   max_styles: number;
   facet_keys: Array<{
     key: RagFacetKey;
@@ -61,7 +56,8 @@ export interface RagSchemaMeta {
     style_id: AestheticStyleId;
     zh: string;
     en: string;
-    desc: string;
+    is_movement?: boolean;
+    desc?: string;
     count: number;
   }>;
   facet_counts: Record<RagFacetKey, Array<{ value: string; count: number }>>;
@@ -75,6 +71,7 @@ export interface AestheticCritique {
   light_and_palette: string;
   why_you_love_it: string;
   design_takeaways: string[];
+  resonance_mode?: 'core_match' | 'contrast_inspiration';
 }
 
 export interface ArchetypeTaxonomyNode {
@@ -128,6 +125,11 @@ export interface CuratedShowcaseAsset {
   aesthetic_style?: AestheticStyleId;
   aesthetic_style_zh?: string;
   aesthetic_style_en?: string;
+  is_canonical_ism?: boolean;
+  native_style_primary?: string;
+  native_style_secondary?: string;
+  visual_traits?: string[];
+  discovery_confidence?: number;
   sub_style?: string;
   sub_category?: string;
   rag_facets?: RagFacets;

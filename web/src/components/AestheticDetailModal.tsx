@@ -191,11 +191,11 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
                 <span className="mono text-muted-foreground">{asset.asset_id}</span>
               </div>
               <div className="grid grid-cols-5 gap-1.5">
-                {asset.granular_descriptors.color_palette.slice(0, 5).map((hex) => {
+                {asset.granular_descriptors.color_palette.slice(0, 5).map((hex, idx) => {
                   const isCopied = copiedHex === hex;
                   return (
                     <button
-                      key={hex}
+                      key={`${hex}-${idx}`}
                       type="button"
                       onClick={() => handleHexClick(hex)}
                       aria-label={`复制色值 ${hex}`}
@@ -263,11 +263,16 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
                 {(asset.aesthetic_style_zh || asset.sub_style || asset.sub_category) && (
                   <span className="rounded-md border border-border bg-secondary/60 text-foreground px-2.5 py-0.5 text-xs font-medium">
                     {asset.aesthetic_style_zh ?? asset.sub_style ?? asset.sub_category}
-                    {asset.aesthetic_style_en ? (
+                    {asset.native_style_primary || asset.aesthetic_style_en ? (
                       <span className="mono text-[11px] text-muted-foreground ml-1.5">
-                        {asset.aesthetic_style_en}
+                        {asset.native_style_primary ?? asset.aesthetic_style_en}
                       </span>
                     ) : null}
+                  </span>
+                )}
+                {typeof asset.is_canonical_ism === 'boolean' && (
+                  <span className="rounded-md border border-border/80 bg-card text-muted-foreground px-2 py-0.5 text-[11px]">
+                    {asset.is_canonical_ism ? '设计主义' : '视觉体系'}
                   </span>
                 )}
               </div>
@@ -296,12 +301,30 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
             </div>
           )}
 
-          {/* Highlight Card: Why You Love It */}
+          {/* Highlight Card: Why You Love It (Core Match vs Contrast Inspiration) */}
           {critique?.why_you_love_it && (
-            <div className="rounded-lg border border-primary/30 bg-accent/40 p-4 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
-                <Heart className="w-3.5 h-3.5" />
-                <span>为什么它让你觉得好看（个人审美共鸣）</span>
+            <div
+              className={`rounded-lg border p-4 space-y-1.5 ${
+                critique.resonance_mode === 'contrast_inspiration'
+                  ? 'border-amber-500/40 bg-amber-500/10'
+                  : 'border-primary/30 bg-accent/40'
+              }`}
+            >
+              <div
+                className={`flex items-center justify-between gap-2 text-xs font-bold ${
+                  critique.resonance_mode === 'contrast_inspiration'
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-primary'
+                }`}
+              >
+                <span className="inline-flex items-center gap-1.5">
+                  <Heart className="w-3.5 h-3.5" />
+                  <span>
+                    {critique.resonance_mode === 'contrast_inspiration'
+                      ? '破圈反差灵感（跳出日常基调的审美补给）'
+                      : '为什么它让你觉得好看（个人审美核心同频）'}
+                  </span>
+                </span>
               </div>
               <p className="text-[13px] text-foreground leading-relaxed">
                 {critique.why_you_love_it}
@@ -315,7 +338,7 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                   <Database className="w-3.5 h-3.5 text-primary" />
-                  <span>RAG 受控索引（4 键元数据 + 模型风格词）</span>
+                  <span>RAG 受控索引（Gemini 视觉直读 · 4 键元数据）</span>
                 </div>
                 {asset.rag_doc && (
                   <button
@@ -331,20 +354,20 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
 
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div className="rounded-md border border-border/80 bg-card px-2.5 py-1.5">
+                  <span className="text-[11px] text-muted-foreground block">视觉媒介 (medium)</span>
+                  <span className="font-semibold text-foreground">{asset.rag_facets.medium}</span>
+                </div>
+                <div className="rounded-md border border-border/80 bg-card px-2.5 py-1.5">
                   <span className="text-[11px] text-muted-foreground block">内容品类 (typology)</span>
                   <span className="font-semibold text-foreground">{asset.rag_facets.typology}</span>
                 </div>
                 <div className="rounded-md border border-border/80 bg-card px-2.5 py-1.5">
-                  <span className="text-[11px] text-muted-foreground block">光影氛围 (lighting)</span>
-                  <span className="font-semibold text-foreground">{asset.rag_facets.lighting}</span>
-                </div>
-                <div className="rounded-md border border-border/80 bg-card px-2.5 py-1.5">
-                  <span className="text-[11px] text-muted-foreground block">核心材质 (materials)</span>
+                  <span className="text-[11px] text-muted-foreground block">材质与技法 (materials)</span>
                   <span className="font-semibold text-foreground">{asset.rag_facets.materials.join(' · ')}</span>
                 </div>
                 <div className="rounded-md border border-border/80 bg-card px-2.5 py-1.5">
-                  <span className="text-[11px] text-muted-foreground block">构图细部 (details)</span>
-                  <span className="font-semibold text-foreground">{asset.rag_facets.details.join(' · ')}</span>
+                  <span className="text-[11px] text-muted-foreground block">光影色域 (lighting)</span>
+                  <span className="font-semibold text-foreground">{asset.rag_facets.lighting}</span>
                 </div>
               </div>
 

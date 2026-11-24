@@ -27,29 +27,30 @@ interface PersonalAestheticAtlasProps {
 type OriginFilter = 'all' | 'pinterest_personal' | 'profile_expansion';
 
 const ARCHETYPE_ORDER: Array<{ key: AssetArchetype; label: string }> = [
-  { key: 'architecture', label: '建筑设计' },
   { key: 'interior', label: '室内设计' },
-  { key: 'landscape', label: '景观空间' },
-  { key: 'industrial', label: '工业设计' },
+  { key: 'architecture', label: '建筑设计' },
+  { key: 'graphic_typography', label: '平面与字体' },
   { key: 'craft', label: '器物工艺' },
-  { key: 'graphic', label: '平面视觉' },
-  { key: 'editorial', label: '时尚影像' },
+  { key: 'industrial', label: '工业设计' },
+  { key: 'landscape', label: '景观空间' },
+  { key: 'illustration_character', label: '插画与角色' },
+  { key: 'fashion_photography', label: '时尚摄影' },
 ];
 
 const RAG_FACET_KEYS: Array<{ key: RagFacetKey; label: string; hint: string }> = [
-  { key: 'typology', label: '内容品类', hint: '画面对象/空间种类（如灯具照明、空间导视）' },
-  { key: 'materials', label: '核心材质', hint: '真实物理或数字媒介材质' },
-  { key: 'lighting', label: '光影氛围', hint: '光照条件与明暗反差' },
-  { key: 'details', label: '构图细部', hint: '构造节点、网格比例与工艺细部' },
+  { key: 'medium', label: '视觉媒介', hint: '摄影、数字插画、字体海报、配色色板、导视实拍等' },
+  { key: 'typology', label: '内容品类', hint: '建筑立面、实验字体、二次元立绘、灯具照明、空间导视等' },
+  { key: 'materials', label: '材质与技法', hint: '清水混凝土/原木等实体材质，或点阵像素/赛璐璐/水墨水彩等技法' },
+  { key: 'lighting', label: '光影色域', hint: '棚拍匀光、戏剧硬影、暖调氛围、漫射柔光、高饱和撞色' },
 ];
 
 function assetMatchesFacet(asset: CuratedShowcaseAsset, key: RagFacetKey, value: string): boolean {
   const facets = asset.rag_facets;
   if (!facets) return false;
+  if (key === 'medium') return facets.medium === value;
   if (key === 'typology') return facets.typology === value;
   if (key === 'lighting') return facets.lighting === value;
-  if (key === 'materials') return facets.materials.includes(value);
-  return facets.details.includes(value);
+  return facets.materials.includes(value);
 }
 
 export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ bundle }) => {
@@ -115,12 +116,15 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
           a.archetype_label,
           a.aesthetic_style_zh,
           a.aesthetic_style_en,
+          a.native_style_primary,
+          a.native_style_secondary,
           a.sub_style ?? a.sub_category,
           a.board_name,
+          a.rag_facets?.medium,
           a.rag_facets?.typology,
           a.rag_facets?.lighting,
           ...(a.rag_facets?.materials ?? []),
-          ...(a.rag_facets?.details ?? []),
+          ...(a.visual_traits ?? []),
           ...(a.rag_doc?.model_prompt_tokens ?? []),
           critique?.headline_insight,
           critique?.proportion_and_order,
@@ -433,7 +437,7 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
                 setSearchQuery(e.target.value);
                 setVisibleLimit(24);
               }}
-              placeholder="搜索模型风格词、品类/材质标签或比例特征（如：High-Tech、高技派、灯具照明、清水混凝土、Wabi-Sabi）..."
+              placeholder="搜索模型原生风格词、媒介/品类或像素特征（如：Anime Techwear、实验字体、Braun Functionalism、春雨）..."
               className="flex-1 min-w-0 h-full px-3 text-sm bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none"
             />
             {searchQuery && (
@@ -596,7 +600,7 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
               >
                 不限 <span className="mono opacity-80">({archetypeScopedAssets.length})</span>
               </button>
-              {styleOptions.map((st) => {
+              {(archetypeFilter === 'all' ? styleOptions.slice(0, 12) : styleOptions).map((st) => {
                 const active = styleFilter === st.id;
                 return (
                   <button
@@ -761,7 +765,10 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
             {filteredAssets.slice(0, visibleLimit).map((asset) => {
               const headline =
                 asset.aesthetic_critique?.headline_insight ?? asset.granular_descriptors.material_stack;
-              const imgObjPos = asset.archetype === 'editorial' ? 'object-top' : 'object-center';
+              const imgObjPos =
+                asset.archetype === 'illustration_character' || asset.archetype === 'fashion_photography'
+                  ? 'object-top'
+                  : 'object-center';
               return (
                 <article key={asset.asset_id} className="flex flex-col h-full">
                   <button
@@ -803,9 +810,9 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
                               {asset.rag_facets.materials[0]}
                             </span>
                           )}
-                          {asset.rag_facets.details[0] && (
+                          {asset.rag_facets.medium && (
                             <span className="rounded border border-border/80 bg-card px-1.5 py-0.5 text-[10px] text-muted-foreground truncate">
-                              {asset.rag_facets.details[0]}
+                              {asset.rag_facets.medium}
                             </span>
                           )}
                         </div>
@@ -822,9 +829,9 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
                     aria-label={`${asset.title} 主色板`}
                     className="mt-2.5 flex h-4 w-full shrink-0 rounded-sm border border-border overflow-hidden"
                   >
-                    {asset.granular_descriptors.color_palette.slice(0, 5).map((hex) => (
+                    {asset.granular_descriptors.color_palette.slice(0, 5).map((hex, idx) => (
                       <button
-                        key={hex}
+                        key={`${hex}-${idx}`}
                         type="button"
                         onClick={() => handleCopyHex(hex)}
                         title={`点击复制 ${hex}`}
