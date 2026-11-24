@@ -7,7 +7,7 @@ import math
 import os
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
@@ -25,6 +25,12 @@ from pipeline import (
     lint_constructability,
     project_panel_seams,
     summarize_project_ve,
+)
+from pipeline.atlas_rag_engine import (
+    fuse_with_nano_banana,
+    get_atlas_rag_status,
+    ingest_images,
+    semantic_search,
 )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -288,3 +294,71 @@ def api_project_seams(req: ProjectSeamsRequest) -> dict[str, object]:
     payload["edge_stretch_ratio"] = stretch_ratio
     payload["extreme_tilt_warning"] = stretch_ratio >= 1.48
     return payload
+
+
+class AtlasFuseRequest(BaseModel):
+    asset_ids: list[str] = Field(default_factory=list, max_length=3)
+    prompt: str = Field(default="", max_length=600)
+    aspect_ratio: str = Field(default="4:3")
+
+
+@app.get("/api/atlas/status")
+def api_atlas_status() -> dict[str, object]:
+    """Check whether Gemini Embedding 2 index and Gemini API key are ready for multimodal RAG."""
+    return get_atlas_rag_status()
+
+
+@app.post("/api/atlas/semantic-search")
+async def api_atlas_semantic_search(
+    query: str = Form(default=""),
+    top_k: int = Form(default=16),
+    image: UploadFile | None = File(default=None),
+) -> dict[str, object]:
+    """Multimodal semantic search over text, uploaded image, or both via Gemini Embedding 2."""
+    img_bytes = await image.read() if image is not None else None
+    try:
+        return semantic_search(query=query, image_bytes=img_bytes, top_k=top_k)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"语义搜图失败: {exc}") from exc
+
+
+@app.post("/api/atlas/fuse")
+def api_atlas_fuse(req: AtlasFuseRequest) -> dict[str, object]:
+    """Cross-domain aesthetic concept synthesis via Gemini Nano Banana 2.1 + controlled RAG tokens."""
+    try:
+        return fuse_with_nano_banana(
+            asset_ids=req.asset_ids,
+            prompt=req.prompt,
+            aspect_ratio=req.aspect_ratio,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"Nano Banana 2.1 融合出图失败: {exc}") from exc
+
+
+@app.post("/api/atlas/ingest")
+async def api_atlas_ingest(
+    files: list[UploadFile] = File(...),
+    source_label: str = Form(default="Drop-In 网页上传"),
+) -> dict[str, object]:
+    """Drop-in incremental upload: dHash dedup -> Gemini 4 Hydrogen -> Gemini Embedding 2 -> persist."""
+    if not files:
+        raise HTTPException(status_code=400, detail="请至少上传 1 张图片。")
+    items: list[tuple[str, bytes]] = []
+    for f in files[:12]:
+        raw = await f.read()
+        if raw:
+            items.append((f.filename or "upload.jpg", raw))
+    try:
+        return ingest_images(items, source_label=source_label)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"增量入库失败: {exc}") from exc

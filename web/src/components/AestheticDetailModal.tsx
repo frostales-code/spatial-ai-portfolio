@@ -1,16 +1,20 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, Copy, Compass, Database, Heart, Layers, SunMedium, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Copy, Compass, Database, Heart, Layers, Plus, Sparkles, SunMedium, X } from 'lucide-react';
 import type { SpectrumAxisId } from '@/engine/salienceMetric';
 import type { CuratedShowcaseAsset } from '@/types/aethervault';
 import { AestheticMiniRadar } from './AestheticMiniRadar';
 
 interface AestheticDetailModalProps {
   asset: CuratedShowcaseAsset | null;
+  allAssetsById?: Record<string, CuratedShowcaseAsset>;
   profileBaselineScores?: Partial<Record<SpectrumAxisId, number>>;
   currentIndex: number;
   totalFiltered: number;
+  isInFusion?: boolean;
+  onToggleFusion?: (assetId: string) => void;
+  onSelectNeighbor?: (assetId: string) => void;
   onPrev: () => void;
   onNext: () => void;
   onCopyHex: (hex: string) => Promise<void> | void;
@@ -19,9 +23,13 @@ interface AestheticDetailModalProps {
 
 export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
   asset,
+  allAssetsById,
   profileBaselineScores,
   currentIndex,
   totalFiltered,
+  isInFusion = false,
+  onToggleFusion,
+  onSelectNeighbor,
   onPrev,
   onNext,
   onCopyHex,
@@ -284,14 +292,30 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
               </h2>
             </div>
 
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="关闭美学深度解析"
-              className="hidden lg:flex w-9 h-9 shrink-0 rounded-md border border-border hover:border-primary/60 items-center justify-center text-foreground transition-colors"
-            >
-              <X className="w-4 h-4" strokeWidth={1.75} />
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              {onToggleFusion && (
+                <button
+                  type="button"
+                  onClick={() => onToggleFusion(asset.asset_id)}
+                  className={`h-9 px-3 rounded-md border text-xs font-semibold inline-flex items-center gap-1.5 transition-colors ${
+                    isInFusion
+                      ? 'border-amber-500 bg-amber-500/15 text-amber-600 dark:text-amber-400'
+                      : 'border-border hover:border-primary/60 bg-card text-foreground'
+                  }`}
+                >
+                  {isInFusion ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                  <span>{isInFusion ? '已在融合槽' : '加入融合'}</span>
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="关闭美学深度解析"
+                className="hidden lg:flex w-9 h-9 shrink-0 rounded-md border border-border hover:border-primary/60 items-center justify-center text-foreground transition-colors"
+              >
+                <X className="w-4 h-4" strokeWidth={1.75} />
+              </button>
+            </div>
           </div>
 
           {/* Headline Aesthetic Thesis */}
@@ -444,6 +468,49 @@ export const AestheticDetailModal: React.FC<AestheticDetailModalProps> = ({
               />
             </div>
           </div>
+
+          {/* 6 Closest Visual Neighbors Strip (Gemini Embedding 2) */}
+          {allAssetsById && onSelectNeighbor && asset.similar_ids && asset.similar_ids.length > 0 && (
+            <div className="pt-4 border-t border-border space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-foreground inline-flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+                  <span>最像视觉邻居漫游（Gemini Embedding 2）</span>
+                </span>
+                <span className="text-[11px] text-muted-foreground">点击直接跳转</span>
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                {asset.similar_ids.slice(0, 6).map((nb) => {
+                  const target = allAssetsById[nb.asset_id];
+                  if (!target) return null;
+                  return (
+                    <button
+                      key={nb.asset_id}
+                      type="button"
+                      onClick={() => onSelectNeighbor(nb.asset_id)}
+                      title={`${target.title}（相似度 ${Math.round(nb.score * 100)}%）`}
+                      className="group text-left space-y-1 rounded-md overflow-hidden focus-visible:outline-none"
+                    >
+                      <div className="relative aspect-square w-full rounded-md overflow-hidden border border-border group-hover:border-primary transition-colors bg-secondary/40">
+                        <img
+                          src={target.image_url}
+                          alt={target.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        />
+                        <span className="absolute bottom-1 right-1 rounded bg-black/70 px-1 py-0.5 mono text-[9px] text-white">
+                          {Math.round(nb.score * 100)}%
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-muted-foreground group-hover:text-foreground truncate">
+                        {target.title}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

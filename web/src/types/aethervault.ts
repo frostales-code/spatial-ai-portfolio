@@ -45,6 +45,9 @@ export interface RagDoc {
 export interface RagSchemaMeta {
   schema_version: string;
   vision_model?: string;
+  embedding_model?: string;
+  embedding_dim?: number;
+  fusion_model?: string;
   max_styles: number;
   facet_keys: Array<{
     key: RagFacetKey;
@@ -134,6 +137,10 @@ export interface CuratedShowcaseAsset {
   sub_category?: string;
   rag_facets?: RagFacets;
   rag_doc?: RagDoc;
+  map_2d?: { x: number; y: number };
+  map_3d?: { x: number; y: number; z: number };
+  core_distance?: number;
+  similar_ids?: Array<{ asset_id: string; score: number }>;
   aesthetic_critique?: AestheticCritique;
   aesthetic_motifs?: string[];
   aesthetic_quality_score?: number;

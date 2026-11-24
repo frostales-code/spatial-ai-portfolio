@@ -1,20 +1,39 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Box, Check, ChevronDown, ChevronUp, Copy, Database, Download, LayoutGrid, RotateCcw, Search, Sparkles, X } from 'lucide-react';
-import { ALL_AXIS_IDS, computeSalienceGatedDistance, distanceToMatchPercent, type SpectrumAxisId } from '@/engine/salienceMetric';
+import {
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  Database,
+  Download,
+  Image as ImageIcon,
+  ImagePlus,
+  LayoutGrid,
+  Loader2,
+  Orbit,
+  Plus,
+  RotateCcw,
+  Search,
+  Sparkles,
+  Wand2,
+  X,
+} from 'lucide-react';
+import { ALL_AXIS_IDS, type SpectrumAxisId } from '@/engine/salienceMetric';
 import type { AetherVaultShowcaseBundle, AestheticStyleId, AssetArchetype, CuratedShowcaseAsset, RagFacetKey } from '@/types/aethervault';
 import { AestheticDetailModal } from './AestheticDetailModal';
 import { AestheticMiniRadar } from './AestheticMiniRadar';
+import { DropInIngestModal, NanoBananaFusionModal } from './AtlasStudioModals';
 
-const AetherVaultManifold3D = dynamic(
-  () => import('./three/AetherVaultManifold3D').then((m) => m.AetherVaultManifold3D),
+const AestheticConstellation3D = dynamic(
+  () => import('./three/AestheticConstellation3D').then((m) => m.AestheticConstellation3D),
   {
     ssr: false,
     loading: () => (
-      <div className="h-[460px] rounded-xl border border-border bg-card flex items-center justify-center text-xs text-muted-foreground">
-        正在加载 500 件个人审美 3D 星图...
+      <div className="rounded-2xl border border-zinc-800 bg-[#07090e] h-[680px] flex items-center justify-center text-xs text-zinc-400">
+        正在初始化 3D 点阵审美星图...
       </div>
     ),
   }
@@ -54,24 +73,134 @@ function assetMatchesFacet(asset: CuratedShowcaseAsset, key: RagFacetKey, value:
 }
 
 export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ bundle }) => {
+  const [liveAssets, setLiveAssets] = useState<CuratedShowcaseAsset[]>(bundle.assets);
   const [searchQuery, setSearchQuery] = useState('');
   const [originFilter, setOriginFilter] = useState<OriginFilter>('all');
   const [archetypeFilter, setArchetypeFilter] = useState<'all' | AssetArchetype>('all');
   const [styleFilter, setStyleFilter] = useState<'all' | AestheticStyleId>('all');
   const [activeFacetKey, setActiveFacetKey] = useState<RagFacetKey>('typology');
   const [selectedFacets, setSelectedFacets] = useState<Partial<Record<RagFacetKey, string>>>({});
-  const [viewMode, setViewMode] = useState<'grid' | '3d'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'constellation'>('grid');
   const [visibleLimit, setVisibleLimit] = useState(24);
   const [dnaOpen, setDnaOpen] = useState(true);
   const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
+  // Multimodal Semantic & Image-to-Image Search State (Gemini Embedding 2)
+  const imageSearchInputRef = useRef<HTMLInputElement | null>(null);
+  const [semanticLoading, setSemanticLoading] = useState(false);
+  const [semanticError, setSemanticError] = useState<string | null>(null);
+  const [semanticMode, setSemanticMode] = useState<string | null>(null);
+  const [semanticImageName, setSemanticImageName] = useState<string | null>(null);
+  const [semanticScores, setSemanticScores] = useState<Record<string, number> | null>(null);
+  const [semanticLatencyMs, setSemanticLatencyMs] = useState<number | null>(null);
+  const [queryMap3d, setQueryMap3d] = useState<{ x: number; y: number; z: number } | null>(null);
+
+  // Nano Banana 2.1 Fusion & Drop-In Ingest State
+  const [fusionIds, setFusionIds] = useState<string[]>([]);
+  const [fusionOpen, setFusionOpen] = useState(false);
+  const [ingestOpen, setIngestOpen] = useState(false);
+
+  useEffect(() => {
+    setLiveAssets(bundle.assets);
+  }, [bundle.assets]);
+
   useEffect(() => {
     if (!toastMsg) return;
-    const t = setTimeout(() => setToastMsg(null), 2000);
+    const t = setTimeout(() => setToastMsg(null), 2200);
     return () => clearTimeout(t);
   }, [toastMsg]);
+
+  const allAssetsById = useMemo(() => {
+    const map: Record<string, CuratedShowcaseAsset> = {};
+    for (const a of liveAssets) map[a.asset_id] = a;
+    return map;
+  }, [liveAssets]);
+
+  const fusionAssets = useMemo(
+    () => fusionIds.map((id) => allAssetsById[id]).filter((a): a is CuratedShowcaseAsset => Boolean(a)),
+    [fusionIds, allAssetsById]
+  );
+
+  const handleToggleFusion = (assetId: string) => {
+    setFusionIds((prev) => {
+      if (prev.includes(assetId)) {
+        setToastMsg('已从融合参考槽移除');
+        return prev.filter((id) => id !== assetId);
+      }
+      if (prev.length >= 3) {
+        setToastMsg('融合槽最多选 3 张，已替换最早 1 张');
+        return [...prev.slice(1), assetId];
+      }
+      setToastMsg(`已加入融合参考槽 (${prev.length + 1}/3)`);
+      return [...prev, assetId];
+    });
+  };
+
+  const handleBatchSelectFusion = (ids: string[]) => {
+    const clean = ids.slice(0, 3);
+    setFusionIds(clean);
+    setToastMsg(`已框选 ${clean.length} 张参考图，可直接点击「融合出图」`);
+    setFusionOpen(true);
+  };
+
+  const handleRunSemanticSearch = async (uploadedFile?: File | null) => {
+    const q = searchQuery.trim();
+    if (!q && !uploadedFile) {
+      setToastMsg('请输入语义描述，或点击右侧相机图标上传参考图以图搜图');
+      return;
+    }
+    setSemanticLoading(true);
+    setSemanticError(null);
+    try {
+      const form = new FormData();
+      form.append('query', q);
+      form.append('top_k', '24');
+      if (uploadedFile) {
+        form.append('image', uploadedFile);
+      }
+      const res = await fetch('/api/atlas/semantic-search', {
+        method: 'POST',
+        body: form,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.detail || `语义检索失败 (HTTP ${res.status})`);
+      }
+      const scoreMap: Record<string, number> = {};
+      for (const r of data.results ?? []) {
+        scoreMap[r.asset_id] = r.score;
+      }
+      setSemanticScores(scoreMap);
+      setQueryMap3d(data.query_map_3d ?? null);
+      setSemanticMode(data.mode ?? 'text');
+      setSemanticLatencyMs(data.latency_ms ?? null);
+      if (uploadedFile) setSemanticImageName(uploadedFile.name);
+      else setSemanticImageName(null);
+      setVisibleLimit(24);
+      setToastMsg(
+        `Gemini Embedding 2 召回 Top-${Object.keys(scoreMap).length}（${Math.round(data.latency_ms ?? 0)} ms）`
+      );
+    } catch (err) {
+      setSemanticError(
+        err instanceof Error
+          ? err.message
+          : '请确认本地 FastAPI (127.0.0.1:8780) 已启动。'
+      );
+    } finally {
+      setSemanticLoading(false);
+    }
+  };
+
+  const clearSemanticSearch = () => {
+    setSemanticScores(null);
+    setQueryMap3d(null);
+    setSemanticMode(null);
+    setSemanticImageName(null);
+    setSemanticLatencyMs(null);
+    setSemanticError(null);
+  };
 
   const profileBaselineScores = useMemo(() => {
     const sig = bundle.aesthetic_profile?.axis_signature;
@@ -96,20 +225,21 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
   const originCounts = useMemo(() => {
     let pin = 0;
     let exp = 0;
-    for (const a of bundle.assets) {
+    for (const a of liveAssets) {
       if (a.source_origin === 'pinterest_personal' || a.subject_isolation.is_personal_prior) pin += 1;
       else exp += 1;
     }
-    return { all: bundle.assets.length, pinterest_personal: pin, profile_expansion: exp };
-  }, [bundle.assets]);
+    return { all: liveAssets.length, pinterest_personal: pin, profile_expansion: exp };
+  }, [liveAssets]);
 
   const originScopedAssets = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return bundle.assets.filter((a) => {
+    const useLexical = q.length > 0 && !semanticScores;
+    return liveAssets.filter((a) => {
       const isPin = a.source_origin === 'pinterest_personal' || a.subject_isolation.is_personal_prior;
       if (originFilter === 'pinterest_personal' && !isPin) return false;
       if (originFilter === 'profile_expansion' && isPin) return false;
-      if (q) {
+      if (useLexical) {
         const critique = a.aesthetic_critique;
         const hay = [
           a.title,
@@ -140,7 +270,7 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
       }
       return true;
     });
-  }, [bundle.assets, originFilter, searchQuery]);
+  }, [liveAssets, originFilter, searchQuery, semanticScores]);
 
   const archetypeCounts = useMemo(() => {
     const counts: Record<string, number> = { all: originScopedAssets.length };
@@ -207,26 +337,27 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
     return Object.entries(counts).sort((a, b) => b[1] - a[1]);
   }, [styleScopedAssets, selectedFacets, activeFacetKey]);
 
-  const filteredAssets = useMemo(() => {
+  const facetScopedAssets = useMemo(() => {
     const activeEntries = (Object.entries(selectedFacets) as Array<[RagFacetKey, string | undefined]>).filter(
       (entry): entry is [RagFacetKey, string] => Boolean(entry[1])
     );
-    if (activeEntries.length === 0) return styleScopedAssets;
-    return styleScopedAssets.filter((a) =>
-      activeEntries.every(([fk, fv]) => assetMatchesFacet(a, fk, fv))
-    );
+    return activeEntries.length === 0
+      ? styleScopedAssets
+      : styleScopedAssets.filter((a) => activeEntries.every(([fk, fv]) => assetMatchesFacet(a, fk, fv)));
   }, [styleScopedAssets, selectedFacets]);
 
-  const manifoldItems = useMemo(() => {
-    return filteredAssets.map((asset) => {
-      const distance = computeSalienceGatedDistance(profileBaselineScores, asset.style_spectrums);
-      return {
-        asset,
-        distance,
-        matchPct: distanceToMatchPercent(distance),
-      };
-    });
-  }, [filteredAssets, profileBaselineScores]);
+  const filteredAssets = useMemo(() => {
+    let list = facetScopedAssets;
+    if (semanticScores) {
+      const matched = list.filter((a) => semanticScores[a.asset_id] !== undefined);
+      if (matched.length > 0) {
+        list = [...matched].sort(
+          (a, b) => (semanticScores[b.asset_id] ?? 0) - (semanticScores[a.asset_id] ?? 0)
+        );
+      }
+    }
+    return list;
+  }, [facetScopedAssets, semanticScores]);
 
   const selectedIndex = useMemo(() => {
     if (!selectedAssetId) return -1;
@@ -236,8 +367,8 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
   const activeModalAsset: CuratedShowcaseAsset | null = useMemo(() => {
     if (!selectedAssetId) return null;
     if (selectedIndex >= 0) return filteredAssets[selectedIndex];
-    return bundle.assets.find((a) => a.asset_id === selectedAssetId) ?? null;
-  }, [selectedAssetId, selectedIndex, filteredAssets, bundle.assets]);
+    return allAssetsById[selectedAssetId] ?? null;
+  }, [selectedAssetId, selectedIndex, filteredAssets, allAssetsById]);
 
   const handleCopyHex = async (hex: string) => {
     setCopiedHex(hex);
@@ -265,7 +396,8 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
     originFilter !== 'all' ||
     archetypeFilter !== 'all' ||
     styleFilter !== 'all' ||
-    activeFacetEntries.length > 0;
+    activeFacetEntries.length > 0 ||
+    Boolean(semanticScores);
 
   const handleReset = () => {
     setSearchQuery('');
@@ -273,6 +405,7 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
     setArchetypeFilter('all');
     setStyleFilter('all');
     setSelectedFacets({});
+    clearSemanticSearch();
     setVisibleLimit(24);
   };
 
@@ -312,22 +445,44 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1.5 max-w-3xl">
             <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-foreground">
-              个人视觉审美图谱 · {bundle.total_assets} 张高审美档案深度解构
+              个人视觉审美图谱 · {liveAssets.length} 张高审美档案深度解构
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              基于全量 523 张个人 Pinterest 原图提炼审美基因，精选保留 {originCounts.pinterest_personal} 张核心样本并跨源扩展{' '}
-              {originCounts.profile_expansion} 张同频设计档案——每一张图均已完成门类归类、风格细分与「比例 / 材质 / 审美共鸣」逐图剖析。
+              基于全量 523 张个人 Pinterest 原图提炼审美基因，精选保留 {originCounts.pinterest_personal} 张个人核心与{' '}
+              {originCounts.profile_expansion} 张当代 Pinterest 同频扩展——全库经 Gemini 4 Hydrogen 原图直读与 Gemini Embedding 2 多模态向量索引，支持语义/以图搜图、3D 点阵引力星图漫游与 Nano Banana 2.1 跨界融合出图。
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setDnaOpen((v) => !v)}
-            className="self-start sm:self-center shrink-0 min-h-[36px] px-3.5 rounded-md border border-border hover:border-primary/60 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-1.5 transition-colors"
-          >
-            {dnaOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-            <span>{dnaOpen ? '收起个人画像' : '展开个人画像'}</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center shrink-0">
+            <button
+              type="button"
+              onClick={() => setIngestOpen(true)}
+              className="min-h-[36px] px-3 rounded-md border border-border hover:border-primary/60 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-1.5 transition-colors"
+            >
+              <ImagePlus className="w-3.5 h-3.5 text-primary" />
+              <span>导入新图</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setFusionOpen(true)}
+              className={`min-h-[36px] px-3 rounded-md border text-xs font-semibold inline-flex items-center gap-1.5 transition-colors ${
+                fusionIds.length > 0
+                  ? 'border-amber-500 bg-amber-500/15 text-amber-600 dark:text-amber-400'
+                  : 'border-border hover:border-primary/60 bg-card text-foreground'
+              }`}
+            >
+              <Wand2 className="w-3.5 h-3.5" />
+              <span>融合出图 ({fusionIds.length}/3)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setDnaOpen((v) => !v)}
+              className="min-h-[36px] px-3 rounded-md border border-border hover:border-primary/60 bg-card text-xs font-semibold text-foreground inline-flex items-center gap-1.5 transition-colors"
+            >
+              {dnaOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              <span>{dnaOpen ? '收起画像' : '展开画像'}</span>
+            </button>
+          </div>
         </div>
 
         {dnaOpen && bundle.aesthetic_profile && (
@@ -424,7 +579,7 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
           <div className="flex-1 flex items-center h-10 rounded-md border border-border focus-within:border-primary bg-card overflow-hidden">
             <label htmlFor="atlas-search" className="sr-only">
-              搜索标题、细分风格、比例特点或材质关键词
+              关键词过滤或输入自然语言语义搜图
             </label>
             <div className="pl-3 text-muted-foreground" aria-hidden="true">
               <Search className="w-4 h-4" />
@@ -435,21 +590,63 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
+                if (semanticScores && !semanticImageName) clearSemanticSearch();
                 setVisibleLimit(24);
               }}
-              placeholder="搜索模型原生风格词、媒介/品类或像素特征（如：Anime Techwear、实验字体、Braun Functionalism、春雨）..."
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && searchQuery.trim()) {
+                  e.preventDefault();
+                  handleRunSemanticSearch(null);
+                }
+              }}
+              placeholder="输入关键词实时筛，或按回车「语义搜图」（如：像春雨那种点阵秩序用在金属导视上）..."
               className="flex-1 min-w-0 h-full px-3 text-sm bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none"
             />
-            {searchQuery && (
+            {(searchQuery || semanticScores) && (
               <button
                 type="button"
-                aria-label="清空搜索关键词"
-                onClick={() => setSearchQuery('')}
-                className="h-full px-2.5 text-muted-foreground hover:text-foreground flex items-center"
+                aria-label="清空搜索"
+                onClick={() => {
+                  setSearchQuery('');
+                  clearSemanticSearch();
+                }}
+                className="h-full px-2 text-muted-foreground hover:text-foreground flex items-center"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
+            <button
+              type="button"
+              disabled={semanticLoading}
+              onClick={() => handleRunSemanticSearch(null)}
+              title="使用 Gemini Embedding 2 执行多模态语义搜图"
+              className="h-full px-2.5 border-l border-border bg-secondary/40 hover:bg-secondary text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0 transition-colors"
+            >
+              {semanticLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+              <span className="hidden sm:inline">语义搜图</span>
+            </button>
+            <input
+              ref={imageSearchInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) handleRunSemanticSearch(f);
+                e.currentTarget.value = '';
+              }}
+            />
+            <button
+              type="button"
+              disabled={semanticLoading}
+              onClick={() => imageSearchInputRef.current?.click()}
+              title="上传任意参考图以图搜图（Gemini Embedding 2）"
+              aria-label="以图搜图"
+              className="h-full px-2.5 border-l border-border bg-card hover:bg-secondary/60 text-xs font-medium text-foreground inline-flex items-center gap-1 shrink-0 transition-colors"
+            >
+              <ImageIcon className="w-3.5 h-3.5 text-primary" />
+              <span className="hidden md:inline">以图搜图</span>
+            </button>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 shrink-0">
@@ -507,15 +704,15 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
               </button>
               <button
                 type="button"
-                aria-pressed={viewMode === '3d'}
-                onClick={() => setViewMode('3d')}
+                aria-pressed={viewMode === 'constellation'}
+                onClick={() => setViewMode('constellation')}
                 className={`h-full px-3 text-xs font-medium inline-flex items-center gap-1.5 transition-colors ${
-                  viewMode === '3d'
+                  viewMode === 'constellation'
                     ? 'bg-foreground text-background font-semibold'
                     : 'bg-card text-foreground hover:bg-secondary/60'
                 }`}
               >
-                <Box className="w-3.5 h-3.5" />
+                <Orbit className="w-3.5 h-3.5" />
                 <span>3D 审美星图</span>
               </button>
             </div>
@@ -532,6 +729,46 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
             )}
           </div>
         </div>
+
+        {/* Active Multimodal Semantic / Image Search Status Banner */}
+        {(semanticScores || semanticError) && (
+          <div
+            className={`rounded-lg border px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs ${
+              semanticError
+                ? 'border-destructive/50 bg-destructive/10 text-destructive'
+                : 'border-primary/40 bg-primary/10 text-foreground'
+            }`}
+          >
+            {semanticError ? (
+              <span>{semanticError}</span>
+            ) : (
+              <span className="inline-flex flex-wrap items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
+                <strong>
+                  Gemini Embedding 2 {semanticMode === 'image' ? '以图搜图' : semanticMode === 'multimodal' ? '图文多模态检索' : '语义检索'}
+                </strong>
+                {semanticImageName && (
+                  <span className="rounded bg-card border border-border px-1.5 py-0.5 mono text-[11px]">
+                    参考图: {semanticImageName}
+                  </span>
+                )}
+                <span className="text-muted-foreground">
+                  已按余弦相似度重排 Top-{Object.keys(semanticScores ?? {}).length}（{Math.round(semanticLatencyMs ?? 0)} ms）· 切换「2D 语义画布」可查看落点与连线
+                </span>
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery('');
+                clearSemanticSearch();
+              }}
+              className="text-xs font-semibold text-primary hover:underline shrink-0"
+            >
+              退出语义检索
+            </button>
+          </div>
+        )}
 
         {/* Tier 1: 7 Primary Archetype Pills + Tier 2: 12 Model-Native Aesthetic Styles + Tier 3: Bounded 4-Key RAG Facets */}
         <div className="space-y-3 pt-1">
@@ -732,25 +969,27 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
         </div>
       </section>
 
-      {/* Main Content: 3D Constellation OR Clean Editorial Grid */}
-      {viewMode === '3d' ? (
-        filteredAssets.length > 0 ? (
-          <AetherVaultManifold3D
-            rankedAssets={manifoldItems}
-            axes={bundle.axes}
-            queryScores={profileBaselineScores}
-            minimalMode
+      {/* Main Content: 3D Dot-Matrix Aesthetic Constellation OR Clean Editorial Grid */}
+      {viewMode === 'constellation' ? (
+        facetScopedAssets.length > 0 ? (
+          <AestheticConstellation3D
+            assets={facetScopedAssets}
+            fusionIds={fusionIds}
+            queryMap3d={queryMap3d}
+            semanticScores={semanticScores}
             onSelectAsset={(asset) => setSelectedAssetId(asset.asset_id)}
+            onToggleFusion={handleToggleFusion}
+            onBatchSelectFusion={handleBatchSelectFusion}
           />
         ) : (
           <div className="rounded-xl border border-border bg-secondary/50 p-12 text-center text-sm text-muted-foreground">
-            当前筛选条件下暂无样本，请重置筛选后查看 3D 星图。
+            当前筛选条件下暂无样本，请重置筛选后查看 3D 审美星图。
           </div>
         )
       ) : filteredAssets.length === 0 ? (
         <div className="rounded-xl border border-border bg-secondary/50 py-16 px-6 text-center space-y-3">
           <div className="text-base font-bold text-foreground">未找到匹配的审美档案</div>
-          <p className="text-xs text-muted-foreground">可清空关键词或切换门类查看全部 {bundle.total_assets} 件图库样本。</p>
+          <p className="text-xs text-muted-foreground">可清空关键词或切换门类查看全部 {liveAssets.length} 件图库样本。</p>
           <button
             type="button"
             onClick={handleReset}
@@ -769,8 +1008,29 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
                 asset.archetype === 'illustration_character' || asset.archetype === 'fashion_photography'
                   ? 'object-top'
                   : 'object-center';
+              const isPinnedFusion = fusionIds.includes(asset.asset_id);
+              const semScore = semanticScores?.[asset.asset_id];
               return (
-                <article key={asset.asset_id} className="flex flex-col h-full">
+                <article key={asset.asset_id} className="group/card relative flex flex-col h-full">
+                  <button
+                    type="button"
+                    onClick={() => handleToggleFusion(asset.asset_id)}
+                    title={isPinnedFusion ? '从融合参考槽移除' : '加入 Nano Banana 2.1 融合参考槽'}
+                    aria-label={isPinnedFusion ? `从融合槽移除 ${asset.title}` : `将 ${asset.title} 加入融合槽`}
+                    className={`absolute top-2 right-2 z-10 h-7 px-2 rounded-md border text-[11px] font-semibold inline-flex items-center gap-1 shadow-sm transition-opacity ${
+                      isPinnedFusion
+                        ? 'opacity-100 border-amber-500 bg-amber-500 text-white'
+                        : 'opacity-0 group-hover/card:opacity-100 focus-visible:opacity-100 border-white/30 bg-black/70 text-white hover:bg-primary'
+                    }`}
+                  >
+                    {isPinnedFusion ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                    <span>{isPinnedFusion ? '已选' : '融合'}</span>
+                  </button>
+                  {semScore !== undefined && (
+                    <span className="pointer-events-none absolute top-2 left-2 z-10 rounded bg-primary/90 text-primary-foreground px-1.5 py-0.5 mono text-[10px] font-semibold shadow-sm">
+                      {Math.round(semScore * 100)}% 相似
+                    </span>
+                  )}
                   <button
                     type="button"
                     onClick={() => setSelectedAssetId(asset.asset_id)}
@@ -871,9 +1131,13 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
       {/* Deep Aesthetic Critique Modal (outside space-y-8 so margin-top never shifts fixed backdrop) */}
       <AestheticDetailModal
         asset={activeModalAsset}
+        allAssetsById={allAssetsById}
         profileBaselineScores={profileBaselineScores}
         currentIndex={Math.max(0, selectedIndex)}
         totalFiltered={filteredAssets.length}
+        isInFusion={activeModalAsset ? fusionIds.includes(activeModalAsset.asset_id) : false}
+        onToggleFusion={handleToggleFusion}
+        onSelectNeighbor={(neighborId) => setSelectedAssetId(neighborId)}
         onPrev={() => {
           if (filteredAssets.length <= 1 || selectedIndex < 0) return;
           const prevIdx = (selectedIndex - 1 + filteredAssets.length) % filteredAssets.length;
@@ -886,6 +1150,26 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
         }}
         onCopyHex={handleCopyHex}
         onClose={() => setSelectedAssetId(null)}
+      />
+
+      <NanoBananaFusionModal
+        isOpen={fusionOpen}
+        selectedAssets={fusionAssets}
+        onRemoveAsset={(id) => setFusionIds((prev) => prev.filter((x) => x !== id))}
+        onClose={() => setFusionOpen(false)}
+      />
+
+      <DropInIngestModal
+        isOpen={ingestOpen}
+        onIngested={(newAssets) => {
+          setLiveAssets((prev) => {
+            const seen = new Set(prev.map((a) => a.asset_id));
+            const fresh = newAssets.filter((a) => !seen.has(a.asset_id));
+            return [...fresh, ...prev];
+          });
+          setToastMsg(`已新增 ${newAssets.length} 张参考图并即时投影至 2D 语义画布`);
+        }}
+        onClose={() => setIngestOpen(false)}
       />
 
       {toastMsg && (
