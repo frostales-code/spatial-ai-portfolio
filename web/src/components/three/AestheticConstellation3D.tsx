@@ -684,7 +684,7 @@ export const AestheticConstellation3D: React.FC<AestheticConstellation3DProps> =
     const webMat = new THREE.LineBasicMaterial({
       vertexColors: true,
       transparent: true,
-      opacity: 0.16,
+      opacity: nodes.length > 1000 ? 0.11 : 0.16,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });

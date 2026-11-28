@@ -16,6 +16,7 @@ import {
   Orbit,
   Plus,
   RotateCcw,
+  Scale,
   Search,
   Sparkles,
   Wand2,
@@ -26,6 +27,7 @@ import type { AetherVaultShowcaseBundle, AestheticStyleId, AssetArchetype, Curat
 import { AestheticDetailModal } from './AestheticDetailModal';
 import { AestheticMiniRadar } from './AestheticMiniRadar';
 import { DropInIngestModal, NanoBananaFusionModal } from './AtlasStudioModals';
+import { TasteCalibrationModal } from './TasteCalibrationModal';
 
 const AestheticConstellation3D = dynamic(
   () => import('./three/AestheticConstellation3D').then((m) => m.AestheticConstellation3D),
@@ -97,10 +99,11 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
   const [semanticLatencyMs, setSemanticLatencyMs] = useState<number | null>(null);
   const [queryMap3d, setQueryMap3d] = useState<{ x: number; y: number; z: number } | null>(null);
 
-  // Nano Banana 2.1 Fusion & Drop-In Ingest State
+  // Nano Banana 2.1 Fusion, Drop-In Ingest & Taste Calibration Bench State
   const [fusionIds, setFusionIds] = useState<string[]>([]);
   const [fusionOpen, setFusionOpen] = useState(false);
   const [ingestOpen, setIngestOpen] = useState(false);
+  const [calibrationOpen, setCalibrationOpen] = useState(false);
 
   useEffect(() => {
     setLiveAssets(bundle.assets);
@@ -232,16 +235,13 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
     return { all: liveAssets.length, pinterest_personal: pin, profile_expansion: exp };
   }, [liveAssets]);
 
-  const originScopedAssets = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    const useLexical = q.length > 0 && !semanticScores;
-    return liveAssets.filter((a) => {
-      const isPin = a.source_origin === 'pinterest_personal' || a.subject_isolation.is_personal_prior;
-      if (originFilter === 'pinterest_personal' && !isPin) return false;
-      if (originFilter === 'profile_expansion' && isPin) return false;
-      if (useLexical) {
-        const critique = a.aesthetic_critique;
-        const hay = [
+  const lexicalIndex = useMemo(() => {
+    const idx = new Map<string, string>();
+    for (const a of liveAssets) {
+      const critique = a.aesthetic_critique;
+      idx.set(
+        a.asset_id,
+        [
           a.title,
           a.archetype_label,
           a.aesthetic_style_zh,
@@ -265,12 +265,26 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
         ]
           .filter(Boolean)
           .join(' ')
-          .toLowerCase();
+          .toLowerCase(),
+      );
+    }
+    return idx;
+  }, [liveAssets]);
+
+  const originScopedAssets = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    const useLexical = q.length > 0 && !semanticScores;
+    return liveAssets.filter((a) => {
+      const isPin = a.source_origin === 'pinterest_personal' || a.subject_isolation.is_personal_prior;
+      if (originFilter === 'pinterest_personal' && !isPin) return false;
+      if (originFilter === 'profile_expansion' && isPin) return false;
+      if (useLexical) {
+        const hay = lexicalIndex.get(a.asset_id) ?? '';
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [liveAssets, originFilter, searchQuery, semanticScores]);
+  }, [liveAssets, lexicalIndex, originFilter, searchQuery, semanticScores]);
 
   const archetypeCounts = useMemo(() => {
     const counts: Record<string, number> = { all: originScopedAssets.length };
@@ -454,6 +468,14 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
           </div>
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-center shrink-0">
+            <button
+              type="button"
+              onClick={() => setCalibrationOpen(true)}
+              className="min-h-[36px] px-3 rounded-md border border-primary/50 hover:border-primary bg-primary/10 hover:bg-primary/15 text-xs font-semibold text-primary inline-flex items-center gap-1.5 transition-colors"
+            >
+              <Scale className="w-3.5 h-3.5" />
+              <span>品味校准台</span>
+            </button>
             <button
               type="button"
               onClick={() => setIngestOpen(true)}
@@ -1171,6 +1193,8 @@ export const PersonalAestheticAtlas: React.FC<PersonalAestheticAtlasProps> = ({ 
         }}
         onClose={() => setIngestOpen(false)}
       />
+
+      <TasteCalibrationModal isOpen={calibrationOpen} onClose={() => setCalibrationOpen(false)} />
 
       {toastMsg && (
         <div

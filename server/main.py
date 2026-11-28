@@ -32,6 +32,13 @@ from pipeline.atlas_rag_engine import (
     ingest_images,
     semantic_search,
 )
+from pipeline.taste_engine_v2 import (
+    append_calibration_vote,
+    get_calibration_state,
+    rerank_three_lanes,
+    sample_next_calibration_pair,
+    update_craft_anchor,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CURATED_DIR = REPO_ROOT / "data" / "curated_80"
@@ -362,3 +369,102 @@ async def api_atlas_ingest(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"增量入库失败: {exc}") from exc
+
+
+class TasteCalibrationVoteRequest(BaseModel):
+    signal: str = Field(..., pattern="^(core_taste|serendipity_save)$")
+    asset_a: str
+    asset_b: str
+    choice: str = Field(..., pattern="^(a|b|tie_like|cannot_compare|skip|both|neither)$")
+    chosen_reasons: list[str] = Field(default_factory=list)
+    reason_note: str = ""
+    meta: dict[str, object] = Field(default_factory=dict)
+
+
+class CraftAnchorUpdateRequest(BaseModel):
+    domain: str
+    role: str = Field(..., pattern="^(familiar_anchor|contrast_anchor)$")
+    asset_id: str | None = None
+    confirmed: bool | None = None
+    craft_confirmed: bool | None = None
+    contrast_confirmed: bool | None = None
+    cycle_next: bool = False
+
+
+@app.get("/api/atlas/calibration/state")
+def api_atlas_calibration_state(
+    stratum: str | None = Query(default=None),
+) -> dict[str, object]:
+    """Return v2.1 K=10 Medoids, 7-param Hierarchical BT metrics, 完成度标准 anchors, and stratified pairs."""
+    try:
+        return get_calibration_state(requested_stratum=stratum)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"读取校准状态失败: {exc}") from exc
+
+
+@app.post("/api/atlas/calibration/vote")
+def api_atlas_calibration_vote(req: TasteCalibrationVoteRequest) -> dict[str, object]:
+    """Record a dual-signal pairwise vote (strictly isolating stratified core_taste vs serendipity_save)."""
+    try:
+        rec = append_calibration_vote(
+            signal=req.signal,
+            asset_a=req.asset_a,
+            asset_b=req.asset_b,
+            choice=req.choice,
+            meta=req.meta,
+            chosen_reasons=req.chosen_reasons,
+            reason_note=req.reason_note,
+        )
+        req_stratum = req.meta.get("locked_stratum")
+        state = get_calibration_state(
+            requested_stratum=str(req_stratum) if isinstance(req_stratum, str) and req_stratum else None
+        )
+        return {"recorded": rec, "state": state}
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"保存投票失败: {exc}") from exc
+
+
+@app.get("/api/atlas/calibration/next-pair")
+def api_atlas_calibration_next_pair(
+    signal: str = Query(default="core_taste", pattern="^(core_taste|serendipity_save)$"),
+    stratum: str | None = Query(default=None),
+) -> dict[str, object]:
+    """Sample a fresh stratified pair for Q1 (T1-T4) or pixel-contrast pair for Q2."""
+    pair = sample_next_calibration_pair(signal=signal, stratum=stratum)
+    return {"pair": pair}
+
+
+@app.post("/api/atlas/calibration/anchors")
+def api_atlas_calibration_anchors(req: CraftAnchorUpdateRequest) -> dict[str, object]:
+    """Confirm completion standard / contrast distinction or cycle contrast reference candidate."""
+    try:
+        anchors = update_craft_anchor(
+            domain=req.domain,
+            role=req.role,
+            asset_id=req.asset_id,
+            confirmed=req.confirmed,
+            craft_confirmed=req.craft_confirmed,
+            contrast_confirmed=req.contrast_confirmed,
+            cycle_next=req.cycle_next,
+        )
+        return {"anchors": anchors, "state": get_calibration_state()}
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"更新参考标准失败: {exc}") from exc
+
+
+@app.get("/api/atlas/calibration/rerank")
+def api_atlas_calibration_rerank(
+    target_total: int = Query(default=1110, ge=60, le=2000),
+    exploration_cap_ratio: float = Query(default=0.15, ge=0.0, le=0.35),
+) -> dict[str, object]:
+    """Run <20ms Zero-LLM 3-Lane Portfolio Slotting + Intra-Lane MMR."""
+    return rerank_three_lanes(
+        target_total=target_total,
+        exploration_cap_ratio=exploration_cap_ratio,
+    )

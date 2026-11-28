@@ -150,7 +150,8 @@ def main() -> None:
         a["similar_ids"] = top_neighbors[aid]
         patched += 1
 
-    bundle["schema_version"] = "6.2.0-constellation-3d-dotmatrix-600"
+    bundle["version"] = f"6.4.0-constellation-3d-atlas-{n}"
+    bundle["schema_version"] = f"6.4.0-constellation-3d-atlas-{n}"
 
     np.savez_compressed(
         EMB_NPZ_PATH,
@@ -162,7 +163,7 @@ def main() -> None:
         core_distances=core_distances,
     )
 
-    serialized = json.dumps(bundle, ensure_ascii=False, indent=2)
+    serialized = json.dumps(bundle, ensure_ascii=False, separators=(",", ":"))
     WEB_PERSONAL_JSON.write_text(serialized, encoding="utf-8")
     ASSETS_500_JSON.write_text(serialized, encoding="utf-8")
 

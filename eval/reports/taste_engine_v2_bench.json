@@ -1,0 +1,99 @@
+{
+  "version": "2.0.0-taste-bench",
+  "k_medoids": 10,
+  "personal_count": 390,
+  "total_atlas_count": 1500,
+  "rerank_latency_ms": {
+    "runs": 30,
+    "p50_ms": 13.7,
+    "p95_ms": 19.8,
+    "max_ms": 21.45,
+    "pass_under_20ms": true
+  },
+  "lane_counts": {
+    "core_resonance": 624,
+    "cross_domain_bridge": 278,
+    "adversarial_exploration": 127,
+    "exploration_qualified_pool": 127,
+    "exploration_cap": 166,
+    "exploration_underfilled_honestly": true
+  },
+  "bt_model": {
+    "fitted": true,
+    "n_stratified_pairs": 9,
+    "legacy_cross_domain_diagnostic": 38,
+    "tie_like_count": 0,
+    "cannot_compare_count": 0,
+    "stratum_counts": {
+      "T1_macro_style": 6,
+      "T2_same_style_instance": 3,
+      "T3_same_subject_treatment": 0,
+      "T4_same_comp_material_or_subject": 0
+    },
+    "theta7": [
+      0.2639,
+      -0.3415,
+      -0.3685,
+      0.0406,
+      -0.4521,
+      -0.4299,
+      0.5417
+    ],
+    "alpha_macro2": [
+      0.2639,
+      -0.3415
+    ],
+    "beta_micro5": [
+      -0.3685,
+      0.0406,
+      -0.4521,
+      -0.4299,
+      0.5417
+    ],
+    "beta_labels": [
+      "色彩丰富度",
+      "色温暖度",
+      "明暗跨度",
+      "构图留白",
+      "纹理边缘复杂度"
+    ],
+    "train_acc": 0.8889,
+    "cv_acc": 0.5556,
+    "cv_logloss": 0.6919,
+    "macro_only_acc": 0.4444,
+    "max_medoid_acc": 0.2222,
+    "single_centroid_acc": 0.5556
+  },
+  "serendipity_eval": {
+    "n_votes": 13,
+    "n_saved": 13,
+    "save_rate": 1.0
+  },
+  "coupled_axis_pairs_gt_035": [
+    {
+      "axis_a": "chromatic_tension",
+      "axis_b": "reality_abstraction",
+      "r": 0.567
+    },
+    {
+      "axis_a": "spatial_density",
+      "axis_b": "chromatic_tension",
+      "r": 0.528
+    },
+    {
+      "axis_a": "spatial_density",
+      "axis_b": "reality_abstraction",
+      "r": 0.485
+    },
+    {
+      "axis_a": "surface_entropy",
+      "axis_b": "thermal_mood",
+      "r": 0.437
+    },
+    {
+      "axis_a": "tectonic_honesty",
+      "axis_b": "spatial_density",
+      "r": 0.36
+    }
+  ]
+}
