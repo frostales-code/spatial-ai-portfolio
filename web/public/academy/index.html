@@ -1,0 +1,3213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Systems Architecture Reference — 结构化技术架构与选型手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Chivo+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --obsidian: #090A0D;
+    --obsidian-surface: #12141A;
+    --obsidian-line: rgba(255, 255, 255, 0.12);
+    --obsidian-muted: #8E96A6;
+    --paper: #FFFFFF;
+    --surface: #F7F8FA;
+    --ink: #0B0D12;
+    --ink-2: #2B313C;
+    --muted: #5B6373;
+    --line: #E5E8EE;
+    --line-strong: #CBD1DC;
+    --cobalt: #1D4ED8;
+    --cobalt-bright: #3B82F6;
+    --cobalt-tint: #EFF4FF;
+    --teal: #0F766E;
+    --teal-tint: #ECFDF5;
+    --amber: #B45309;
+    --amber-tint: #FFFBEB;
+    --crimson: #B91C1C;
+    --crimson-tint: #FEF2F2;
+    --font-display: 'Archivo', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+    --font-body: 'Manrope', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Chivo Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 112px; color-scheme: light; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--cobalt-tint); color: var(--cobalt); }
+  :focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+  /* ==================== STICKY 2-TIER STRUCTURED NAVIGATION ==================== */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--obsidian);
+    color: #FFFFFF;
+    border-bottom: 1px solid var(--obsidian-line);
+  }
+  .header-top {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--obsidian-line);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+  .brand-sq {
+    width: 8px;
+    height: 8px;
+    background: var(--cobalt-bright);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+  }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--obsidian-muted);
+    font-weight: 400;
+  }
+  .header-tools {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cmd-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 32px;
+    padding: 0 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.16);
+    color: #CBD5E1;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .cmd-btn:hover { border-color: #FFFFFF; color: #FFFFFF; }
+  .cmd-kbd {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--obsidian-muted);
+    padding: 0 4px;
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .progress-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #CBD5E1;
+  }
+  .progress-track {
+    width: 56px;
+    height: 3px;
+    background: rgba(255,255,255,0.16);
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--cobalt-bright);
+    width: 0%;
+    transition: width 0.25s ease;
+  }
+
+  /* Category Navigation Rail (modern-web-guidance tabs: single-row scrollable, aria-selected underline) */
+  .cat-rail-wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  .cat-rail {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: inline proximity;
+  }
+  .cat-rail::-webkit-scrollbar { display: none; }
+  .cat-tab {
+    flex: none;
+    position: relative;
+    background: transparent;
+    border: none;
+    color: var(--obsidian-muted);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 13px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    transition: color 0.15s;
+  }
+  .cat-tab:hover { color: #FFFFFF; }
+  .cat-tab[aria-selected="true"] { color: #FFFFFF; font-weight: 600; }
+  .cat-tab[aria-selected="true"]::after {
+    content: "";
+    position: absolute;
+    inset: auto 10px 0;
+    border-block-end: 2px solid var(--cobalt-bright);
+  }
+  .cat-tab .cn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #64748B;
+    margin-right: 5px;
+  }
+  .cat-tab[aria-selected="true"] .cn { color: #60A5FA; }
+
+  /* ==================== MAIN CONTENT CONTAINER ==================== */
+  .views-host { display: block; }
+  .cat-panel[hidden] { pointer-events: none; }
+  .cat-panel-inner { min-height: calc(100dvh - 102px); }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* Category Dark Banner (Cool Architectural Minimalism) */
+  .cat-banner {
+    background:
+      radial-gradient(circle at 86% 24%, rgba(37, 99, 235, 0.22), transparent 46%),
+      radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+      var(--obsidian);
+    background-size: auto, 24px 24px, auto;
+    color: #FFFFFF;
+    padding: 44px 0 36px;
+    border-bottom: 1px solid var(--obsidian-line);
+  }
+  .banner-kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #60A5FA;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .cat-banner h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+  }
+  .banner-desc {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: #A1A9B8;
+    max-width: 68ch;
+  }
+  .banner-desc strong { color: #FFFFFF; font-weight: 600; }
+
+  /* Anchor Jump Strip inside Category Banner */
+  .toc-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--obsidian-line);
+  }
+  .toc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 12.5px;
+    color: #E2E8F0;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.14);
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .toc-link:hover { border-color: var(--cobalt-bright); background: rgba(59, 130, 246, 0.14); color: #FFFFFF; }
+  .toc-link .tnum { font-family: var(--font-mono); font-size: 12px; color: #60A5FA; }
+
+  /* Body Sections */
+  .section-pad { padding: 40px 0 64px; }
+  .block-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .block-title-row h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .block-sub {
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 16px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0;
+    text-decoration: none;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .btn:hover { border-color: var(--ink); background: var(--surface); }
+  .btn-primary { background: var(--cobalt); border-color: var(--cobalt); color: #FFFFFF; }
+  .btn-primary:hover { background: #1E40AF; border-color: #1E40AF; }
+  .btn-light { background: #FFFFFF; border-color: #FFFFFF; color: var(--obsidian); }
+  .btn-light:hover { background: #E2E8F0; }
+  .btn-dark-ghost { background: transparent; border-color: rgba(255,255,255,0.24); color: #E2E8F0; }
+  .btn-dark-ghost:hover { border-color: #FFFFFF; color: #FFFFFF; }
+  .btn-sm { min-height: 30px; padding: 0 12px; font-size: 12.5px; }
+
+  /* Weight Indicators */
+  .w-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+  }
+  .w-1 { color: var(--teal); border-color: #99F6E4; background: var(--teal-tint); }
+  .w-2 { color: var(--cobalt); border-color: #BFDBFE; background: var(--cobalt-tint); }
+  .w-3 { color: var(--amber); border-color: #FDE68A; background: var(--amber-tint); }
+  .w-4 { color: #C2410C; border-color: #FED7AA; background: #FFF7ED; }
+  .w-5 { color: var(--crimson); border-color: #FECACA; background: var(--crimson-tint); }
+
+  .weight-bars { display: inline-flex; gap: 3px; align-items: center; margin-left: 4px; }
+  .wb { width: 14px; height: 4px; background: var(--line-strong); }
+  .wb.on-1 { background: var(--teal); }
+  .wb.on-2 { background: var(--cobalt); }
+  .wb.on-3 { background: var(--amber); }
+  .wb.on-4 { background: #C2410C; }
+  .wb.on-5 { background: var(--crimson); }
+
+  /* ==================== RESPONSIVE DATA TABLES (modern-web-guidance) ==================== */
+  .table-wrapper {
+    overflow: auto;
+    max-inline-size: 100%;
+    border: 1px solid var(--line-strong);
+    container-type: inline-size;
+    background: var(--paper);
+    margin-bottom: 40px;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13.5px;
+    text-align: left;
+  }
+  .data-table caption {
+    text-align: left;
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .data-table thead { position: sticky; inset-block-start: 0; z-index: 2; }
+  .data-table thead th {
+    background: var(--obsidian);
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 11px 14px;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    white-space: nowrap;
+  }
+  .data-table tbody th {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 1;
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 700;
+    padding: 12px 14px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    min-width: 190px;
+    vertical-align: top;
+  }
+  .data-table tbody th a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .data-table tbody th a:hover { color: var(--cobalt); border-bottom-color: var(--cobalt); }
+  .data-table tbody td {
+    padding: 12px 14px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    color: var(--ink-2);
+    min-width: 150px;
+  }
+  .data-table tbody tr:hover td, .data-table tbody tr:hover th { background: var(--cobalt-tint); }
+
+  @container (width < 600px) {
+    .data-table, .data-table caption, .data-table thead, .data-table tbody, .data-table tr, .data-table th, .data-table td {
+      display: block;
+      width: 100%;
+    }
+    .data-table thead { display: none; }
+    .data-table tr { margin-block-end: 14px; border-bottom: 2px solid var(--ink); }
+    .data-table tbody th { position: sticky; inset-block-start: 0; z-index: 2; border-right: none; background: var(--obsidian); color: #FFFFFF; }
+    .data-table tbody th a { color: #FFFFFF; }
+    .data-table tbody td { border-right: none; min-width: 0; padding: 9px 14px; }
+    .data-table.cat-summary {
+      --c2: "核心用途";
+      --c3: "工程重量";
+      --c4: "核心收益";
+      --c5: "主要代价";
+      --c6: "关联项目";
+    }
+    .data-table.proj-matrix {
+      --c2: "核心目标";
+      --c3: "技术栈";
+      --c4: "AI / RAG / Agent 机制";
+      --c5: "工程护栏与验证";
+      --c6: "重量级与取舍";
+    }
+    .data-table td:nth-child(2)::before { content: var(--c2) "："; font-weight: 700; color: var(--ink); display: block; font-size: 12px; font-family: var(--font-mono); margin-bottom: 2px; }
+    .data-table td:nth-child(3)::before { content: var(--c3) "："; font-weight: 700; color: var(--ink); display: block; font-size: 12px; font-family: var(--font-mono); margin-bottom: 2px; }
+    .data-table td:nth-child(4)::before { content: var(--c4) "："; font-weight: 700; color: var(--ink); display: block; font-size: 12px; font-family: var(--font-mono); margin-bottom: 2px; }
+    .data-table td:nth-child(5)::before { content: var(--c5) "："; font-weight: 700; color: var(--ink); display: block; font-size: 12px; font-family: var(--font-mono); margin-bottom: 2px; }
+    .data-table td:nth-child(6)::before { content: var(--c6) "："; font-weight: 700; color: var(--ink); display: block; font-size: 12px; font-family: var(--font-mono); margin-bottom: 2px; }
+  }
+
+  /* ==================== STRUCTURED TECHNICAL DOSSIER MODULES ==================== */
+  .dossier-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .dossier {
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+  }
+  .dossier.mastered { border-color: var(--teal); }
+  .dossier-head {
+    padding: 20px 26px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .dossier-id {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cobalt);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .dossier-title {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .dossier-en {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .dossier-head-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .dossier-body {
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .spec-grid-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 24px;
+  }
+  .sub-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+  }
+  .prose {
+    font-size: 14.5px;
+    line-height: 1.82;
+    color: var(--ink-2);
+  }
+  .prose + .prose { margin-top: 10px; }
+  .example-callout {
+    margin-top: 12px;
+    padding: 12px 15px;
+    background: var(--surface);
+    border-left: 2px solid var(--cobalt);
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .example-callout strong { color: var(--ink); }
+
+  .mech-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mech-steps li {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .mech-n { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--cobalt); padding-top: 2px; }
+
+  /* Trade-offs + Alternatives Structured Row */
+  .tradeoff-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .tp-cell {
+    background: var(--paper);
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .tp-head { font-family: var(--font-mono); font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+  .tp-cell.gain .tp-head { color: var(--teal); }
+  .tp-cell.cost .tp-head { color: var(--crimson); }
+
+  .alt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .alt-col {
+    background: var(--paper);
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.72;
+    color: var(--ink-2);
+  }
+  .alt-col-head {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cobalt);
+    margin-bottom: 6px;
+  }
+
+  .boundary-bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .b-note {
+    padding: 12px 15px;
+    font-size: 13.5px;
+    line-height: 1.72;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-2);
+  }
+  .b-note.risk { background: var(--crimson-tint); border-color: #FECACA; }
+  .b-note strong { color: var(--ink); }
+  .b-note.risk strong { color: var(--crimson); }
+
+  /* Native Accordion (<details>) per modern-web-guidance */
+  details.ref-drawer {
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  details.ref-drawer summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  details.ref-drawer summary::-webkit-details-marker { display: none; }
+  details.ref-drawer summary:hover { background: var(--surface); color: var(--ink); }
+  details.ref-drawer summary::before {
+    content: "";
+    inline-size: 11px;
+    block-size: 11px;
+    flex-shrink: 0;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='square'/%3E%3C/svg%3E") no-repeat center / contain;
+    rotate: -90deg;
+  }
+  details.ref-drawer[open] > summary::before { rotate: 0deg; }
+  @media (prefers-reduced-motion: no-preference) {
+    details.ref-drawer summary::before { transition: rotate 0.2s ease; }
+    details.ref-drawer::details-content {
+      transition: block-size 0.25s ease, content-visibility 0.25s ease;
+      transition-behavior: allow-discrete;
+    }
+  }
+  details.ref-drawer::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+  }
+  details.ref-drawer:not([open])::details-content { block-size: 0; }
+  .code-panel {
+    background: var(--obsidian);
+    color: #E2E8F0;
+    padding: 16px 26px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* Category Bottom Prev/Next Navigation */
+  .cat-pager {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-strong);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ==================== OVERVIEW (00) COMPONENTS ==================== */
+  .overview-grid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 40px;
+  }
+  .ov-cell {
+    background: var(--paper);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ov-num { font-family: var(--font-mono); font-size: 12px; color: var(--cobalt); font-weight: 600; }
+  .ov-cell h3 { font-family: var(--font-display); font-size: 16px; line-height: 1.3; }
+  .ov-cell p { font-size: 13.5px; line-height: 1.7; color: var(--ink-2); }
+
+  .cat-directory {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .dir-card {
+    text-align: left;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    padding: 20px 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .dir-card:hover { border-color: var(--cobalt); background: var(--cobalt-tint); }
+  .dir-head { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 12px; color: var(--cobalt); font-weight: 600; }
+  .dir-card h3 { font-family: var(--font-display); font-size: 18px; color: var(--ink); }
+  .dir-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  .weight-grid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 44px;
+  }
+  .wg-cell {
+    background: var(--surface);
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .wg-cell strong { display: block; font-size: 14px; color: var(--ink); margin: 6px 0 4px; }
+
+  .glossary-2col {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .gl-item {
+    background: var(--paper);
+    padding: 16px 20px;
+  }
+  .gl-item strong { display: block; font-family: var(--font-mono); font-size: 13.5px; color: var(--ink); margin-bottom: 4px; }
+  .gl-item p { font-size: 13.5px; color: var(--ink-2); line-height: 1.72; }
+
+  /* ==================== SECTION 07: DECISION SELECTOR + BLUEPRINTS + PROJECTS ==================== */
+  .scenario-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .sc-pill {
+    padding: 8px 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .sc-pill:hover { border-color: var(--ink); background: var(--surface); }
+  .sc-pill[aria-pressed="true"] { background: var(--obsidian); border-color: var(--obsidian); color: #FFFFFF; }
+
+  .sc-result {
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .stack-banner {
+    background: var(--obsidian);
+    color: #FFFFFF;
+    padding: 16px 20px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  .bp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 44px;
+  }
+  .bp-card {
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    padding: 18px 20px;
+  }
+  .bp-card h3 { font-family: var(--font-display); font-size: 16px; margin-bottom: 6px; }
+  .bp-card p { font-size: 13.5px; color: var(--muted); margin-bottom: 12px; }
+  .bp-card svg { width: 100%; height: auto; display: block; background: var(--paper); border: 1px solid var(--line); }
+
+  /* ==================== SECTION 08: ASSESSMENT QUIZ ==================== */
+  .quiz-card {
+    max-width: 860px;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .quiz-header {
+    padding: 14px 22px;
+    background: var(--obsidian);
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .quiz-body { padding: 26px; }
+  .quiz-q { font-family: var(--font-display); font-size: 19px; font-weight: 700; line-height: 1.45; margin-bottom: 18px; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+  .q-btn {
+    text-align: left;
+    padding: 13px 16px;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .q-btn:hover:not(:disabled) { border-color: var(--cobalt); background: var(--cobalt-tint); }
+  .q-btn.correct { border-color: var(--teal); background: var(--teal-tint); font-weight: 600; }
+  .q-btn.wrong { border-color: var(--crimson); background: var(--crimson-tint); color: var(--crimson); }
+  .quiz-exp {
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    font-size: 14.5px;
+    line-height: 1.78;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  /* ==================== GLOBAL SEARCH COMMAND DIALOG (<dialog closedby="any">) ==================== */
+  dialog.cmd-dialog {
+    margin: 72px auto auto;
+    width: min(720px, calc(100vw - 24px));
+    max-height: calc(100dvh - 120px);
+    padding: 0;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    overflow: hidden;
+  }
+  dialog.cmd-dialog::backdrop {
+    background: rgba(9, 10, 13, 0.68);
+    backdrop-filter: blur(3px);
+  }
+  .cmd-shell { display: flex; flex-direction: column; max-height: calc(100dvh - 120px); }
+  .cmd-top {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+  }
+  .cmd-input {
+    flex: 1;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    border-radius: 0;
+  }
+  .cmd-input:focus { border-color: var(--cobalt); outline: none; }
+  .cmd-filters {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: var(--paper);
+  }
+  .cmd-select {
+    height: 30px;
+    padding: 0 8px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    font-size: 12.5px;
+    font-family: var(--font-body);
+    color: var(--ink);
+  }
+  .cmd-results { overflow-y: auto; padding: 8px 0; }
+  .cmd-row {
+    width: 100%;
+    text-align: left;
+    padding: 11px 18px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 60px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .cmd-row:hover { background: var(--cobalt-tint); }
+  .cmd-row-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .cmd-row-sub { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  @media (max-width: 1024px) {
+    .overview-grid-5, .weight-grid-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cat-directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .spec-grid-2, .alt-grid, .bp-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .header-top, .cat-rail-wrap, .wrap { padding-left: 16px; padding-right: 16px; }
+    .brand { font-size: 13.5px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .brand-sub, .progress-chip, .cmd-kbd { display: none; }
+    .cmd-btn { white-space: nowrap; flex-shrink: 0; padding: 0 10px; font-size: 12px; }
+    .overview-grid-5, .weight-grid-5, .cat-directory, .glossary-2col, .tradeoff-pair, .boundary-bar { grid-template-columns: 1fr; }
+    .dossier-head, .dossier-body { padding: 18px 16px; }
+    details.ref-drawer summary, .code-panel { padding-left: 16px; padding-right: 16px; }
+    .cat-banner { padding: 30px 0 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY STRUCTURED HEADER -->
+<header class="site-header">
+  <div class="header-top">
+    <a class="brand" href="#top" id="brandHomeLink">
+      <span class="brand-sq" aria-hidden="true"></span>
+      AI Systems Architecture Reference
+      <span class="brand-sub">/ 37 Modules · 7 Projects</span>
+    </a>
+    <div class="header-tools">
+      <button type="button" class="cmd-btn" id="openCmdBtn">
+        <span>全局检索</span>
+        <span class="cmd-kbd">/</span>
+      </button>
+      <div class="progress-chip" aria-live="polite">
+        <span id="masteryText">0/37</span>
+        <div class="progress-track"><div class="progress-fill" id="masteryFill"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-rail-wrap">
+    <div class="cat-rail" role="tablist" aria-label="架构分类导航" id="catTabRail"></div>
+  </div>
+</header>
+
+<main id="top" class="views-host">
+  <div id="catPanelsHost"></div>
+</main>
+
+<!-- GLOBAL SEARCH & FILTER COMMAND DIALOG (<dialog closedby="any">) -->
+<dialog id="cmdDialog" class="cmd-dialog" closedby="any" aria-labelledby="cmdTitle">
+  <div class="cmd-shell">
+    <div class="cmd-top">
+      <label for="cmdInput" id="cmdTitle" class="sr-only">全局检索 37 个技术模块</label>
+      <input id="cmdInput" class="cmd-input" type="search" placeholder="输入技术名、概念或项目（如：向量、BM25、Job Object、Decimal、SSE、LangGraph）...">
+      <form method="dialog"><button type="submit" class="btn btn-sm">关闭 ✕</button></form>
+    </div>
+    <div class="cmd-filters">
+      <select id="cmdWeight" class="cmd-select" aria-label="按重量级筛选">
+        <option value="all">全部重量级 (W1–W5)</option>
+        <option value="1">W1 极轻零依赖</option>
+        <option value="2">W2 轻量嵌入式</option>
+        <option value="3">W3 平衡主力档</option>
+        <option value="4">W4 偏重 OS / GPU</option>
+        <option value="5">W5 重型集群对照</option>
+      </select>
+      <select id="cmdProject" class="cmd-select" aria-label="按关联项目筛选">
+        <option value="all">全部 7 个项目</option>
+        <option value="Spatial Studio">Spatial Studio</option>
+        <option value="Aesthetic KB">Aesthetic KB</option>
+        <option value="Radar">Radar (RAG)</option>
+        <option value="Agent Habitat">Agent Habitat</option>
+        <option value="Super Agent">Super Agent / AP</option>
+        <option value="Aurora">Aurora (算量)</option>
+        <option value="Style-Wash & ORBIS">Style-Wash / ORBIS</option>
+      </select>
+      <span class="mono" id="cmdCount" style="font-size:12px;color:var(--muted);margin-left:auto;align-self:center;">37 项</span>
+    </div>
+    <div class="cmd-results" id="cmdResults"></div>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const NAV_TABS = [
+    { id: 'overview', num: '00', label: '总览与基础' },
+    { id: 'spatial', num: '01', label: '空间与视觉' },
+    { id: 'rag', num: '02', label: '检索与 RAG' },
+    { id: 'agent', num: '03', label: '多 Agent 编排' },
+    { id: 'deterministic', num: '04', label: '确定性与存储' },
+    { id: 'frontend', num: '05', label: '前端与 3D' },
+    { id: 'eval', num: '06', label: '评测与成本' },
+    { id: 'matrix', num: '07', label: '选型与项目矩阵' },
+    { id: 'quiz', num: '08', label: '架构自测' }
+  ];
+
+  const CATEGORY_META = {
+    spatial: {
+      num: '01',
+      title: '空间 AI、审美建模与视觉计算',
+      en: 'SPATIAL AI, AESTHETIC MODELING & COMPUTER VISION',
+      desc: '本分类涵盖 <strong>Spatial AI Studio</strong> 中的 5 项核心技术：如何把抽象视觉感受转化为可计算坐标、如何通过分层比较学习个人品味而不陷入信息茧房、如何在多图生图时防止串色，以及如何在立面改造重绘中保持几何透视不失真。',
+      rule: '核心边界：语义理解与标定交由视觉大模型离线完成；实时排序、色差度量与透视几何 100% 由确定性数学计算执行。'
+    },
+    rag: {
+      num: '02',
+      title: '检索增强（RAG）与多模态知识库',
+      en: 'RETRIEVAL-AUGMENTED GENERATION & MULTIMODAL SEARCH',
+      desc: '本分类涵盖 <strong>Aesthetic KB (P-MIC-4)</strong>、<strong>Radar / Filament</strong> 与 <strong>Spatial Atlas</strong> 中的 7 项核心检索技术：为什么必须结合字面检索与语义向量、不同数据规模如何选择存储介质、如何通过多路融合避免结果雷同，以及如何杜绝大模型编造引用与泄露私密资料。',
+      rule: '核心边界：检索层决定信息上限，数据版本清洗与字符级引用校验比盲目堆叠重型图谱框架更决定可用性。'
+    },
+    agent: {
+      num: '03',
+      title: '多 Agent 编排、状态协议与系统隔离',
+      en: 'MULTI-AGENT ORCHESTRATION, STATE PROTOCOLS & OS SANDBOXING',
+      desc: '本分类涵盖 <strong>Agent Habitat / AETHER v3</strong> 与 <strong>AP / Super Agent / NOEMA</strong> 中的 8 项核心控制面技术：如何设计清晰的状态机与推送通道、如何防止断网与重复点击造成的误执行、如何在 Windows 底层彻底隔离受管 CAD 进程树，以及何时需要拆分多 Agent。',
+      rule: '核心边界：在严肃交付场景下，确定性状态机、人工双签发与故障闭锁（Fail-Closed）优先于无约束全自动执行。'
+    },
+    deterministic: {
+      num: '04',
+      title: '确定性精算、本地存储与显卡编排',
+      en: 'DETERMINISTIC COMPUTING, EMBEDDED STORAGE & LOCAL GPU',
+      desc: '本分类涵盖 <strong>Aurora / Timbre</strong>、<strong>Style-Wash</strong> 与 <strong>ORBIS</strong> 中的 6 项底层工程基石：为什么金额与工程损耗严禁使用普通小数、如何为大模型输出建立严格格式安检、为何单机首选 SQLite WAL，以及如何在 12GB 消费级显卡上稳定运行本地生图队列。',
+      rule: '核心边界：涉及金额、面积、文件完整性与显存边界的逻辑全部由确定性代码强制守门，绝不依赖模型概率猜测。'
+    },
+    frontend: {
+      num: '05',
+      title: '现代前端架构、状态流与 3D 渲染',
+      en: 'FRONTEND ARCHITECTURE, STATE MANAGEMENT & WEBGL 3D',
+      desc: '本分类对比 4 种不同重量级的网页运行时架构（单文件 HTML / Vite / Next.js 静态导出 / SSR）、状态管理分级、原生 Three.js 显存管理、现代浏览器原生控件，以及兼顾公网零成本展示与本地满血算力的「双模同构」模式。',
+      rule: '核心边界：前端运行时应匹配业务形态而非追逐热点；将高频 60fps 交互留在局部引用中，低频业务态集中管理。'
+    },
+    eval: {
+      num: '06',
+      title: '离线评测（EDD）、成本账本与可观测性',
+      en: 'EVAL-DRIVEN DEVELOPMENT, UNIT ECONOMICS & OBSERVABILITY',
+      desc: '本分类总结贯穿全部 7 个项目的工程治理体系：如何建立可量化的离线考卷替代主观感觉、如何用自动化间谍测试证明隐私零泄露、如何按端云分层将单图成本压至 ¥0.008 以内，以及启动任何 AI 功能前的「五问边界法则」。',
+      rule: '核心边界：没有量化基准和全漏斗成本账本的 AI 优化无法验证其真实收益；诚实暴露失败边界是系统演进的前提。'
+    }
+  };
+
+  const WEIGHTS = {
+    1: { code: 'W1', label: '极轻 · 零外部依赖', desc: '纯内存数学或标准库算法，无独立服务进程，亚毫秒级执行，维护成本极低。' },
+    2: { code: 'W2', label: '轻量 · 单文件嵌入式', desc: '持久化存储在本地单文件或嵌入式目录中，无需独立部署数据库服务，便于备份迁移。' },
+    3: { code: 'W3', label: '平衡 · 单机主力架构', desc: '单机服务与现代静态前端分离，兼顾开发效率、性能与长期可维护性，适合个人与小团队主力系统。' },
+    4: { code: 'W4', label: '偏重 · OS 底层 / 本地 GPU', desc: '直接调用操作系统进程管理接口或调度本地显卡显存，实现门槛高但可解决特殊桌面与隐私需求。' },
+    5: { code: 'W5', label: '重型 · 分布式基础设施', desc: '涉及多节点集群、重型编排平台或云端模型微调，仅在海量数据或高并发多租户场景下具备投入产出比。' }
+  };
+
+  const MODULES = [
+    // ==================== 01. 空间与视觉 (5) ====================
+    {
+      id: 'salience-spectrum',
+      cat: 'spatial',
+      num: '01.1',
+      title: '8 轴连续美学光谱与显著性门控',
+      en: 'Salience-Gated 8-Axis Continuous Aesthetic Spectrum',
+      summary: '将抽象视觉气质拆解为 8 维连续数值坐标，并按各维度表达强度加权检索跨领域参考。',
+      weight: 1,
+      projects: ['Spatial Studio'],
+      definition: '传统视觉检索依赖“物体名称”（例如搜索“混凝土”仅返回建筑照片）。该机制将视觉风格从具体物体中剥离，定义为 8 条从 -1.0 到 +1.0 的连续双极维度（如冷暖色温、粗粝/精工材质、留白/密实构图等）。同时为每张图片在每个维度赋予“显著性权重（Salience，0 到 1）”，衡量该图片在这一维度上是否具有明确特征，避免无关维度干扰相似度计算。',
+      example: '直观案例：一张极简拉丝金属灯具与一栋清水混凝土美术馆属于完全不同的物体类别，但两者在“冷峻度、材质克制、构图留白”三条显著轴上的坐标非常接近，系统因此能够实现跨品类的美学匹配；而一张纯黑白平面海报在“空间纵深轴”上显著性接近 0，门控机制会自动将其权重置零，避免产生错误匹配。',
+      steps: [
+        '离线锚定建档：参照预设的五档视觉标尺（-1.0 至 +1.0），由视觉大模型一次性为图库每张作品标注 8 维坐标及各维显著性权重。',
+        '意图向量映射：用户通过滑块调节或 2 轮二分视觉选择，实时生成目标 8 维查询向量与关注度权重。',
+        '客户端确定性排序：浏览器在本地直接执行加权欧氏距离计算，在 0.2 毫秒内完成全库重排，无需请求后端或 GPU。'
+      ],
+      why: '解决前期概念设计中“难以用文字准确描述风格”以及“仅在同品类内重复参考”两大痛点，同时使排序逻辑完全白盒化、可手动微调。',
+      gain: '实测跨领域 Top-5 多样性达到 75%（对照普通多模态 CLIP 向量基线 31%）；客户端重排 p95 延迟仅 0.152 ms，零推理成本。',
+      cost: '8 个通用美学维度无法穷尽高度特殊的艺术笔触或局部细节，因此需要与 256 维多模态向量配合使用以覆盖长尾特征。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '离散关键词标签（如文件夹或人工 Tag）——仅支持“有/无”二元筛选，无法表达程度渐变与连续插值。' },
+        { tier: '同级对照 (W1)', text: '无显著性门控的等权 8 轴距离——容易被大量取值为 0.0 的中性无关轴稀释排序精度（实测 Bad Case BC-02）。' },
+        { tier: '更重升级 (W5)', text: '端到端自监督解耦表征网络（如微调 β-VAE / CLIP）——隐空间黑盒不可解释，用户无法直接干预单一美学轴。' }
+      ],
+      upgrade: '当产品扩展至高度垂直的单一门类（如专业字体排版或珠宝工艺）且 8 维区分度不足时，可在保留显著性门控框架的前提下按领域扩展专属子轴。',
+      pitfall: '若缺少显著性下限过滤（如 w < 0.05 忽略），各项指标均趋近于 0 的中性抽象图容易在所有查询中获得虚高排名，污染检索结果。',
+      code: `// 显著性门控加权距离计算 (salienceMetric.ts)
+let weightedSq = 0, weightSum = 0;
+for (const axis of AXES) {
+  const w = userAttention[axis] * asset.salience[axis];
+  if (w < 0.05) continue;
+  weightedSq += w * (asset.score[axis] - query[axis]) ** 2;
+  weightSum += w;
+}
+const distance = Math.sqrt(weightedSq / Math.max(weightSum, 1e-6));`
+    },
+    {
+      id: 'stratified-bt',
+      cat: 'spatial',
+      num: '01.2',
+      title: 'K=10 多中心原型 (Medoids) 与 7 参分层 Bradley-Terry 模型',
+      en: 'Multi-Medoid Taste Representation & Stratified Pairwise Preference Learning',
+      summary: '以 10 个真实中心样本保留多元审美结构，结合 4 层同门类 A/B 对比学习细粒度偏好。',
+      weight: 2,
+      projects: ['Spatial Studio'],
+      definition: 'Bradley-Terry（BT）模型是一种经典的成对比较统计模型：相比要求人类给出绝对分数（1–10 分，受情绪影响波动极大），通过多次“A 与 B 二选一”能推导出稳定得多的偏好权重。为避免把多元审美平均化，系统先通过层次聚类从个人原图中提取 K=10 个真实样本中心（Medoids）；再将二选一题目严格限定在同一门类内的 4 个层次（T1 宏观风格、T2 同风格细部执行、T3 同构图换光色、T4 同构图换材质），仅拟合 7 个核心参数（2 个宏观 + 5 个微观）。',
+      example: '直观案例：一名设计师同时偏爱“粗粝工业金属”与“温润原木庭院”。若将全部收藏压缩为单一平均值（Single Centroid），会得到居中平庸特征；K=10 原型则同时保留这两个审美分支。同时，在 T2 同风格对比中，两张图同属“室内极简主义”，宏观风格差异相互抵消，模型只能从色彩、明暗、留白与肌理等微观执行差异中学习真实偏好。',
+      steps: [
+        '多中心建模：对 390 张个人原点执行 Ward 层次聚类，选出 10 张真实代表图构成多元审美坐标骨架。',
+        '同门类分层抽样：按 T1(25%) / T2(35%) / T3(20%) / T4(20%) 配比生成成对比较题，消除“门类偏见”对细粒度权重的干扰。',
+        '双信号物理隔离：将 Q1（核心口味）与 Q2（破圈反差收藏意愿）存入独立数据表，防止偶发性新奇偏好污染日常推荐模型。'
+      ],
+      why: '针对 Midjourney --p 等黑盒个性化模型“需要海量投票、越用越单一（模式坍塌）、权重不可见”的局限，构建小样本（~60 题）即可收敛的白盒轻量偏好引擎。',
+      gain: '7 参数设计有效防止小样本过拟合；1,500 张资产三通道重排实测 p95 = 19.8 ms（满足 <20 ms 门禁）；完整保留多元审美子人格。',
+      cost: '为确保信号纯净，历史 38 票旧跨域投票无法直接并入训练，需独立完成约 60 题同门类分层校准（目前 9/60，留出验证尚待补齐）。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '单一均值向量相似度——实现最简单，但必然抹平用户的多面审美特征。' },
+        { tier: '同级对照 (W2)', text: '无分层的普通成对比较（普通 Elo/BT）——容易将“喜欢建筑胜过插画”误学为微观审美规则。' },
+        { tier: '更重升级 (W5)', text: '端到端神经奖励模型 / 隐空间微调（如 Midjourney --p）——需要大量标注与算力，黑盒不可解释。' }
+      ],
+      upgrade: '当分层成对标注积累超过 1,000 组且线性模型在留出集上出现明显拟合上限时，可升档为强正则化的轻量树模型（GBDT）或浅层双塔 MLP。',
+      pitfall: '严禁将历史“暂缓采用/未入选”的高质量收藏图标记为负面训练样本，否则会误伤用户真正的审美基准线。',
+      code: `# 7 参分层 BT 效用计算 (taste_engine_v2.py)
+# T2 同风格对决中 macro 特征近似相等，梯度集中作用于 5 维微观参数 beta
+u_a = dot(alpha_macro2, feat_macro_a) + dot(beta_micro5, feat_micro_a)
+u_b = dot(alpha_macro2, feat_macro_b) + dot(beta_micro5, feat_micro_b)
+prob_a_wins = sigmoid(u_a - u_b)`
+    },
+    {
+      id: 'oklab-cv-contrast',
+      cat: 'spatial',
+      num: '01.3',
+      title: 'OKLab 感知色空间与 4×4 空间构图确定性反差判定',
+      en: 'Deterministic Perceptual Color & Spatial Composition Contrast',
+      summary: '基于人眼感知均匀色空间与 4×4 边缘亮度网格，以纯数值规则识别真实视觉反差。',
+      weight: 1,
+      projects: ['Spatial Studio', 'Aesthetic KB'],
+      definition: '常规 RGB 数值空间与人眼视觉感受并不均匀。OKLab 是现代图形学中按人眼感知均匀性构建的色彩空间，可直接准确度量彩度（Chroma）、色温与高饱和像素占比。结合将图片划分为 4×4 共 16 个子区域的 Sobel 边缘密度与亮度分布统计，系统以确定性规则筛选出排在全库前 10%（≥P90）且跨越绝对可见差值阈值的反差候选图。',
+      example: '直观案例：实测中一张被整体压暗亮度的单色枯山水照片（pext4_land_663）曾被纯语义算法误判为“高反差风格”；引入 OKLab 彩度与高彩面积绝对差值校验后，系统确认其仅明度偏暗而色彩与结构并无反差，将其准确拦截。',
+      steps: [
+        '感知色彩提取：离线将缩略图转入 OKLab 空间，提取彩度均值、色温偏移与高饱和像素占比。',
+        '4×4 构图特征提取：计算 16 个空间网格的明度方差与 Sobel 边缘密度，量化画面留白比例与纹理复杂度。',
+        '双重阈值门禁：同时满足“全库分位 ≥P90”与“绝对可见差值下限”，结果缓存至本地 .npz 文件供零延迟调用。'
+      ],
+      why: '消除视觉大模型在判断“是否具有反差”时的温度随机性与口径漂移，以零 API 成本构建可 100% 回归测试的反茧房筛选器。',
+      gain: '离线秒级完成 1,500 张图特征提取，运行期零延迟、零费用，并可直接复用为 T3/T4 同构图近邻抽样依据。',
+      cost: '像素级统计无法识别抽象的文化观念或符号隐喻反差（此类反差由语义残差通道补充）。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: 'RGB / HSV 颜色直方图——感知极不均匀，色温与彩度计算偏差大。' },
+        { tier: '同级对照 (W1)', text: '传统 CIE LAB 空间——优于 RGB，但在蓝色至紫色区域存在已知色相偏移，精度略逊于 OKLab。' },
+        { tier: '更重升级 (W3)', text: '调用视觉大模型逐张判定反差——单次全库扫描成本高，且不同批次输出易波动。' }
+      ],
+      upgrade: '在颜色与构图维度已属最优轻方案；若后续需区分细微物理材质肌理（如哑光洞石与拉丝金属），可叠加局部纹理算子或轻量 DINOv2 patch 特征。',
+      pitfall: '仅设定相对分位数（≥P90）而不加绝对差值门槛，会在整体色调单一的数据集中强行挑出肉眼几乎无差异的“伪反差样本”。',
+      code: `# 色彩反差双重门禁：相对分位 + 肉眼可见绝对差值
+is_color_contrast = (pct_rank >= 0.90) and (
+    abs(delta_chroma) >= 0.025 or abs(delta_vivid_ratio) >= 0.08
+)`
+    },
+    {
+      id: 'orthogonal-ast',
+      cat: 'spatial',
+      num: '01.4',
+      title: '3 槽位正交 Prompt AST 编译器',
+      en: 'Conflict-Free 3-Slot Orthogonal Prompt AST Compiler',
+      summary: '将多图风格融合强制隔离为镜头、材质、光影三个互斥作用域，并自动生成负向冲突护栏。',
+      weight: 1,
+      projects: ['Spatial Studio'],
+      definition: '在文生图与多图参考工作流中，同时输入多张参考图极易导致“风格串色/串型（Style Bleed）”——例如借用图 B 的材质时，图 B 的暖色灯光与构图也被一同带入。正交 AST 编译器借鉴编程语言抽象语法树（Abstract Syntax Tree）的隔离思想，将参考属性强制划分为 Optics（镜头构图）⊥ Material（材质肌理）⊥ Lighting（光影色温）三个互斥槽位，自动剔除非本槽属性并汇总写入负向屏蔽指令（Negative Prompt）。',
+      example: '直观案例：当材质槽位选入一张“暗黑霓虹下的拉丝不锈钢”参考图、光影槽位选入“清晨柔和天光”时，编译器仅从材质图提取金属肌理描述，同时自动将材质图自带的“霓虹/夜景”词汇压入负向护栏，防止生成画面被暗夜霓虹污染。',
+      steps: [
+        '结构化槽位绑定：将三张跨领域参考资产分别指派至 Optics、Material、Lighting 独立作用域。',
+        '跨槽冲突剥离：仅抽取各资产对应作用域内的结构化描述符，过滤其余维度的冗余词汇。',
+        '负向护栏合成：自动集合被剥离的潜在冲突词生成互斥约束段，输出中英文结构化编译结果。'
+      ],
+      why: '在 20 组跨界混搭实测中，多图直接拼接的串色泄漏率达 45%；通过正交 AST 编译，40 处词法冲突实现 100% 隔离与 0 外部实体泄漏。',
+      gain: '客户端编译耗时 <1 ms，语法完全透明可编辑，可无缝对接各类主流商业或开源生图引擎。',
+      cost: '属于提示词与符号层面的软约束，最终成图忠实度仍受下游扩散模型对负向指令遵循能力的上限制约。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '人工手写拼接长段自然语言——易遗漏隐含语义冲突，复用与对比效率低。' },
+        { tier: '同级对照 (W2)', text: '云端节点画布的常规图像描述拼接（如 Figma Weave）——拆出了文本，但缺少槽位冲突消解与负向护栏生成。' },
+        { tier: '更重升级 (W4)', text: 'ComfyUI 多路 IP-Adapter + 区域注意力掩码——在隐空间层执行硬隔离，控制极强但显存与节点维护成本高。' }
+      ],
+      upgrade: '若未来部署专属 GPU 渲染管线，可将本编译器输出的结构化三槽 AST 作为上游控制协议，直接驱动 ComfyUI 的多路 IP-Adapter 节点参数。',
+      pitfall: '仅保留正向提取词而不生成对应 Negative Guardrail，扩散模型仍会依据训练分布惯性（如“工业金属”常伴随昏暗灯光）自行补全冲突元素。',
+      code: `// 正交三槽位编译结构 (aethervault_schema.py / salienceMetric.ts)
+{
+  "optics_clause":   extractOnly(slotA, "camera_framing"),
+  "material_clause": extractOnly(slotB, "surface_tectonics"),
+  "lighting_clause": extractOnly(slotC, "atmosphere_illumination"),
+  "negative_guard":  union(nonSlotTokens(slotA), nonSlotTokens(slotB))
+}`
+    },
+    {
+      id: 'homography-relight',
+      cat: 'spatial',
+      num: '01.5',
+      title: 'H / H⁻¹ 单应性立面锁缝与本征光照融合',
+      en: 'Planar Homography Wireframe Lock & Intrinsic Albedo/Shading Relighting',
+      summary: '利用平面单应性矩阵锁定改造立面的几何透视与板缝模数，并保留原场景真实光照与周边像素。',
+      weight: 3,
+      projects: ['Spatial Studio'],
+      definition: '单应性矩阵（Homography，一个 3×3 投影变换矩阵）可在斜拍实景照片与正交建筑立面图之间建立精确的像素映射。系统先通过 H 将斜视角墙面映射至正交坐标系绘制毫米级等距板材分缝，再经逆矩阵 H⁻¹ 投影回原照片；材质重绘阶段采用本征分解思想，分离新材料的材质本色（Albedo）与原照片的真实环境阴影（Shading）进行 LAB 空间融合，并严格锁死掩码外像素。',
+      example: '直观案例：对一栋临街 90–300㎡ 商业门头进行立面改造方案比选时，直接用扩散模型重绘常导致垂直立柱歪斜、石材分缝间距漂移及周边邻铺被篡改；单应性投影可将垂直灭点偏差严格控制在 0.0°，且非改造区域保真度达 99.0 dB。',
+      steps: [
+        '四角几何标定：在实景立面标注改造区域四个角点，求解正交平面与照片间的 3×3 单应性矩阵 H。',
+        '模数分缝投影与往返校验：按实际板材模数在正交平面生成分缝网格并投回照片，校验往返几何误差（RMSE = 0.0 px）。',
+        '本征光照合成与掩码隔离：仅在改造掩码内叠加新材质与原图阴影，强制保持非掩码区域像素原样不变。'
+      ],
+      why: '弥合建筑概念效果图与实际施工排版之间的几何断层，使 AI 立面重绘具备工程汇报级的可信度。',
+      gain: '3 套商业改造案例实测灭点偏差 0.0°（远低于 1.5° 门禁），非掩码区 PSNR 99.0 dB（高于 38 dB 门禁）。',
+      cost: '单应性矩阵基于共面假设，遇到极端大斜视角（倾斜 ≥32° 或透视压缩比 ≥1.48，即 Bad Case BC-01）或大曲率弧面立面时精度明显下降。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '纯 Prompt + 涂抹局部重绘（Inpainting）——操作最简，但板缝透视间距方差超 40%，不可用于模数排版。' },
+        { tier: '同级对照 (W3)', text: 'ControlNet 线条/深度引导——可维持宏观轮廓，但难以按精确毫米模数锁定局部板缝尺寸。' },
+        { tier: '更重升级 (W5)', text: '三维摄影测量重建（Mesh / 3DGS）+ 物理光追渲染——精度最高且支持任意曲面，但单项目耗时数小时。' }
+      ],
+      upgrade: '面对多折面或转角立面，可将单一单应性扩展为“分段多平面单应性矩阵”，或衔接 Rhino/Blender 三维相机匹配流程。',
+      pitfall: '对极端斜视角若不设定几何失真上限告警，系统会输出严重拉伸失真的伪网格线；必须设定阈值（≥32°）触发人工四点降级重标。',
+      code: `# OpenCV 单应性正逆投影与往返误差验证 (homography_seam.py)
+H, _ = cv2.findHomography(ortho_corners_mm, photo_corners_px)
+seams_px = cv2.perspectiveTransform(ortho_seams_mm, H)
+roundtrip = cv2.perspectiveTransform(seams_px, np.linalg.inv(H))`
+    },
+
+    // ==================== 02. 检索与 RAG (7) ====================
+    {
+      id: 'bm25-fts5',
+      cat: 'rag',
+      num: '02.1',
+      title: '纯 Python BM25 与 SQLite FTS5 中文 N-Gram 词法检索',
+      en: 'Lexical Sparse Retrieval with CJK 1/2/3-Gram Pre-Tokenization',
+      summary: '基于倒排索引与词频统计的精确字面检索引擎，补齐向量检索对型号、代码与专词的召回盲区。',
+      weight: 1,
+      projects: ['Aesthetic KB', 'Radar'],
+      definition: 'BM25 是一种经典的词法相关性打分算法（综合词频、文档长度与词项稀有度）；SQLite FTS5 则是内置于 SQLite 单文件数据库中的全文倒排索引引擎（原理类似书籍末尾的关键词页码对照表）。由于中文书写缺乏空格分隔，系统在入库前通过自定义预分词器将连续中文切分为 1 字、2 字、3 字片段（CJK N-Gram）并去重，使轻量嵌入式引擎具备稳定的中文精确检索能力。',
+      example: '直观案例：当设计师检索特定型号（如“SKU-402”）、规范条文编号或具体建筑师姓名时，纯语义向量可能返回语义相近但型号错误的结果，而 BM25 / FTS5 可在毫秒内实现字面精确命中。',
+      steps: [
+        '中英文混合预分词：分离英文/数字词元，并将中文片段展开为去重 1/2/3-gram 索引词项。',
+        '构建本地倒排索引：在纯 Python 内存索引（Radar）或 SQLite FTS5 虚拟表（Aesthetic KB）中维护词项到文档 ID 的映射。',
+        '相关性打分输出：查询时依据 BM25 公式（k1=1.5, b=0.75）快速输出精确匹配的候选排序列表。'
+      ],
+      why: '作为混合检索体系的“确定性左腿”，以零外部服务和零调用费解决向量检索对精确术语失灵的结构性短板。',
+      gain: '零运维开销、毫秒级响应、完全可解释；Radar 在结合版本过滤后，离线评测命中率由 1/10 提升至 10/10 + 15/15。',
+      cost: '词法检索不具备语义泛化能力，无法识别字面完全不同的同义表达（例如 Radar 实测中刻意保留的失败用例：查询“苹果系统”无法召回正文中的“macOS”）。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: 'SQL LIKE 模糊全表扫描——数据增长后性能急剧下降，且缺乏相关性排序与多词乱序容错。' },
+        { tier: '同级对照 (W2)', text: 'Meilisearch / Tantivy 单机引擎——自带拼写纠错与高亮，但需额外维护独立可执行进程。' },
+        { tier: '更重升级 (W5)', text: 'Elasticsearch / OpenSearch 集群——适合千万级日志与企业级分布式搜索，但 JVM 内存占用与运维极重。' }
+      ],
+      upgrade: '词法检索应长期保留；当出现同义词或跨语言召回缺口时，通过 RRF 融合叠加稠密语义向量，而非移除 BM25/FTS5。',
+      pitfall: 'SQLite FTS5 默认 unicode61 分词器无法切分连续汉字，直接存入中文句子会导致整句被视为单个词元，局部关键词查询命中率为零。',
+      code: `# CJK 1/2/3-gram 预分词函数供 SQLite FTS5 索引 (sqlite_store.py)
+def cjk_ngrams(text: str) -> str:
+    tokens = re.findall(r"[A-Za-z0-9_]+", text.lower())
+    for seg in re.findall(r"[\\u4e00-\\u9fff]+", text):
+        for n in (1, 2, 3):
+            tokens.extend(seg[i:i+n] for i in range(len(seg)-n+1))
+    return " ".join(dict.fromkeys(tokens))`
+    },
+    {
+      id: 'vector-store-ladder',
+      cat: 'rag',
+      num: '02.2',
+      title: '向量存储三级阶梯：NumPy .npz / LanceDB / Qdrant·pgvector',
+      en: 'Vector Storage Weight Spectrum (In-Memory -> Embedded -> Server)',
+      summary: '依据数据规模与并发特征分档选择向量存储介质，避免中小规模场景过早引入重型集群。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Aesthetic KB'],
+      definition: '向量检索的本质是在高维坐标空间中寻找与查询向量余弦相似度最高的 Top-K 节点。不同数据规模对应的最优存储架构截然不同：万级以内可采用内存矩阵精确计算（NumPy .npz，无近似误差）；数万至数十万级单机场景适合嵌入式列式存储（LanceDB，直接落地为本地目录且支持标量预过滤）；百万级以上或高并发多用户写入才需要独立向量服务（Qdrant / Milvus）或关系库插件（PostgreSQL + pgvector）。',
+      example: '直观案例：Spatial Studio 的 1,500 张图 × 256 维向量仅占 1.5 MB 磁盘空间，启动载入内存后执行单行矩阵点积耗时 <2 ms 且召回率 100%，完全不需要通过 Docker 启动独立向量数据库。',
+      steps: [
+        'W1 级（< 1 万条）：保存归一化矩阵为 .npz，CPU BLAS 直接执行精确余弦点积。',
+        'W2 级（1 万 ~ 50 万条单机）：使用嵌入式 LanceDB，基于 Apache Arrow 列式格式实现零拷贝读取与标量预过滤。',
+        'W4–W5 级（> 50 万条或多人高并发）：若已有业务 PG 库优先启用 pgvector；超大规模低延迟检索再独立部署 Qdrant / Milvus。'
+      ],
+      why: '消除中小规模 AI 应用中常见的“架构虚胖”，将有限精力集中在检索质量与业务闭环而非数据库运维。',
+      gain: 'Spatial Studio 零数据库部署成本；Aesthetic KB 无需独立守护进程即可支持图文双向量与隐私标量预过滤。',
+      cost: 'NumPy 方案数据全量驻留内存且缺乏并发写事务；LanceDB 基于单机本地文件系统，不适用于多节点分布式并发写入。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: 'NumPy .npz / FAISS Flat——万级数据内的精确检索最优解，零网络开销。' },
+        { tier: '轻量主力 (W2)', text: 'LanceDB / sqlite-vec / Chroma——单机嵌入式方案，其中 LanceDB 对多模态大文件与预过滤支持突出。' },
+        { tier: '重型升级 (W4–W5)', text: 'PostgreSQL + pgvector（统一事务与权限）或 Qdrant / Milvus / Pinecone（分布式海量高并发）。' }
+      ],
+      upgrade: '明确规模拐点：<1 万条使用 .npz；1 万~50 万条单机迁移至 LanceDB；多用户高并发业务升档 pgvector；超过 500 万条独立检索再上 Qdrant。',
+      pitfall: '部分轻量向量库采用“先召回 Top-K 再过滤权限/标签（后过滤）”，当目标子集占比较小时极易返回空结果；选型时务必确认支持“标量预过滤（Pre-filtering）”。',
+      code: `# 万级以内向量精确检索 (< 2ms, 100% 精确召回)
+scores = embeddings @ query_vec   # (1500, 256) · (256,)
+top_idx = np.argpartition(-scores, k)[:k]`
+    },
+    {
+      id: 'multimodal-embeddings',
+      cat: 'rag',
+      num: '02.3',
+      title: '多模态嵌入路线：本地 SigLIP 2 (CUDA) 与云端 Gemini Embedding 2',
+      en: 'Local Vision-Language Embeddings vs Cloud Matryoshka API',
+      summary: '将图像与文本映射至统一向量空间，并依据隐私红线与存储体积在本地模型与云端 API 间分流。',
+      weight: 3,
+      projects: ['Aesthetic KB', 'Spatial Studio'],
+      definition: '多模态嵌入模型（Vision-Language Encoder）能将图片与文字编码为同一坐标系下的稠密向量，从而支持“以文搜图”与“以图搜图”。两个项目采用差异化路线：Aesthetic KB 侧重绝对隐私与零边际成本，在本地 GPU 运行开源 SigLIP 2（采用 Sigmoid 对比损失，细粒度图文对齐显著优于初代 CLIP）；Spatial Studio 侧重强中文语义与极致轻量存储，调用云端 Gemini Embedding 2 并利用 Matryoshka（套娃降维）特性截取前 256 维，使体积缩减 12 倍。',
+      example: '直观案例：输入中文描述“阴天粗粝石墙与暖光缝隙”或拖入一张现场实拍图，系统将其转为 256 维或 768 维向量，直接与库中预计算向量比对距离，即时返回跨界视觉近邻。',
+      steps: [
+        '隐私离线通道（SigLIP 2）：在本地 CUDA GPU 上以 FP16 精度计算私密素材的图像与文本双向量，数据 0 出境。',
+        '云端降维通道（Gemini Emb 2）：面向公开/扩展图谱获取高语义向量，截断至 256 维后重新执行 L2 归一化。',
+        '版本锁定管理：在索引元数据中记录精确的 embedding_model_id 与维度，杜绝跨模型向量混用。'
+      ],
+      why: '针对“数据隐私绝对隔离”与“跨语言高语义压缩”两类不同工程约束分别选型，兼顾安全性与轻量化。',
+      gain: '本地通道推理边际成本 ¥0；云端 256 维套娃截断大幅压缩索引与传输体积。',
+      cost: '本地 SigLIP 2 依赖 NVIDIA GPU 与 PyTorch 环境；云端 API 需联网并产生微额按量费用，不适用于私密资产。',
+      alts: [
+        { tier: '更轻替代 (W2)', text: '先用 VLM 将图片转文本再做纯文本嵌入——流程简化，但文字未提及的构图与色彩细节永久丢失。' },
+        { tier: '同级对照 (W3)', text: 'OpenCLIP ViT-L/14 或 Jina-CLIP-v2——开源生态完善，Jina-CLIP-v2 对中文图文对齐表现良好。' },
+        { tier: '更重升级 (W5)', text: '基于行业专有图文数据集微调双塔模型——垂直精度最高，但标注与多卡训练成本高昂。' }
+      ],
+      upgrade: '无独立显卡但需本地隐私离线运行时，可将 SigLIP 2 导出为 ONNX INT8 量化模型在 CPU 运行；公域多语言检索优先选用支持 Matryoshka 降维的新一代多模态 API。',
+      pitfall: '不同模型或不同维度生成的向量处于完全不同的数学空间，绝不可混合存入同一索引表；更换嵌入模型必须全量重建向量索引。',
+      code: `# Matryoshka 截断降维后必须重新 L2 归一化，否则余弦相似度失真
+vec = raw_embedding[:256]
+vec = vec / (np.linalg.norm(vec) + 1e-12)`
+    },
+    {
+      id: 'rrf-mmr-rerank',
+      cat: 'rag',
+      num: '02.4',
+      title: '4 通道 RRF 倒数排名融合与 MMR 多样性去重',
+      en: 'Reciprocal Rank Fusion, MMR Diversity & Cross-Encoder Reranking',
+      summary: '无需手工调参即可合并不同量纲的检索结果，并抑制同类近邻扎堆刷屏。',
+      weight: 2,
+      projects: ['Aesthetic KB', 'Radar', 'Spatial Studio'],
+      definition: '混合检索往往同时产出多路量纲迥异的分数（向量余弦位于 [0,1]、BM25 无上界、OKLab 色距越小越相似），无法直接线性相加。RRF（Reciprocal Rank Fusion，倒数排名融合）舍弃原始绝对分数，仅依据各通道排名计算 1 / (k + rank) 并累加；随后通过 MMR（Maximal Marginal Relevance，最大边际相关性）在“与查询相关”与“与已选结果保持差异”之间取平衡，防止同一系列连拍图占据前排。',
+      example: '直观案例：Aesthetic KB 同时拉起图像向量、文本向量、FTS5 词法与 OKLab 色距 4 条通道，通过 RRF（k=20）合并总榜，再叠加偏好门控（已赞 +0.006、已踩 -1.0 硬拦截），最后由 MMR 筛选出兼具准确度与多样性的灵感板。',
+      steps: [
+        '多通道独立召回：各检索通道分别返回 Top-50 候选有序列表。',
+        'RRF 跨量纲合流：按排名倒数求和并执行硬负样本拦截（disliked 直接过滤出局）。',
+        'MMR 多样性重排：按权重 λ=0.7 逐条挑选结果，对与已入选样本过于相似的候选施加多样性惩罚。'
+      ],
+      why: '免去脆弱的人工分数归一化与调参过程，以纯确定性数学毫秒级解决多模态融合与结果同质化问题。',
+      gain: '算法鲁棒性强、零推理延迟、显著提升灵感板与推荐流的视觉多样性。',
+      cost: 'RRF 仅依赖名次顺序而忽略分值绝对差距；在极高精度文本问答场景下，语义精排能力不及 Cross-Encoder。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '手工设定线性加权系数（如 0.7×向量 + 0.3×BM25）——语料分布变动后极易失效。' },
+        { tier: '同级主力 (W2)', text: 'RRF + MMR——中小规模多模态与混合检索的最高性价比标准方案。' },
+        { tier: '更重升级 (W3–W4)', text: 'Cross-Encoder 精排模型（BGE-Reranker-v2 / Cohere Rerank 3）——将查询与全文拼接做全注意力打分，精度最高但增加 100–400 ms 延迟。' }
+      ],
+      upgrade: '针对法律、医疗、金融等对 Top-3 文本精度要求极高的问答场景，可在 RRF 粗排 Top-50 后追加一层 Cross-Encoder 精排至 Top-5。',
+      pitfall: '用户明确标记厌恶（disliked）的资产切忌仅靠小幅扣分处理，否则在多通道高分叠加下仍会泄漏回前台，必须执行硬拦截过滤。',
+      code: `# 4 通道 RRF 融合核心逻辑 (hybrid.py)
+for channel_hits in [img_vec_hits, txt_vec_hits, fts_hits, oklab_hits]:
+    for rank, doc_id in enumerate(channel_hits, start=1):
+        rrf_score[doc_id] += 1.0 / (RRF_K + rank)`
+    },
+    {
+      id: 'provenance-rag',
+      cat: 'rag',
+      num: '02.5',
+      title: '字符偏移溯源切片与严格引证校验器',
+      en: 'Provenance-Anchored Chunking & Strict Citation Validator',
+      summary: '记录精确字符起止位置与文档指纹，并通过代码强制拦截未锚定到选中原文的越界生成。',
+      weight: 2,
+      projects: ['Radar'],
+      definition: '普通 RAG 仅将长文按固定字数切片，导致表格与条款断裂且生成结果难以核验。溯源切片在保留段落边界的同时，精确记录每段原文的 Unicode 起止字符偏移量（start_char, end_char）与文档哈希（document_hash）；在生成阶段，通过严格校验器（StrictDraftBackend）检查模型输出 JSON 中的每条引用 ID，凡超出用户所选 1–8 个证据段落范围的陈述一律拒收。',
+      example: '直观案例：在 Radar 企业知识编辑流程中，用户勾选 4 段 Confluence 规范生成汇报草稿；每一句结论都绑定可跳转高亮的原文偏移坐标，且当源文档被他人修订（哈希变更）时，旧草稿自动标脏提示复核。',
+      steps: [
+        '语义段落切分与锚定：按文档结构切分并落盘 (document_hash, start_char, end_char)。',
+        '受控证据范围生成：仅将用户核验过的 1–8 个 passage_id 传入生成模型，要求逐句附带引用编号。',
+        '确定性引证审核与版本隔离：校验器拦截越界编号，同时维护 32 步撤销栈与在途 request_id 取消机制防止过期回复覆写草稿。'
+      ],
+      why: '从制度与代码层面根治严肃写作场景中的“大模型编造来源”问题，使每一条 AI 生成结论都具备可审计性。',
+      gain: '实现精准原文定位与源文档变更感知；配合 Confluence 版本清单过滤后，离线召回评测从 1/10 提升至 10/10。',
+      cost: '严格限制模型在选中证据内作答，牺牲了模型利用预训练常识自由补全背景的流畅度。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '固定 500 字滑动窗口切片（Naive Chunking）——易切断上下文逻辑，无法精准高亮回溯。' },
+        { tier: '同级对照 (W2)', text: 'Contextual Retrieval（入库时为每块补充上下文摘要句）+ 字符偏移锚定。' },
+        { tier: '更重升级 (W4)', text: '引入独立 NLI（自然语言推理）验证模型逐句校验忠实度——检测更严格但推理延迟与成本翻倍。' }
+      ],
+      upgrade: '面向合同审查、技术规范与企业知识库的 RAG 系统应默认采用“结构切片 + 字符偏移 + 严格引证校验”；高合规金融/医疗场景可再叠加 NLI 忠实度复核。',
+      pitfall: '将历史过期草稿与正式版文档混合入库会严重稀释检索精度（Radar 实测命中率因此低至 10%）；入库前按发布清单做版本过滤往往比更换向量模型收益大得多。',
+      code: `# 严格引证校验：拒绝任何超出用户选定 passage_ids 范围的声明
+for claim in draft.claims:
+    if not claim.citation_ids or not set(claim.citation_ids).issubset(allowed_ids):
+        raise CitationHallucinationError("拦截未锚定至授权段落的内容")`
+    },
+    {
+      id: 'privacy-routed-vlm',
+      cat: 'rag',
+      num: '02.6',
+      title: '隐私路由 VLM 与 SHA-256 摘要锁定本地推理',
+      en: 'Privacy-Aware Model Routing & SHA-256 Pinned Local Inference',
+      summary: '按资产密级强制分流云端批处理与本地 Ollama 模型，锁定模型指纹并禁止隐式云端回退。',
+      weight: 3,
+      projects: ['Aesthetic KB', 'Aurora', 'Radar'],
+      definition: '针对同时存在公开素材与商业机密图纸的混合工作流，路由层依据资产的 privacy 属性执行硬分流：public 资产走低成本云端 Batch VLM 以获取最高视觉理解质量；private 资产强制路由至本机 127.0.0.1:11434 运行的本地模型（Ollama），并在启动时校验模型权重的 SHA-256 摘要防止后台隐式更新导致输出格式漂移。本地失败时采取 Fail-Closed 策略直接报错，严禁静默降级至云端。',
+      example: '直观案例：Aurora 报价提取锁定本地 qwen3.8:27b-mlx 摘要且限定最大输入 12,000 字符；Aesthetic KB 在离线测试中通过 _SpyCloudVLM 验证 private 资产 100% 未触发任何云端网络调用。',
+      steps: [
+        '入库密级声明：每份文档或图像在元数据中明确标记 public 或 private 隐私级别。',
+        '确定性路由守门：路由函数根据密级选择执行通道，对 private 通道物理切断云端客户端引用。',
+        '模型指纹核验：本地推理前校验模型 SHA-256 摘要，保障不同时期批处理口径完全一致。'
+      ],
+      why: '在“公域低成本高质量打标”与“私密商业图纸绝对不离本机”两个核心诉求间建立不可逾越的安全隔离。',
+      gain: '100% 满足商业隐私底线且边际推理成本为 ¥0，输出结果具备版本可复现性。',
+      cost: '本地 9B–27B 参数模型在精细改写与长上下文遵循能力上弱于云端前沿模型（如 Radar 实测本地 9B 执行压缩文案任务时反而将 55 字扩写至 82 字）。',
+      alts: [
+        { tier: '更轻替代 (W2)', text: '全量直连公有云 API——零本地硬件门槛且推理最强，但无法承接涉密图纸与私人数据。' },
+        { tier: '同级主力 (W3–W4)', text: '本地 Ollama / llama.cpp / vLLM 隐私路由——个人与中小型设计工作室的最优合规解。' },
+        { tier: '更重升级 (W5)', text: '企业私有 VPC 托管（AWS Bedrock / Vertex 私有端点 / 内网 H100 集群）——适合大型机构高并发合规部署。' }
+      ],
+      upgrade: '单人或小团队使用本机 Ollama 即可；当团队并发查询本地涉密模型导致排队阻塞时，可在内网服务器部署 vLLM 连续批处理服务。',
+      pitfall: '切忌在本地推理异常捕获块中编写“失败则自动切换至云端 OpenAI/Gemini”的兜底逻辑，该写法会在本地超时瞬间导致机密数据无声外泄。',
+      code: `# Fail-Closed 隐私路由守门
+if asset.privacy == "private":
+    return local_ollama.infer(asset, pinned_sha256=EXPECTED_DIGEST) # 失败即报错，绝不回退云端
+return cloud_batch_vlm.infer(asset)`
+    },
+    {
+      id: 'graphrag-agentic-rag',
+      cat: 'rag',
+      num: '02.7',
+      title: 'RAG 四代架构演进：Long-Context / Hybrid / GraphRAG / Agentic RAG',
+      en: 'Evolution of RAG Paradigms & Scale Decision Tree',
+      summary: '系统区分四代知识增强路线的适用语料规模、延迟开销与升级时机，避免过度工程化。',
+      weight: 5,
+      projects: ['Aesthetic KB', 'Radar', 'Spatial Studio'],
+      definition: '现代知识检索与增强包含四个典型层级：① Long-Context（<15 万字静态文档直接置入百万上下文 + 热缓存，免建检索库）；② Hybrid RAG（BM25 + 向量 + RRF + 偏移溯源，绝大多数动态知识库主力）；③ GraphRAG（离线抽取实体与关系图谱及社区摘要，专为跨千篇文档的宏观主题归纳设计）；④ Agentic RAG（由 Agent 自主拆解子问题、多轮改写检索词并结合外部工具循环求证）。',
+      example: '直观案例：50 篇总计 8 万字的项目规范直接采用 Long-Context + Prompt Cache 往往比自建向量库更准确；数千张图文素材与企业 Wiki 应使用 Hybrid RAG；而只有当需求变为“跨 1,000 份历史招投标文件归纳系统性供应链风险”时，GraphRAG 才真正体现价值。',
+      steps: [
+        '先评估语料总量与更新频率：总量 <15 万字且变更少，直接验证 Long-Context + Prompt Cache 基线。',
+        '常规主力落地 Hybrid RAG：具备高精确度、低延迟（<100 ms 检索）与严格溯源，覆盖约 90% 实际业务。',
+        '按实测瓶颈谨慎升档：仅在出现跨文档宏观综述需求时引入 GraphRAG，或多跳复合推理需求时引入带步数上限的 Agentic RAG。'
+      ],
+      why: '明确各代 RAG 的算力代价与适用边界，防止在中小语料上盲目套用重型图谱框架导致成本与延迟暴增。',
+      gain: '精准匹配技术投入与业务复杂度，规避 GraphRAG 高达 20–50 倍的离线建图 Token 消耗及 Agentic RAG 的 10–30 秒长尾延迟。',
+      cost: 'Hybrid RAG 每次仅向模型注入 Top-K 局部片段，天然不擅长回答需要通览全库统计规律的全局宏观问题。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: 'Long-Context + Prompt Cache——15 万字以内静态文档的最简高精度方案。' },
+        { tier: '平衡主力 (W2–W3)', text: 'Hybrid RAG（BM25/FTS5 + Dense + RRF + 字符溯源）——十万至千万字级动态知识库首选。' },
+        { tier: '重型特种 (W4–W5)', text: 'GraphRAG / LightRAG（宏观全局综述）与 Agentic RAG（多步工具协同检索，须限制 max_steps）。' }
+      ],
+      upgrade: '坚持“评测驱动升级”：先在 Hybrid RAG 上跑出真实错题集，只有当错因明确归结为“信息分散在数十篇文档中导致单跳召回不全”时再升级。',
+      pitfall: '在小规模文档集上强行构建 GraphRAG 往往适得其反——实体抽取噪声远大于收益，且文档微调后的增量图谱维护极为繁重。',
+      code: `// RAG 架构四档决策规则
+1. 语料 < 15万字且低频更新   -> Long-Context + Prompt Cache
+2. 精准事实/多模态/严格溯源  -> Hybrid RAG (BM25 + Dense + RRF + Provenance)
+3. 跨千篇文档宏观主题归纳    -> GraphRAG / LightRAG (离线社区摘要)
+4. 多跳拆解 + 查库 + 工具调用 -> Agentic RAG (配置硬性 max_steps <= 5)`
+    },
+
+    // ==================== 03. 多 AGENT 编排 (8) ====================
+    {
+      id: 'canonical-agent-fsm',
+      cat: 'agent',
+      num: '03.1',
+      title: '权威正交状态机（FSM）与通用 Agent 框架对比',
+      en: 'Canonical Orthogonal Agent State Machine vs LangGraph / CrewAI',
+      summary: '由服务端维护单一正交状态契约，彻底解耦运行态、未读提醒与人工验收证据。',
+      weight: 2,
+      projects: ['Agent Habitat', 'Super Agent'],
+      definition: '有限状态机（Finite State Machine）指为系统明确定义有限个合法状态以及允许的状态转换规则。Agent Habitat 与 Super Agent 不依赖重型多角色对话框架，而是由后端维护权威状态契约，将三个互不干扰（正交）的维度彻底拆开：① 生命周期态（running / blocked / unknown / stopped）；② UI 未读提示（hasUnread）；③ 产物验收状态（unverified / verified / failed）。',
+      example: '直观案例：当一个后台任务执行完毕但尚未经设计师复核时，其生命周期态为 stopped、系统产物为 ready，但人工签收状态仍为 unverified（未采纳），从而防止未经审核的草稿自动覆盖正式版本。',
+      steps: [
+        '定义权威状态表：将运行态、未读态、验收态拆分为独立字段并落盘 SQLite，禁止前端自行推算覆盖。',
+        '约束合法转换：在状态转换函数中写死前置条件（如 unknown 态禁止自动触发新任务派发）。',
+        '协议化回归测试：基于固定模拟执行器（Fixture）验证所有状态跳转与异常边界（Habitat 通过 144 项协议测试）。'
+      ],
+      why: '通用框架（如 CrewAI / AutoGen）侧重多角色自然语言对话编排，缺乏严肃工程工具所必需的崩溃恢复、断连未知态隔离与人工双签发机制。',
+      gain: '零框架黑盒开销，状态流转清晰可审计，极易编写确定性单元测试覆盖各类异常分支。',
+      cost: '状态转移矩阵与工具调度逻辑需手工维护，前期代码量略高于现成框架的快速示例模板。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: '简单 while 循环 + 原生 Function Calling——适合单一 Agent 执行短平快任务。' },
+        { tier: '轻量主力 (W2)', text: '自建权威 FSM + SQLite Checkpoint 或轻量 OpenAI / Claude Agents SDK。' },
+        { tier: '中重升级 (W3–W5)', text: 'LangGraph（可视化复杂分支图与团队协作断点恢复）或 Temporal（跨机分布式长周期可靠工作流引擎）。' }
+      ],
+      upgrade: '单机多 CLI 控制台与严谨交付流水线首选自建 FSM；多人协作维护数十个复杂条件分支图时可引入 LangGraph；跨主机高可用长任务升级至 Temporal。',
+      pitfall: '将“系统运行完成（ready）”与“人工确认采纳（accepted）”合并为单一布尔字段，是导致自动化工具误覆定稿的高发根因。',
+      code: `// 正交三维度状态契约 (habitat-contract.ts)
+interface AgentInstanceState {
+  lifecycle: 'running' | 'blocked' | 'unknown' | 'stopped'; // 断连显式标 unknown
+  hasUnread: boolean;                                       // 提醒维度独立
+  outcomeEvidence: 'verified' | 'unverified' | 'failed';    // 验收证据独立
+  generation: number;                                       // 每次重启递增防重放
+}`
+    },
+    {
+      id: 'sse-vs-ws',
+      cat: 'agent',
+      num: '03.2',
+      title: 'SSE 单向事件流（Epoch + Cursor 溢窗 410 重同步）与 WebSocket 对比',
+      en: 'Server-Sent Events with Replay Cursor vs WebSockets',
+      summary: '以标准 HTTP 长连接承接高频状态推送，并通过环形缓冲与 410 快照降级保障长断网一致性。',
+      weight: 2,
+      projects: ['Agent Habitat', 'Super Agent', 'Style-Wash & ORBIS'],
+      definition: 'SSE（Server-Sent Events）是基于标准 HTTP 协议的服务端向客户端单向实时推送通道；客户端发送控制指令则走常规 REST POST 请求。为解决长断网或休眠导致的事件丢失，后端维护固定容量（如 512 条）的环形事件缓冲，并附带服务端重启期号（epoch）与递增序号（seq）；一旦客户端重连游标落后于缓冲窗口，服务端返回 HTTP 410（cursor_expired），触发前端拉取完整状态快照重建一致性。',
+      example: '直观案例：Agent 监控面板、大模型流式文字输出与本地生图进度均属于“服务端高频下推、用户低频点按钮”，采用 SSE 极其稳定；仅在 Agent Habitat 内嵌实时命令行终端（xterm.js + node-pty 需要双向键盘字节流）时局部引入 WebSocket。',
+      steps: [
+        '单向推送通道：客户端通过浏览器原生 EventSource 订阅 /api/events，自动获得断线重连能力。',
+        '游标增量补发：短暂抖动重连时，后端按客户端携带的 (epoch, lastEventSeq) 补发缺失事件。',
+        '溢窗全量重同步：若断网期间事件数超出 512 条缓冲或服务端已重启，返回 HTTP 410 强制拉取最新快照。'
+      ],
+      why: '相比全双工 WebSocket，SSE 直接复用标准 HTTP 的 Cookie、CSRF 校验与代理设施，大幅降低连接状态维护与调试复杂度。',
+      gain: '协议轻量、断连自愈、避免长时间休眠唤醒后的增量状态错乱。',
+      cost: '仅支持服务端向客户端单向推送文本帧，不适用于双向二进制低延迟音视频流或交互式终端。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '定时轮询（Polling）——实现最简单，但存在响应延迟与空转资源浪费。' },
+        { tier: '同级对照 (W2–W3)', text: 'SSE（状态/进度/文本流首选）vs WebSocket（双向终端、协同光标、实时语音必选）。' },
+        { tier: '更重升级 (W4–W5)', text: 'WebRTC DataChannel / gRPC 双向流——面向超低延迟实时音视频与跨微服务网关。' }
+      ],
+      upgrade: '单向实时状态与流式生成优先采用 SSE；当业务明确需要双向高频帧通信（交互终端、实时语音 API、多人协同编辑）时，针对该通道引入 WebSocket 或 WebRTC。',
+      pitfall: '仅实现 SSE 增量推送而忽略游标溢出与服务端重启重置，必然在笔记本休眠重连后引发前后端界面状态永久不一致。',
+      code: `// SSE 环形缓冲溢窗检查：强制快照重同步 (NOEMA / Super Agent)
+if (clientCursor < ringBuffer.oldestSeq || clientEpoch !== serverEpoch) {
+  return res.status(410).json({ error: "cursor_expired", action: "fetch_full_snapshot" });
+}`
+    },
+    {
+      id: 'generation-fencing',
+      cat: 'agent',
+      num: '03.3',
+      title: '代次幂等锁 (expectedGeneration) 与故障闭锁隔离',
+      en: 'Generation-Bound Idempotency & Fail-Closed Slot Isolation',
+      summary: '为每个实例操作绑定单调递增代次号以防重放，并在超时未知态下锁定槽位禁止盲目重试。',
+      weight: 2,
+      projects: ['Agent Habitat', 'Super Agent', 'Style-Wash & ORBIS'],
+      definition: '幂等性（Idempotency）指同一操作意外执行一次与执行多次产生完全相同的结果；故障闭锁（Fail-Closed）指系统遇到异常或通信中断时自动停在安全状态而非盲目继续。系统为每个 Agent 实例维护单调递增的代次号（generation），所有审批或写指令必须携带前端当前所见的 expectedGeneration；同时在网络断连或工具超时时将状态置为 unknown 并锁定项目槽位，交由人工复核释放，严禁自动重发。',
+      example: '直观案例：当用户点击“批准执行”时遇网络抖动连点两次，或后端重启后重放旧队列，第二次请求携带的旧代次号与数据库最新代次号不匹配，会被原子 SQL 更新直接拦截并返回冲突，杜绝重复派发（Double Dispatch）。',
+      steps: [
+        '单调代次递增：每次实例状态跃迁或服务重启时，后端自动递增 generation 计数。',
+        '条件原子更新：所有审批与写入指令在数据库事务内校验 WHERE generation = expectedGeneration。',
+        '未知态槽位锁定：工具超时或断连时保留槽位锁定（经有限次只读复查后交人工介入），禁止后台静默重试。'
+      ],
+      why: '防止有副作用的 Agent 执行（改写模型、覆盖文档、调用付费接口）在并发点击、超时或重启时发生不可逆损坏。',
+      gain: '从协议层彻底消除重复扣费、重启重放审批及双进程并发写坏文件的风险。',
+      cost: '真实发生超时阻塞时需要人工显式确认解锁，牺牲了表面上的“全自动自愈”体验。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '仅在前端禁用按钮——无法防御多标签页操作、网络重传及服务重启重放。' },
+        { tier: '同级主力 (W2)', text: '数据库乐观锁版本号 + Idempotency-Key（ORBIS 与主流支付网关标准范式）。' },
+        { tier: '更重升级 (W5)', text: '分布式共识围栏令牌（etcd / ZooKeeper Fencing Tokens）——多数据中心并发写共享存储必需。' }
+      ],
+      upgrade: '单机服务结合 SQLite 原子条件更新与本地 owner.sqlite 单宿主锁即可满足严谨要求；多节点云端部署时升级为 PostgreSQL 乐观锁或 etcd 租约。',
+      pitfall: '将“网络超时”直接等同于“任务失败”并触发自动重试是工程高发事故——超时仅代表未收到回执，原任务可能仍在后台写盘。',
+      code: `-- SQLite 原子代次围栏：旧代次请求影响 0 行并触发 409 Conflict
+UPDATE agent_instances
+SET approval_state = 'approved', generation = generation + 1
+WHERE id = ? AND generation = ? AND approval_state = 'pending';`
+    },
+    {
+      id: 'win32-job-object',
+      cat: 'agent',
+      num: '03.4',
+      title: 'Win32 Job Object 原子进程树隔离与沙箱对比',
+      en: 'OS-Level Process Tree Containment & Zero-Orphan Proof',
+      summary: '通过 Windows 内核级作业对象原子绑定受管进程树，确保子进程零残留且不误伤用户其他窗口。',
+      weight: 4,
+      projects: ['Super Agent'],
+      definition: '在 Windows 桌面环境下自动化调用重型专业软件（如 Rhino CAD、Python 脚本链）时，常规终止父进程（subprocess.kill）往往遗留后台孙进程继续锁定模型文件，而按进程名全局强杀又会误杀用户独立打开的日常工作窗口。Win32 Job Object 是操作系统内核提供的进程组隔离机制：通过 CREATE_SUSPENDED 挂起启动目标进程，在进程运行前经 STARTUPINFOEX 属性列表将其原子绑定至配置了 KILL_ON_JOB_CLOSE 的 Job Object，并在结束时查询内核确认存活进程数 ActiveProcesses == 0 后才释放执行槽。',
+      example: '直观案例：Super Agent 驱动本机 Rhino 8 生成 2 版三维模型与 4 版 A3 施工图纸时，即便中途取消或脚本异常卡死，关闭作业句柄即可一次性清零整棵受管进程树，而用户同一台电脑上自行打开的另一个 Rhino 设计窗口完全不受影响。',
+      steps: [
+        '创建内核作业对象：调用 CreateJobObject 并配置 JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE。',
+        '挂起原子绑定：以 CREATE_SUSPENDED + PROC_THREAD_ATTRIBUTE_JOB_LIST 启动进程，持久化 PID 与创建时间戳后再唤醒执行。',
+        '零残留验证放槽：退出或中止后调用 QueryInformationJobObject 核实 ActiveProcesses == 0，确认文件锁彻底释放。'
+      ],
+      why: 'Docker 容器无法原生承载依赖宿主机 GPU 与正版 GUI 授权的 Windows 桌面 CAD 软件，操作系统原生进程树围栏是可靠自动化的唯一工程路径。',
+      gain: '实现受管桌面软件 100% 精准清场、零孤儿文件锁、零误伤宿主机正常业务窗口。',
+      cost: '直接调用 Win32 底层结构体（ctypes），开发与异常边界测试门槛较高，且跨平台迁移至 Linux 需改用 cgroups v2。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '标准库 subprocess.terminate()——无法可靠回收 Windows 下的多层衍生孙进程。' },
+        { tier: '同级对照 (W4)', text: 'Linux cgroups v2 / systemd-run --scope——Linux 下的等价内核进程树隔离方案。' },
+        { tier: '更重升级 (W4–W5)', text: 'Docker 容器（无界面后端代码隔离）或 Firecracker MicroVM / E2B 沙箱（面向不可信第三方代码的硬件级虚拟化隔离）。' }
+      ],
+      upgrade: '操控本机受信桌面软件采用 Job Object / cgroups；若产品需在云端执行陌生用户提交的任意代码，必须升级为非特权容器或 Firecracker/E2B 微虚拟机。',
+      pitfall: '若先启动进程再调用 AssignProcessToJobObject，中间存在微秒级竞态窗口，子进程可能提前派生逃逸孙进程；必须使用挂起启动 + 启动属性列表原子绑定。',
+      code: `# Win32 原子进程树绑定关键序列 (windows_job.py)
+# 1. CreateJobObject + SetInformationJobObject(KILL_ON_JOB_CLOSE)
+# 2. CreateProcessW(..., CREATE_SUSPENDED | PROC_THREAD_ATTRIBUTE_JOB_LIST)
+# 3. 落盘 (pid, filetime) 后调用 ResumeThread()
+# 4. 释放执行槽前强制校验 ActiveProcesses == 0`
+    },
+    {
+      id: 'mcp-cli-harness',
+      cat: 'agent',
+      num: '03.5',
+      title: 'MCP 标准工具协议与 CLI-First 执行编排',
+      en: 'Model Context Protocol & Headless CLI Harness Orchestration',
+      summary: '以开放协议解耦工具与模型宿主，并通过命令行沙箱编排复用成熟 Coding Agent 底座。',
+      weight: 3,
+      projects: ['Aesthetic KB', 'Agent Habitat', 'Super Agent'],
+      definition: 'MCP（Model Context Protocol）是用于连接 AI 宿主与外部数据源/工具的开放通信标准（支持本地 Stdio 进程通信与远程 HTTP），避免为每个 AI 客户端重复编写适配代码。CLI-First Harness 则将成熟的命令行 Agent（如 codex exec --json --sandbox、Claude/Kimi CLI）作为标准化执行单元，通过结构化 JSON 事件流与 Hook 守护进程纳入统一调度。',
+      example: '直观案例：Aesthetic KB 将 7 个检索与色板提取工具封装为一套标准 MCP Server，可同时被 Antigravity、Codex 与 Claude 客户端直接调用；NOEMA 与 Agent Habitat 则通过 CLI 沙箱调度现成编码 Agent，将研发精力聚焦于状态控制与验收护栏。',
+      steps: [
+        '标准化工具暴露（MCP）：以 JSON Schema 声明输入输出，通过本地 Stdio 暴露高复用工具集。',
+        '受限沙箱调用（CLI Harness）：为外部命令行执行器指定工作区写权限与结构化 JSON 输出模式。',
+        '控制工具上下文预算：采用按需懒加载或渐进披露 Skills，防止冗余工具说明书挤占上下文窗口。'
+      ],
+      why: '消除重复开发工具胶水代码与底层推理循环的沉没成本，并保持随时替换最新前沿底座模型的架构弹性。',
+      gain: '一套能力跨多宿主复用；快速集成多家成熟 Agent 的持续演进成果。',
+      cost: '同时挂载过多 MCP 工具会持续消耗可观的输入 Token（工具描述税）；外部 CLI 输出协议升级需做好版本兼容。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '应用内原生 Function Calling——若工具仅供单一程序私有使用，无需额外跨进程 IPC 通信。' },
+        { tier: '同级主力 (W2–W3)', text: '本地 MCP Stdio（跨宿主工具复用）+ 渐进披露 Skills Markdown（按需读取，极省上下文）。' },
+        { tier: '更重升级 (W4–W5)', text: '远程 MCP Streamable HTTP + OAuth 2.1 企业鉴权网关 + A2A 跨组织 Agent 协作协议。' }
+      ],
+      upgrade: '单应用私有函数直用 Function Calling；跨多个桌面 AI 宿主复用工具采用 MCP Stdio；工具数量超 20 个时务必引入延迟加载机制。',
+      pitfall: '在单一会话中一次性注入数十个全量 MCP 工具定义，不仅大幅拉高每轮 Token 账单，还会显著降低大模型选择正确工具的准确率。',
+      code: `# CLI-First 受限沙箱执行模式 (NOEMA)
+codex exec --json --sandbox workspace-write "完成指定模块并运行回归测试"`
+    },
+    {
+      id: 'dag-hitl-delivery',
+      cat: 'agent',
+      num: '03.6',
+      title: 'DAG 依赖级联局部重跑与不可变交付快照',
+      en: 'DAG Partial Recompute, Immutable Delivery Artifacts & Dual Sign-Off',
+      summary: '依据有向无环图依赖关系仅重算受影响节点，并以不可变原子归档与人工双签发保障交付安全。',
+      weight: 3,
+      projects: ['Super Agent', 'Aurora'],
+      definition: 'DAG（Directed Acyclic Graph，有向无环图）用于清晰刻画工程交付中的先后依赖链（来源文档 → 参数表 → 三维模型 → A3 图纸）。系统为每个节点计算输入内容哈希；上游修改时仅按依赖链路级联重跑受影响节点，未变更上游直接复用缓存产物。每次交付产物先写入同盘临时文件并强制刷盘（fsync），再执行原子重命名（os.replace）冻结为只读快照，且草稿编辑与任务派发彻底分离。',
+      example: '直观案例：在 Super Agent 建筑出图管线中，若设计师仅修订了图纸标题栏文字，系统检测到 3D 模型输入哈希未变，自动跳过耗时的 Rhino 建模步骤而直接重出图纸；同时历史已签发的 V1 压缩包永久只读可回读。',
+      steps: [
+        '构建节点依赖拓扑：记录各环节的输入文件哈希与下游关联关系。',
+        '增量级联重算：仅对哈希失效的节点及其下游触发执行，其余节点直接命中不可变缓存。',
+        '原子交付与双签发：采用临时文件 + fsync + 原子替换写入只读版本包，须经人工显式接受方生效。'
+      ],
+      why: '解决复杂设计工程中“微小改动引发全流程耗时重算”以及“新版本异常覆写历史可用成果”两大交付痛点。',
+      gain: '局部修改响应提速数倍，历史交付 100% 可回溯，可抵御半途磁盘满（ENOSPC）或进程崩溃。',
+      cost: '前期需明确定义各阶段输入输出契约与哈希口径，架构规划成本高于简单线性脚本。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '线性批处理脚本全量覆写输出目录——仅适合一次性实验，不具备版本追溯与崩溃恢复能力。' },
+        { tier: '同级主力 (W2–W3)', text: '轻量 SQLite DAG + 内容寻址哈希缓存（借鉴 Make / Bazel 增量构建思想）。' },
+        { tier: '更重升级 (W4–W5)', text: 'Airflow / Dagster / Prefect——面向企业级定时数仓与分布式大规模 ETL 的调度平台。' }
+      ],
+      upgrade: '单机设计交付与个人工程管线采用轻量 SQLite DAG 即可；当任务扩展至跨主机数百个定时数据流节点时再引入 Dagster 或 Prefect。',
+      pitfall: '直接向目标归档路径流式写入数据，一旦中途崩溃会留下损坏的半成品文件；必须采用“同卷临时文件 + fsync + 原子替换”三步法。',
+      code: `# 原子快照落盘三步法 (blob_store.py)
+tmp_path = target.with_suffix(".tmp")
+with open(tmp_path, "wb") as f:
+    f.write(payload); f.flush(); os.fsync(f.fileno())
+os.replace(tmp_path, target)`
+    },
+    {
+      id: 'multi-agent-patterns',
+      cat: 'agent',
+      num: '03.7',
+      title: 'Multi-Agent 四大协作拓扑与上下文卫生准则',
+      en: 'Canonical Multi-Agent Orchestration Topologies & Context Hygiene',
+      summary: '区分路由、流水线、主从隔离与匿名会诊四种协作结构，克制拆分以防上下文膨胀与缓存失效。',
+      weight: 4,
+      projects: ['Super Agent', 'Agent Habitat'],
+      definition: '多 Agent 并非数量越多越强，盲目让多个模型自由对话往往引发信息失真与 Token 失控。工程实践中的有效拓扑分为四类：① Router（单次轻量分流至专职 Agent）；② Pipeline / DAG（确定性步骤接力）；③ Supervisor + Subagent（将全仓检索、长日志排查路由至独立只读子 Agent，主线程仅接收精炼摘要以保持上下文卫生）；④ Council / Swarm（重大决策时让多模型独立匿名交叉审查）。',
+      example: '直观案例：本工作区通过规则约束所有 >300 行大文件读取与全仓探索必须交由只读 Flash Subagent 执行，主会话仅保留 ≤20 行结构化结论，从而避免上下文逼近 200k 计费拐点；同时主会话保持单模型直连以维持 95% 热缓存命中。',
+      steps: [
+        '单 Agent 优先：80% 常规任务由单模型直接配合工具完成，避免不必要的交接信息损耗。',
+        '重只读探索隔离：将高噪音文件扫描与日志分析剥离至只读轻量 Subagent，保护主线程上下文纯净。',
+        '高风险节点独立会诊：仅在关键架构或内容定稿时启用一次性多模型盲审，评审结束即归档。'
+      ],
+      why: '在“避免单会话上下文膨胀”、“保持 Prompt Cache 热缓存连续性”与“消除单模型盲区”三者之间建立最优工程平衡。',
+      gain: '显著降低配额消耗与推理退化风险，并按任务复杂度合理分层调用不同价位模型。',
+      cost: '跨 Agent 交接存在上下文压缩折损风险，需要清晰定义子任务输入输出契约。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: '单 Agent + 结构化步骤清单——绝大多数任务的默认起点。' },
+        { tier: '平衡主力 (W2–W3)', text: '确定性 Workflow / DAG + 只读 Subagent 上下文隔离（工业界最稳健的实用范式）。' },
+        { tier: '重型特种 (W4–W5)', text: '大规模并行 Swarm 分片与去中心化多角色协作——适用于独立多模块并行改造或开放研究。' }
+      ],
+      upgrade: '严格遵循由简入繁路线：单 Agent → 引入只读探索 Subagent → 固化确定性 DAG → 关键决策辅以一次性多模型会诊。',
+      pitfall: '在同一长会话中让两个不同系统提示词的模型高频交替发言（Orchestrator ↔ Executor 轮切），会导致前缀缓存命中率归零，触发全量上下文冷启动重算。',
+      code: `// 多 Agent 协作与缓存卫生分工准则
+常规全栈开发     -> 单模型 Direct 直连（维持 Prompt Cache 连续命中）
+全仓搜索/大日志  -> 独立只读轻量 Subagent（主线程仅收 <= 20 行摘要）
+严肃交付流水线   -> 确定性 DAG（状态可审计、局部可重跑）
+高风险评审定稿   -> 独立多模型匿名会诊（单次闭环）`
+    },
+    {
+      id: 'sandbox-security',
+      cat: 'agent',
+      num: '03.8',
+      title: '本地 Agent 控制面四层安全防线',
+      en: 'Defense-in-Depth for Local & Cloud Agent Control Planes',
+      summary: '通过回环地址锁定、来源校验、随机令牌与工作区沙箱，防御跨站请求伪造与越权执行。',
+      weight: 3,
+      projects: ['Agent Habitat', 'Super Agent'],
+      definition: '具备写盘、进程调度或外部 API 调用能力的本地 Agent 服务存在隐蔽攻击面：用户在浏览器中访问任意外部网页时，恶意脚本可通过跨站请求伪造（CSRF）或 DNS 重绑定尝试向本机 127.0.0.1 端口发送指令。AP 与 Habitat 采用四层纵深防御：① 仅监听 127.0.0.1 回环地址（绝不绑定 0.0.0.0）；② 严格校验 HTTP Origin 与 Host 头；③ 要求 HttpOnly/SameSite=Strict Cookie 或启动期随机令牌（X-Habitat-Token）；④ 限制执行器目录沙箱并禁止源码硬编码密钥。',
+      example: '直观案例：若本地服务错误配置为 0.0.0.0 且开放 CORS: *，在公共 Wi-Fi 或公司局域网下，同网段设备可直接调用该端口的脚本执行或生图接口；启用四层防线后，未经授权的跨站与局域网请求均被中间件直接阻断。',
+      steps: [
+        '网络层收口：服务启动参数强制绑定 --host 127.0.0.1，隔离局域网横向访问。',
+        '请求层鉴权：所有非只读接口校验精确 Origin 白名单与会话级随机 Token。',
+        '凭证与目录隔离：所有 API Key 仅从本机环境变量读取，外部执行器限定工作目录写边界。'
+      ],
+      why: '以极低代码成本（数十行中间件）堵住本地高权限 AI 工具最常被忽视的浏览器侧劫持与凭证泄露风险。',
+      gain: '零外部鉴权基础设施依赖，保障密钥 0 入库与高危执行接口零未授权触发。',
+      cost: '本地自动化调试脚本调用写接口时需额外携带令牌头，增加轻微联调步骤。',
+      alts: [
+        { tier: '高危反例', text: '0.0.0.0 监听 + 允许全部跨域（CORS: *）——严禁用于具备执行或计费能力的后端。' },
+        { tier: '轻量主力 (W2)', text: '127.0.0.1 + 精确 Origin + 随机 Token + 环境变量密钥（本地开发与个人工具标配）。' },
+        { tier: '重型升级 (W4–W5)', text: 'HTTPS / mTLS + OAuth 2.1 / OIDC + 非特权只读容器 + 网络出口白名单（公网多租户平台标配）。' }
+      ],
+      upgrade: '单人本机使用严格执行上述四层防线即可；只要服务面向局域网协作或公网多用户开放，必须立即升级至 HTTPS + 正规身份认证与速率限流。',
+      pitfall: '将 API Key 或私有 Token 写入源码、前端配置文件或示例 JSON 中，一旦推送至公开代码仓库，数秒内即可能被自动化爬虫扫描盗刷。',
+      code: `# 本地控制面安全底线清单
+# 1. --host 127.0.0.1 (严禁 0.0.0.0)
+# 2. 写接口校验精确 Origin 白名单与随机 X-Session-Token
+# 3. 密钥仅从 os.environ 读取，Git 提交前执行正则密钥扫描`
+    }
+  ];
+
+  MODULES.push(
+    // ==================== 04. 确定性与存储 (6) ====================
+    {
+      id: 'decimal-costing',
+      cat: 'deterministic',
+      num: '04.1',
+      title: 'Python Decimal 与前端整数分同构精算（含缺价阻断）',
+      en: 'Exact Fixed-Point Financial Arithmetic & Unknown Propagation',
+      summary: '以十进制精算替代二进制浮点，解耦净面积与整箱包装损耗，并在缺价时强制阻断汇总。',
+      weight: 1,
+      projects: ['Aurora', 'Spatial Studio'],
+      definition: '计算机默认小数类型（IEEE-754 二进制浮点数）无法精确表示十进制小数（例如 0.1 + 0.2 在二进制中会产生微小舍入残差），累积于大面积工程造价与税费计算时会引发账目偏差。后端全面采用 Python Decimal（显式指定 ROUND_HALF_UP 精确至分、ROUND_CEILING 执行整箱与起订量向上取整），前端 TypeScript 则以整数“分”保持同构一致。同时强制执行“未知向上传播”规则：任意材料缺失有效报价或税运时，返回 UNKNOWN_PRICE_MISSING 并阻断总价汇总，严禁静默按 0 元计入。',
+      example: '直观案例：一块净面积 11 m² 的地面，方案 A 包装规格 2.5 m²/箱需采购 5 箱（12.5 m²），方案 B 规格 5 m²/箱需采购 3 箱（15 m²），直接按 11 × 单价计算会严重低估真实采购成本；若某条材料删去有效报价，系统立即阻断总计以防止输出虚假低预算。',
+      steps: [
+        '十进制精度隔离：后端统一以字符串初始化 Decimal("12.50")，接口传输使用字符串避免 JSON 浮点失真。',
+        '包装与起订量解耦：按净面积 × 损耗系数除以包装规格并向上取整，同采购组运费与起订量去重仅计一次。',
+        '缺价状态传播：当任意子项单价为空、过期或缺少必要税运口径时，向上标记状态异常并阻断汇总。'
+      ],
+      why: '大模型在多步算术上具有固有幻觉，通用表格易漏算包装余料并将空白单元格按 0 相加；确定性精算内核是工程报价可审计的底线。',
+      gain: 'Aurora 通过 253 项后端回归测试并与手算底稿完全一致；TectonicLoop 算账平均耗时 0.03 ms，缺价拦截率 100%。',
+      cost: '类型初始化与序列化较普通浮点略显严格；遇到单条缺价即无法显示“大致总价”（属有意坚守的防失真底线）。',
+      alts: [
+        { tier: '高危反例', text: '使用原生 float 算账或交由大模型直接汇总报价——存在精度误差与不可控算术幻觉。' },
+        { tier: '极轻主力 (W1)', text: '后端 Python Decimal + 前端整数分 / decimal.js——金融、电商与工程造价的行业标准正解。' },
+        { tier: '重型升级 (W5)', text: '接入广联达 / SAP ERP 全量定额计价引擎——适用于施工图招投标级全专业预算编审。' }
+      ],
+      upgrade: '精算内核永远保持 W1 确定性 Decimal；未来系统演进应把复杂度投入到多供应商报价有效期审核流与区域税率表管理中。',
+      pitfall: '切忌使用浮点字面量初始化 Decimal（如 Decimal(1.15) 会先继承二进制浮点尾数误差），必须始终以字符串 Decimal("1.15") 构造。',
+      code: `# 缺价阻断 + 整箱向上取整 (Aurora & tectonic_state.py)
+if sku.unit_price is None:
+    return ZoneCost(status="UNKNOWN_PRICE_MISSING", total_cny=None)
+boxes = (net_area * wastage / pack_size).to_integral_value(rounding=ROUND_CEILING)
+total = (boxes * pack_size * sku.unit_price).quantize(Decimal("0.01"), ROUND_HALF_UP)`
+    },
+    {
+      id: 'pydantic-strict',
+      cat: 'deterministic',
+      num: '04.2',
+      title: 'Pydantic v2 严格数据契约校验',
+      en: 'Strict Schema Enforcement at LLM & API Boundaries',
+      summary: '在模型输出解析与接口入口强制校验字段类型、值域与完整性，阻断脏数据流入内核。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Aurora', 'Aesthetic KB'],
+      definition: 'Pydantic v2（底层由 Rust 实现的高性能数据校验库）用于在系统边界建立不可违背的数据契约。通过配置 strict=True 关闭宽松的隐式类型转换，并配置 extra="forbid" 禁止未声明的幽灵字段，结合数值范围约束（如价格 ≥ 0、置信度位于 [0,1]），将大模型不稳定的自然语言/JSON 输出转化为 100% 合法的结构化对象。',
+      example: '直观案例：Aurora 使用本地大模型从非结构化报价文档提取候选价格时，严格契约强制缺失依据字段输出显式 null（禁止填入“暂无”或 0），且所有通过格式校验的提取结果仅落入“待人工复核候选池”，绝不直接写入正式批准报价表。',
+      steps: [
+        '声明严格模型：为每个 API 入参与大模型输出定义 Pydantic BaseModel，开启 strict 与 extra="forbid"。',
+        '业务值域复验：在语法合法基础上，通过 Field 约束校验数值边界、币种枚举与 ISO 日期格式。',
+        '异常显式隔离：校验失败立即抛出明确字段级错误或触发有限次重试，绝不放行残缺数据写入数据库。'
+      ],
+      why: '将 AI 的概率性输出严密隔离在系统边界层，保障下游计算、数据库事务与前端渲染始终面对确定、干净的数据结构。',
+      gain: 'AetherVault 80 张图离线打标 Pydantic 协议通过率 100%；大幅减少运行期空指针与字段拼写错导致的崩溃。',
+      cost: '数据结构变更时需同步维护模型定义与版本兼容迁移，无法随意向 JSON 追加临时未声明字段。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '手工编写 dict.get() 与条件判断——字段增多后极易遗漏边界校验，维护脆弱。' },
+        { tier: '同级主力 (W2)', text: 'Python 端采用 Pydantic v2，TypeScript 端采用 Zod / Valibot。' },
+        { tier: '更重升级 (W4)', text: 'Protobuf / GraphQL Schema Registry——适用于多语言大型微服务团队跨接口演进治理。' }
+      ],
+      upgrade: 'Python 全栈默认选用 Pydantic v2，前端对接外部复杂接口时按需搭配 Zod；跨多语言大型服务集群时再考虑 Protobuf。',
+      pitfall: '开启大模型的 Structured Outputs 仅保证 JSON 语法结构合法，并不保证业务语义合法（如输出单价 -100），仍需 Pydantic 业务值域约束托底。',
+      code: `class ExtractedQuote(BaseModel):
+    model_config = ConfigDict(strict=True, extra="forbid")
+    unit_price_cny: Optional[str] = None
+    currency: Literal["CNY", "USD", "EUR"]
+    evidence_span: str = Field(min_length=1)`
+    },
+    {
+      id: 'sqlite-wal',
+      cat: 'deterministic',
+      num: '04.3',
+      title: 'SQLite WAL 单文件事务库与 PostgreSQL / Redis 对比',
+      en: 'Embedded Transactional SQLite with Write-Ahead Logging',
+      summary: '以单文件关系型数据库配合 WAL 并发模式承载单机核心持久化，零独立服务运维负担。',
+      weight: 2,
+      projects: ['Aurora', 'Agent Habitat', 'Super Agent', 'Aesthetic KB', 'Style-Wash & ORBIS'],
+      definition: 'SQLite 是直接嵌入应用程序进程内的单文件关系型数据库（Node 24 起甚至原生内置 node:sqlite），无需安装独立数据库服务或配置连接池。开启 WAL（Write-Ahead Logging，预写式日志）模式后，写操作先顺序追加至独立 WAL 日志文件，使读取与写入不再互相阻塞；配合不可变 versions 表与 audit 审计日志表，即可在单机提供完整的 ACID 事务保障。',
+      example: '直观案例：7 个真实项目中有 5 个以 SQLite WAL 作为核心存储——Aurora 存储不可变报价版本与审计记录，Agent Habitat 与 Super Agent 存储实例状态机，ORBIS 甚至在同一事务中原子保存业务记录与原始图像字节，拷贝单个文件即可完成完整备份迁移。',
+      steps: [
+        '启用 WAL 初始化：每次建连执行 PRAGMA journal_mode=WAL、busy_timeout=5000 与 foreign_keys=ON。',
+        '不可变版本留痕：关键业务表采用只追加版本表与审计表，禁止就地覆写已签发历史记录。',
+        '单宿主防冲突锁：通过独立 owner.sqlite 文件锁防止同一数据目录被两个后端进程同时启动写坏。'
+      ],
+      why: '单机 AI 工具、本地控制面与中小并发应用最稀缺的是“零安装摩擦与极致可靠性”，SQLite WAL 在十万级记录内性能充裕且零运维。',
+      gain: '免安装免运维、单文件便携备份、断电崩溃自动前滚恢复、支持内置 FTS5 全文检索。',
+      cost: '底层仍为单写者模型（同一微秒仅允许一个写入事务），不适用于多台应用服务器并发高频写入同一共享库，且不宜部署在网络共享盘（NFS）上。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '纯 JSON / JSONL 文本文件——适合只追加日志（如校准投票记录）或静态只读包，缺乏并发更新与事务回滚能力。' },
+        { tier: '同级对照 (W2)', text: 'SQLite WAL（事务记录首选）vs DuckDB（本地千万行分析型报表首选）。' },
+        { tier: '更重升级 (W4)', text: 'PostgreSQL（多副本云端 SaaS、复杂行级锁高并发写、pgvector 统一库）+ Redis（分布式内存缓存与队列）。' }
+      ],
+      upgrade: '单机运行、本地工作台及早期轻量服务首选 SQLite WAL；当架构演进为多容器水平扩展或面临高并发多人写入瓶颈时，平滑迁移至 PostgreSQL。',
+      pitfall: '未显式启用 WAL 时，SQLite 默认处于 DELETE 回滚日志模式，任何写事务都会锁死全部读连接并频繁抛出 SQLITE_BUSY 异常。',
+      code: `PRAGMA journal_mode = WAL;
+PRAGMA busy_timeout = 5000;
+PRAGMA foreign_keys = ON;`
+    },
+    {
+      id: 'cad-human-anchor',
+      cat: 'deterministic',
+      num: '04.4',
+      title: 'PDF/DXF 矢量解析与人工校尺描区机制',
+      en: 'Deterministic CAD Vector Parsing with Human Scale Calibration',
+      summary: '结合开放标准矢量解析与 30 秒人工标尺锚定，以确定性几何联动替代高误差的黑盒识图算量。',
+      weight: 2,
+      projects: ['Aurora'],
+      definition: '建筑工程图纸图层规范极不统一且常存在未闭合多段线与文字遮挡，直接依赖计算机视觉或视觉大模型自动分割房间并算量，一旦面积识别产生 15% 误差即令整份概算作废。Aurora 采用确定性人机分工：后端通过 ezdxf 解析开放矢量格式 DXF、通过 pdfplumber / pypdfium2 处理 PDF，明确拒绝兼容脆弱的闭源二进制 .dwg；前台由设计师在底图拉取已知长度标尺线并勾勒选材区，建立区域与底图比例尺的严格依赖，比例尺一旦调整即自动使所有下游净面积失效重算。',
+      example: '直观案例：设计师导入一层平面 DXF 或 PDF 后，花 30 秒标定 6000mm 轴网比例尺并锁定关键区域防止误替换；后续即便重调比例尺，旧净面积立即标脏失效，而历史已冻结的报价快照仍保持只读可比对。',
+      steps: [
+        '规范输入格式边界：接收开放标准 DXF 与 PDF，主动规避闭源 .dwg 的专利与版本解析泥潭。',
+        '人工标尺与区域锚定：前端 SVG 交互层完成比例尺标定、选材多边形描绘与防误改锁定。',
+        '比例尺变更级联失效：比例尺重设时原子清空关联区域净面积并触发重算，确保数据口径绝不陈旧。'
+      ],
+      why: '在早中期选材概算场景中，以极低人工投入（30 秒）换取 100% 可复核精度，是典型的 AI 与确定性克制边界典范。',
+      gain: '面积与造价结果 100% 可审计、消除改尺忘改表的经典人工失误、规避闭源格式维护泥潭。',
+      cost: '保留了 30 秒人工校尺与描区交互，表面自动化程度低于“一键 AI 自动识图”。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '手工量取后填入独立 Excel 表格——面积数值与空间位置脱钩，方案修订极易遗漏。' },
+        { tier: '同级主力 (W2)', text: 'ezdxf / PDF 解析 + 人工校尺描区（早中期概算精度与效率的最佳平衡点）。' },
+        { tier: '更重升级 (W4–W5)', text: 'Revit / IfcOpenShell 全量 3D BIM 算量（需要完整深化三维模型）或专用图纸分割模型（仍需人工逐间复核）。' }
+      ],
+      upgrade: '未来可将视觉模型作为“候选区域预标注建议层”以减少描边点击次数，但必须永久保留人工确认与改尺自动失效两道机制。',
+      pitfall: '试图在开源栈中直接解析闭源二进制 .dwg 文件往往陷入无尽的版本兼容故障；在产品规范中要求 CAD 端导出标准 DXF 是最务实的工程止损。',
+      code: `// 底图比例尺重标时，自动作废关联净面积但保留冻结历史快照
+function onScaleRecalibrated(drawingId, newMetersPerPx) {
+  db.exec("UPDATE zones SET net_area_m2 = NULL, stale = 1 WHERE drawing_id = ?", [drawingId]);
+}`
+    },
+    {
+      id: 'local-gpu-queue',
+      cat: 'deterministic',
+      num: '04.5',
+      title: '本地 ComfyUI 串行显存队列与消费级 GPU 编排',
+      en: 'Serialized Local VRAM Queue & ComfyUI API Orchestration',
+      summary: '以极轻后端薄壳封装复杂节点图并强制单任务串行调度，保障 12GB 消费级显卡零显存溢出。',
+      weight: 4,
+      projects: ['Style-Wash & ORBIS', 'Aurora', 'Radar'],
+      definition: 'ComfyUI 提供开源图像/视频生成领域最高的底层参数可控度，但原始节点图学习与日常操作门槛极高，且消费级显卡（如 RTX 5070 Ti 12GB VRAM）一旦并发执行多张高清生成任务或模型卸载未完成即接续下一任务，极易触发 CUDA OOM（显存溢出）崩溃。Style-Wash 采用零依赖 Node ESM 服务封装 ComfyUI HTTP API（127.0.0.1:8188），结合 SSE 推送实时进度，并在内核执行严格单队列串行调度与“取消 ≠ 显存清理确认”双状态隔离。',
+      example: '直观案例：创作者在简洁界面一次提交多组 Anima Turbo 8 步精修、2x 放大与 Lab 校色任务，后台自动排队逐张渲染，且看门狗持续监听下载目录实现自动入库与非破坏性预览采纳。',
+      steps: [
+        '工作流模板化封装：将验证通过的 ComfyUI 复杂节点图固化为参数化 JSON 模板，对前台隐藏节点连线。',
+        '严格单队列串行出队：后端维护 FIFO 任务队列，确保同一时刻仅有一个采样任务占用 12GB 显存。',
+        '清理确认门禁：收到取消指令后不立即启动新任务，等待底层返回显存释放确认（cleanup_confirmed）后再放行下一队列项。'
+      ],
+      why: '将极客级开源渲染引擎转化为稳定、零边际订阅费的日常视觉精修工作台。',
+      gain: '边际出图费用为 ¥0、支持私有 LoRA 与定制后处理流程、彻底消除并发显存崩塌。',
+      cost: '串行队列吞吐受限于单卡算力（冷启动实测 46.8–49.1 s），强依赖本机 NVIDIA GPU，难以直接共享给公网多用户。',
+      alts: [
+        { tier: '更轻替代 (W2)', text: '按次调用云端生图 API（Nano Banana / GPT Image / Flux API）——零硬件部署，低频使用总成本更低。' },
+        { tier: '同级主力 (W4)', text: '本机 ComfyUI 串行队列 + Ollama——高频重度私密视觉创作者最优解。' },
+        { tier: '更重升级 (W4–W5)', text: '云端按秒弹性 GPU（Modal / Replicate / Google Colab A100/G4）——适用于多并发请求或 80GB+ 视频大模型。' }
+      ],
+      upgrade: '单人高频精修首选本机显卡串行队列；当出现多人并发调用或需运行本机显存无法容纳的大参数视频模型时，切换至 Colab GPU 或 Modal Serverless。',
+      pitfall: '用户点击“取消生成”后立刻无缝塞入下一张高分辨率任务是触发显存 OOM 的常见原因，必须显式等待后端确认显存彻底卸载。',
+      code: `// 串行显存队列调度守卫 (studio-server.mjs)
+while (queue.length > 0 && !gpuBusy && cleanupConfirmed) {
+  gpuBusy = true;
+  await dispatchToComfyUI(queue.shift());
+}`
+    },
+    {
+      id: 'cas-orbis-backup',
+      cat: 'deterministic',
+      num: '04.6',
+      title: 'CAS 内容寻址存储与自包含便携归档',
+      en: 'Content-Addressable Storage & Self-Contained Portable Archives',
+      summary: '以文件内容 SHA-256 哈希命名实现天然去重与防篡改，并通过自包含归档消除跨机断链裂图。',
+      weight: 2,
+      projects: ['Super Agent', 'Style-Wash & ORBIS'],
+      definition: 'CAS（Content-Addressable Storage，内容寻址存储，Git 底层采用同款机制）不再按人为目录名定位文件，而是计算二进制字节的 SHA-256 哈希值作为唯一地址：内容完全相同的图片重复导入自动去重，改动任意 1 字节哈希即变从而具备比特级完整性校验。对外迁移或版本归档时，ORBIS（封顶 18–19MB .orbis 包）与 AP（.ap.zip）将元数据、原始图像与 SHA-256 清单封装为单一自包含文件，彻底摆脱脆弱的本地文件路径引用。',
+      example: '直观案例：传统本地贴图板若仅记录文件路径，用户一旦整理文件夹或迁移硬盘即出现大量裂图；采用 CAS + 自包含归档后，任意历史评审版本（如 V1/V2 对比核验记录）均可跨设备 100% 无损复原。',
+      steps: [
+        '计算内容指纹：读取原始二进制字节计算 64 位 SHA-256 摘要，并按前 4 位分两级子目录存放。',
+        '去重与完整性校验：相同摘要秒级复用存储空间，读取关键交付件时复算摘要核验无损。',
+        '自包含版本打包：导出归档时内嵌原图与清单，并配合版本锁定（如 ORBIS 禁止在 V1 画布提交 V2 验收确认）。'
+      ],
+      why: '保障跨周期设计资产与评审证据在硬盘迁移、目录重构后仍保持 100% 可回读与防篡改。',
+      gain: '自动去重节省磁盘、比特级防篡改、跨机器交接零断链。',
+      cost: '自包含归档包体积显著大于纯链接索引，需设定单包体积上限或流式分卷策略。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '仅记录磁盘相对路径——最轻量，但任意目录重命名即可破坏项目完整性。' },
+        { tier: '同级主力 (W2)', text: '本地目录 CAS Blob Store + SQLite 元数据表（单机创作与交付系统首选）。' },
+        { tier: '更重升级 (W3–W4)', text: '云对象存储（AWS S3 / Cloudflare R2 + CDN）——公网多用户共享海量媒体资产必选。' }
+      ],
+      upgrade: '单机工作台采用本地 CAS；演进为云端多用户产品时，可直接沿用“以内容哈希为对象键”的设计，无缝切换至 S3 / Cloudflare R2。',
+      pitfall: '删除单条业务记录时切忌直接物理删除对应 CAS 文件，因为多个历史版本可能共同引用同一份内容哈希，须依赖引用计数或离线垃圾回收。',
+      code: `# CAS 两级目录分片，避免单目录容纳数万文件导致文件系统退化
+digest = hashlib.sha256(raw_bytes).hexdigest()
+blob_path = CAS_ROOT / digest[:2] / digest[2:4] / digest`
+    },
+
+    // ==================== 05. 前端与 3D (5) ====================
+    {
+      id: 'frontend-weight-ladder',
+      cat: 'frontend',
+      num: '05.1',
+      title: '前端四档运行时架构：Zero-Build / Vite SPA / Next 静态导出 / SSR',
+      en: 'Choosing the Right Web Runtime & Build Architecture',
+      summary: '按部署形态与交互需求精确匹配四档前端运行时，避免无 SEO 需求的交互工具盲目背负 SSR 成本。',
+      weight: 3,
+      projects: ['Spatial Studio', 'Agent Habitat', 'Aurora', 'Style-Wash & ORBIS'],
+      definition: '现代 Web 前端按构建与运行复杂度可分为四档：① Zero-Build 原生 HTML/ESM（零构建工具、离线双击即开，适用于归档手册与极轻小窗，如本页面与 AETHER v3）；② Vite + React SPA（极速热更新、纯客户端渲染，适用于本地高频交互工作台，如 Aurora 与 Habitat）；③ Next.js Static Export（output: "export"，产出纯静态包免费托管至 GitHub Pages / Vercel CDN，如 Spatial Studio）；④ Next.js SSR / Remix（运行独立 Node/Edge 服务器动态渲染，仅在强 SEO 或服务端鉴权聚合场景必需）。',
+      example: '直观案例：Spatial Studio 公网版采用 Next.js 15 Static Export 部署至 GitHub Pages，实现零服务器费用与 0 秒冷启动；本地开发模式自动启用 rewrites 将 /api/* 代理至 127.0.0.1:8780 FastAPI。',
+      steps: [
+        '判断内容属性：离线文档或极简桌面面板优先 Zero-Build 单文件 HTML。',
+        '判断交互与部署：强交互本地工作台首选 Vite SPA；需兼容 Next 生态且免费静态托管则启用 Static Export。',
+        '克制引入 SSR：仅当业务依赖公开动态网页搜索引擎抓取（SEO）或服务端隐私接口聚合时，才启用完整 SSR 服务。'
+      ],
+      why: '避免把本可纯静态托管或本地运行的交互产品过度复杂化为服务端渲染应用，规避 Hydration 报错与持续服务器运维成本。',
+      gain: '公网静态包零运维、全球 CDN 极速首屏；本地 Vite 工具开发启动耗时低于 1 秒。',
+      cost: '静态导出不支持服务端动态渲染 SEO，也无法在前端隐藏私密 API 凭证；Zero-Build 缺乏编译期 TypeScript 类型检查。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: 'Zero-Build 原生 HTML5 + CSS + Vanilla JS——永不因依赖过期而无法构建。' },
+        { tier: '轻量主力 (W2)', text: 'Vite + React + TypeScript SPA——本地 AI 工作台与内部工具的最佳效率档。' },
+        { tier: '中重对照 (W3–W4)', text: 'Next.js Static Export（免费静态托管）vs Next.js SSR / Remix（动态 SEO 与多租户服务端 SaaS 必选）。' }
+      ],
+      upgrade: '公开展示与个人工具停留在 Vite 或 Next Static Export 即可；当产品进入商业化获客与动态登录态服务端渲染阶段时再开启完整 SSR。',
+      pitfall: 'Next.js 静态导出本地高频坑点：执行 npm run build 后直接切回 npm run dev 易因 .next 产物缓存冲突异常，切换前需清理 web/.next 目录；同时所有资源路径须统一经 basePath 解析。',
+      code: `// next.config.mjs 双模配置：生产静态导出，开发代理本地 FastAPI
+export default {
+  output: isProd ? 'export' : undefined,
+  images: { unoptimized: true },
+  rewrites: isProd ? undefined : async () => [
+    { source: '/api/:path*', destination: 'http://127.0.0.1:8780/api/:path*' }
+  ]
+};`
+    },
+    {
+      id: 'state-management',
+      cat: 'frontend',
+      num: '05.2',
+      title: '前端状态管理分级：原生 Context / Zustand / Redux·TanStack Query',
+      en: 'State Management Complexity Ladder',
+      summary: '严格区分低频业务状态与高频 60fps 交互引用，在零外部依赖的前提下打通跨模块数据流。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Aurora'],
+      definition: '状态管理解决跨组件共享与同步数据的架构问题。在 Spatial AI Studio 统一融合设计中，跨 4 个主工作台共享的数据（当前资产集合、3 槽位选图、筛选条件、校准态与 Tectonic Handoff 载荷）均属于低频点击触发状态，采用 React 原生 Context + useReducer 即可清晰托管；而每帧变化的高频交互（3D 相机轨道矩阵、对比帘幕像素位移）则隔离在 useRef 中，绕过 React 重渲染流水线以稳锁 60fps。',
+      example: '直观案例：用户在图谱视图点击一张材质参考图装入底部 Material 槽位（低频更新进 Context），随后切换至正交编译器与 TectonicLoop 造价页，该选中状态与衍生推荐 SKU 保持 100% 持久同步。',
+      steps: [
+        '动静分离：低频业务状态集中归入 StudioContext，高频 60fps 坐标与动画保留在局部 useRef。',
+        '单向数据流：通过清晰枚举的 Reducer Action 更新全局状态，避免组件间双向回调缠绕。',
+        '轻量会话保持：将关键槽位与筛选态同步至 sessionStorage，防止误刷新丢失当前搭配。'
+      ],
+      why: '避免为中等规模应用引入冗余状态库与样板代码，以 0 KB 额外包体彻底解决原有双外壳的状态孤岛问题。',
+      gain: '零第三方状态依赖、原生 TypeScript 完整类型推导、代码结构透明易于审计。',
+      cost: 'React Context 缺乏细粒度字段级订阅，若将来单个 Context 下挂载数十个高频变动字段，会引发不必要的子树重渲染。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: '局部 useState + URL SearchParams——适合彼此独立的简单页面。' },
+        { tier: '轻量主力 (W2)', text: 'React Context + useReducer（零依赖）或 Zustand（约 1KB，支持 selector 精准按字段订阅）。' },
+        { tier: '中重升级 (W3–W4)', text: 'TanStack Query（专攻复杂服务端异步接口缓存、去重与失效刷新）+ Redux Toolkit（大型团队强规范协作）。' }
+      ],
+      upgrade: '若局部 Context 出现重渲染卡顿，第一步拆分读写 Context，第二步可零痛点迁移至 Zustand；当异步服务端接口超过 15 个且缓存联动复杂时引入 TanStack Query。',
+      pitfall: '将鼠标拖拽坐标、滚动偏移量或 3D 渲染循环变量存入 React 全局 State 是造成页面掉帧与风扇狂转的最常见错误。',
+      code: `// 动静分离状态架构 (StudioContext.tsx)
+// 低频业务态 -> Context + useReducer (assets, slots, filters, tectonicHandoff)
+// 高频 60fps -> useRef (cameraOrbitRef, curtainDragPxRef)`
+    },
+    {
+      id: 'threejs-vs-r3f',
+      cat: 'frontend',
+      num: '05.3',
+      title: '原生 Three.js 渲染与显存管理 vs React Three Fiber / Deck.gl',
+      en: 'Imperative WebGL Control vs Declarative 3D Frameworks',
+      summary: '绕过 React 渲染周期直接控制 WebGL 绘制调用与纹理按需卸载，稳定承载 1,500 节点 60fps 星图。',
+      weight: 3,
+      projects: ['Spatial Studio', 'Agent Habitat', 'Aurora'],
+      definition: '浏览器三维渲染依托 WebGL 图形接口。原生 Three.js 采用命令式编程直接操控场景树（Scene）、相机与 GPU 缓冲区；相比封装层 React Three Fiber（R3F），原生 Three.js 零框架版本绑定（规避 React 19 升级期依赖冲突），且便于精细控制 1,500 张图片的按距离分批纹理加载、点阵实例化渲染（InstancedMesh）以及组件卸载时的显存彻底回收（dispose）。',
+      example: '直观案例：Spatial Studio 的 AestheticConstellation3D 在单屏内流畅渲染 1,500 个审美节点与 Top-10 拓扑关系连线，并支持在“白纸专著底”与“暗室观测底”两种主题间无缝切换而不触发重绘卡顿。',
+      steps: [
+        '合并绘制调用：通过实例化网格与合并线段缓冲控制 Draw Call 数量，确保 1,500 节点稳跑 60fps。',
+        '分级纹理按需加载：远景节点采用色点占位，镜头拉近或选中邻域时异步加载压缩 WebP 贴图。',
+        '卸载期显存清零：组件销毁时递归遍历释放所有 geometry、material、texture 与 WebGLRenderer。'
+      ],
+      why: '在高密度多图 WebGL 场景下，对帧率、显存上限与 React 版本兼容性的绝对掌控优先于声明式语法糖。',
+      gain: '零 React 生态版本冲突、包体精简、显存回收可控且支持低配/移动端按需降采样。',
+      cost: '命令式场景管理代码篇幅较长（需手工维护 ResizeObserver 与 Raycaster 射线拾取）。',
+      alts: [
+        { tier: '更轻替代 (W2)', text: '2D Canvas / PixiJS——若不需要 Z 轴空间旋转，2D 渲染在文字锐度与移动端耗电上更具优势。' },
+        { tier: '同级对照 (W3)', text: '原生 Three.js（显存与性能掌控度最高）vs React Three Fiber（复杂交互式 3D 组件复用更快）。' },
+        { tier: '更重升级 (W4–W5)', text: 'Deck.gl（十万至百万级点云与地理空间可视化）或 Unity WebGL（完整游戏级物理与着色管线，包体大）。' }
+      ],
+      upgrade: '1,000–5,000 视觉节点规模下原生 Three.js 表现充裕；若节点量级扩张至 50,000+，需改用纹理图集（Texture Atlas）单次着色器渲染或迁移至 Deck.gl。',
+      pitfall: '浏览器对同一页面的活跃 WebGL 上下文数量存在硬上限（通常 8–16 个），切 Tab 时若未严格执行 dispose() 回收贴图与渲染器，数次切换后即发生 WebGL Context Lost 黑屏。',
+      code: `// 卸载 3D 画布时严格释放 GPU 显存，杜绝上下文丢失
+scene.traverse(obj => {
+  obj.geometry?.dispose();
+  if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+  else obj.material?.dispose();
+});
+renderer.dispose();`
+    },
+    {
+      id: 'ui-primitives-web',
+      cat: 'frontend',
+      num: '05.4',
+      title: '无头无障碍组件（Radix UI）与现代浏览器原生控件',
+      en: 'Headless Accessible Primitives vs Modern Native HTML5 Platform',
+      summary: '剥离预设视觉样式仅复用无障碍交互逻辑，并在轻场景直接调用现代原生 HTML/CSS 能力。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Aurora'],
+      definition: '传统重型 UI 组件库（如 Ant Design / MUI）将交互行为与默认视觉风格强绑定，极易造成产品外观趋同；无头组件库（Headless UI，如 Radix UI / Base UI）仅封装复杂的键盘焦点管理、ARIA 语义与弹层定位逻辑，将 100% 视觉控制权交还给设计系统。同时，现代浏览器已原生提供模态弹窗（<dialog closedby="any">）、可动画折叠面板（<details> + ::details-content）与容器查询（@container），使文档与轻量工具得以零依赖实现高质量无障碍交互。',
+      example: '直观案例：Spatial Studio 使用 Radix UI + Tailwind 精准落地 Architectural Monograph 白纸信号蓝视觉规范；而本架构参考手册则完全基于原生 HTML5 + CSS 实现全局检索弹窗、折叠代码抽屉与窄屏自动堆叠的响应式数据表。',
+      steps: [
+        '优先评估浏览器原生能力：标准弹窗、折叠披露、响应式表格与暗亮主题优先使用原生语义标签与现代 CSS。',
+        '复杂交互引入无头原语：面对滑块、复合下拉菜单等高复杂键盘交互，在 React 中选用 Radix UI 托底。',
+        '跨浏览器渐进回退：针对处于新可用阶段的特性（如 <dialog closedby="any">），补齐轻量特性检测回退。'
+      ],
+      why: '既确保专业级设计系统的独特辨识度，又避免手写交互控件遗漏键盘导航、Esc 退出与读屏无障碍规范。',
+      gain: '极高的视觉定制自由度、更小的脚本加载体积与原生级无障碍兼容。',
+      cost: '需要团队具备完整的设计系统意识（字号层级、色彩对比度 ≥4.5:1、焦点环与间距节奏均须自主把控）。',
+      alts: [
+        { tier: '极轻替代 (W1)', text: '纯原生 HTML5 (<dialog>, <details>, Popover) + 现代 CSS——文档站与轻量单文件工具最优解。' },
+        { tier: '轻量主力 (W2)', text: 'Radix UI / Base UI + Tailwind CSS——高审美定制化 Web 应用的行业主力组合。' },
+        { tier: '偏重对照 (W3–W4)', text: 'Ant Design / MUI——适合工期紧迫、以数十张密集表单为主的企业内部管理后台。' }
+      ],
+      upgrade: '面向设计师、创意工具与品牌展示的产品坚持“原生 HTML 或无头组件 + 自主设计规范”；纯内部 B 端 CRUD 后台可直接选用 Ant Design 换取交付速度。',
+      pitfall: '原生 <details> 的 <summary> 内部严禁嵌套标题标签（h2/h3），否则屏幕阅读器会将其降级为普通按钮并丢失文档大纲；使用 <dialog closedby="any"> 时须为 Safari 提供点击边界坐标检测回退。',
+      code: `<!-- 现代原生模态框 + Safari 轻量回退检测 -->
+<dialog id="cmdDialog" closedby="any" aria-labelledby="cmdTitle">...</dialog>
+<script>
+  if (!('closedBy' in HTMLDialogElement.prototype)) { /* 外框点击坐标回退关闭 */ }
+<\/script>`
+    },
+    {
+      id: 'dual-mode-iso',
+      cat: 'frontend',
+      num: '05.5',
+      title: '双模同构架构：公网零延迟静态展示与本地满血引擎',
+      en: 'Isomorphic Dual-Mode Architecture (Instant Showcase + Local Live)',
+      summary: '同一套前端代码在公网以预烘焙轻包零延迟运行，在本地自动探测并接入完整 FastAPI AI 管线。',
+      weight: 3,
+      projects: ['Spatial Studio'],
+      definition: '双模同构架构针对 AI 作品集与原型演示的核心矛盾而设计：公网托管全栈 AI 后端不仅产生持续服务器费用，还面临 API 额度被恶意刷爆及私有数据外泄风险；而纯视频演示又缺乏真实交互验证能力。该模式让同一套前端在公网自动读取精简预烘焙包（80 张公开样张，<500 KB JSON）并执行客户端确定性引擎；当运行于 localhost 且探测到 127.0.0.1:8780 在线时，无缝激活 1,500 张私人图谱、多模态 RAG、实时生图与分层 BT 训练。',
+      example: '直观案例：外部评审打开 GitHub Pages 公网链接可在 0 秒冷启动下完整体验 8 轴排序、3 槽位 AST 编译、6 组实拍对比与造价排雷；作者本机启动 FastAPI 后，同一界面即刻升级为完整生产研究环境。',
+      steps: [
+        '静态资产脱敏预烘焙：离线将公开 80 样张的色板、3D 坐标、对比图与评测基准打包为轻量静态 JSON。',
+        '运行时环境探测：仅在 localhost 主机名下请求 /api/health，探测失败时静默保持公开模式而不弹出报错。',
+        '构建期隐私门禁：在静态导出完成后通过脚本硬校验，确保输出目录绝对不含私有 8.3 MB 图谱 JSON 或私有原图。'
+      ],
+      why: '同时兼得“公网零成本高可用互动展示”、“私有资产绝对安全”与“本地真实 AI 算力闭环”三项目标。',
+      gain: '公网托管费用 ¥0、无冷启动延迟、零 API 盗刷风险、本地演示满血可控。',
+      cost: '核心确定性逻辑（如 AST 编译与含损耗算账）需在后端 Python 与前端 TypeScript 维护同构一致性，依靠单元测试锁定。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '纯静态图文介绍或 Figma 原型——无法证明底层算法与真实工程边界。' },
+        { tier: '同级主力 (W3)', text: '双模同构架构（技术作品集、AI PM 原型与本地优先工具的理想形态）。' },
+        { tier: '更重升级 (W4–W5)', text: '全栈云端托管 + 用户鉴权 + 限流配额 + 支付计费系统——面向商业化公开售卖 SaaS 阶段。' }
+      ],
+      upgrade: '在产品从“个人工具与能力证明”转向“面向陌生大众收费的商业 SaaS”时，再引入云端后端、身份认证与计费限流网关。',
+      pitfall: '若静态导出流程未显式隔离 public/data 下的本地私有大文件，极易在部署时将数兆私密数据意外推送至公网 CDN；必须加设自动化构建后安检脚本。',
+      code: `// 运行时双模自动探测与优雅降级
+const isLive = isLocalHost && await fetch('/api/health').then(r => r.ok).catch(() => false);`
+    },
+
+    // ==================== 06. 评测与成本 (6) ====================
+    {
+      id: 'edd-golden-eval',
+      cat: 'eval',
+      num: '06.1',
+      title: 'EDD 评测驱动开发与核心量化指标体系',
+      en: 'Eval-Driven Development & Quantitative Offline Benchmarks',
+      summary: '先固化覆盖常规与边界用例的黄金考卷与基线分数，再以自动化回归驱动 Prompt 与算法迭代。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Aesthetic KB', 'Radar'],
+      definition: 'EDD（Eval-Driven Development，评测驱动开发）是针对非确定性 AI 系统的核心工程方法：在修改提示词或算法之前，先建立包含标准答案与红线门禁的离线黄金测试集（Golden Dataset），并以领域适配的量化指标持续回归：排序一致性采用 Spearman 等级相关系数 ρ，检索覆盖度采用 Recall@K 与 MRR（平均倒数排名），偏好模型采用留出集 A/B 盲测，工程造价采用历史真实决算区间命中率。',
+      example: '直观案例：AetherVault 通过 4 套离线评测脚本验证全链路——5 点视觉锚定使 Spearman ρ 从盲打 0.540 升至原始 VLM 0.6107（+13.1%）及校后 0.8577；TectonicLoop 对 15 宗历史门头决算回测命中 ±15% 区间达 86.7% (13/15)。',
+      steps: [
+        '构建分层黄金考卷：手工沉淀涵盖典型场景、极端边界与对抗陷阱的固定测试集。',
+        '记录初始基线：优化前运行评测锁定 Baseline，确保后续每一次改动均有客观参照。',
+        '严格区分训练与留出集：绝不以训练集拟合度代替泛化表现（例如 Taste Engine v2.1 显式区分 9 票训练准确率 88.9% 与留出交叉验证 55.6%）。'
+      ],
+      why: '消除 AI 迭代中“凭体感评估”与“修复一处却静默破坏十处”的盲区，使每次演进具备可审计的工程证据。',
+      gain: '所有核心宣称均锚定可一键复现的实测 JSON 报告，建立稳健的质量防线。',
+      cost: '高质量黄金评测集与手算底稿需人工精细标注，前期投入显著高于随意抽测。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '人工抽查 3–5 个样例（Vibe Check）——仅适合首日概念验证，无法支撑持续迭代。' },
+        { tier: '同级主力 (W2)', text: '本地 Python unittest + 黄金 JSON 基准脚本——零外部依赖，可纳入本地与 CI 必跑检查。' },
+        { tier: '更重升级 (W3–W4)', text: 'Promptfoo / Langfuse / Braintrust / Arize AX——适用于多人团队线上大流量持续抽检与回归看板。' }
+      ],
+      upgrade: '个人与早期团队先把可离线一键复现的 eval/*.py 跑实；产品上线产生持续线上用户流量后，再接入 Langfuse / Arize AX 做在线抽样评测。',
+      pitfall: '在小样本上直接汇报训练集准确率极易掩盖过拟合；必须强制使用留出集（Holdout）或交叉验证，并在样本不足时诚实标注 UNPROVEN。',
+      code: `# 四大自动化离线评测门禁 (eval/)
+# eval_01_spearman.py   -> VLM 5点锚定 ρ 与跨界 Top-5 对齐率
+# eval_02_decouple.py   -> 20 组正交 AST 冲突隔离 (0 泄漏)
+# eval_03_homography.py -> 灭点偏差 <1.5° & 非掩码 PSNR >=38dB
+# eval_04_cost_backtest -> 15 宗决算 ±15% 区间命中率 >=80%`
+    },
+    {
+      id: 'spy-mock-honesty',
+      cat: 'eval',
+      num: '06.2',
+      title: '零泄漏测试桩 (_SpyCloudVLM) 与失败基线诚实保留',
+      en: 'Zero-Leakage Spy Assertions & Anti-Gaming Failure Transparency',
+      summary: '以自动化间谍测试硬性证明隐私与安全红线，并在报告中刻意保留真实失败用例防止指标刷分。',
+      weight: 1,
+      projects: ['Aesthetic KB', 'Radar', 'Spatial Studio'],
+      definition: '安全与隐私边界若仅停留在口头或文档约定中，极易在后续重构中被无意破坏。测试桩（Spy Mock）是在离线自动化测试中替换真实网络客户端的监听替身：例如 Aesthetic KB 的 _SpyCloudVLM 精确记录每一次云端调用企图，对所有 private 资产断言调用次数严格等于 0。同时，遵循“反刷分（Anti-Gaming）”纪律，评测报告刻意保留真实失败案例（如 Radar 的 2 项失败与 Spatial 的 3 类 Bad Case），而非修改题目凑出虚假 100%。',
+      example: '直观案例：Aesthetic KB 的 25 查询黄金测试中专门设计了 2 条“霓虹粉陷阱查询”验证硬负样本 0% 泄漏；Radar 在版本过滤达到 25/25 命中后，仍保留词法同义词盲区与 9B 小模型压缩失真两项真实失败记录，直接指明下阶段升级方向。',
+      steps: [
+        '编写反向红队单测：针对隐私出境、缺价归零、讨厌项泄漏、代次重放四类红线编写专门诱错测试。',
+        '注入间谍断言：以 _SpyCloudVLM 等测试替身证明违规路径执行次数严格为 0。',
+        '建立公开 Bad Case 台账：记录触发条件、根因归类与确定性兜底动作，禁止为美化报表删除难例。'
+      ],
+      why: '将安全承诺转化为每次提交必跑的自动化硬断言，并通过坦诚暴露系统物理边界赢得专业评审的深度信任。',
+      gain: '重构期安全护栏零退化；每个真实失败用例都直接转化为清晰可执行的工程优化清单。',
+      cost: '需要克制追求“100% 满分报表”的心理惯性，持续维护失败归因文档。',
+      alts: [
+        { tier: '无效反例', text: '仅在文档中口头声明“不上传隐私数据”——缺乏自动化校验保障。' },
+        { tier: '极轻主力 (W1)', text: '单元测试 Spy Mock + 对抗陷阱用例——零成本且与代码演进同步执行。' },
+        { tier: '重型升级 (W4–W5)', text: '生产级网络出口防泄漏防火墙（DLP）+ 专职红队对抗演练——金融与大型云厂商合规标配。' }
+      ],
+      upgrade: '任何涉及资金、隐私与不可逆写盘的约束均应在首日配备反向单测；商业化上云后叠加网络层审计与 DLP 防火墙。',
+      pitfall: '仅测试“正常合法输入（Happy Path）”无法暴露真实系统脆弱点；AI 应用绝大多数线上故障源自空值、断网、畸形输入与并发重复触发。',
+      code: `# 隐私零泄漏间谍断言 (aesthetic-kb/eval.py)
+spy_cloud = _SpyCloudVLM()
+run_ingest(private_asset, cloud_vlm=spy_cloud)
+assert spy_cloud.call_count == 0, "FATAL: private asset leaked to cloud VLM!"`
+    },
+    {
+      id: 'tiered-cost-ledger',
+      cat: 'eval',
+      num: '06.3',
+      title: '全漏斗端云分层成本账本与 Prompt Cache 机制',
+      en: 'Full-Funnel Unit Economics & Prompt Caching Architecture',
+      summary: '按端云分层将免费粗筛前置、云端批处理与热缓存后置，并以全漏斗口径核算单图真实成本。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Aesthetic KB'],
+      definition: '端云分层成本控制遵循“越便宜的筛子越前置”原则：Tier-0 在本机 CPU/GPU 零费用完成去重（64-bit dHash）、清晰度检查、OKLab 色彩提取与本地向量预筛，淘汰大部分无效候选；Tier-1 仅对通过初筛的候选使用异步 Batch API（享半价折扣）并锁定稳定的系统提示词前缀以命中 Prompt Cache（热缓存读取享 50%–95% 折扣）。核算单位成本时，必须将淘汰图、锚点参考图与重试费用全部摊入最终合格入库图数（全漏斗口径），硬性压控 ≤ ¥0.008/图。',
+      example: '直观案例：AetherVault 80 图实测 Prompt Cache 命中率达 49.25%，结合批量缓存模型测算单图入库成本仅 ¥0.000767，低于 ¥0.008 门禁一个数量级。',
+      steps: [
+        'Tier-0 本地免费削峰：离线 CPU/GPU 完成去重、低质过滤与确定性视觉特征提取，成本 ¥0。',
+        'Tier-1 批处理 + 热缓存：离线打标走异步 Batch 通道，严格固定 System Prompt 与共享锚图前缀。',
+        '全漏斗真实结算：按 (全部筛选费用 + 锚图费用 + 重试费用) / 最终入库图数 验证单位经济可行性。'
+      ],
+      why: '避免仅按“单次成功调用”低估真实商业成本，确保资产库从百张扩至数万张时单位经济模型依然健康。',
+      gain: '在同等预算下将可处理资产规模放大 10–30 倍，所有成本测算透明可审计。',
+      cost: 'Batch API 具有异步等待延迟（分钟至小时级），仅适用于离线入库与批评审，不适用于前台同步交互。',
+      alts: [
+        { tier: '高成本反例', text: '全量原始候选不经筛选直接同步调用旗舰大模型——单位成本暴涨 30–100 倍。' },
+        { tier: '轻量主力 (W2)', text: '本地 Tier-0 预筛 + 轻量云模型 Batch + Prompt Cache（中小规模最优降本方案）。' },
+        { tier: '重型升级 (W5)', text: '以大模型合成数据蒸馏专属 3B 视觉小模型并自建推理集群——仅在月 API 账单极高且任务高度固定时具备 ROI。' }
+      ],
+      upgrade: '十万级以内视觉入库坚持「本地预筛 + 云端小模型 Batch/Cache」；当规模迈入千万级且云账单显著超过自托管显卡折旧时，再推进蒸馏小模型。',
+      pitfall: '在 System Prompt 头部插入动态时间戳、随机请求 ID，或在同一会话中频繁切换模型前缀，会瞬间导致 Prompt Cache 命中率归零并触发全量冷启动重算。',
+      code: `# 全漏斗单位成本硬性核算公式 (Taste Engine v2.1)
+true_cost_per_admitted = (
+    cost_candidates_screened + cost_anchor_images + cost_retries
+) / max(admitted_count, 1)
+assert true_cost_per_admitted <= 0.008  # CNY / 入库图`
+    },
+    {
+      id: 'craft-anchor-judge',
+      cat: 'eval',
+      num: '06.4',
+      title: '共享锚点 VLM 相对评审裁判',
+      en: 'Shared-Anchor Multimodal Judge for Craft Floor Verification',
+      summary: '以用户确认的同门类完成度标杆作为固定参照，将主观打分收敛为低温度相对达标判定。',
+      weight: 3,
+      projects: ['Spatial Studio'],
+      definition: '让视觉大模型孤立查看单张图片并给出 1–10 绝对打分存在严重缺陷：分数极易扎堆在 7.5–8.5 分失去区分度且跨批次漂移。共享锚点裁判机制将每个门类由用户亲手确认的「完成度标准参考图（常选参考 + 反差参考）」前置固定为参照锚点，在低温（temperature=0.1）下仅要求模型对比候选图与标杆图的执行完成度（构图完整性、无拼接白边、材质光影达标），严禁模型越权评判用户的个人风格喜好。',
+      example: '直观案例：在 Taste Engine v2.1 的破圈探索通道中，高反差外源候选图必须先通过共享锚点完成度评审才可入池；若某门类合格样本不足 15%，系统宁可诚实欠填（当前 127/166），绝不降格混入低质拼接图。',
+      steps: [
+        '人工确立完成度锚点：每个门类由用户完成常选与反差参考图双问确认，定立清晰质量基准。',
+        '共享前缀命中热缓存：将同门类锚图固定置于 Prompt 前缀，连续评审数百张候选图时共享同一热缓存段。',
+        '严格剥离主观口味：评审指令限定仅考察基础完成度，避免模型因风格陌生误杀高水准反差作品。'
+      ],
+      why: '解决破圈推荐中“放宽风格就涌入大量低质 AI 图，收紧模型又陷入同质化茧房”的经典两难。',
+      gain: '显著提高跨批次质量判定一致性，并借前缀复用将锚图视觉 Token 开销摊薄至极低水平。',
+      cost: '相较单图盲评增加了固定锚图输入长度，且在冷启动前需要用户完成 8 个门类的标杆确认。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '纯清晰度/分辨率规则（Laplacian 方差 + 拼图白边检测）——适合作为前置过滤，但无法识别构图失衡的高清劣质图。' },
+        { tier: '同级主力 (W3)', text: '共享锚点 VLM Judge（低温相对比较，准确度与成本最佳平衡）。' },
+        { tier: '更重升级 (W5)', text: '全人工逐张审核（无法扩展）或通用美学评分器（如 LAION-Aesthetic，极易偏向过度饱和的商业网红风格）。' }
+      ],
+      upgrade: '先以 W1 确定性图像体检过滤明显低质与多图白边拼贴，再将通过初筛的候选送入 W3 共享锚点 VLM Judge 复核。',
+      pitfall: '在同一评审提示词中同时询问“做工是否达标”与“是否符合用户口味”，会导致模型将大量高完成度反差样本误判淘汰。',
+      code: `# 共享锚图前置 -> 跨数百张同门类候选命中同一 Prompt Cache
+messages = [
+  {"role": "system", "content": CRAFT_RUBRIC},
+  {"role": "user",   "content": [anchor_1, anchor_2, "以上为本门类完成度基准参考"]},
+  {"role": "user",   "content": [candidate_img, "仅比对完成度是否达标，输出结构化判定"]}
+]`
+    },
+    {
+      id: 'observability-tracing',
+      cat: 'eval',
+      num: '06.5',
+      title: 'AI 可观测性与结构化轨迹审计',
+      en: 'Structured Telemetry, Prompt Cache Auditing & Trace Debugging',
+      summary: '通过结构化日志追踪尾延迟（p95/max）、缓存命中率与上下文膨胀源，以实测数据指导优化。',
+      weight: 2,
+      projects: ['Spatial Studio', 'Super Agent', 'Aesthetic KB'],
+      definition: 'AI 系统的异常往往表现为隐性成本暴涨或长尾延迟，而非传统 HTTP 500 报错。结构化可观测性通过落盘标准 JSONL 轨迹与基准报告（如 transcript.jsonl、edd_benchmark_v1.json、taste_engine_v2_bench.json），持续监控三项核心遥测指标：① 响应延迟分布（p50 / p95 / max，拒绝仅看掩盖卡顿的平均值）；② Prompt Cache 热缓存命中率；③ 单会话上下文水位与膨胀来源定位。',
+      example: '直观案例：借助 session-report 轨迹体检脚本分析真实 transcript.jsonl，可精确识别出造成上下文逼近 150k–180k 换仓线的具体大文件读取步数，并量化验证 Subagent 分流前后的配额节省幅度。',
+      steps: [
+        '结构化遥测落盘：统一记录延迟分位、输入/输出/缓存 Token 及错误码至本地 JSONL。',
+        '强制分位数报告：所有性能验收同时报告 p50、p95 与 max 峰值，拦截偶发性长尾阻塞。',
+        '日志安全脱敏：确保所有持久化遥测与归档报告严禁包含 API Key、认证 Cookie 与私有原图路径。'
+      ],
+      why: '让性能优化与配额管控告别盲猜，每一项架构取舍都能在真实遥测曲线上得到证实或证伪。',
+      gain: '精准定位缓存失效与上下文膨胀根因，为项目性能门禁（如 1,500 图重排 p95 = 19.8 ms < 20 ms）提供可核验记录。',
+      cost: '需持续维护日志格式规范与自动化脱敏校验。',
+      alts: [
+        { tier: '更轻替代 (W1)', text: '临时控制台 print / console.log——缺乏聚合统计与历史趋势留存。' },
+        { tier: '同级主力 (W2)', text: '本地结构化 JSONL + 自动化体检与基准脚本——零运维、完全私密。' },
+        { tier: '更重升级 (W4)', text: 'OpenTelemetry + Langfuse / Arize Phoenix / Datadog LLM Observability——面向公网多用户生产环境实时大盘与告警。' }
+      ],
+      upgrade: '本地研发与个人工作站采用 JSONL + 自动化审计脚本即可；产品上线承接公网真实流量后，优先部署开源可自托管的 Langfuse 或 Arize Phoenix。',
+      pitfall: '仅统计平均响应时间（Mean）会掩盖严重的体验卡顿——99 次 5 ms 混入 1 次 5,000 ms 平均仍仅 55 ms，必须以 p95 和 max 为核心门禁。',
+      code: `// 性能基准账本标准字段：必须覆盖 p50 / p95 / max 与缓存命中率
+{
+  "rerank_1500_p50_ms": 13.7,
+  "rerank_1500_p95_ms": 19.8,
+  "rerank_1500_max_ms": 21.45,
+  "prompt_cache_hit_rate": 0.4925
+}`
+    },
+    {
+      id: 'boundary-heuristic',
+      cat: 'eval',
+      num: '06.6',
+      title: '系统架构边界法则：AI 与确定性代码的五问切分法',
+      en: 'The 5-Question AI vs. Deterministic Boundary Heuristic',
+      summary: '在任意新功能立项前通过五个结构化问题界定模型与代码的职责分工、轻重档位及故障底线。',
+      weight: 1,
+      projects: ['Spatial Studio', 'Aurora', 'Super Agent', 'Radar', 'Agent Habitat', 'Aesthetic KB'],
+      definition: '设计可靠 AI 产品的核心并非最大化模型调用比例，而是清晰划定“非结构化语义能力”与“确定性工程边界”。贯穿全部 7 个项目的五问切分法包括：① 规则能否以数学/物理公式穷举？（能则 100% 确定性代码）；② 单次失误代价是否不可逆？（是则强制硬护栏或人工双签发）；③ 是否要求 <20 ms 实时交互？（是则 AI 离线预计算、在线确定性执行）；④ 当前数据与并发规模是否匹配重框架？（先选 W1/W2 最轻档，实测触顶再升档）；⑤ 模型超时或数据缺失如何处置？（始终 Fail-Closed 显式标未知并暂停）。',
+      example: '直观案例：将这五问依次套用于建筑微改造场景，自然推导出 Spatial AI Studio 的双引擎分工——离线 VLM 标定与模糊意图解析交由 AI，实时重排、OKLab 反差、单应性透视投影与 Decimal 含损耗算账全部交由确定性代码托底。',
+      steps: [
+        '先划确定性骨架：在 PRD 与 SPEC 阶段先列出必须 100% 可复现的数学、物理、状态机与安全红线。',
+        '再定位高杠杆 AI 节点：将大模型精准投放于非结构化理解、跨模态语义对齐与受控创意生成。',
+        '最后锁定评测与降级策略：为每个 AI 节点绑定离线黄金考卷、全漏斗成本上限与显式未知态兜底。'
+      ],
+      why: '提供一套可跨行业迁移（建筑、制造、金融、知识管理）的底层架构决策框架，避免被短期热门工具词裹挟。',
+      gain: '显著提升系统稳定性、可解释性与单位经济效益，并使技术方案在架构评审中逻辑严密。',
+      cost: '要求产品与架构设计者在动工前深入拆解一线业务物理约束，不能以“交由通用 Agent 自动处理”回避核心设计决策。',
+      alts: [
+        { tier: '极端反例 A', text: '全链路黑盒 Prompt 化——用大模型承担算账、几何计算与进程控制，线上可靠性难以保障。' },
+        { tier: '极端反例 B', text: '完全排斥 AI 能力——丧失处理非标自然语言、多模态视觉语义与非结构化信息提取的杠杆优势。' },
+        { tier: '结构化最优解', text: 'AI 承担语义桥接与创意探索，确定性内核承担数学、物理、状态机与权限安全托底。' }
+      ],
+      upgrade: '伴随新一代基础模型能力演进，每季度对照离线黄金考卷复审边界：仅当某项 AI 能力在留出集上稳定满足门禁与零致命错误要求时，才逐步放宽其自主范围。',
+      pitfall: '将可验证的中间结构（如 8 轴光谱、3 槽位 AST、原文引用偏移、BOM 损耗算式）隐藏在黑盒背后会削弱专业用户信任；将中间态白盒化呈现是专业 AI 工具的关键护城河。',
+      code: `// 新功能立项前 5 问架构边界核查清单
+1. 可穷举数学/物理/会计规则?  -> 100% 确定性代码 (Zero-LLM)
+2. 失误代价不可逆/高合规风险?  -> 硬护栏校验 + 人工双签发
+3. 需 <20ms 实时交互反馈?     -> 离线 AI 预计算 + 在线确定性引擎
+4. 规模 <1 万条且单机运行?     -> 优先 W1/W2 单文件方案，忌过早建集群
+5. 超时/断连/缺数如何响应?     -> Fail-Closed 显式标 unknown，绝不静默归零`
+    }
+  );
+
+  const SCENARIOS = [
+    {
+      id: 'personal_atlas',
+      title: '1,500 张个人视觉图库与反茧房检索',
+      sub: 'Spatial AI Studio',
+      weight: 2,
+      context: '需要管理上千张跨领域视觉参考，支持按语义与感觉检索，并能主动发现高完成度反差灵感，同时保持低成本离线可用。',
+      stack: 'NumPy .npz (1.5MB 内存精确点积) + OKLab/4×4 确定性 CV + K=10 Medoids + 7 参分层 BT + FastAPI',
+      why: '1,500 × 256 维矩阵点积在普通 CPU 上耗时 <2 ms 且召回率 100%，无需独立向量数据库；确定性像素反差防止将单纯变暗误判为新风格。',
+      rejected: '不采用本地微调 CLIP / LoRA（W5）与独立 Qdrant 集群（W5），规避高昂算力与持续运维负担。',
+      upgrade: '当资产规模超过 50,000 张或需多用户在线并发写入时，从 .npz 平滑升档至嵌入式 LanceDB（W2）或独立 Qdrant（W5）。'
+    },
+    {
+      id: 'multimodal_kb',
+      title: '私密多模态设计知识库（图文色值混合检索）',
+      sub: 'Aesthetic KB (P-MIC-4)',
+      weight: 3,
+      context: '管理大量未公开商业项目方案与个人素材，要求支持中文关键词、色值与以图搜图混合检索，且私密文件严禁上传公网。',
+      stack: 'SQLite WAL + FTS5 (CJK N-Gram) + 本地 LanceDB + 本地 CUDA SigLIP 2 + 4 通道 RRF + MCP Stdio',
+      why: 'LanceDB 零后台进程直接落地本地目录且支持预过滤；本地 CUDA 跑 SigLIP 2 保障 private 资产 100% 不离本机；FTS5 补足中文专词精确召回。',
+      rejected: '放弃公有云向量服务（隐私合规与月费）及单一向量检索（对精确型号与中文术语漏召回）。',
+      upgrade: '若扩展为百人跨部门共享与细粒度角色权限控制的企业平台，升级至内网 PostgreSQL + pgvector + 独立精排服务。'
+    },
+    {
+      id: 'enterprise_rag',
+      title: '严苛可溯源企业文档写作 RAG',
+      sub: 'Radar / Filament',
+      weight: 1,
+      context: '基于企业 Confluence 文档汇总汇报，首要诉求是每一句生成内容均可定位至精确原文段落，坚决杜绝大模型编造来源。',
+      stack: '纯 Python BM25 + Unicode 字符偏移与文档哈希锚定 + StrictDraftBackend 越界拒收 + 指纹锁定本地 Ollama',
+      why: '以零重型框架先把“版本过滤 + 字符偏移锚定 + 仅限引用选中 1–8 段”的防幻觉骨架立实，离线命中率即可由 10% 跃升至 100%。',
+      rejected: '拒绝盲目堆叠 LangChain / GraphRAG 复杂黑盒，并禁止大模型引入未选中证据池外的自由发散内容。',
+      upgrade: '基于真实离线失败用例（词法漏掉“苹果系统/macOS”同义词），按需挂接轻量双语 Embedding 通过 RRF 补齐语义召回。'
+    },
+    {
+      id: 'multi_agent_local',
+      title: '多 CLI 编程助手并发监控与防重放审批',
+      sub: 'Agent Habitat / AETHER v3',
+      weight: 2,
+      context: '本地同时运行多个 Coding CLI 助手，需要一眼分辨运行状态与阻塞原因，防止断连误判与重复点击批准。',
+      stack: '权威正交状态契约 + SQLite WAL + SSE 事件推送 + expectedGeneration 代次围栏 + Hook 守护进程',
+      why: '单向实时状态推送采用 SSE 比双向 WebSocket 更轻更稳；正交拆分运行态、未读提醒与验收证据，断连显式标 unknown。',
+      rejected: '放弃偏重对话模拟的 CrewAI 框架，以及早期超出单机高频需求的远程 PKI 网关与复杂多端分屏。',
+      upgrade: '当业务演进为跨多台云主机调度数百个无头远程 Agent 容器时，升级至 Temporal + WebSocket + 微虚拟机沙箱。'
+    },
+    {
+      id: 'cad_hitl_pipeline',
+      title: '受管桌面 Rhino 自动化出图与人机签发管线',
+      sub: 'AP / Super Agent / NOEMA',
+      weight: 4,
+      context: '自动化驱动 Windows 本机 Rhino 建模并输出 A3 施工图纸，要求改草稿绝不误覆历史可用版本且进程退出零残留。',
+      stack: '零依赖 Node ESM + SQLite WAL + Win32 Job Object 原子进程树隔离 + DAG 局部重跑 + 不可变原子快照',
+      why: '桌面 CAD 软件必须依靠操作系统内核级 Job Object 证明存活进程归零才释放执行槽，且严格区分系统 ready 与人工 accepted。',
+      rejected: '严禁使用普通 subprocess.kill()（遗留孤儿孙进程锁死模型）及无人工确认的全自动覆写。',
+      upgrade: '若后续迁移至云端无头几何计算农场（Rhino.Compute 集群），替换为 Linux cgroups / 容器隔离与云对象存储。'
+    },
+    {
+      id: 'cost_takeoff',
+      title: '建筑早中期选材与整箱损耗精算工作台',
+      sub: 'Aurora / Timbre + TectonicLoop',
+      weight: 2,
+      context: '面向商业与建筑空间早中期概算，需精确核算整箱包装损耗与起订量，并防范缺价归零与改尺脏数据。',
+      stack: 'DXF/PDF (ezdxf) + 人工标尺描区 + Python Decimal (ROUND_CEILING) + 缺价阻断 + SQLite 版本表',
+      why: 'Decimal 消除二进制浮点尾数误差，30 秒人工标尺锚定规避黑盒识图 15% 面积误差，缺价强制报未知阻断虚假低价。',
+      rejected: '主动砍掉不可审计的 VLM 自动识图算量、闭源 .dwg 二进制解析及缺价按 0 处理。',
+      upgrade: '接入多供应商实时报价协同审批与多人并发录入时，将存储层由 SQLite 迁至 PostgreSQL，核心 Decimal 引擎保持不变。'
+    }
+  ];
+
+  const PROJECTS = [
+    {
+      name: 'Spatial AI Studio',
+      alias: 'AetherVault + Personal Atlas + TectonicLoop',
+      goal: '贯通 0→1 跨领域审美编译与反茧房检索，及 1→N 商业立面透视锁缝与造价闭环',
+      stack: 'Next.js 15 Static · React 19 · Three.js · FastAPI · NumPy/OpenCV · Decimal',
+      ai: '8 轴显著性光谱 · K=10 原型 + 7 参分层 BT · OKLab 反差 · 3 槽位 AST · Gemini Emb2 · 锚点裁判',
+      guard: 'Q1/Q2 物理隔离 · 暗调伪反差拦截 · 0.0° 立面灭点锁 · 99dB 原像素锁 · 缺价阻断 · 私有 0 入库',
+      weight: 'W2–W3 双模同构：公网 0 冷启动，本地满血；放弃 CLIP/LoRA 微调与全量 BIM'
+    },
+    {
+      name: 'Aesthetic KB',
+      alias: 'P-MIC-4 本地多模态美学知识库',
+      goal: '构建隐私优先的本地图文/色值混合检索库，并通过标准协议供多客户端复用',
+      stack: 'Python 3.12 · FastAPI · SQLite WAL + FTS5 · LanceDB · PyTorch CUDA · MCP Stdio',
+      ai: '本地 CUDA SigLIP 2 · OKLab 5 色聚类 · 4 通道 RRF + MMR · 隐私路由 VLM',
+      guard: 'CJK N-Gram 预分词 · disliked 硬过滤 · _SpyCloudVLM 证 100% 隐私隔离 · 40 图 25 查黄金评测',
+      weight: 'W3–W4 本地隐私档：以本地 GPU 与嵌入式 LanceDB 换取绝对隐私与 ¥0 检索边际费'
+    },
+    {
+      name: 'Radar / Filament',
+      alias: 'Confluence 严格溯源 RAG 写作',
+      goal: '解决企业文档版本污染与大模型自由编造引用的可信写作问题',
+      stack: 'Python 标准库 HTTP（零框架）· 纯 Python BM25 · SHA-256 锁定本地 Ollama · Vite Canvas',
+      ai: 'BM25 (k1=1.5, b=0.75) + rrf_merge 扩展钩子 · 限 1–8 段受控引用生成',
+      guard: '字符偏移与文档哈希锚定 · StrictDraftBackend 越界拒收 · 32 步撤销 · 诚实保留 2 项失败基线',
+      weight: 'W1 极轻零框架：先以版本过滤与引证守门立稳可信度，避免过早引入重框架'
+    },
+    {
+      name: 'Agent Habitat / AETHER v3',
+      alias: '多 CLI Agent 巡检与空间工作区',
+      goal: '解决多开本地 Coding Agent 状态同质、阻塞难察觉与重型 3D 干扰主线问题',
+      stack: 'TypeScript · Vite / Zero-Build ESM · Three.js · xterm.js + node-pty · node:sqlite · SSE/ws',
+      ai: '多 CLI Hook 守护进程 + 模拟执行器基线 + 标准化控制面状态协议',
+      guard: '正交三态拆分 · expectedGeneration 防重放 · 断连标 unknown 不重发 · owner.sqlite 防双开锁',
+      weight: 'W2 轻量事件驱动：砍掉过重远程 PKI，聚焦高频盯盘小窗与按需 3D 展开'
+    },
+    {
+      name: 'AP / Super Agent / NOEMA',
+      alias: '受控人机交付与受管 Rhino 管线',
+      goal: '解决全自动 Agent 改草稿误覆、缺依赖全重算与 CAD 孤儿进程锁死模型问题',
+      stack: '零依赖 Node 24 ESM · SQLite WAL · React 19 · Win32 Job Object · RhinoCommon C#',
+      ai: 'CLI-First 沙箱执行器 (codex exec) + DAG 局部重跑 + SSE 512 窗溢窗 410 重同步',
+      guard: '草稿⊥派发隔离 · ready≠accepted 双签发 · Job Object 0 残留放槽 · 同卷原子快照',
+      weight: 'W4 偏重 OS 级工程：攻坚 Win32 进程树隔离，实机跑通 2 版模型与 4 版 A3 图纸'
+    },
+    {
+      name: 'Aurora / Timbre',
+      alias: '建筑选材与整箱损耗精算台',
+      goal: '解决建筑早中期算量漏算整箱损耗、缺价归零误报低预算与改尺脏数据问题',
+      stack: 'Python 3.12 · FastAPI · Pydantic strict · SQLite WAL · ezdxf/pdfplumber · React 19',
+      ai: 'SHA-256 锁定本地 Ollama 抽取候选报价（严格 null 校验，绝不直入正式报价库）',
+      guard: 'Decimal ROUND_CEILING 整箱进位 · 缺价阻断 · 改尺级联失效旧面积 · 253 项回归全过',
+      weight: 'W2–W3 轻严谨：主动舍弃黑盒 CV 识图与 DWG 解析，以 30 秒人工校尺换 100% 可审计性'
+    },
+    {
+      name: 'Style-Wash & ORBIS',
+      alias: '本地 GPU 生图编排 & 版本核验归档',
+      goal: '在 12GB 消费级显卡上稳定运行 ComfyUI 流程；确保版本对比防误签与跨机零裂图',
+      stack: '零依赖 Node ESM · SSE · Python image_ops · ComfyUI API (8188) · SQLite + FFmpeg',
+      ai: 'Anima Aesthetic / Turbo 8-step + 放大 + Lab 校色本地化流水线',
+      guard: '单队列串行防 OOM · 取消≠清理确认 · .orbis 自包含打包 & V1/V2 版本锁',
+      weight: 'W2–W4 本地主权档：边际生图成本 ¥0，以极简交互封装重型开源节点引擎'
+    }
+  ];
+
+  const QUIZ = [
+    {
+      q: '1. 当个人视觉图库规模为 1,500 张（每张 256 维归一化向量）时，性价比与精度最优的向量检索存储方案是？',
+      opts: [
+        'A. 使用 Docker Compose 部署多节点 Qdrant + Redis 分布式集群',
+        'B. 离线存储为约 1.5 MB 的 NumPy .npz，启动载入内存执行 BLAS 精确矩阵点积（<2 ms，100% 召回）',
+        'C. 每次搜索将 1,500 张图文本描述全量置入大语言模型上下文中排序',
+        'D. 将浮点向量序列化为字符串存入数据库执行模糊匹配'
+      ],
+      ans: 1,
+      why: '1 万条以内的向量在普通 CPU 内存中进行精确矩阵乘法仅需 1–2 ms 且无近似索引误差，零外部服务运维；超过数万条或需高并发多写时再升级至 LanceDB / pgvector / Qdrant。'
+    },
+    {
+      q: '2. 为什么现代多模态知识库（如 Aesthetic KB）在使用 SigLIP 2 语义向量的同时，仍需配合 SQLite FTS5 中文 N-Gram 词法检索？',
+      opts: [
+        'A. 因为语义向量无法在本地 CPU 或 GPU 运行',
+        'B. 稠密向量擅长语义与氛围匹配但易漏掉精确型号与专有名词，词法检索精准补位且需通过 N-Gram 解决中文分词问题',
+        'C. 因为 LanceDB 不支持存储中文元数据',
+        'D. 仅用于增加系统技术栈复杂度'
+      ],
+      ans: 1,
+      why: '词法检索（BM25/FTS5）锁死精确字符与型号，稠密向量覆盖语义近似表达，二者经 RRF 融合互补；且 SQLite 默认分词器无法切分中文，必须辅以 CJK 1/2/3-gram 预分词。'
+    },
+    {
+      q: '3. 多参考图生图工作流中，直接混喂多张参考图的核心风险是什么？正交 3 槽位 AST 编译器如何解决？',
+      opts: [
+        'A. 容易导致风格串色与构图污染（Style Bleed）；通过将 Optics / Material / Lighting 隔离为互斥作用域并自动注入 Negative Guardrail 消除冲突',
+        'B. 仅会导致单张图片像素尺寸缩小',
+        'C. 模型一次只能接受单张参考图输入',
+        'D. 增大采样步数即可彻底消除多图冲突'
+      ],
+      ans: 0,
+      why: '直接混喂实测串色泄漏率高达 45%；通过 3 槽位正交作用域隔离与自动互斥负向护栏，20 组跨界混搭实测 40 处词法冲突实现 100% 隔离。'
+    },
+    {
+      q: '4. 建筑选材与算量系统（Aurora）为何坚持“DXF/PDF 人工校尺描区 + Decimal 精算”，而主动舍弃“VLM 自动识图算面积”？',
+      opts: [
+        'A. 当前视觉模型无法读取 PDF 图像',
+        'B. 非标建筑图纸中 15% 的自动识别面积误差将令整份概算失效；30 秒人工标尺锚定可换取 100% 可复核精度',
+        'C. 行业规范禁止使用任何计算机视觉辅助工具',
+        'D. 人工描区比模型推理耗时更短'
+      ],
+      ans: 1,
+      why: '在出错代价极高且人工 30 秒即可确保 100% 准确的环节保持确定性边界，将 AI 留作候选提取与辅助校验，是高可靠行业 AI 产品的核心设计取舍。'
+    },
+    {
+      q: '5. 当工程预算清单中某条材料缺失有效报价时，系统遵循 Fail-Closed 原则的正确处理方式是？',
+      opts: [
+        'A. 静默按 0 元计入总价，先展示初步汇总数字',
+        'B. 由大模型估算市场均价自动补全',
+        'C. 显式返回 UNKNOWN_PRICE_MISSING 并向上传播阻断总价汇总，杜绝误导性虚假低预算',
+        'D. 自动隐藏该条材料记录'
+      ],
+      ans: 2,
+      why: '静默归零或无据估算会在商业决策与招采阶段制造严重失真；显式暴露未知状态并阻断汇总是最诚实且安全的工程底线。'
+    },
+    {
+      q: '6. Windows 桌面端自动化驱动 Rhino 建模出图时，为何需要 Win32 Job Object（配合 CREATE_SUSPENDED）而非普通 subprocess.kill()？',
+      opts: [
+        'A. 普通 kill 易遗留后台孙进程持续锁定 .3dm 模型文件，而按进程名全局强杀会误杀用户独立开启的其他 Rhino 窗口',
+        'B. 普通 kill 无法在 Python 3.12 中调用',
+        'C. Job Object 可直接提升三维渲染帧率',
+        'D. 为实现跨 Linux 与 macOS 兼容'
+      ],
+      ans: 0,
+      why: '挂起启动并原子绑定至 KILL_ON_JOB_CLOSE 作业对象，可在孙进程逃逸前锁定整棵进程树，并通过 ActiveProcesses == 0 验证零残留且零误伤宿主机工作窗口。'
+    },
+    {
+      q: '7. 多 Agent 执行器在调用外部工具时遭遇网络断连或超时，最安全的容错策略是？',
+      opts: [
+        'A. 后台立即自动重试 5 次直至返回成功',
+        'B. 前端默认按成功处理并放行下游节点',
+        'C. 将状态置为 unknown 并锁定项目槽位，禁止自动重发与重启重放旧审批，交由人工核验解锁',
+        'D. 自动清空当前项目历史快照'
+      ],
+      ans: 2,
+      why: '超时并不等同于未执行，原进程可能仍在写盘；盲目自动重试极易引发重复派发（Double Dispatch）损坏文件。'
+    },
+    {
+      q: '8. 对于 AI 监控看板与流式进度推送（服务端高频下推、客户端低频控制），为何优先选用 SSE 而非 WebSocket？',
+      opts: [
+        'A. 现代浏览器已停止支持 WebSocket',
+        'B. SSE 基于标准 HTTP，原生支持断线重连且复用 Cookie/CSRF 安全机制，配合游标溢窗 410 快照重同步维护成本远低于双向 WS',
+        'C. SSE 支持低延迟双向音视频二进制流',
+        'D. WebSocket 无法在本地 127.0.0.1 端口运行'
+      ],
+      ans: 1,
+      why: '单向实时流场景选择 SSE 最为轻盈可靠；仅在双向交互终端（xterm.js）或实时双向音视频通信时才局部引入 WebSocket / WebRTC。'
+    },
+    {
+      q: '9. 在压控批量视觉入库成本（≤ ¥0.008/图）时，以下哪项设计失误会直接导致 Prompt Cache 失效、费用暴涨？',
+      opts: [
+        'A. 在云端调用前先于本地 CPU 执行去重与 OKLab 特征提取',
+        'B. 将固定不变的五点黄金锚点规则与同门类参考图置于 System Prompt 前缀',
+        'C. 在 System Prompt 开头插入精确到秒的动态时间戳，或在同会话内高频切换不同角色前缀',
+        'D. 对离线入库任务启用异步 Batch API'
+      ],
+      ans: 2,
+      why: 'Prompt Cache 依赖前缀 Token 序列完全一致；前置动态时间戳或高频轮切模型系统前缀会导致缓存命中归零，触发全量冷启动重算。'
+    },
+    {
+      q: '10. 当私有知识库总量为 8 万字静态规范文档且极少修订时，最克制且高准确率的检索增强起点是？',
+      opts: [
+        'A. 立即构建 GraphRAG 实体关系图谱并部署分布式向量集群',
+        'B. 直接使用支持超长上下文的模型结合 Prompt Cache 进行整库缓存问答，零检索切块损耗且维护成本最低',
+        'C. 租用多卡 GPU 对开源基础模型执行全参数微调',
+        'D. 必须先切分为数千碎片再接入外部重排服务'
+      ],
+      ans: 1,
+      why: '总量低于 15 万字的低频变动文档可直接依托 Long-Context + Prompt Cache 获得极高全局准确率；超出规模或高频增量更新后再演进至 Hybrid RAG。'
+    }
+  ];
+
+  // ==================== STATE ====================
+  const STORAGE_KEY = 'ai_arch_ref_mastered_v3';
+  let mastered = new Set();
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (Array.isArray(saved)) mastered = new Set(saved);
+  } catch (_) {}
+
+  let activeTab = 'overview';
+  let activeScenario = SCENARIOS[0].id;
+  let quizIdx = 0;
+  let quizAnswers = {};
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, ch => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[ch]));
+  }
+
+  function saveMastered() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...mastered])); } catch (_) {}
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = MODULES.length;
+    const count = mastered.size;
+    document.getElementById('masteryText').textContent = `${count}/${total}`;
+    document.getElementById('masteryFill').style.width = `${Math.round((count / total) * 100)}%`;
+  }
+
+  function renderWeightBadge(w) {
+    const info = WEIGHTS[w];
+    let bars = '<span class="weight-bars" aria-hidden="true">';
+    for (let i = 1; i <= 5; i++) bars += `<span class="wb ${i <= w ? 'on-' + w : ''}"></span>`;
+    bars += '</span>';
+    return `<span class="w-badge w-${w}">${info.code} · ${info.label}${bars}</span>`;
+  }
+
+  // ==================== BUILD TOP TABS & ALL PANELS ====================
+  function buildOverviewHTML() {
+    const catKeys = ['spatial', 'rag', 'agent', 'deterministic', 'frontend', 'eval'];
+    return `
+      <header class="cat-banner">
+        <div class="wrap">
+          <div class="banner-kicker">00 · FOUNDATIONS &amp; TAXONOMY</div>
+          <h1>AI 系统架构分类参考手册</h1>
+          <p class="banner-desc">
+            本手册系统梳理 <strong>7 个真实 AI 工程体系</strong>（Spatial Studio / Aesthetic KB / Radar / Agent Habitat / Super Agent / Aurora / Style-Wash）中采用的 <strong>37 项核心技术</strong>。全部内容按 <strong>6 大技术分类</strong>结构化组织，零编程背景读者亦可按章节顺序清晰理解每一项技术的底层原理、取舍理由、轻重级别与替代方案。
+          </p>
+          <div class="toc-strip">
+            <a class="toc-link" href="#ov-layers"><span class="tnum">01</span>AI 系统五层通用结构</a>
+            <a class="toc-link" href="#ov-cats"><span class="tnum">02</span>六大技术分类直达</a>
+            <a class="toc-link" href="#ov-weights"><span class="tnum">03</span>轻重五档选型标尺</a>
+            <a class="toc-link" href="#ov-glossary"><span class="tnum">04</span>核心基础术语对照</a>
+          </div>
+        </div>
+      </header>
+      <div class="wrap section-pad">
+        <div id="ov-layers" class="block-title-row">
+          <h2>一、任何可靠 AI 应用的五层通用结构</h2>
+          <span class="block-sub">无论领域是空间设计、企业文档还是自动化办公，生产级 AI 系统均由以下五层协作构成</span>
+        </div>
+        <div class="overview-grid-5">
+          <div class="ov-cell"><span class="ov-num">LAYER 01</span><h3>语义推理层 (LLM / VLM)</h3><p>负责自然语言理解、视觉特征提取与受控内容生成。优势在于处理非结构化模糊输入；局限在于缺乏严格算术精度与私有记忆。</p></div>
+          <div class="ov-cell"><span class="ov-num">LAYER 02</span><h3>知识检索层 (RAG)</h3><p>在模型生成前从私有资料库精确召回相关原文、图片或色板，并将出处锚定至精确位置，从源头抑制无依据编造。</p></div>
+          <div class="ov-cell"><span class="ov-num">LAYER 03</span><h3>编排与隔离层 (Agent)</h3><p>赋予系统调用外部工具、执行多步任务与操作本地软件的能力，同时通过状态机、幂等锁与进程沙箱防止失控覆写。</p></div>
+          <div class="ov-cell"><span class="ov-num">LAYER 04</span><h3>确定性内核层 (Zero-LLM)</h3><p>承接全部可穷举规则：十进制财务精算、几何透视投影、像素色差计算与权限校验，以纯代码实现亚毫秒与 100% 可复现。</p></div>
+          <div class="ov-cell"><span class="ov-num">LAYER 05</span><h3>评测与成本层 (Eval)</h3><p>通过离线黄金考卷、隐私防泄漏测试桩与全漏斗单位成本账本，持续验证系统质量是否真实提升且具备规模经济性。</p></div>
+        </div>
+
+        <div id="ov-cats" class="block-title-row">
+          <h2>二、按六大技术分类进入精讲（共 37 项）</h2>
+          <span class="block-sub">点击任意分类卡片直接进入该领域完整对比表与技术档案</span>
+        </div>
+        <div class="cat-directory">
+          ${catKeys.map(k => {
+            const meta = CATEGORY_META[k];
+            const cnt = MODULES.filter(m => m.cat === k).length;
+            return `
+              <button type="button" class="dir-card" data-jump-tab="${k}">
+                <div class="dir-head"><span>CATEGORY ${meta.num}</span><span>${cnt} 项技术 →</span></div>
+                <h3>${esc(meta.title)}</h3>
+                <p>${meta.desc.replace(/<[^>]+>/g, '')}</p>
+              </button>
+            `;
+          }).join('')}
+        </div>
+
+        <div id="ov-weights" class="block-title-row">
+          <h2>三、架构选型「轻重五档标尺（W1–W5）」</h2>
+          <span class="block-sub">核心原则：优先选用能解决 80% 核心痛点的最轻档位，仅在遇到明确规模、并发或安全瓶颈时升档</span>
+        </div>
+        <div class="weight-grid-5">
+          ${[1,2,3,4,5].map(w => `
+            <div class="wg-cell">
+              <span class="w-badge w-${w}">${WEIGHTS[w].code}</span>
+              <strong>${WEIGHTS[w].label}</strong>
+              <div>${WEIGHTS[w].desc}</div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div id="ov-glossary" class="block-title-row">
+          <h2>四、阅读前核心基础术语速查</h2>
+          <span class="block-sub">面向非计算机专业读者的八个高频基础概念定义</span>
+        </div>
+        <div class="glossary-2col">
+          <div class="gl-item"><strong>Embedding（嵌入向量）</strong><p>将一段文字或一张图片映射为固定长度的数值坐标（如 256 个浮点数）。语义或视觉气质越接近的对象，在空间中的坐标距离越短。</p></div>
+          <div class="gl-item"><strong>BM25 / FTS5（词法倒排检索）</strong><p>类似书尾“关键词页码索引”的精确字面检索引擎。不依赖语义推测，专精于型号、编号、人名与专有名词的毫秒级精确命中。</p></div>
+          <div class="gl-item"><strong>RRF（倒数排名融合）</strong><p>合并多路检索结果的无参算法：忽略不同通道的绝对分数差异，仅按各自排名倒数求和，实现图像、文字、色值等多路结果的稳定合流。</p></div>
+          <div class="gl-item"><strong>Prompt Cache（提示词热缓存）</strong><p>对多次请求中完全一致的前置指令与参考材料进行服务端缓存复用，可将重复读取成本降低 50%–95%，前提是前缀内容保持严格不变。</p></div>
+          <div class="gl-item"><strong>Idempotency（幂等性）</strong><p>指同一指令因网络重传或重复点击执行多次时，系统最终状态与仅执行一次完全等价，避免重复扣费、重复派发或覆写文件。</p></div>
+          <div class="gl-item"><strong>Fail-Closed（故障安全闭锁）</strong><p>当通信中断、接口超时或关键数据（如材料报价）缺失时，系统自动停在显式报错的受控状态而非静默归零或盲目继续执行。</p></div>
+          <div class="gl-item"><strong>WAL（预写式日志模式）</strong><p>SQLite 单文件数据库的并发日志机制：将写入先记录至独立日志再同步回主库，使并发读取与写入不再互相阻塞。</p></div>
+          <div class="gl-item"><strong>Homography（平面单应性矩阵）</strong><p>描述两个平面之间精确透视投影关系的 3×3 数学矩阵，可在斜拍建筑实景照片与正交平面立面图之间执行无畸变双向坐标映射。</p></div>
+        </div>
+      </div>
+    `;
+  }
+
+  function buildCategoryHTML(catId) {
+    const meta = CATEGORY_META[catId];
+    const items = MODULES.filter(m => m.cat === catId);
+    const tabIdx = NAV_TABS.findIndex(t => t.id === catId);
+    const prevTab = NAV_TABS[tabIdx - 1];
+    const nextTab = NAV_TABS[tabIdx + 1];
+
+    return `
+      <header class="cat-banner">
+        <div class="wrap">
+          <div class="banner-kicker">CATEGORY ${meta.num} · ${meta.en}</div>
+          <h1>${esc(meta.title)}</h1>
+          <p class="banner-desc">${meta.desc}</p>
+          <p class="banner-desc" style="margin-top:10px;color:#93C5FD;font-size:14px;">${esc(meta.rule)}</p>
+          <div class="toc-strip" aria-label="本分类快速目录">
+            ${items.map(m => `<a class="toc-link" href="#mod-${m.id}"><span class="tnum">${m.num}</span>${esc(m.title)}</a>`).join('')}
+          </div>
+        </div>
+      </header>
+
+      <div class="wrap section-pad">
+        <div class="block-title-row">
+          <h2>本分类总览对比表（${items.length} 项）</h2>
+          <span class="block-sub">点击任意技术名称直接定位至下方完整结构化档案</span>
+        </div>
+
+        <div tabindex="0" role="region" aria-labelledby="cap-${catId}" class="table-wrapper">
+          <table class="data-table cat-summary">
+            <caption id="cap-${catId}">${esc(meta.title)} — 重量级、收益与代价快速对照（窄屏自动折叠为卡片）</caption>
+            <thead>
+              <tr>
+                <th>技术模块</th>
+                <th>解决的核心问题</th>
+                <th>工程重量</th>
+                <th>核心收益</th>
+                <th>边界代价</th>
+                <th>关联项目</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${items.map(m => `
+                <tr>
+                  <th><a href="#mod-${m.id}"><span class="mono" style="color:var(--cobalt);margin-right:6px;">${m.num}</span>${esc(m.title)}</a></th>
+                  <td>${esc(m.summary)}</td>
+                  <td><span class="w-badge w-${m.weight}">${WEIGHTS[m.weight].code}</span></td>
+                  <td>${esc(m.gain)}</td>
+                  <td>${esc(m.cost)}</td>
+                  <td class="mono" style="font-size:12px;">${esc(m.projects.join(' / '))}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="block-title-row">
+          <h2>结构化深度解析档案</h2>
+          <button type="button" class="btn btn-sm" data-expand-cat="${catId}" aria-expanded="false">展开本类全部代码参考</button>
+        </div>
+
+        <div class="dossier-list">
+          ${items.map(m => {
+            const done = mastered.has(m.id);
+            return `
+              <article class="dossier ${done ? 'mastered' : ''}" id="mod-${m.id}" data-dossier="${m.id}">
+                <div class="dossier-head">
+                  <div>
+                    <div class="dossier-id">
+                      <span>MODULE ${m.num}</span>
+                      <span>·</span>
+                      <span style="color:var(--muted);">关联项目：${esc(m.projects.join(' / '))}</span>
+                    </div>
+                    <h3 class="dossier-title">${esc(m.title)}</h3>
+                    <div class="dossier-en">${esc(m.en)}</div>
+                  </div>
+                  <div class="dossier-head-right">
+                    ${renderWeightBadge(m.weight)}
+                    <button type="button" class="btn btn-sm ${done ? 'btn-primary' : ''}" data-master-id="${m.id}" aria-pressed="${done}">
+                      ${done ? '✓ 已掌握' : '标记已掌握'}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="dossier-body">
+                  <div class="spec-grid-2">
+                    <div>
+                      <div class="sub-label">01 · 核心原理与通俗定义</div>
+                      <p class="prose">${esc(m.definition)}</p>
+                      <div class="example-callout">${esc(m.example)}</div>
+                    </div>
+                    <div>
+                      <div class="sub-label">02 · 运行机制（三步拆解）</div>
+                      <ol class="mech-steps">
+                        ${m.steps.map((st, idx) => `<li><span class="mech-n">0${idx + 1}</span><span>${esc(st)}</span></li>`).join('')}
+                      </ol>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="sub-label">03 · 选型依据与取舍（为什么采用它）</div>
+                    <p class="prose" style="margin-bottom:12px;">${esc(m.why)}</p>
+                    <div class="tradeoff-pair">
+                      <div class="tp-cell gain"><div class="tp-head">获得收益 (GAIN)</div><div>${esc(m.gain)}</div></div>
+                      <div class="tp-cell cost"><div class="tp-head">接受代价 (TRADE-OFF)</div><div>${esc(m.cost)}</div></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="sub-label">04 · 替代方案与轻重光谱对比</div>
+                    <div class="alt-grid">
+                      ${m.alts.map(a => `
+                        <div class="alt-col">
+                          <div class="alt-col-head">${esc(a.tier)}</div>
+                          <div>${esc(a.text)}</div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+
+                  <div class="boundary-bar">
+                    <div class="b-note"><strong>升级与换栈拐点：</strong>${esc(m.upgrade)}</div>
+                    <div class="b-note risk"><strong>关键工程风险：</strong>${esc(m.pitfall)}</div>
+                  </div>
+                </div>
+
+                <details class="ref-drawer">
+                  <summary>展开核心实现参考与伪代码（${m.num}）</summary>
+                  <div class="code-panel">${esc(m.code)}</div>
+                </details>
+              </article>
+            `;
+          }).join('')}
+        </div>
+
+        <nav class="cat-pager" aria-label="分类翻页导航">
+          ${prevTab ? `<button type="button" class="btn" data-jump-tab="${prevTab.id}">← 上一分类：${prevTab.num} ${esc(prevTab.label)}</button>` : '<span></span>'}
+          ${nextTab ? `<button type="button" class="btn btn-primary" data-jump-tab="${nextTab.id}">下一分类：${nextTab.num} ${esc(nextTab.label)} →</button>` : '<span></span>'}
+        </nav>
+      </div>
+    `;
+  }
+
+  function buildMatrixHTML() {
+    return `
+      <header class="cat-banner">
+        <div class="wrap">
+          <div class="banner-kicker">07 · DECISION MATRIX, BLUEPRINTS &amp; 7 PROJECTS</div>
+          <h1>场景选型器、系统蓝图与 7 项目全景矩阵</h1>
+          <p class="banner-desc">将前述 37 项原子技术重新装配为完整系统视角：按典型业务场景查询推荐技术组合、对照四大标准架构数据流，并横向审视全部 7 个项目的选型取舍。</p>
+          <div class="toc-strip">
+            <a class="toc-link" href="#mx-advisor"><span class="tnum">01</span>交互式场景选型器</a>
+            <a class="toc-link" href="#mx-blueprints"><span class="tnum">02</span>四大系统框架蓝图</a>
+            <a class="toc-link" href="#mx-projects"><span class="tnum">03</span>7 项目全栈对照表</a>
+          </div>
+        </div>
+      </header>
+      <div class="wrap section-pad">
+        <div id="mx-advisor" class="block-title-row">
+          <h2>一、典型业务场景架构选型器</h2>
+          <span class="block-sub">选择具体场景，查看推荐轻重档位、主动舍弃的重装备及明确升级条件</span>
+        </div>
+        <div class="scenario-bar" id="scenarioBar"></div>
+        <div class="sc-result" id="scenarioResult" aria-live="polite"></div>
+
+        <div id="mx-blueprints" class="block-title-row">
+          <h2>二、四大标准系统框架蓝图</h2>
+          <span class="block-sub">清晰界定离线与在线、AI 语义与确定性护栏的架构分界</span>
+        </div>
+        <div class="bp-grid">
+          <article class="bp-card">
+            <h3>01 · 混合 RAG 与严格溯源架构（Aesthetic KB + Radar）</h3>
+            <p>多通道离线索引 → RRF 合流与硬过滤 → 字符偏移锚定生成与隐私零泄漏路由。</p>
+            <svg viewBox="0 0 560 170" role="img" aria-label="混合RAG架构图">
+              <rect x="12" y="18" width="108" height="58" fill="#F7F8FA" stroke="#0B0D12" stroke-width="1.2"/>
+              <text x="66" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#0B0D12">原始资料库</text>
+              <text x="66" y="60" text-anchor="middle" font-family="Manrope, sans-serif" font-size="10" fill="#5B6373">图文 / Wiki / 规范</text>
+              <line x1="120" y1="47" x2="148" y2="47" stroke="#0B0D12" stroke-width="1.2"/><polygon points="148,43 156,47 148,51" fill="#0B0D12"/>
+              <rect x="156" y="14" width="156" height="66" fill="#EFF4FF" stroke="#1D4ED8" stroke-width="1.2"/>
+              <text x="234" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#1D4ED8">多路离线索引</text>
+              <text x="234" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.8" fill="#0B0D12">SigLIP2/Emb2 + FTS5 CJK</text>
+              <text x="234" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.8" fill="#5B6373">+ OKLab 色距 + 字符偏移</text>
+              <line x1="312" y1="47" x2="340" y2="47" stroke="#1D4ED8" stroke-width="1.2"/><polygon points="340,43 348,47 340,51" fill="#1D4ED8"/>
+              <rect x="348" y="14" width="200" height="66" fill="#090A0D"/>
+              <text x="448" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">RRF 融合 + MMR 去重</text>
+              <text x="448" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.8" fill="#93C5FD">硬拦截 disliked · 隐私路由本地</text>
+              <text x="448" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.8" fill="#6EE7B7">严格引证校验 (1–8 授权段落)</text>
+              <rect x="12" y="100" width="536" height="54" fill="#FFFFFF" stroke="#E5E8EE" stroke-width="1.2"/>
+              <text x="24" y="122" font-family="Chivo Mono, monospace" font-size="10" font-weight="600" fill="#0B0D12">架构要点：词法补齐型号精度，向量覆盖语义近似；万级以内用 .npz，十万级用 LanceDB。</text>
+              <text x="24" y="140" font-family="Manrope, sans-serif" font-size="10.5" fill="#5B6373">评测门禁：Recall@5/10 · MRR · 0% 负样本泄漏 · _SpyCloudVLM 100% 隐私拦截。</text>
+            </svg>
+          </article>
+
+          <article class="bp-card">
+            <h3>02 · 受控 Multi-Agent 与 OS 隔离架构（Habitat + AP）</h3>
+            <p>草稿与派发隔离 → 权威状态机与代次幂等 → Win32 Job Object 零残留进程围栏。</p>
+            <svg viewBox="0 0 560 170" role="img" aria-label="受控Multi-Agent架构图">
+              <rect x="12" y="16" width="128" height="62" fill="#F7F8FA" stroke="#0B0D12" stroke-width="1.2"/>
+              <text x="76" y="38" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#0B0D12">人机控制界面</text>
+              <text x="76" y="54" text-anchor="middle" font-family="Manrope, sans-serif" font-size="9.5" fill="#5B6373">草稿编辑 ⊥ 显式派发</text>
+              <text x="76" y="69" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.8" fill="#1D4ED8">ready ≠ accepted</text>
+              <line x1="140" y1="40" x2="164" y2="40" stroke="#0B0D12" stroke-width="1.2"/><polygon points="164,36 172,40 164,44" fill="#0B0D12"/>
+              <line x1="172" y1="58" x2="148" y2="58" stroke="#1D4ED8" stroke-width="1.2" stroke-dasharray="4 2"/><polygon points="148,54 140,58 148,62" fill="#1D4ED8"/>
+              <rect x="172" y="14" width="204" height="66" fill="#090A0D"/>
+              <text x="274" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">权威正交状态机 + SSE</text>
+              <text x="274" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#93C5FD">expectedGeneration 防重放</text>
+              <text x="274" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#6EE7B7">溢窗 410 重同步 · 未知态锁槽</text>
+              <line x1="376" y1="47" x2="400" y2="47" stroke="#0B0D12" stroke-width="1.2"/><polygon points="400,43 408,47 400,51" fill="#0B0D12"/>
+              <rect x="408" y="14" width="140" height="66" fill="#FEF2F2" stroke="#B91C1C" stroke-width="1.2"/>
+              <text x="478" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#B91C1C">OS 级受管执行</text>
+              <text x="478" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#0B0D12">Win32 Job Object</text>
+              <text x="478" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#B91C1C">ActiveProcesses == 0</text>
+              <rect x="12" y="100" width="536" height="54" fill="#FFFFFF" stroke="#E5E8EE" stroke-width="1.2"/>
+              <text x="24" y="122" font-family="Chivo Mono, monospace" font-size="10" font-weight="600" fill="#0B0D12">架构要点：运行态、未读态与验收证据正交拆分；超时即 Fail-Closed，严禁静默重发。</text>
+              <text x="24" y="140" font-family="Manrope, sans-serif" font-size="10.5" fill="#5B6373">实机验证：Habitat 144 项协议回归；Super Agent 跑通 2 版 Rhino 模型与 4 版 A3 交付。</text>
+            </svg>
+          </article>
+
+          <article class="bp-card">
+            <h3>03 · Spatial AI 双引擎正交架构（0→1 × 1→N）</h3>
+            <p>白盒 8 轴光谱与分层偏好 → 3 槽位无串色编译 → 单应性锁缝与 Decimal 造价闭环。</p>
+            <svg viewBox="0 0 560 170" role="img" aria-label="Spatial AI双引擎架构图">
+              <rect x="12" y="14" width="164" height="66" fill="#EFF4FF" stroke="#1D4ED8" stroke-width="1.2"/>
+              <text x="94" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#1D4ED8">0→1 审美图谱引擎</text>
+              <text x="94" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#0B0D12">8 轴显著性 + K=10 Medoids</text>
+              <text x="94" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#0F766E">Zero-LLM 重排 &lt;20ms</text>
+              <line x1="176" y1="47" x2="192" y2="47" stroke="#1D4ED8" stroke-width="1.2"/><polygon points="192,43 200,47 192,51" fill="#1D4ED8"/>
+              <rect x="200" y="14" width="162" height="66" fill="#090A0D"/>
+              <text x="281" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">3 槽位正交 AST</text>
+              <text x="281" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#93C5FD">Optics ⊥ Material ⊥ Light</text>
+              <text x="281" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#6EE7B7">0 串色泄漏 · OKLab→SKU</text>
+              <line x1="362" y1="47" x2="378" y2="47" stroke="#0B0D12" stroke-width="1.2"/><polygon points="378,43 386,47 378,51" fill="#0B0D12"/>
+              <rect x="386" y="14" width="162" height="66" fill="#ECFDF5" stroke="#0F766E" stroke-width="1.2"/>
+              <text x="467" y="36" text-anchor="middle" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#0F766E">1→N TectonicLoop</text>
+              <text x="467" y="53" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#0B0D12">H/H⁻¹ 锁缝 (0.0°) + 8 排雷</text>
+              <text x="467" y="68" text-anchor="middle" font-family="Chivo Mono, monospace" font-size="8.5" fill="#B91C1C">Decimal 算账 · 缺价阻断</text>
+              <rect x="12" y="100" width="536" height="54" fill="#FFFFFF" stroke="#E5E8EE" stroke-width="1.2"/>
+              <text x="24" y="122" font-family="Chivo Mono, monospace" font-size="10" font-weight="600" fill="#0B0D12">架构要点：公网静态轻包（80 样张）与本地 FastAPI（1,500 图谱）同构无缝切换。</text>
+              <text x="24" y="140" font-family="Manrope, sans-serif" font-size="10.5" fill="#5B6373">实测基准：校后 ρ=0.8577 · 跨界多样性 75% · 非掩码 PSNR 99dB · 决算回测 86.7%。</text>
+            </svg>
+          </article>
+
+          <article class="bp-card">
+            <h3>04 · 确定性算量与本地 GPU 编排（Aurora + Style-Wash）</h3>
+            <p>人工标尺锚定与 Decimal 整箱精算；12GB 显存单队列串行调度与清理确认。</p>
+            <svg viewBox="0 0 560 170" role="img" aria-label="确定性算量与本地GPU架构图">
+              <rect x="12" y="14" width="258" height="68" fill="#F7F8FA" stroke="#0B0D12" stroke-width="1.2"/>
+              <text x="24" y="36" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#0B0D12">Aurora 确定性算量管道</text>
+              <text x="24" y="53" font-family="Chivo Mono, monospace" font-size="8.8" fill="#2B313C">DXF/PDF (ezdxf) + 人工校尺描区</text>
+              <text x="24" y="70" font-family="Chivo Mono, monospace" font-size="8.8" fill="#B91C1C">Decimal 整箱进位 · 改尺失效 · 缺价阻断</text>
+              <rect x="290" y="14" width="258" height="68" fill="#FFFBEB" stroke="#B45309" stroke-width="1.2"/>
+              <text x="302" y="36" font-family="Archivo, sans-serif" font-size="11.5" font-weight="700" fill="#B45309">Style-Wash 本地 GPU 串行队列</text>
+              <text x="302" y="53" font-family="Chivo Mono, monospace" font-size="8.8" fill="#2B313C">Zero-dep Node ESM + SSE 进度流</text>
+              <text x="302" y="70" font-family="Chivo Mono, monospace" font-size="8.8" fill="#0F766E">单队列调 ComfyUI (8188) · 清理确认放行</text>
+              <rect x="12" y="100" width="536" height="54" fill="#090A0D"/>
+              <text x="24" y="122" font-family="Chivo Mono, monospace" font-size="10" font-weight="600" fill="#93C5FD">架构要点：算量环节坚持人工定锚与十进制精算；本地显卡严格串行杜绝 VRAM OOM。</text>
+              <text x="24" y="140" font-family="Manrope, sans-serif" font-size="10.5" fill="#CBD5E1">安全约束：本地 Ollama 锁定 SHA-256 摘要，提取候选绝不直接写入正式批准报价池。</text>
+            </svg>
+          </article>
+        </div>
+
+        <div id="mx-projects" class="block-title-row">
+          <h2>三、7 大真实项目全栈技术选型与护栏对照表</h2>
+          <span class="block-sub">横向检视不同业务约束下的技术组合与重量级取舍</span>
+        </div>
+        <div tabindex="0" role="region" aria-labelledby="cap-projects" class="table-wrapper">
+          <table class="data-table proj-matrix">
+            <caption id="cap-projects">7 个 AI 工程体系技术栈、AI/RAG/Agent 机制、工程护栏与轻重取舍总表</caption>
+            <thead>
+              <tr>
+                <th>项目名称</th>
+                <th>核心目标</th>
+                <th>技术栈</th>
+                <th>AI / RAG / Agent 机制</th>
+                <th>工程护栏与验证</th>
+                <th>重量级与取舍</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${PROJECTS.map(p => `
+                <tr>
+                  <th>
+                    <div>${esc(p.name)}</div>
+                    <div class="mono" style="font-size:12px;font-weight:400;color:var(--muted);margin-top:3px;">${esc(p.alias)}</div>
+                  </th>
+                  <td>${esc(p.goal)}</td>
+                  <td class="mono" style="font-size:12px;">${esc(p.stack)}</td>
+                  <td>${esc(p.ai)}</td>
+                  <td>${esc(p.guard)}</td>
+                  <td>${esc(p.weight)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function buildQuizHTML() {
+    return `
+      <header class="cat-banner">
+        <div class="wrap">
+          <div class="banner-kicker">08 · ARCHITECTURE ASSESSMENT</div>
+          <h1>架构取舍与轻重决策自测（10 题）</h1>
+          <p class="banner-desc">覆盖向量存储分级、混合检索、多图正交解耦、确定性算量、Win32 进程隔离、故障闭锁与成本缓存 10 个核心决策点，即时检验架构判断力。</p>
+        </div>
+      </header>
+      <div class="wrap section-pad">
+        <div class="quiz-card" id="quizContainer"></div>
+      </div>
+    `;
+  }
+
+  // Normalize code property name for dossier drawer
+
+  // ==================== INITIAL RENDER ====================
+  function initDOM() {
+    const rail = document.getElementById('catTabRail');
+    rail.innerHTML = NAV_TABS.map(t => {
+      const sel = t.id === activeTab;
+      return `
+        <button type="button" role="tab" id="tab-${t.id}" class="cat-tab" data-tab="${t.id}" aria-selected="${sel}" tabindex="${sel ? '0' : '-1'}">
+          <span class="cn">${t.num}</span>${esc(t.label)}
+        </button>
+      `;
+    }).join('');
+
+    const host = document.getElementById('catPanelsHost');
+    host.innerHTML = NAV_TABS.map(t => {
+      const sel = t.id === activeTab;
+      let inner = '';
+      if (t.id === 'overview') inner = buildOverviewHTML();
+      else if (t.id === 'matrix') inner = buildMatrixHTML();
+      else if (t.id === 'quiz') inner = buildQuizHTML();
+      else inner = buildCategoryHTML(t.id);
+      return `
+        <div role="tabpanel" id="panel-${t.id}" class="cat-panel" aria-labelledby="tab-${t.id}" ${sel ? '' : 'hidden="until-found"'}>
+          <div class="cat-panel-inner">${inner}</div>
+        </div>
+      `;
+    }).join('');
+
+    renderScenarioWidget();
+    renderQuizWidget();
+    updateProgress();
+  }
+
+  function switchTab(tabId, { focusTab = false, scrollTop = true } = {}) {
+    activeTab = tabId;
+    const tabs = [...document.querySelectorAll('#catTabRail [role="tab"]')];
+    const panels = [...document.querySelectorAll('#catPanelsHost > [role="tabpanel"]')];
+    for (const t of tabs) {
+      const sel = t.dataset.tab === tabId;
+      t.setAttribute('aria-selected', String(sel));
+      t.tabIndex = sel ? 0 : -1;
+      if (sel) {
+        t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        if (focusTab) t.focus();
+      }
+    }
+    for (const p of panels) {
+      const sel = p.id === `panel-${tabId}`;
+      if (sel) p.removeAttribute('hidden');
+      else p.setAttribute('hidden', 'until-found');
+    }
+    if (scrollTop) window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  // ==================== SCENARIO WIDGET ====================
+  function renderScenarioWidget() {
+    const bar = document.getElementById('scenarioBar');
+    const res = document.getElementById('scenarioResult');
+    if (!bar || !res) return;
+    bar.innerHTML = SCENARIOS.map(s => `
+      <button type="button" class="sc-pill" data-sc="${s.id}" aria-pressed="${s.id === activeScenario}">${esc(s.title)}</button>
+    `).join('');
+    const cur = SCENARIOS.find(s => s.id === activeScenario) || SCENARIOS[0];
+    res.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line);">
+        <div>
+          <div class="mono" style="font-size:12px;color:var(--cobalt);font-weight:600;">${esc(cur.sub)}</div>
+          <h3 style="font-family:var(--font-display);font-size:20px;margin-top:4px;">${esc(cur.title)}</h3>
+        </div>
+        ${renderWeightBadge(cur.weight)}
+      </div>
+      <p class="prose"><strong>场景约束：</strong>${esc(cur.context)}</p>
+      <div>
+        <div class="sub-label">推荐技术栈组合</div>
+        <div class="stack-banner">${esc(cur.stack)}</div>
+      </div>
+      <div class="tradeoff-pair">
+        <div class="tp-cell gain"><div class="tp-head">选型依据</div><div>${esc(cur.why)}</div></div>
+        <div class="tp-cell cost"><div class="tp-head">主动舍弃的重装备</div><div>${esc(cur.rejected)}</div></div>
+      </div>
+      <div class="b-note"><strong>架构升档条件：</strong>${esc(cur.upgrade)}</div>
+    `;
+  }
+
+  // ==================== QUIZ WIDGET ====================
+  function renderQuizWidget() {
+    const box = document.getElementById('quizContainer');
+    if (!box) return;
+    const q = QUIZ[quizIdx];
+    const picked = quizAnswers[quizIdx];
+    const totalAns = Object.keys(quizAnswers).length;
+    const totalOk = Object.entries(quizAnswers).filter(([i, a]) => QUIZ[Number(i)].ans === a).length;
+    box.innerHTML = `
+      <div class="quiz-header">
+        <span>QUESTION ${String(quizIdx + 1).padStart(2, '0')} / ${QUIZ.length}</span>
+        <span>已作答 ${totalAns}/${QUIZ.length} · 正确 ${totalOk}</span>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-q">${esc(q.q)}</div>
+        <div class="quiz-opts">
+          ${q.opts.map((o, i) => {
+            let cls = '';
+            if (picked !== undefined) {
+              if (i === q.ans) cls = 'correct';
+              else if (i === picked) cls = 'wrong';
+            }
+            return `<button type="button" class="q-btn ${cls}" data-qopt="${i}" ${picked !== undefined ? 'disabled' : ''}>${esc(o)}</button>`;
+          }).join('')}
+        </div>
+        ${picked !== undefined ? `
+          <div class="quiz-exp">
+            <strong style="color:${picked === q.ans ? 'var(--teal)' : 'var(--crimson)'};">${picked === q.ans ? '判断准确：' : '解析说明：'}</strong>${esc(q.why)}
+          </div>
+        ` : ''}
+        <div class="quiz-foot">
+          <button type="button" class="btn btn-sm" id="qPrev" ${quizIdx === 0 ? 'disabled' : ''}>← 上一题</button>
+          <div style="display:flex;gap:8px;">
+            <button type="button" class="btn btn-sm" id="qReset">重置测验</button>
+            <button type="button" class="btn btn-sm btn-primary" id="qNext" ${quizIdx === QUIZ.length - 1 ? 'disabled' : ''}>下一题 →</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ==================== GLOBAL SEARCH COMMAND DIALOG ====================
+  const cmdDialog = document.getElementById('cmdDialog');
+  const cmdInput = document.getElementById('cmdInput');
+  const cmdWeight = document.getElementById('cmdWeight');
+  const cmdProject = document.getElementById('cmdProject');
+
+  function renderCmdResults() {
+    const q = cmdInput.value.trim().toLowerCase();
+    const w = cmdWeight.value;
+    const p = cmdProject.value;
+    const matched = MODULES.filter(m => {
+      if (w !== 'all' && String(m.weight) !== w) return false;
+      if (p !== 'all' && !m.projects.includes(p)) return false;
+      if (!q) return true;
+      const hay = [m.num, m.title, m.en, m.summary, m.definition, m.example, m.why, m.projects.join(' '), m.alts.map(a => a.text).join(' ')].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+    document.getElementById('cmdCount').textContent = `匹配 ${matched.length} / ${MODULES.length} 项`;
+    document.getElementById('cmdResults').innerHTML = matched.length
+      ? matched.map(m => `
+        <button type="button" class="cmd-row" data-cmd-cat="${m.cat}" data-cmd-id="${m.id}">
+          <span class="mono" style="font-size:12px;color:var(--cobalt);font-weight:600;">${m.num}</span>
+          <div>
+            <div class="cmd-row-title">${esc(m.title)}</div>
+            <div class="cmd-row-sub">${esc(CATEGORY_META[m.cat].title)} · ${esc(m.projects.join(' / '))}</div>
+          </div>
+          <span class="w-badge w-${m.weight}">${WEIGHTS[m.weight].code}</span>
+        </button>
+      `).join('')
+      : `<div style="padding:28px;text-align:center;font-size:13.5px;color:var(--muted);">无匹配技术模块，请尝试更换关键词或放宽筛选条件。</div>`;
+  }
+
+  function openCmdDialog() {
+    renderCmdResults();
+    cmdDialog.showModal();
+    cmdInput.focus();
+  }
+
+  document.getElementById('openCmdBtn').addEventListener('click', openCmdDialog);
+  cmdInput.addEventListener('input', renderCmdResults);
+  cmdWeight.addEventListener('change', renderCmdResults);
+  cmdProject.addEventListener('change', renderCmdResults);
+
+  document.getElementById('cmdResults').addEventListener('click', e => {
+    const row = e.target.closest('.cmd-row');
+    if (!row) return;
+    const cat = row.dataset.cmdCat;
+    const id = row.dataset.cmdId;
+    cmdDialog.close();
+    switchTab(cat, { scrollTop: false });
+    requestAnimationFrame(() => {
+      document.getElementById(`mod-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Keyboard "/" opens global search cleanly when not typing in an input
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) && !cmdDialog.open) {
+      e.preventDefault();
+      openCmdDialog();
+    }
+  });
+
+  // Safari fallback for <dialog closedby="any"> per modern-web-guidance
+  if (!('closedBy' in HTMLDialogElement.prototype)) {
+    cmdDialog.addEventListener('click', event => {
+      if (event.target !== cmdDialog) return;
+      const r = cmdDialog.getBoundingClientRect();
+      const inside = r.top <= event.clientY && event.clientY <= r.top + r.height && r.left <= event.clientX && event.clientX <= r.left + r.width;
+      if (!inside) cmdDialog.close();
+    });
+  }
+
+  // ==================== EVENT DELEGATION ====================
+  document.getElementById('brandHomeLink').addEventListener('click', e => {
+    e.preventDefault();
+    switchTab('overview');
+  });
+
+  document.getElementById('catTabRail').addEventListener('click', e => {
+    const tab = e.target.closest('[role="tab"]');
+    if (!tab) return;
+    switchTab(tab.dataset.tab, { focusTab: false, scrollTop: true });
+  });
+
+  document.getElementById('catTabRail').addEventListener('keydown', e => {
+    const tabs = [...document.querySelectorAll('#catTabRail [role="tab"]')];
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    let next = i;
+    if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+    else if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = tabs.length - 1;
+    else return;
+    e.preventDefault();
+    switchTab(tabs[next].dataset.tab, { focusTab: true, scrollTop: true });
+  });
+
+  document.getElementById('catPanelsHost').addEventListener('beforematch', e => {
+    const panel = e.target.closest('#catPanelsHost > [role="tabpanel"]');
+    if (!panel) return;
+    const tid = panel.id.replace(/^panel-/, '');
+    if (tid && tid !== activeTab) switchTab(tid, { scrollTop: false });
+  });
+
+  document.getElementById('catPanelsHost').addEventListener('click', e => {
+    const jump = e.target.closest('[data-jump-tab]');
+    if (jump) { switchTab(jump.dataset.jumpTab, { scrollTop: true }); return; }
+
+    const masterBtn = e.target.closest('[data-master-id]');
+    if (masterBtn) {
+      const id = masterBtn.dataset.masterId;
+      const done = !mastered.has(id);
+      if (done) mastered.add(id);
+      else mastered.delete(id);
+      saveMastered();
+      masterBtn.setAttribute('aria-pressed', String(done));
+      masterBtn.textContent = done ? '✓ 已掌握' : '标记已掌握';
+      masterBtn.classList.toggle('btn-primary', done);
+      masterBtn.closest('.dossier')?.classList.toggle('mastered', done);
+      return;
+    }
+
+    const expBtn = e.target.closest('[data-expand-cat]');
+    if (expBtn) {
+      const panel = document.getElementById(`panel-${expBtn.dataset.expandCat}`);
+      const drawers = [...panel.querySelectorAll('details.ref-drawer')];
+      const openAll = expBtn.getAttribute('aria-expanded') !== 'true';
+      for (const d of drawers) d.open = openAll;
+      expBtn.setAttribute('aria-expanded', String(openAll));
+      expBtn.textContent = openAll ? '收起本类全部代码参考' : '展开本类全部代码参考';
+      return;
+    }
+
+    const scBtn = e.target.closest('[data-sc]');
+    if (scBtn) { activeScenario = scBtn.dataset.sc; renderScenarioWidget(); return; }
+
+    const qOpt = e.target.closest('[data-qopt]');
+    if (qOpt) { quizAnswers[quizIdx] = Number(qOpt.dataset.qopt); renderQuizWidget(); return; }
+    if (e.target.id === 'qPrev' && quizIdx > 0) { quizIdx--; renderQuizWidget(); }
+    if (e.target.id === 'qNext' && quizIdx < QUIZ.length - 1) { quizIdx++; renderQuizWidget(); }
+    if (e.target.id === 'qReset') { quizIdx = 0; quizAnswers = {}; renderQuizWidget(); }
+  });
+
+  document.getElementById('catPanelsHost').addEventListener('toggle', e => {
+    if (!e.target.matches('details.ref-drawer')) return;
+    const panel = e.target.closest('.cat-panel');
+    if (!panel) return;
+    const expBtn = panel.querySelector('[data-expand-cat]');
+    if (!expBtn) return;
+    const drawers = [...panel.querySelectorAll('details.ref-drawer')];
+    const allOpen = drawers.length > 0 && drawers.every(d => d.open);
+    expBtn.setAttribute('aria-expanded', String(allOpen));
+    expBtn.textContent = allOpen ? '收起本类全部代码参考' : '展开本类全部代码参考';
+  }, { capture: true });
+
+  initDOM();
+})();
+</script>
+</body>
+</html>
